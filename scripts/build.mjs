@@ -7,7 +7,9 @@ import { ROOT, loadJSON, esc, typo, plain, detailHtml, questionSlugs } from "./l
 const data = loadJSON("data/questions.json");
 const config = loadJSON("site.config.json");
 const argUrl = (() => { const i = process.argv.indexOf("--base-url"); return i > 0 ? process.argv[i + 1] : ""; })();
-const SITE_URL = (argUrl || process.env.SITE_URL || config.url).replace(/\/+$/, "");
+// Toujours https en ligne (GitHub Pages peut annoncer http:// tant que le certificat n'est pas prêt).
+const SITE_URL = (argUrl || process.env.SITE_URL || config.url).replace(/\/+$/, "")
+  .replace(/^http:\/\/(?!localhost|127\.0\.0\.1)/, "https://");
 const BASE = new URL(SITE_URL + "/");
 const PREFIX = BASE.pathname.replace(/\/$/, "");
 const href = (p) => PREFIX + p;
