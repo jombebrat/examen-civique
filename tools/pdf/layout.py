@@ -176,6 +176,7 @@ html,body{ margin:0; padding:0; }
 .cover{ position:relative; width:210mm; height:297mm; overflow:hidden; background:#fff; color:var(--ink); }
 .cover .flag{ position:absolute; top:0; left:0; right:0; height:5mm; display:flex; }
 .cover .flag span{ flex:1; }
+.cover .logo{ position:absolute; top:17mm; right:18mm; width:30mm; height:30mm; }
 .cover .inner{ position:absolute; top:24mm; left:20mm; right:20mm; bottom:20mm; display:flex; flex-direction:column; }
 .cover .eyebrow{ font-size:8.6pt; letter-spacing:.2em; text-transform:uppercase; color:var(--red); font-weight:700; }
 .cover h1{ font-size:62pt; line-height:.98; letter-spacing:-0.02em; margin-top:5mm; color:var(--navy); }
@@ -205,6 +206,12 @@ def notes_html(h_mm):
     return '<div class="notes"><div class="nh">Mes notes</div>' + '<div class="ln"></div>' * n + '</div>'
 
 
+def logo_data_uri():
+    import base64
+    with open(os.path.join(ROOT, "assets", "logo.png"), "rb") as f:
+        return "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
+
+
 def build_cover():
     rows = ""
     for i, (name, qs) in enumerate(THEMES):
@@ -215,6 +222,7 @@ def build_cover():
 <style>{font_faces()}{CSS}{COVER_CSS}</style></head><body>
 <div class="cover">
   <div class="flag"><span style="background:#1F4E9C"></span><span style="background:#E9ECF2"></span><span style="background:#C8102E"></span></div>
+  <img class="logo" src="{logo_data_uri()}" alt="">
   <div class="inner">
     <div class="eyebrow">{BRAND} · Fiches de révision · Naturalisation</div>
     <h1>Examen<br>civique <em>2026</em></h1>

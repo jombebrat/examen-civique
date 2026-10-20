@@ -7,7 +7,9 @@
 <meta name="description" content="__DESC__">
 <link rel="canonical" href="__CANONICAL__">
 <meta name="theme-color" content="#1F4E9C">
-<link rel="icon" href="__ASSETS__/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="__ASSETS__/icon-32.png">
+<link rel="apple-touch-icon" href="__ASSETS__/icon-180.png">
+<meta property="og:image" content="__OGIMAGE__">
 <link rel="preload" href="__ASSETS__/fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{ font-family:"Fraunces"; font-weight:600; font-display:swap; src:url("__ASSETS__/fonts/fraunces-600.woff2") format("woff2"); }
@@ -53,7 +55,8 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 /* ---------- Barre du site ---------- */
 .sitebar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:14px; font-size:15px; }
 .sitebar a{ color:var(--ink); text-decoration:none; font-weight:700; }
-.sitebar .brand{ font-family:var(--display); font-weight:800; font-size:19px; }
+.sitebar .brand{ display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:800; font-size:19px; }
+.sitebar .brand img{ border-radius:8px; flex:none; }
 .sitebar a:hover{ color:var(--accent); }
 .more{ display:inline-block; margin-top:8px; margin-left:8px; font-size:13px; color:var(--accent); }
 
@@ -226,7 +229,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 <body>
 <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="app">
-  <nav class="sitebar" aria-label="Site"><a class="brand" href="__HOME__">__NAME__</a><a href="__QUESTIONS__">Les 259 questions</a></nav>
+  <nav class="sitebar" aria-label="Site"><a class="brand" href="__HOME__"><img src="__ASSETS__/icon-64.png" width="30" height="30" alt="">__NAME__</a><a href="__QUESTIONS__">Les 259 questions</a></nav>
 
   <!-- Accueil -->
   <section id="home">
@@ -352,7 +355,7 @@ let P = empty();
 try { P = sanitize(JSON.parse(localStorage.getItem(LS_KEY) || "null")); } catch (e) { P = empty(); }
 function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(P)); } catch (e) {} }
 /* Compte (Supabase) : facultatif, actif seulement si le site est configuré */
-const SB = { client: window.COQ_SB || null, user: null, timer: null, writing: false, again: false, step: "idle", email: "", err: "", busy: false, askDelete: false };
+const SB = { client: (window.COQ && window.COQ.accounts && window.COQ_SB) || null, user: null, timer: null, writing: false, again: false, step: "idle", email: "", err: "", busy: false, askDelete: false };
 function setSync(s) {
   const el = $("#sync"); if (!el) return;
   el.dataset.s = s;
@@ -438,7 +441,7 @@ document.addEventListener("submit", e => {
   if (e.target.id === "acct-code-form") { e.preventDefault(); verifyCode($("#acct-code").value || ""); }
 });
 async function initAccount() {
-  if (window.COQ && window.COQ.pdfPage && SB.client) $("#pdfLink").innerHTML = `<a href="${window.COQ.pdfPage}">Télécharger le livret de révision en PDF (27 pages)</a>`;
+  if (window.COQ && window.COQ.pdfPage) $("#pdfLink").innerHTML = `<a href="${window.COQ.pdfPage}">Télécharger le livret de révision en PDF (27 pages)</a>`;
   if (!SB.client) return;
   try {
     const { data } = await SB.client.auth.getSession();
@@ -740,7 +743,7 @@ document.addEventListener("click", e => {
     case "acct-delete-no": SB.askDelete = false; SB.err = ""; renderAccount(); break;
     case "acct-delete-yes": (async () => {
       SB.busy = true; renderAccount();
-      const { error } = await SB.client.rpc("delete_my_account");
+      const { error } = await SB.client.functions.invoke("delete-account", { method: "POST" });
       SB.busy = false;
       if (error) { SB.err = "La suppression n’a pas fonctionné. Réessayez ou écrivez-nous."; return renderAccount(); }
       SB.askDelete = false; await SB.client.auth.signOut().catch(() => {});

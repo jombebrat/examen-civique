@@ -29,8 +29,10 @@ const TOTAL = questions.length;
 const sitemap = [];
 const SB = config.supabase || {};
 const SB_ON = Boolean(SB.url && SB.cle_publique);
+const PDF_ON = SB_ON && SB.livret_pdf === true;   // formulaire « livret PDF »
+const ACCOUNTS_ON = SB_ON && SB.comptes === true;  // connexion et synchronisation
 const PDF_PATH = "/assets/coq-civique-examen-civique.pdf";
-const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfPage: href("/#pdf"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
+const sbScripts = () => (PDF_ON || ACCOUNTS_ON) ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfPage: PDF_ON ? href("/#pdf") : "", accounts: ACCOUNTS_ON, privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
 <script src="${href("/assets/vendor/supabase.js")}"></script>
 <script src="${href("/assets/coq.js")}"></script>` : "";
 
@@ -69,7 +71,13 @@ ${index ? "" : '<meta name="robots" content="noindex">\n'}<meta property="og:typ
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${abs(canonical)}">
 <meta name="theme-color" content="#1F4E9C">
-<link rel="icon" href="${href("/assets/favicon.svg")}" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="${href("/assets/icon-32.png")}">
+<link rel="icon" type="image/png" sizes="192x192" href="${href("/assets/icon-192.png")}">
+<link rel="apple-touch-icon" href="${href("/assets/icon-180.png")}">
+<meta property="og:image" content="${abs("/assets/og-image.png")}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="${href("/assets/fonts/atkinson-400.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${href("/assets/fonts/fraunces-800.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${href("/assets/site.css")}">
@@ -79,7 +87,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
 <a class="skip" href="#contenu">Aller au contenu</a>
 <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
 <header class="wrap top">
-  <a class="brand" href="${href("/")}">${esc(NAME)}</a>
+  <a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt="">${esc(NAME)}</a>
   <nav class="nav" aria-label="Navigation principale">
     <a class="hide-sm" href="${href("/questions/")}">Les 259 questions</a>
     <a class="btn primary small" href="${href("/reviser/")}">Réviser</a>
@@ -140,7 +148,7 @@ function home() {
   </div>
   <p style="margin-top:16px"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant, sans inscription</a></p>
 </section>
-${SB_ON ? `<section class="block pdf" id="pdf" data-pdf hidden>
+${PDF_ON ? `<section class="block pdf" id="pdf" data-pdf hidden>
   <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
   <div><h2>Le livret de révision en PDF</h2>
   <p class="pdf-lead">Les ${TOTAL} questions et réponses sur 27 pages A4, à imprimer : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
@@ -193,7 +201,7 @@ function themePage(t) {
 <div class="essentiel"><h2>L’essentiel à retenir</h2><ul>${t.essentiel.map((e) => `<li>${typo(e)}</li>`).join("")}</ul></div>
 <section class="block"><h2>Les ${qs.length} questions et leurs réponses</h2><ol class="qlist">${list}</ol></section>
 <div class="cta"><p>Entraînez-vous sur ce thème avec des cartes et des quiz.</p><a class="btn primary" href="${href("/reviser/")}">Réviser</a></div>
-${SB_ON ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href("/#pdf")}">Obtenir le PDF</a></div>` : ""}`,
+${PDF_ON ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href("/#pdf")}">Obtenir le PDF</a></div>` : ""}`,
   }));
 }
 
@@ -256,6 +264,7 @@ function appPage() {
     .replaceAll("__HOME__", href("/"))
     .replaceAll("__QUESTIONS__", href("/questions/"))
     .replaceAll("__ASSETS__", href("/assets"))
+    .replaceAll("__OGIMAGE__", abs("/assets/og-image.png"))
     .replace("__SUPABASE__", () => sbScripts())
     .replace("__DATA__", () => JSON.stringify(appData).replace(/<\//g, "<\\/")));
 }
@@ -265,19 +274,21 @@ function legal() {
   const e = config.editeur;
   const items = [["Accueil", "/"], ["Mentions légales", "/mentions-legales/"]];
   const contact = `<a href="mailto:${esc(e.contact)}">${esc(e.contact)}</a>`;
-  const donnees = SB_ON ? `
-<p><b>Responsable du traitement :</b> ${esc(e.nom)}, joignable à ${contact}.</p>
-<h3>Compte (facultatif)</h3>
-<p>Si vous créez un compte, nous enregistrons votre adresse email et votre progression de révision (questions vues, réponses sues, résultats des examens blancs). Finalité : vous connecter avec un code reçu par email et retrouver votre progression sur tous vos appareils. Base légale : l’exécution du service que vous demandez. Durée : jusqu’à la suppression de votre compte, possible à tout moment depuis la page « Réviser ».</p>
-<h3>Livret PDF</h3>
-<p>Pour télécharger le livret, vous indiquez votre adresse email ; nous enregistrons aussi la date et votre choix concernant les nouvelles. Finalité : donner accès au livret et, uniquement si vous avez coché la case, vous envoyer des nouvelles de ${esc(NAME)}. Base légale : votre consentement, que vous pouvez retirer à tout moment. Durée : 3 ans après la collecte ou votre dernier contact avec nous.</p>
-<h3>Prestataires</h3>
-<p>Base de données et connexion : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Envoi des emails de connexion : ${esc(config.emails)}. Ces prestataires agissent pour notre compte dans le cadre d’accords de traitement des données. Vos données ne sont ni vendues ni cédées à des tiers.</p>
+  const local = "Votre progression de révision est enregistrée dans votre navigateur (stockage local), sur votre appareil";
+  const donnees = (PDF_ON || ACCOUNTS_ON) ? [
+    `<p><b>Responsable du traitement :</b> ${esc(e.nom)}, joignable à ${contact}.</p>`,
+    ACCOUNTS_ON ? `<h3>Compte (facultatif)</h3>
+<p>Si vous créez un compte, nous enregistrons votre adresse email et votre progression de révision (questions vues, réponses sues, résultats des examens blancs). Finalité : vous connecter avec un code reçu par email et retrouver votre progression sur tous vos appareils. Base légale : l’exécution du service que vous demandez. Durée : jusqu’à la suppression de votre compte, possible à tout moment depuis la page « Réviser ».</p>` : "",
+    PDF_ON ? `<h3>Livret PDF</h3>
+<p>Pour télécharger le livret, vous indiquez votre adresse email ; nous enregistrons aussi la date et votre choix concernant les nouvelles. Finalité : donner accès au livret et, uniquement si vous avez coché la case, vous envoyer des nouvelles de ${esc(NAME)}. Base légale : votre consentement, que vous pouvez retirer à tout moment. Durée : 3 ans après la collecte ou votre dernier contact avec nous.</p>` : "",
+    `<h3>Prestataires</h3>
+<p>Base de données${ACCOUNTS_ON ? " et connexion" : ""} : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}.${ACCOUNTS_ON ? ` Envoi des emails de connexion : ${esc(config.emails)}.` : ""} Ces prestataires agissent pour notre compte dans le cadre d’accords de traitement des données. Vos données ne sont ni vendues ni cédées à des tiers.</p>
 <h3>Vos droits</h3>
 <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l’utilisation, vous y opposer, en demander la portabilité et retirer votre consentement : écrivez à ${contact}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
 <h3>Stockage dans votre navigateur</h3>
-<p>Le site n’utilise ni cookie publicitaire ni outil de mesure d’audience. Il enregistre dans votre navigateur votre progression et, si vous êtes connecté, votre session de connexion. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
-<p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée uniquement dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
+<p>Le site n’utilise ni cookie publicitaire ni outil de mesure d’audience. ${local}${ACCOUNTS_ON ? " et, si vous êtes connecté, votre session de connexion" : ""}. Ces informations sont strictement nécessaires au fonctionnement du service.</p>`,
+  ].join("\n") : `
+<p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. ${local} ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
   write("/mentions-legales/", layout({
     title: `Mentions légales et confidentialité | ${NAME}`,
     description: `Mentions légales, hébergement et politique de confidentialité du site ${NAME}.`,

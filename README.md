@@ -1,6 +1,6 @@
 # Coq Civique — examen civique : les 259 questions et réponses
 
-Site de révision pour l’examen civique (naturalisation), publié sur https://coqcivique.com : une page par question, une page par thème et une application de révision (cartes, quiz QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages, sans compte ni cookie.
+Site de révision pour l’examen civique (naturalisation), publié sur https://coqcivique.com : une page par question, une page par thème et une application de révision (cartes, quiz QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages ; compte facultatif et livret PDF via Supabase (voir plus bas).
 
 ## Organisation
 
@@ -10,7 +10,7 @@ Site de révision pour l’examen civique (naturalisation), publié sur https://
 | `site.config.json` | Nom du site, slogan, éditeur (mentions légales). |
 | `src/site/site.css` | Apparence des pages du site. |
 | `src/app/app.html` | Application de révision (page `/reviser/`). |
-| `assets/` | Polices (licence SIL OFL) et icône. |
+| `assets/` | Logo et icônes, image de partage (`og-image.png`), polices (licence SIL OFL), livret PDF. |
 | `scripts/validate.mjs` | Vérifie les données (lancé automatiquement avant chaque publication). |
 | `scripts/build.mjs` | Génère le site dans `dist/`. |
 | `.github/workflows/deploy.yml` | Vérifie, génère et publie le site à chaque modification de `main`. |
@@ -67,10 +67,16 @@ Avant une diffusion publique, renseigner `editeur` dans `site.config.json` (ment
 
 ## Comptes et livret PDF (Supabase)
 
-- `supabase/migrations/0001_comptes_et_livret.sql` : tables `progress` (progression de chaque compte) et `pdf_downloads` (demandes du livret), règles de sécurité (RLS) et fonction `delete_my_account()`.
+Projet Supabase `coq-civique` (région Paris). Tout est déjà en place côté Supabase ; les fichiers du dépôt servent de référence.
+
+- `supabase/migrations/` : tables `progress` (progression de chaque compte) et `pdf_downloads` (demandes du livret), règles de sécurité (RLS) et droits minimaux.
+- `supabase/functions/delete-account/` : fonction qui supprime le compte de la personne connectée (bouton « Supprimer mon compte »).
 - `supabase/emails/code-de-connexion.html` : modèle d’email (code à 6 chiffres) pour **Magic Link** et **Confirm signup**.
-- Dans `site.config.json`, renseigner `supabase.url` et `supabase.cle_publique` (clé publique « anon/publishable », jamais la clé secrète). Sans ces deux valeurs, la connexion et le formulaire du livret sont masqués et le site fonctionne sans compte.
-- Supabase n’envoie les emails à tous les utilisateurs qu’avec un service SMTP configuré (par exemple Brevo) : Authentication → Emails → SMTP Settings.
+- `site.config.json` → `supabase` : adresse du projet et clé publique (« publishable », jamais la clé secrète), plus deux interrupteurs :
+  - `"livret_pdf": true` affiche le formulaire « email → PDF » ;
+  - `"comptes": true` affiche la connexion par code et la synchronisation de la progression.
+
+  Avant de les passer à `true`, renseigner `editeur.nom` (obligatoire dès qu’on collecte des emails). Pour `comptes`, il faut aussi un service SMTP (par exemple Brevo) dans Authentication → Emails → SMTP Settings, et le modèle d’email ci-dessus.
 
 ## Régénérer le livret PDF
 
