@@ -28,13 +28,11 @@ const byTheme = (id) => questions.filter((q) => q.theme === id);
 const TOTAL = questions.length;
 const sitemap = [];
 const SB = config.supabase || {};
-const SB_ON = Boolean(SB.url && SB.cle_publique);
-const PDF_ON = SB_ON && SB.livret_pdf === true;   // formulaire « livret PDF »
-const ACCOUNTS_ON = SB_ON && SB.comptes === true;  // connexion et synchronisation
+// Adresse email + progression en ligne + livret PDF : actifs si l'adresse et la clé publique Supabase sont renseignées.
+const SB_ON = Boolean(SB.url && SB.cle_publique && SB.actif !== false);
 const PDF_PATH = "/assets/coq-civique-examen-civique.pdf";
-const sbScripts = () => (PDF_ON || ACCOUNTS_ON) ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfPage: PDF_ON ? href("/#pdf") : "", accounts: ACCOUNTS_ON, privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
-<script src="${href("/assets/vendor/supabase.js")}"></script>
-<script src="${href("/assets/coq.js")}"></script>` : "";
+const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), logo: href("/assets/icon-192.png"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
+<script src="${href("/assets/coq.js")}" defer></script>` : "";
 
 function write(path, html) {
   const file = join(DIST, path.endsWith("/") ? path + "index.html" : path);
@@ -90,6 +88,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
   <a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt="">${esc(NAME)}</a>
   <nav class="nav" aria-label="Navigation principale">
     <a class="hide-sm" href="${href("/questions/")}">Les 259 questions</a>
+    <a class="btn small" href="${href(PDF_PATH)}" data-pdf-link download>PDF</a>
     <a class="btn primary small" href="${href("/reviser/")}">Réviser</a>
   </nav>
 </header>
@@ -105,7 +104,7 @@ ${body}
   </div>
   <p>${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : liste officielle publiée le 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (édition mai 2026).</p>
 </footer>
-${sb ? sbScripts() : ""}
+${sbScripts()}
 </body>
 </html>
 `;
@@ -124,14 +123,18 @@ function home() {
     ["Quel score faut-il pour réussir ?", "Il faut au moins 80 % de bonnes réponses, soit 32 sur 40. Une erreur ou une absence de réponse vaut 0 : il vaut donc mieux répondre à toutes les questions."],
     ["D’où viennent les questions et les réponses ?", `Les ${TOTAL} questions sont celles de la liste officielle des questions de connaissance pour la naturalisation, publiée le 12 décembre 2025. Les réponses sont rédigées d’après le Livret du citoyen (édition mai 2026) ; quand une information n’y figure pas, elle est signalée « hors livret ».`],
     ["Ce site est-il officiel ?", "Non. C’est un site indépendant de révision, sans lien avec le ministère de l’Intérieur. Pour vous inscrire à l’examen, adressez-vous à un centre d’examen agréé."],
-    ["Faut-il créer un compte ?", "Non. La révision est gratuite et sans inscription. Votre progression est enregistrée dans votre navigateur, sur l’appareil que vous utilisez."],
+    ["Faut-il créer un compte ?", "Non. Il suffit d’indiquer votre adresse email, sans mot de passe : votre progression y est liée et vous la retrouvez sur votre téléphone comme sur votre ordinateur. La même adresse donne accès au livret PDF."],
   ];
   const body = `
-<section class="hero">
+<section class="hero hero-m">
+  <div class="hero-text">
   <div class="eyebrow">Naturalisation · liste officielle du 12 décembre 2025</div>
   <h1>Examen civique : les ${TOTAL} questions et leurs réponses</h1>
   <p class="lead">Toutes les questions de connaissance de l’examen civique pour la naturalisation, avec une réponse claire et expliquée. Révisez avec des cartes, des quiz et des examens blancs chronométrés.</p>
   <div class="ctas"><a class="btn primary" href="${href("/reviser/")}">Commencer à réviser</a><a class="btn" href="${href("/questions/")}">Voir les ${TOTAL} questions</a></div>
+  </div>
+  <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
+  <script>(function(){var v=document.querySelector(".mascot video");if(!v)return;var end=${JSON.stringify(href("/assets/mascotte-fin.jpg"))};function still(){v.removeAttribute("src");v.poster=end;v.querySelectorAll("source").forEach(function(s){s.remove()});v.load();}if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){still();return;}var p=v.play();if(p&&p.catch)p.catch(still);})();</script>
   <div class="facts">
     <div class="fact"><b>40</b><span>questions à l’examen</span></div>
     <div class="fact"><b>45 min</b><span>durée maximale</span></div>
@@ -146,14 +149,15 @@ function home() {
     <div><h3>Quiz QCM</h3><p>Quatre propositions et une seule bonne réponse, comme le jour de l’examen, avec l’explication après chaque question.</p></div>
     <div><h3>Examen blanc</h3><p>40 questions des 5 thèmes en 45 minutes. Votre score, et la liste des questions à retravailler.</p></div>
   </div>
-  <p style="margin-top:16px"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant, sans inscription</a></p>
+  <p style="margin-top:16px"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant</a></p>
 </section>
-${PDF_ON ? `<section class="block pdf" id="pdf" data-pdf hidden>
+<section class="block pdf" id="pdf">
   <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
   <div><h2>Le livret de révision en PDF</h2>
   <p class="pdf-lead">Les ${TOTAL} questions et réponses sur 27 pages A4, à imprimer : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
-  <div class="pdf-body"><noscript>Activez JavaScript pour télécharger le livret.</noscript></div></div>
-</section>` : ""}
+  <p><a class="btn primary" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF (27 pages)</a></p>
+  <p class="pdf-note">Gratuit : il suffit d’indiquer votre adresse email.</p></div>
+</section>
 <section class="block faq"><h2>Questions fréquentes</h2>
 ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></details>`).join("\n")}
 </section>`;
@@ -162,7 +166,7 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   ];
   write("/", layout({
     title: `Examen civique 2026 : les ${TOTAL} questions et réponses | ${NAME}`,
-    description: `Les ${TOTAL} questions officielles de l’examen civique pour la naturalisation, avec leurs réponses expliquées. Cartes, quiz et examens blancs gratuits, sans inscription.`,
+    description: `Les ${TOTAL} questions officielles de l’examen civique pour la naturalisation, avec leurs réponses expliquées. Cartes, quiz, examens blancs et livret PDF gratuits.`,
     path: "/", body, jsonld: ld, sb: true,
   }));
 }
@@ -201,7 +205,7 @@ function themePage(t) {
 <div class="essentiel"><h2>L’essentiel à retenir</h2><ul>${t.essentiel.map((e) => `<li>${typo(e)}</li>`).join("")}</ul></div>
 <section class="block"><h2>Les ${qs.length} questions et leurs réponses</h2><ol class="qlist">${list}</ol></section>
 <div class="cta"><p>Entraînez-vous sur ce thème avec des cartes et des quiz.</p><a class="btn primary" href="${href("/reviser/")}">Réviser</a></div>
-${PDF_ON ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href("/#pdf")}">Obtenir le PDF</a></div>` : ""}`,
+<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF</a></div>`,
   }));
 }
 
@@ -274,21 +278,19 @@ function legal() {
   const e = config.editeur;
   const items = [["Accueil", "/"], ["Mentions légales", "/mentions-legales/"]];
   const contact = `<a href="mailto:${esc(e.contact)}">${esc(e.contact)}</a>`;
-  const local = "Votre progression de révision est enregistrée dans votre navigateur (stockage local), sur votre appareil";
-  const donnees = (PDF_ON || ACCOUNTS_ON) ? [
-    `<p><b>Responsable du traitement :</b> ${esc(e.nom)}, joignable à ${contact}.</p>`,
-    ACCOUNTS_ON ? `<h3>Compte (facultatif)</h3>
-<p>Si vous créez un compte, nous enregistrons votre adresse email et votre progression de révision (questions vues, réponses sues, résultats des examens blancs). Finalité : vous connecter avec un code reçu par email et retrouver votre progression sur tous vos appareils. Base légale : l’exécution du service que vous demandez. Durée : jusqu’à la suppression de votre compte, possible à tout moment depuis la page « Réviser ».</p>` : "",
-    PDF_ON ? `<h3>Livret PDF</h3>
-<p>Pour télécharger le livret, vous indiquez votre adresse email ; nous enregistrons aussi la date et votre choix concernant les nouvelles. Finalité : donner accès au livret et, uniquement si vous avez coché la case, vous envoyer des nouvelles de ${esc(NAME)}. Base légale : votre consentement, que vous pouvez retirer à tout moment. Durée : 3 ans après la collecte ou votre dernier contact avec nous.</p>` : "",
-    `<h3>Prestataires</h3>
-<p>Base de données${ACCOUNTS_ON ? " et connexion" : ""} : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}.${ACCOUNTS_ON ? ` Envoi des emails de connexion : ${esc(config.emails)}.` : ""} Ces prestataires agissent pour notre compte dans le cadre d’accords de traitement des données. Vos données ne sont ni vendues ni cédées à des tiers.</p>
+  const donnees = SB_ON ? `
+<p><b>Responsable du traitement :</b> ${esc(e.nom)}, joignable à ${contact}.</p>
+<h3>Adresse email et progression</h3>
+<p>Si vous indiquez votre adresse email, nous l’enregistrons avec votre progression de révision (questions vues, réponses sues, résultats des examens blancs), la date et la page où vous l’avez indiquée. Finalité : retrouver votre progression sur vos appareils et vous donner accès au livret PDF. Base légale : l’exécution du service que vous demandez. Il n’y a pas de mot de passe : une personne qui saisit votre adresse sur le site peut voir et modifier cette progression. Durée de conservation : 3 ans après votre dernière activité, ou jusqu’à votre demande de suppression.</p>
+<h3>Nouvelles de ${esc(NAME)}</h3>
+<p>Uniquement si vous cochez la case prévue : envoi occasionnel de nouvelles du site. Base légale : votre consentement, que vous pouvez retirer à tout moment en nous écrivant ou par le lien présent dans chaque message.</p>
+<h3>Prestataire</h3>
+<p>Base de données : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}, qui agit pour notre compte dans le cadre d’un accord de traitement des données. Vos données ne sont ni vendues ni cédées à des tiers.</p>
 <h3>Vos droits</h3>
 <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l’utilisation, vous y opposer, en demander la portabilité et retirer votre consentement : écrivez à ${contact}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
 <h3>Stockage dans votre navigateur</h3>
-<p>Le site n’utilise ni cookie publicitaire ni outil de mesure d’audience. ${local}${ACCOUNTS_ON ? " et, si vous êtes connecté, votre session de connexion" : ""}. Ces informations sont strictement nécessaires au fonctionnement du service.</p>`,
-  ].join("\n") : `
-<p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. ${local} ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
+<p>Le site n’utilise ni cookie ni outil de mesure d’audience. Il enregistre dans votre navigateur votre progression et, si vous l’avez indiquée, votre adresse email, pour ne pas vous la redemander à chaque visite. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
+<p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
   write("/mentions-legales/", layout({
     title: `Mentions légales et confidentialité | ${NAME}`,
     description: `Mentions légales, hébergement et politique de confidentialité du site ${NAME}.`,

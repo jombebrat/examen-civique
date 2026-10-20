@@ -4,7 +4,7 @@
   "url": "https://coqcivique.com",
   "langue": "fr",
   "editeur": {
-    "nom": "À COMPLÉTER",
+    "nom": "Jovan PAVLOVIC",
     "contact": "pavlovicjov@yahoo.com"
   },
   "hebergeur": "GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis",
@@ -12,8 +12,6 @@
     "url": "https://rmdkxnqabhtrzpxcdjws.supabase.co",
     "cle_publique": "sb_publishable_ELHrDzYH8EsYHafBs5XO8w_McMfS3XZ",
     "region": "Union européenne (Paris)",
-    "livret_pdf": false,
-    "comptes": false
-  },
-  "emails": "À COMPLÉTER (prestataire d'envoi des emails, ex. Brevo)"
+    "actif": true
+  }
 }

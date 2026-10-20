@@ -58,6 +58,8 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .sitebar .brand{ display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:800; font-size:19px; }
 .sitebar .brand img{ border-radius:8px; flex:none; }
 .sitebar a:hover{ color:var(--accent); }
+.sb-links{ display:flex; align-items:center; gap:14px; }
+.sb-pdf{ border:1.5px solid var(--line); background:var(--surface); border-radius:10px; padding:5px 12px; font-size:15px; }
 .more{ display:inline-block; margin-top:8px; margin-left:8px; font-size:13px; color:var(--accent); }
 
 /* ---------- En-tête ---------- */
@@ -132,7 +134,6 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .acct form{ display:flex; gap:8px; flex-wrap:wrap; }
 .acct input{ flex:1 1 200px; min-width:0; min-height:48px; padding:10px 12px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font:inherit; }
 .acct input:focus{ outline:2.5px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
-.acct input.code{ letter-spacing:.3em; font-variant-numeric:tabular-nums; font-size:20px; text-align:center; flex:0 1 200px; }
 .acct .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
 .acct .err{ color:var(--bad); font-weight:700; font-size:14.5px; }
 .acct .who{ font-weight:700; color:var(--ink); word-break:break-all; }
@@ -229,7 +230,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 <body>
 <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="app">
-  <nav class="sitebar" aria-label="Site"><a class="brand" href="__HOME__"><img src="__ASSETS__/icon-64.png" width="30" height="30" alt="">__NAME__</a><a href="__QUESTIONS__">Les 259 questions</a></nav>
+  <nav class="sitebar" aria-label="Site"><a class="brand" href="__HOME__"><img src="__ASSETS__/icon-64.png" width="30" height="30" alt="">__NAME__</a><span class="sb-links"><a href="__QUESTIONS__">Les questions</a><a class="sb-pdf" href="__ASSETS__/coq-civique-examen-civique.pdf" data-pdf-link download>PDF</a></span></nav>
 
   <!-- Accueil -->
   <section id="home">
@@ -270,7 +271,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     <div class="panel history" id="history"></div>
 
     <div class="foot">
-      <div>Site indépendant et non officiel. Questions : liste officielle du 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (mai 2026). Aucun compte, aucun cookie : votre progression reste dans ce navigateur.</div>
+      <div>Site indépendant et non officiel. Questions : liste officielle du 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (mai 2026). Sans mot de passe ni cookie : votre progression est enregistrée dans ce navigateur et, si vous avez indiqué votre email, liée à cette adresse.</div>
       <div id="pdfLink"></div>
       <div id="resetZone"><button class="linkbtn" data-act="ask-reset">Effacer ma progression</button></div>
     </div>
@@ -354,108 +355,57 @@ const weakList = () => CARDS.filter(c => { const r = P.cards[c.k]; return r && r
 let P = empty();
 try { P = sanitize(JSON.parse(localStorage.getItem(LS_KEY) || "null")); } catch (e) { P = empty(); }
 function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(P)); } catch (e) {} }
-/* Compte (Supabase) : facultatif, actif seulement si le site est configuré */
-const SB = { client: (window.COQ && window.COQ.accounts && window.COQ_SB) || null, user: null, timer: null, writing: false, again: false, step: "idle", email: "", err: "", busy: false, askDelete: false };
+/* Progression liée à l'adresse email du visiteur (voir assets/coq.js) */
+let ID = null; // renseigné au démarrage, une fois assets/coq.js chargé
+const SY = { timer: null, writing: false, again: false };
 function setSync(s) {
   const el = $("#sync"); if (!el) return;
   el.dataset.s = s;
-  el.lastElementChild.textContent = { local: "Progression enregistrée sur cet appareil", sync: "Synchronisé avec votre compte", saving: "Enregistrement…", error: "Synchronisation interrompue" }[s];
+  el.lastElementChild.textContent = { local: "Progression enregistrée sur cet appareil", sync: "Progression sauvegardée en ligne", saving: "Enregistrement…", error: "Sauvegarde en ligne interrompue" }[s];
 }
 function touch() { P.u = Date.now(); saveLocal(); schedule(); }
 function schedule() {
-  if (!SB.user) return;
-  clearTimeout(SB.timer); setSync("saving");
-  SB.timer = setTimeout(flush, 1500);
+  if (!ID || !ID.email()) return;
+  clearTimeout(SY.timer); setSync("saving");
+  SY.timer = setTimeout(flush, 1500);
 }
 async function flush() {
-  if (!SB.user) return;
-  clearTimeout(SB.timer); SB.timer = null;
-  if (SB.writing) { SB.again = true; return; }
-  SB.writing = true;
-  try {
-    const { error } = await SB.client.from("progress").upsert({ user_id: SB.user.id, data: JSON.parse(JSON.stringify(P)), updated_at: new Date().toISOString() });
-    if (error) throw error;
-    setSync("sync");
-  } catch (e) { setSync("error"); }
-  finally { SB.writing = false; if (SB.again) { SB.again = false; flush(); } }
+  if (!ID || !ID.email()) return;
+  clearTimeout(SY.timer); SY.timer = null;
+  if (SY.writing) { SY.again = true; return; }
+  SY.writing = true;
+  try { await ID.save(JSON.parse(JSON.stringify(P))); setSync("sync"); }
+  catch (e) { setSync("error"); }
+  finally { SY.writing = false; if (SY.again) { SY.again = false; flush(); } }
 }
 async function pull() {
-  if (!SB.user) return;
+  if (!ID || !ID.email()) { setSync("local"); return; }
   setSync("saving");
-  const { data, error } = await SB.client.from("progress").select("data").eq("user_id", SB.user.id).maybeSingle();
-  if (error) { setSync("error"); return; }
-  const remote = data ? sanitize(data.data) : empty();
+  let remote;
+  try { remote = sanitize(await ID.load()); } catch (e) { setSync("error"); return; }
   const merged = merge(P, remote);
   const changed = !same(merged, P);
   P = merged; saveLocal();
-  if (!data || !same(merged, remote)) await flush(); else setSync("sync");
+  if (!same(merged, remote)) await flush(); else setSync("sync");
   if (changed) refreshHome();
 }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && SB.timer) flush(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && SY.timer) flush(); });
 
 function renderAccount() {
   const box = $("#account"); if (!box) return;
-  if (!SB.client) { box.innerHTML = ""; return; }
-  const err = SB.err ? `<p class="err" role="alert">${esc(SB.err)}</p>` : "";
-  if (SB.user) {
-    box.innerHTML = SB.askDelete
-      ? `<div class="acct"><h3>Supprimer votre compte ?</h3><p>Votre adresse et votre progression enregistrées dans le compte seront effacées définitivement. La progression reste sur cet appareil.</p>${err}
-         <div class="row"><button class="btn small bad" data-act="acct-delete-yes" ${SB.busy ? "disabled" : ""}>Supprimer définitivement</button><button class="btn small" data-act="acct-delete-no">Annuler</button></div></div>`
-      : `<div class="acct compact"><div><p>Connecté avec</p><div class="who">${esc(SB.user.email || "")}</div></div>
-         <div class="row"><button class="btn small" data-act="acct-logout">Se déconnecter</button></div>
-         <div style="grid-column:1/-1"><button class="linkbtn" data-act="acct-delete">Supprimer mon compte</button></div>${err}</div>`;
-    return;
-  }
-  if (SB.step === "sent") {
-    box.innerHTML = `<div class="acct"><h3>Entrez le code reçu par email</h3>
-      <p>Un code de connexion a été envoyé à <b>${esc(SB.email)}</b>. Il peut mettre une minute à arriver ; pensez à vérifier les courriers indésirables.</p>
-      <form id="acct-code-form" novalidate><input class="code" id="acct-code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456" aria-label="Code reçu par email">
-      <button class="btn primary" type="submit" ${SB.busy ? "disabled" : ""}>Me connecter</button></form>${err}
-      <div class="row"><button class="linkbtn" data-act="acct-back">Changer d’adresse</button></div></div>`;
-    const i = $("#acct-code"); if (i && !SB.busy) i.focus();
-    return;
-  }
-  box.innerHTML = `<div class="acct"><h3>Sauvegardez votre progression</h3>
-    <p>Créez un compte gratuit avec votre email pour retrouver votre progression sur votre téléphone et votre ordinateur. Pas de mot de passe : vous recevez un code.</p>
-    <form id="acct-email-form" novalidate><input id="acct-email" type="email" autocomplete="email" placeholder="prenom@exemple.fr" value="${esc(SB.email)}" aria-label="Adresse email">
-    <button class="btn primary" type="submit" ${SB.busy ? "disabled" : ""}>Recevoir un code</button></form>${err}</div>`;
+  if (!ID) { box.innerHTML = ""; return; }
+  const e = ID.email();
+  box.innerHTML = e
+    ? `<div class="acct compact"><div><p>Progression liée à</p><div class="who">${esc(e)}</div></div><div class="row"><button class="btn small" data-act="acct-change">Changer d’adresse</button></div></div>`
+    : `<div class="acct compact"><div><h3>Gardez votre progression</h3><p>Indiquez votre email pour la retrouver sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
 }
-async function sendCode(email) {
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { SB.err = "Cette adresse email ne semble pas valide."; return renderAccount(); }
-  SB.email = email; SB.busy = true; SB.err = ""; renderAccount();
-  const { error } = await SB.client.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname } });
-  SB.busy = false;
-  if (error) { SB.err = /rate|limit|security purposes/i.test(error.message || "") ? "Trop de demandes. Attendez une minute avant de redemander un code." : "L’envoi du code n’a pas fonctionné. Réessayez dans un instant."; return renderAccount(); }
-  SB.step = "sent"; renderAccount();
-}
-async function verifyCode(code) {
-  code = code.replace(/\s+/g, "");
-  if (!/^\d{6,10}$/.test(code)) { SB.err = "Le code contient uniquement des chiffres. Vérifiez-le et réessayez."; return renderAccount(); }
-  SB.busy = true; SB.err = ""; renderAccount();
-  const { error } = await SB.client.auth.verifyOtp({ email: SB.email, token: code, type: "email" });
-  SB.busy = false;
-  if (error) { SB.err = "Ce code n’est pas valide ou a expiré. Demandez-en un nouveau si besoin."; renderAccount(); }
-}
-document.addEventListener("submit", e => {
-  if (e.target.id === "acct-email-form") { e.preventDefault(); sendCode(($("#acct-email").value || "").trim().toLowerCase()); }
-  if (e.target.id === "acct-code-form") { e.preventDefault(); verifyCode($("#acct-code").value || ""); }
-});
-async function initAccount() {
-  if (window.COQ && window.COQ.pdfPage) $("#pdfLink").innerHTML = `<a href="${window.COQ.pdfPage}">Télécharger le livret de révision en PDF (27 pages)</a>`;
-  if (!SB.client) return;
-  try {
-    const { data } = await SB.client.auth.getSession();
-    SB.user = data && data.session ? data.session.user : null;
-  } catch (e) { SB.user = null; }
+function initAccount() {
+  ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
+  if (window.COQ && window.COQ.pdfUrl) $("#pdfLink").innerHTML = `<a href="${esc(window.COQ.pdfUrl)}" data-pdf-link download>Télécharger le livret de révision en PDF (27 pages)</a>`;
+  if (!ID) return;
   renderAccount();
-  if (SB.user) pull();
-  SB.client.auth.onAuthStateChange((ev, session) => {
-    const u = session ? session.user : null;
-    const before = SB.user ? SB.user.id : null;
-    SB.user = u;
-    if (u && u.id !== before) { SB.step = "idle"; SB.err = ""; setTimeout(() => { renderAccount(); pull(); }, 0); }
-    else if (!u && before) { SB.step = "idle"; SB.askDelete = false; setTimeout(() => { renderAccount(); setSync("local"); }, 0); }
-  });
+  pull();
+  ID.onChange(() => { renderAccount(); pull(); });
 }
 
 /* ---------- Accueil ---------- */
@@ -737,18 +687,9 @@ document.addEventListener("click", e => {
     case "finish-yes": finishExam(); break;
     case "finish-no": S.finishAsk = false; S.i = Math.max(0, S.pick.indexOf(null)); renderExam(); break;
     case "speak": if (S) speak(plain(BY_K[S.q[S.i]].q)); break;
-    case "acct-back": SB.step = "idle"; SB.err = ""; renderAccount(); break;
-    case "acct-logout": SB.client.auth.signOut().catch(() => {}); break;
-    case "acct-delete": SB.askDelete = true; SB.err = ""; renderAccount(); break;
-    case "acct-delete-no": SB.askDelete = false; SB.err = ""; renderAccount(); break;
-    case "acct-delete-yes": (async () => {
-      SB.busy = true; renderAccount();
-      const { error } = await SB.client.functions.invoke("delete-account", { method: "POST" });
-      SB.busy = false;
-      if (error) { SB.err = "La suppression n’a pas fonctionné. Réessayez ou écrivez-nous."; return renderAccount(); }
-      SB.askDelete = false; await SB.client.auth.signOut().catch(() => {});
-    })(); break;
-    case "ask-reset": $("#resetZone").innerHTML = `<div class="confirm"><span>${SB.user ? "Effacer toute votre progression, sur cet appareil et dans votre compte ?" : "Effacer toute votre progression sur cet appareil ?"}</span><button class="btn small bad" data-act="reset-yes">Effacer</button><button class="btn small" data-act="reset-no">Annuler</button></div>`; break;
+    case "acct-ask": if (ID) ID.ask(""); break;
+    case "acct-change": if (ID) { ID.forget(); ID.ask(""); } break;
+    case "ask-reset": $("#resetZone").innerHTML = `<div class="confirm"><span>${ID && ID.email() ? "Effacer toute votre progression, sur cet appareil et en ligne ?" : "Effacer toute votre progression sur cet appareil ?"}</span><button class="btn small bad" data-act="reset-yes">Effacer</button><button class="btn small" data-act="reset-no">Annuler</button></div>`; break;
     case "reset-no": $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; break;
     case "reset-yes": { const t = Date.now(); P = empty(); P.reset = t; touch(); $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; refreshHome(); break; }
   }
@@ -772,7 +713,7 @@ document.addEventListener("keydown", e => {
 
 /* ---------- Démarrage ---------- */
 refreshHome();
-initAccount();
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAccount); else initAccount();
 window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS };
 })();
 </script>

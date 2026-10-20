@@ -7,10 +7,11 @@ Site de révision pour l’examen civique (naturalisation), publié sur https://
 | Dossier / fichier | Rôle |
 |---|---|
 | `data/questions.json` | **Le contenu** : thèmes, questions, réponses, explications, propositions du QCM. C’est le seul fichier à modifier pour corriger une réponse. |
-| `site.config.json` | Nom du site, slogan, éditeur (mentions légales). |
+| `site.config.json` | Nom du site, éditeur (mentions légales), connexion Supabase. |
 | `src/site/site.css` | Apparence des pages du site. |
+| `src/site/coq.js` | Fenêtre « votre email », liens PDF, sauvegarde en ligne. |
 | `src/app/app.html` | Application de révision (page `/reviser/`). |
-| `assets/` | Logo et icônes, image de partage (`og-image.png`), polices (licence SIL OFL), livret PDF. |
+| `assets/` | Logo et icônes, mascotte animée (`mascotte.*`), image de partage (`og-image.png`), polices (licence SIL OFL), livret PDF. |
 | `scripts/validate.mjs` | Vérifie les données (lancé automatiquement avant chaque publication). |
 | `scripts/build.mjs` | Génère le site dans `dist/`. |
 | `.github/workflows/deploy.yml` | Vérifie, génère et publie le site à chaque modification de `main`. |
@@ -63,20 +64,16 @@ cd dist && python3 -m http.server  # le voir sur http://localhost:8000
 2. Chaque modification de la branche `main` publie le site.
 3. Domaine personnalisé : **Settings → Pages → Custom domain**, puis les enregistrements DNS indiqués par GitHub. L’adresse du site est prise en compte automatiquement.
 
-Avant une diffusion publique, renseigner `editeur` dans `site.config.json` (mentions légales obligatoires en France).
+## Adresse email, progression et livret PDF (Supabase)
 
-## Comptes et livret PDF (Supabase)
+À l’arrivée sur le site, une fenêtre demande l’adresse email du visiteur (il peut choisir « Plus tard »). Il n’y a ni mot de passe ni code : la progression de révision est liée à l’adresse, et le livret PDF se télécharge dès qu’elle est indiquée. Le code est dans `src/site/coq.js` (fenêtre, liens PDF) et `src/app/app.html` (synchronisation).
 
-Projet Supabase `coq-civique` (région Paris). Tout est déjà en place côté Supabase ; les fichiers du dépôt servent de référence.
+Projet Supabase `coq-civique` (région Paris), déjà configuré ; les fichiers du dépôt servent de référence.
 
-- `supabase/migrations/` : tables `progress` (progression de chaque compte) et `pdf_downloads` (demandes du livret), règles de sécurité (RLS) et droits minimaux.
-- `supabase/functions/delete-account/` : fonction qui supprime le compte de la personne connectée (bouton « Supprimer mon compte »).
-- `supabase/emails/code-de-connexion.html` : modèle d’email (code à 6 chiffres) pour **Magic Link** et **Confirm signup**.
-- `site.config.json` → `supabase` : adresse du projet et clé publique (« publishable », jamais la clé secrète), plus deux interrupteurs :
-  - `"livret_pdf": true` affiche le formulaire « email → PDF » ;
-  - `"comptes": true` affiche la connexion par code et la synchronisation de la progression.
-
-  Avant de les passer à `true`, renseigner `editeur.nom` (obligatoire dès qu’on collecte des emails). Pour `comptes`, il faut aussi un service SMTP (par exemple Brevo) dans Authentication → Emails → SMTP Settings, et le modèle d’email ci-dessus.
+- `supabase/migrations/0003_progression_par_email.sql` : table `learners` (email, accord pour les nouvelles, progression) et fonctions `coq_open` / `coq_save`. La table n’est pas lisible depuis le site ; les deux fonctions sont le seul accès, ce que signalent (normalement) les avertissements « SECURITY DEFINER » de Supabase.
+- Les adresses se consultent dans Supabase → Table Editor → `learners` (colonne `newsletter` = accord pour les nouvelles).
+- `site.config.json` → `supabase` : adresse du projet, clé publique (« publishable », jamais la clé secrète) et `"actif"` (`false` pour tout désactiver).
+- Anciens éléments non utilisés : tables `progress` et `pdf_downloads`, fonction `delete-account`, modèle `supabase/emails/` (connexion par code, si on veut un jour des comptes vérifiés).
 
 ## Régénérer le livret PDF
 
