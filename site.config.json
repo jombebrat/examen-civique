@@ -1,0 +1,11 @@
+{
+  "nom": "Révision civique",
+  "slogan": "Les 259 questions de l'examen civique, avec leurs réponses expliquées",
+  "url": "http://localhost:8000",
+  "langue": "fr",
+  "editeur": {
+    "nom": "À COMPLÉTER",
+    "contact": "À COMPLÉTER"
+  },
+  "hebergeur": "GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis"
+}

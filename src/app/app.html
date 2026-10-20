@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>__TITLE__</title>
+<meta name="description" content="__DESC__">
+<link rel="canonical" href="__CANONICAL__">
+<meta name="theme-color" content="#1F4E9C">
+<link rel="icon" href="__ASSETS__/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="__ASSETS__/fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{ font-family:"Fraunces"; font-weight:600; font-display:swap; src:url("__ASSETS__/fonts/fraunces-600.woff2") format("woff2"); }
+@font-face{ font-family:"Fraunces"; font-weight:700; font-display:swap; src:url("__ASSETS__/fonts/fraunces-700.woff2") format("woff2"); }
+@font-face{ font-family:"Fraunces"; font-weight:800; font-display:swap; src:url("__ASSETS__/fonts/fraunces-800.woff2") format("woff2"); }
+@font-face{ font-family:"Atkinson Hyperlegible"; font-weight:400; font-display:swap; src:url("__ASSETS__/fonts/atkinson-400.woff2") format("woff2"); }
+@font-face{ font-family:"Atkinson Hyperlegible"; font-weight:700; font-display:swap; src:url("__ASSETS__/fonts/atkinson-700.woff2") format("woff2"); }
+/* Layout : un jeu de fiches de poche — une carte à la fois ; les cinq thèmes officiels comme onglets de couleur, numérotés comme la brochure imprimée */
+:root{
+  --paper:#F4F6FA; --surface:#FFFFFF; --sunk:#EDF0F6; --ink:#15203B; --muted:#5A6378; --line:#DADFE9;
+  --accent:#1F4E9C; --on-accent:#FFFFFF; --accent-weak:#E6EDF9; --red:#C8102E;
+  --good:#17744A; --good-weak:#E3F3EA; --bad:#B42318; --bad-weak:#FBE9E7;
+  --t1:#1F4E9C; --t2:#2B6B5E; --t3:#A8432F; --t4:#8A6516; --t5:#5B3F8E;
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0C1220; --surface:#141C2F; --sunk:#10182A; --ink:#E6EBF5; --muted:#9BA6BD; --line:#253049;
+  --accent:#8FB1F5; --on-accent:#0C1220; --accent-weak:#1B2843; --red:#FF6F80;
+  --good:#5CCB92; --good-weak:#12301F; --bad:#FF8B80; --bad-weak:#3A1B19;
+  --t1:#8FB1F5; --t2:#6FC4AF; --t3:#F2937C; --t4:#E5BD62; --t5:#BBA0F2; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --paper:#0C1220; --surface:#141C2F; --sunk:#10182A; --ink:#E6EBF5; --muted:#9BA6BD; --line:#253049;
+  --accent:#8FB1F5; --on-accent:#0C1220; --accent-weak:#1B2843; --red:#FF6F80;
+  --good:#5CCB92; --good-weak:#12301F; --bad:#FF8B80; --bad-weak:#3A1B19;
+  --t1:#8FB1F5; --t2:#6FC4AF; --t3:#F2937C; --t4:#E5BD62; --t5:#BBA0F2; color-scheme:dark; }
+
+*{ box-sizing:border-box; }
+html,body{ min-height:100%; }
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.45;
+  -webkit-font-smoothing:antialiased; }
+body::before{ content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top, 0px); z-index:10; background:var(--paper); }
+button{ font:inherit; color:inherit; }
+sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
+:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; border-radius:6px; }
+
+.app{ max-width:680px; margin:0 auto; padding-block:0 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+.flag{ display:flex; height:4px; }
+.flag i{ flex:1; } .flag i:nth-child(1){ background:var(--t1); } .flag i:nth-child(2){ background:var(--line); } .flag i:nth-child(3){ background:var(--red); }
+
+/* ---------- Barre du site ---------- */
+.sitebar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:14px; font-size:15px; }
+.sitebar a{ color:var(--ink); text-decoration:none; font-weight:700; }
+.sitebar .brand{ font-family:var(--display); font-weight:800; font-size:19px; }
+.sitebar a:hover{ color:var(--accent); }
+.more{ display:inline-block; margin-top:8px; margin-left:8px; font-size:13px; color:var(--accent); }
+
+/* ---------- En-tête ---------- */
+.head{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:22px 0 16px; }
+.head .eyebrow{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--red); font-weight:700; }
+.head h1{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 7vw, 38px); line-height:1.02; letter-spacing:-.01em; margin:6px 0 0; text-wrap:balance; }
+.sync{ display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--muted); background:var(--surface);
+  border:1px solid var(--line); border-radius:999px; padding:5px 11px 5px 9px; white-space:nowrap; }
+.sync i{ width:8px; height:8px; border-radius:50%; background:var(--muted); }
+.sync[data-s="sync"] i{ background:var(--good); } .sync[data-s="saving"] i{ background:var(--accent); }
+.sync[data-s="error"] i{ background:var(--bad); }
+
+/* ---------- Accueil ---------- */
+.panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px; }
+.summary{ display:grid; gap:14px; }
+.summary .top{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.big{ font-family:var(--display); font-weight:800; font-size:44px; line-height:1; font-variant-numeric:tabular-nums; }
+.big small{ font-size:20px; color:var(--muted); font-weight:700; }
+.lbl{ font-size:13px; color:var(--muted); }
+.due{ font-size:14px; background:var(--accent-weak); color:var(--accent); border-radius:999px; padding:5px 12px; font-weight:700; }
+.bar{ display:flex; height:10px; border-radius:999px; overflow:hidden; background:var(--sunk); }
+.bar span{ display:block; height:100%; }
+.bar .m{ background:var(--good); } .bar .l{ background:var(--accent); opacity:.55; }
+.legend{ display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--muted); }
+.legend b{ color:var(--ink); font-variant-numeric:tabular-nums; }
+.legend i{ display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align:0; }
+
+h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px 0 10px; }
+.scopes{ display:grid; gap:8px; }
+.scope{ position:relative; display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:11px 14px; cursor:pointer; }
+.scope input{ position:absolute; opacity:0; pointer-events:none; }
+.scope:has(input:checked){ border-color:var(--c, var(--accent)); box-shadow:0 0 0 1px var(--c, var(--accent)) inset; }
+.scope:has(input:focus-visible){ outline:2.5px solid var(--accent); outline-offset:2px; }
+.scope .num{ font-family:var(--display); font-weight:800; font-size:20px; color:var(--c, var(--accent)); }
+.scope .nm{ font-weight:700; min-width:0; }
+.scope .mini{ display:flex; height:5px; border-radius:99px; overflow:hidden; background:var(--sunk); margin-top:6px; }
+.scope .mini span{ height:100%; } .scope .mini .m{ background:var(--c, var(--good)); } .scope .mini .l{ background:var(--c, var(--accent)); opacity:.35; }
+.scope .ct{ font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+
+.modes{ display:grid; gap:10px; }
+.mode{ display:grid; grid-template-columns:44px 1fr auto; align-items:center; gap:14px; text-align:left; cursor:pointer;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:var(--r); padding:15px 16px; transition:border-color .15s, transform .15s; }
+.mode:hover{ border-color:var(--accent); }
+.mode:active{ transform:scale(.99); }
+.mode .ic{ width:44px; height:44px; border-radius:11px; display:grid; place-items:center; background:var(--accent-weak); color:var(--accent); }
+.mode .t{ font-weight:700; font-size:17px; }
+.mode .s{ font-size:14px; color:var(--muted); }
+.mode .go{ color:var(--muted); }
+.mode.primary{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.mode.primary .s, .mode.primary .go{ color:var(--on-accent); opacity:.85; }
+.mode.primary .ic{ background:color-mix(in srgb, var(--on-accent) 18%, transparent); color:var(--on-accent); }
+
+.history{ display:grid; gap:0; }
+.hrow{ display:grid; grid-template-columns:1fr auto auto; gap:12px; align-items:center; padding:10px 2px; border-bottom:1px solid var(--line); font-size:15px; }
+.hrow:last-child{ border-bottom:0; }
+.hrow .sc{ font-family:var(--display); font-weight:700; font-variant-numeric:tabular-nums; }
+.pill{ font-size:12px; font-weight:700; border-radius:999px; padding:3px 9px; white-space:nowrap; }
+.pill.ok{ background:var(--good-weak); color:var(--good); } .pill.ko{ background:var(--bad-weak); color:var(--bad); }
+.empty{ color:var(--muted); font-size:14px; }
+
+.foot{ margin-top:30px; display:grid; gap:12px; font-size:13px; color:var(--muted); }
+.linkbtn{ background:none; border:0; padding:0; color:var(--muted); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font-size:13px; justify-self:start; }
+.confirm{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:var(--bad-weak); color:var(--ink); border-radius:10px; padding:10px 12px; }
+
+/* ---------- Barre d'étude ---------- */
+.studybar{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:var(--paper); display:flex; align-items:center; gap:10px; padding:12px 0; }
+.back{ display:inline-flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:7px 13px 7px 9px; cursor:pointer; font-size:14px; font-weight:700; }
+.studybar .where{ flex:1; min-width:0; font-size:14px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.studybar .count{ font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; }
+.prog{ height:4px; background:var(--sunk); border-radius:99px; overflow:hidden; margin-bottom:14px; }
+.prog span{ display:block; height:100%; background:var(--accent); transition:width .25s; }
+
+/* ---------- Carte ---------- */
+.card{ background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--c); border-radius:var(--r); padding:20px 18px 18px; }
+.card .meta{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+.chip{ display:inline-flex; gap:6px; align-items:baseline; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700; color:var(--c); min-width:0; }
+.chip b{ font-family:var(--display); font-size:15px; letter-spacing:0; text-transform:none; }
+.speak{ display:inline-grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; flex:none; }
+.speak:hover{ color:var(--accent); border-color:var(--accent); }
+.q{ font-size:21px; line-height:1.35; font-weight:700; margin:0; text-wrap:pretty; }
+.reveal{ margin-top:18px; width:100%; }
+.ans{ margin-top:18px; padding-top:16px; border-top:1px dashed var(--line); animation:rise .22s ease-out; }
+.ans .a{ font-size:18px; font-weight:700; color:var(--accent); }
+.ans .d{ margin-top:8px; color:var(--muted); font-size:15px; }
+.ref{ display:inline-block; margin-top:8px; font-size:13px; color:var(--muted); background:var(--sunk); border-radius:6px; padding:2px 8px; }
+.tag{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); border-radius:5px; padding:0 5px; margin:0 3px; vertical-align:1px; white-space:nowrap; }
+@keyframes rise{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+.btn{ display:inline-flex; justify-content:center; align-items:center; gap:8px; min-height:50px; padding:12px 18px; border-radius:12px; border:1.5px solid var(--line);
+  background:var(--surface); font-weight:700; font-size:16px; cursor:pointer; }
+.btn.primary{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.btn.good{ background:var(--good-weak); border-color:var(--good); color:var(--good); }
+.btn.bad{ background:var(--bad-weak); border-color:var(--bad); color:var(--bad); }
+.btn.small{ min-height:38px; padding:7px 13px; font-size:14px; }
+.grade{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.keys{ margin-top:12px; font-size:12.5px; color:var(--muted); text-align:center; }
+.keys kbd{ font-family:var(--body); border:1px solid var(--line); border-bottom-width:2px; border-radius:5px; padding:0 5px; background:var(--surface); }
+@media (hover:none){ .keys{ display:none; } }
+
+/* ---------- QCM ---------- */
+.opts{ display:grid; gap:9px; margin-top:18px; }
+.opt{ display:grid; grid-template-columns:30px 1fr; gap:12px; align-items:center; text-align:left; width:100%; cursor:pointer;
+  background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:12px 14px; font-size:16px; line-height:1.35; }
+.opt:hover:not([disabled]){ border-color:var(--accent); }
+.opt .L{ width:30px; height:30px; border-radius:8px; display:grid; place-items:center; font-weight:700; font-size:14px; background:var(--sunk); color:var(--muted); }
+.opt.sel{ border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset; }
+.opt.sel .L{ background:var(--accent); color:var(--on-accent); }
+.opt.ok{ border-color:var(--good); background:var(--good-weak); }
+.opt.ok .L{ background:var(--good); color:var(--surface); }
+.opt.ko{ border-color:var(--bad); background:var(--bad-weak); }
+.opt.ko .L{ background:var(--bad); color:var(--surface); }
+.opt[disabled]{ cursor:default; }
+.opt.dim{ opacity:.6; }
+.verdict{ font-weight:700; font-size:17px; }
+.verdict.ok{ color:var(--good); } .verdict.ko{ color:var(--bad); }
+.next{ margin-top:14px; width:100%; }
+
+/* ---------- Examen ---------- */
+.clock{ font-family:var(--display); font-weight:700; font-variant-numeric:tabular-nums; font-size:17px; padding:5px 11px; border-radius:999px; background:var(--surface); border:1px solid var(--line); }
+.clock.low{ color:var(--bad); border-color:var(--bad); }
+.navrow{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.grid40{ display:grid; grid-template-columns:repeat(10, 1fr); gap:5px; margin-top:16px; }
+.grid40 button{ aspect-ratio:1; max-width:100%; border-radius:7px; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-variant-numeric:tabular-nums; cursor:pointer; padding:0; color:var(--muted); }
+.grid40 button.done{ background:var(--accent-weak); color:var(--accent); border-color:transparent; font-weight:700; }
+.grid40 button.cur{ outline:2px solid var(--accent); outline-offset:1px; }
+.finish{ margin-top:16px; width:100%; }
+
+.result{ text-align:center; padding:26px 18px; }
+.result .big{ font-size:64px; }
+.scale{ position:relative; height:12px; background:var(--sunk); border-radius:99px; margin:18px 0 8px; overflow:visible; }
+.scale .fill{ position:absolute; inset:0 auto 0 0; border-radius:99px; }
+.scale .mark{ position:absolute; top:-5px; bottom:-5px; width:2px; background:var(--red); }
+.scale-l{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.review{ display:grid; gap:10px; margin-top:16px; }
+.rv{ background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--c); border-radius:12px; padding:14px 16px; }
+.rv .rq{ font-weight:700; }
+.rv .yours{ margin-top:6px; font-size:15px; color:var(--bad); }
+.rv .right{ margin-top:4px; font-size:15px; color:var(--good); font-weight:700; }
+.rv .d{ margin-top:6px; font-size:14px; color:var(--muted); }
+.row-btns{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
+
+.done-card{ text-align:center; padding:28px 18px; }
+.done-card h2{ font-family:var(--display); font-size:26px; margin:0 0 6px; }
+
+@media (max-width:420px){
+  .q{ font-size:19px; } .big{ font-size:38px; } .card{ padding:18px 15px 16px; }
+  .grid40{ grid-template-columns:repeat(8, 1fr); }
+}
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+
+</head>
+<body>
+<div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="app">
+  <nav class="sitebar" aria-label="Site"><a class="brand" href="__HOME__">__NAME__</a><a href="__QUESTIONS__">Les 259 questions</a></nav>
+
+  <!-- Accueil -->
+  <section id="home">
+    <header class="head">
+      <div>
+        <div class="eyebrow">Naturalisation · 259 questions officielles</div>
+        <h1>Réviser l’examen civique</h1>
+      </div>
+      <span class="sync" data-s="local"><i></i><span>Progression enregistrée sur cet appareil</span></span>
+    </header>
+
+    <div class="panel summary" id="summary"></div>
+
+    <h2 class="sec">Que voulez-vous réviser ?</h2>
+    <div class="scopes" id="scopes" role="radiogroup" aria-label="Thème à réviser"></div>
+
+    <h2 class="sec">Comment ?</h2>
+    <div class="modes">
+      <button class="mode primary" data-act="start-cards">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span>
+        <span><span class="t">Cartes</span><br><span class="s">Lisez la question, retrouvez la réponse</span></span>
+        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="mode" data-act="start-quiz">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span>
+        <span><span class="t">Quiz QCM</span><br><span class="s">4 propositions, une seule bonne réponse</span></span>
+        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <button class="mode" data-act="start-exam">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
+        <span><span class="t">Examen blanc</span><br><span class="s">40 questions · 45 min · 32 pour réussir</span></span>
+        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <h2 class="sec">Mes examens blancs</h2>
+    <div class="panel history" id="history"></div>
+
+    <div class="foot">
+      <div>Site indépendant et non officiel. Questions : liste officielle du 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (mai 2026). Aucun compte, aucun cookie : votre progression reste dans ce navigateur.</div>
+      <div id="resetZone"><button class="linkbtn" data-act="ask-reset">Effacer ma progression</button></div>
+    </div>
+  </section>
+
+  <!-- Session (cartes, quiz, examen) -->
+  <section id="study" hidden>
+    <div class="studybar">
+      <button class="back" data-act="home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>Accueil</button>
+      <span class="where" id="where"></span>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="prog"><span id="progfill" style="width:0"></span></div>
+    <div id="stage"></div>
+  </section>
+</div>
+
+<script type="application/json" id="qdata">__DATA__</script>
+<script>
+(() => {
+"use strict";
+const DATA = JSON.parse(document.getElementById("qdata").textContent);
+const THEMES = DATA.themes;
+const CARDS = DATA.cards.map(c => Object.assign({}, c, { k: c.t + "-" + c.n }));
+const BY_K = Object.fromEntries(CARDS.map(c => [c.k, c]));
+const TOTAL = CARDS.length;
+const MIN = 60e3, DAY = 864e5;
+const INTERVALS = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
+const MASTERED = 3;
+const EXAM_N = 40, EXAM_PASS = 32, EXAM_MS = 45 * MIN;
+const LS_KEY = "civique259:v1";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+const plain = html => { const d = document.createElement("div"); d.innerHTML = html; return d.textContent; };
+const tcol = t => `var(--t${t})`;
+
+/* ---------- Progression : modèle et fusion ---------- */
+const empty = () => ({ v: 1, cards: {}, exams: [], u: 0, reset: 0 });
+function sanitize(o) {
+  const p = empty();
+  if (!o || typeof o !== "object") return p;
+  p.u = +o.u || 0; p.reset = +o.reset || 0;
+  if (o.cards && typeof o.cards === "object") for (const k in o.cards) {
+    const r = o.cards[k];
+    if (BY_K[k] && r && typeof r === "object") p.cards[k] = { b: Math.max(0, Math.min(5, r.b | 0)), due: +r.due || 0, r: r.r | 0, w: r.w | 0, t: +r.t || 0 };
+  }
+  if (Array.isArray(o.exams)) p.exams = o.exams.filter(e => e && +e.at).map(e => ({ at: +e.at, s: e.s | 0, n: e.n | 0 || EXAM_N, d: +e.d || 0 })).slice(0, 30);
+  return p;
+}
+function merge(a, b) {
+  const R = Math.max(a.reset || 0, b.reset || 0);
+  const out = { v: 1, cards: {}, exams: [], u: Math.max(a.u || 0, b.u || 0), reset: R };
+  for (const src of [a, b]) for (const k in src.cards) {
+    const r = src.cards[k];
+    if ((r.t || 0) < R) continue;
+    if (!out.cards[k] || (r.t || 0) > (out.cards[k].t || 0)) out.cards[k] = r;
+  }
+  const ex = new Map();
+  for (const e of [...a.exams, ...b.exams]) if (e.at >= R) ex.set(e.at, e);
+  out.exams = [...ex.values()].sort((x, y) => y.at - x.at).slice(0, 30);
+  return out;
+}
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+function grade(k, ok, now = Date.now()) {
+  const r = P.cards[k];
+  const b = ok ? Math.min(5, (r ? r.b : 0) + 1) : 0;
+  P.cards[k] = { b, due: now + INTERVALS[b], r: (r ? r.r : 0) + (ok ? 1 : 0), w: (r ? r.w : 0) + (ok ? 0 : 1), t: now };
+  touch();
+}
+function stats(list) {
+  let m = 0, l = 0;
+  for (const c of list) { const r = P.cards[c.k]; if (r) { if (r.b >= MASTERED) m++; else l++; } }
+  return { m, l, n: list.length - m - l, total: list.length };
+}
+const isDue = (r, now) => r && r.due <= now;
+const weakList = () => CARDS.filter(c => { const r = P.cards[c.k]; return r && r.w > 0 && r.b < MASTERED; });
+
+/* ---------- Stockage local + synchronisation ---------- */
+let P = empty();
+try { P = sanitize(JSON.parse(localStorage.getItem(LS_KEY) || "null")); } catch (e) { P = empty(); }
+function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(P)); } catch (e) {} }
+function touch() { P.u = Date.now(); saveLocal(); }
+
+/* ---------- Accueil ---------- */
+let scope = "all";
+try { scope = localStorage.getItem(LS_KEY + ":scope") || "all"; } catch (e) {}
+function scopeCards(s) {
+  if (s === "weak") return weakList();
+  if (/^[1-5]$/.test(String(s))) return CARDS.filter(c => c.t === +s);
+  return CARDS;
+}
+function scopeLabel(s) {
+  if (s === "weak") return "Mes erreurs";
+  if (/^[1-5]$/.test(String(s))) return "Thème " + s + " · " + plain(THEMES[s - 1].name);
+  return "Tous les thèmes";
+}
+function renderSummary() {
+  const st = stats(CARDS), now = Date.now();
+  const due = CARDS.filter(c => isDue(P.cards[c.k], now)).length;
+  const pc = x => (100 * x / TOTAL).toFixed(2) + "%";
+  $("#summary").innerHTML = `
+    <div class="top">
+      <div><div class="lbl">Réponses maîtrisées</div><div class="big">${st.m}<small> / ${TOTAL}</small></div></div>
+      ${due ? `<span class="due">${due} à revoir maintenant</span>` : `<span class="lbl">Rien à revoir pour l’instant</span>`}
+    </div>
+    <div class="bar" role="img" aria-label="${st.m} maîtrisées, ${st.l} en cours, ${st.n} nouvelles"><span class="m" style="width:${pc(st.m)}"></span><span class="l" style="width:${pc(st.l)}"></span></div>
+    <div class="legend">
+      <span><i style="background:var(--good)"></i><b>${st.m}</b> maîtrisées</span>
+      <span><i style="background:var(--accent);opacity:.55"></i><b>${st.l}</b> en cours</span>
+      <span><i style="background:var(--sunk);outline:1px solid var(--line)"></i><b>${st.n}</b> jamais vues</span>
+    </div>`;
+}
+function renderScopes() {
+  const rows = [];
+  const all = stats(CARDS);
+  const row = (val, num, name, st, color, extra) => {
+    const pm = st.total ? 100 * st.m / st.total : 0, pl = st.total ? 100 * st.l / st.total : 0;
+    return `<label class="scope" style="--c:${color}">
+      <input type="radio" name="scope" id="scope-${val}" value="${val}" ${String(scope) === String(val) ? "checked" : ""}>
+      <span class="num">${num}</span>
+      <span class="nm">${name}<span class="mini"><span class="m" style="width:${pm}%"></span><span class="l" style="width:${pl}%"></span></span></span>
+      <span class="ct">${extra || st.m + " / " + st.total}</span>
+    </label>`;
+  };
+  rows.push(row("all", "∗", "Tous les thèmes", all, "var(--accent)"));
+  THEMES.forEach(t => rows.push(row(t.t, "0" + t.t, t.name, stats(CARDS.filter(c => c.t === t.t)), tcol(t.t))));
+  const weak = weakList();
+  if (weak.length) rows.push(row("weak", "!", "Mes erreurs", { m: 0, l: 0, n: weak.length, total: weak.length }, "var(--bad)", weak.length + " question" + (weak.length > 1 ? "s" : "")));
+  else if (scope === "weak") scope = "all";
+  $("#scopes").innerHTML = rows.join("");
+  const checked = document.querySelector('#scopes input:checked') || document.querySelector('#scope-all');
+  if (checked) checked.checked = true;
+}
+function renderHistory() {
+  if (!P.exams.length) { $("#history").innerHTML = `<p class="empty" style="margin:0">Aucun examen blanc pour l’instant. Faites-en un pour voir où vous en êtes : il faut 32 bonnes réponses sur 40.</p>`; return; }
+  $("#history").innerHTML = P.exams.slice(0, 6).map(e => {
+    const d = new Date(e.at);
+    const when = d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) + " · " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+    const ok = e.s >= EXAM_PASS;
+    return `<div class="hrow"><span>${when}</span><span class="sc">${e.s} / ${e.n}</span><span class="pill ${ok ? "ok" : "ko"}">${ok ? "Réussi" : "Pas encore"}</span></div>`;
+  }).join("");
+}
+function refreshHome() { if (!$("#home").hidden) { renderSummary(); renderScopes(); renderHistory(); } }
+document.addEventListener("change", e => {
+  if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
+});
+
+/* ---------- Sessions ---------- */
+let S = null, tick = null;
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function optionsFor(c) { return shuffle([{ h: c.c, ok: true }, ...c.w.map(h => ({ h, ok: false }))]); }
+
+function pickCards(list, n, now = Date.now()) {
+  const due = list.filter(c => isDue(P.cards[c.k], now)).sort((a, b) => P.cards[a.k].due - P.cards[b.k].due);
+  const fresh = list.filter(c => !P.cards[c.k]);
+  const rest = list.filter(c => P.cards[c.k] && !isDue(P.cards[c.k], now)).sort((a, b) => P.cards[a.k].due - P.cards[b.k].due);
+  return [...due, ...fresh, ...rest].slice(0, n).map(c => c.k);
+}
+function pickQuiz(list, n) {
+  return list.map(c => ({ k: c.k, s: (P.cards[c.k] ? P.cards[c.k].b : -1) + Math.random() * 1.6 }))
+    .sort((a, b) => a.s - b.s).slice(0, n).map(x => x.k);
+}
+function pickExam() {
+  const quotas = THEMES.map(t => { const q = EXAM_N * t.count / TOTAL; return { t: t.t, n: Math.floor(q), r: q - Math.floor(q) }; });
+  let left = EXAM_N - quotas.reduce((s, q) => s + q.n, 0);
+  [...quotas].sort((a, b) => b.r - a.r).forEach(q => { if (left > 0) { q.n++; left--; } });
+  const picked = [];
+  quotas.forEach(q => picked.push(...shuffle(CARDS.filter(c => c.t === q.t)).slice(0, q.n).map(c => c.k)));
+  return shuffle(picked);
+}
+
+function show(view) {
+  $("#home").hidden = view !== "home";
+  $("#study").hidden = view === "home";
+  window.scrollTo(0, 0);
+}
+function goHome() {
+  clearInterval(tick); tick = null; S = null;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  show("home"); refreshHome();
+}
+function setBar(where, count, frac) {
+  $("#where").textContent = where; $("#count").textContent = count;
+  $("#progfill").style.width = Math.max(0, Math.min(100, frac * 100)) + "%";
+}
+const ttsOK = "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined";
+function speak(text) {
+  if (!ttsOK) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "fr-FR"; u.rate = 0.95;
+  const v = speechSynthesis.getVoices().find(x => /^fr(-|_)FR/i.test(x.lang)) || speechSynthesis.getVoices().find(x => /^fr/i.test(x.lang));
+  if (v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+const speakBtn = () => ttsOK ? `<button class="speak" data-act="speak" aria-label="Écouter la question" title="Écouter la question"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>` : "";
+const metaChip = c => `<span class="chip" style="--c:${tcol(c.t)}">Thème ${c.t} <b>n° ${c.n}</b></span>`;
+const refLine = c => (c.h ? `<span class="tag">hors livret</span> ` : "") + (c.p ? `<span class="ref">Livret p. ${esc(c.p)}</span>` : "");
+const detail = c => (c.d ? `<div class="d">${c.d}</div>` : "") + `<div>${refLine(c)}<a class="more" href="${c.u}" target="_blank" rel="noopener">Fiche de la question ›</a></div>`;
+
+/* Cartes */
+function startCards() {
+  const list = scopeCards(scope);
+  S = { mode: "cards", q: pickCards(list, 20), i: 0, open: false, known: 0, again: 0, req: {} };
+  if (!S.q.length) return goHome();
+  show("study"); renderCards();
+}
+function renderCards() {
+  if (S.i >= S.q.length) return renderDone(`Session terminée`, `${S.known} réponse${S.known > 1 ? "s" : ""} sue${S.known > 1 ? "s" : ""}, ${S.again} à revoir. Les questions manquées reviendront plus vite.`, "start-cards");
+  const c = BY_K[S.q[S.i]];
+  setBar(scopeLabel(scope), `${S.i + 1} / ${S.q.length}`, S.i / S.q.length);
+  $("#stage").innerHTML = `
+    <article class="card" style="--c:${tcol(c.t)}">
+      <div class="meta">${metaChip(c)}${speakBtn()}</div>
+      <p class="q">${c.q}</p>
+      ${S.open ? `<div class="ans"><div class="a">${c.a}</div>${detail(c)}</div>` : `<button class="btn primary reveal" data-act="reveal">Afficher la réponse</button>`}
+    </article>
+    ${S.open ? `<div class="grade"><button class="btn bad" data-act="again">À revoir</button><button class="btn good" data-act="know">Je savais</button></div>
+    <div class="keys"><kbd>1</kbd> à revoir · <kbd>2</kbd> je savais</div>` : `<div class="keys"><kbd>Espace</kbd> afficher la réponse</div>`}`;
+}
+function cardAnswer(ok) {
+  const k = S.q[S.i];
+  grade(k, ok);
+  if (ok) S.known++; else {
+    S.again++;
+    S.req[k] = (S.req[k] || 0) + 1;
+    if (S.req[k] <= 2) S.q.splice(Math.min(S.q.length, S.i + 4), 0, k);
+  }
+  S.i++; S.open = false; renderCards();
+}
+
+/* Quiz */
+function startQuiz() {
+  const list = scopeCards(scope);
+  const q = pickQuiz(list, Math.min(20, list.length));
+  if (!q.length) return goHome();
+  S = { mode: "quiz", q, i: 0, opts: q.map(k => optionsFor(BY_K[k])), pick: null, score: 0 };
+  show("study"); renderQuiz();
+}
+function renderQuiz() {
+  if (S.i >= S.q.length) return renderDone(`${S.score} / ${S.q.length}`, S.score / S.q.length >= .8 ? "Très bien : vous êtes au niveau requis (80 %)." : "Continuez : l’examen demande 80 % de bonnes réponses.", "start-quiz");
+  const c = BY_K[S.q[S.i]], opts = S.opts[S.i], answered = S.pick !== null;
+  setBar(scopeLabel(scope), `${S.i + 1} / ${S.q.length}`, S.i / S.q.length);
+  const ok = answered && opts[S.pick].ok;
+  $("#stage").innerHTML = `
+    <article class="card" style="--c:${tcol(c.t)}">
+      <div class="meta">${metaChip(c)}${speakBtn()}</div>
+      <p class="q">${c.q}</p>
+      <div class="opts">${opts.map((o, i) => {
+        let cls = "opt";
+        if (answered) cls += o.ok ? " ok" : (i === S.pick ? " ko" : " dim");
+        return `<button class="${cls}" data-act="choose" data-i="${i}" ${answered ? "disabled" : ""}><span class="L">${"ABCD"[i]}</span><span>${o.h}</span></button>`;
+      }).join("")}</div>
+      ${answered ? `<div class="ans"><div class="verdict ${ok ? "ok" : "ko"}">${ok ? "Bonne réponse" : "Ce n’est pas ça"}</div><div class="a" style="margin-top:6px">${c.a}</div>${detail(c)}</div>` : ""}
+    </article>
+    ${answered ? `<button class="btn primary next" data-act="qnext">${S.i + 1 < S.q.length ? "Question suivante" : "Voir le résultat"}</button><div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
+}
+function quizChoose(i) {
+  if (S.pick !== null) return;
+  S.pick = i;
+  const ok = S.opts[S.i][i].ok;
+  if (ok) S.score++;
+  grade(S.q[S.i], ok);
+  renderQuiz();
+}
+
+/* Examen blanc */
+function startExam() {
+  const q = pickExam();
+  const t = Date.now();
+  S = { mode: "exam", q, opts: q.map(k => optionsFor(BY_K[k])), pick: q.map(() => null), i: 0, start: t, end: t + EXAM_MS, over: false, leave: false, finishAsk: false };
+  show("study"); renderExam();
+  clearInterval(tick);
+  tick = setInterval(() => {
+    if (!S || S.mode !== "exam" || S.over) return clearInterval(tick);
+    const el = $("#clock"); const left = S.end - Date.now();
+    if (left <= 0) return finishExam();
+    if (el) { el.textContent = fmt(left); el.classList.toggle("low", left < 5 * MIN); }
+  }, 1000);
+}
+const fmt = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+function renderExam() {
+  if (S.over) return renderExamResult();
+  const c = BY_K[S.q[S.i]], opts = S.opts[S.i], answered = S.pick.filter(x => x !== null).length;
+  setBar("Examen blanc", `${S.i + 1} / ${EXAM_N}`, answered / EXAM_N);
+  $("#count").innerHTML = `<span class="clock" id="clock">${fmt(S.end - Date.now())}</span>`;
+  $("#stage").innerHTML = `
+    ${S.leave ? `<div class="confirm" style="margin-bottom:12px"><span>Quitter l’examen ? Vos réponses seront perdues.</span><button class="btn small bad" data-act="leave-yes">Quitter</button><button class="btn small" data-act="leave-no">Continuer l’examen</button></div>` : ""}
+    <article class="card" style="--c:${tcol(c.t)}">
+      <div class="meta"><span class="chip" style="--c:${tcol(c.t)}">Question <b>${S.i + 1}</b></span>${speakBtn()}</div>
+      <p class="q">${c.q}</p>
+      <div class="opts">${opts.map((o, i) => `<button class="opt ${S.pick[S.i] === i ? "sel" : ""}" data-act="epick" data-i="${i}" aria-pressed="${S.pick[S.i] === i}"><span class="L">${"ABCD"[i]}</span><span>${o.h}</span></button>`).join("")}</div>
+    </article>
+    <div class="navrow">
+      <button class="btn" data-act="eprev" ${S.i === 0 ? "disabled" : ""}>Précédente</button>
+      <button class="btn primary" data-act="enext" ${S.i === EXAM_N - 1 ? "disabled" : ""}>Suivante</button>
+    </div>
+    <div class="grid40" aria-label="Aller à une question">${S.q.map((k, i) => `<button class="${S.pick[i] !== null ? "done" : ""} ${i === S.i ? "cur" : ""}" data-act="ego" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join("")}</div>
+    ${S.finishAsk ? `<div class="confirm" style="margin-top:14px"><span>${EXAM_N - answered} question${EXAM_N - answered > 1 ? "s" : ""} sans réponse. Terminer quand même ?</span><button class="btn small primary" data-act="finish-yes">Terminer</button><button class="btn small" data-act="finish-no">Revenir</button></div>`
+      : `<button class="btn finish" data-act="finish">Terminer l’examen (${answered} / ${EXAM_N} répondues)</button>`}`;
+}
+function finishExam() {
+  if (!S || S.over) return;
+  S.over = true; clearInterval(tick);
+  const now = Date.now();
+  let score = 0;
+  S.q.forEach((k, i) => { const ok = S.pick[i] !== null && S.opts[i][S.pick[i]].ok; if (ok) score++; grade(k, ok, now); });
+  S.score = score; S.used = Math.min(EXAM_MS, now - S.start);
+  P.exams.unshift({ at: S.start, s: score, n: EXAM_N, d: S.used }); P.exams = P.exams.slice(0, 30);
+  touch(); renderExam();
+}
+function renderExamResult() {
+  const pass = S.score >= EXAM_PASS;
+  setBar("Examen blanc · résultat", "", 1);
+  const wrong = S.q.map((k, i) => ({ c: BY_K[k], i })).filter(x => !(S.pick[x.i] !== null && S.opts[x.i][S.pick[x.i]].ok));
+  $("#stage").innerHTML = `
+    <div class="panel result">
+      <div class="lbl">Votre score</div>
+      <div class="big">${S.score}<small> / ${EXAM_N}</small></div>
+      <div class="scale" role="img" aria-label="${S.score} sur ${EXAM_N}, seuil 32"><span class="fill" style="width:${100 * S.score / EXAM_N}%;background:${pass ? "var(--good)" : "var(--bad)"}"></span><span class="mark" style="left:${100 * EXAM_PASS / EXAM_N}%"></span></div>
+      <div class="scale-l"><span>0</span><span>seuil : 32</span><span>40</span></div>
+      <p style="margin:14px 0 0"><span class="pill ${pass ? "ok" : "ko"}">${pass ? "Réussi" : "Pas encore"}</span> · temps utilisé ${fmt(S.used)}</p>
+      <div class="row-btns"><button class="btn primary" data-act="start-exam">Nouvel examen blanc</button><button class="btn" data-act="home">Accueil</button></div>
+    </div>
+    ${wrong.length ? `<h2 class="sec">À retravailler (${wrong.length})</h2><div class="review">${wrong.map(({ c, i }) => {
+      const p = S.pick[i];
+      return `<div class="rv" style="--c:${tcol(c.t)}">${metaChip(c)}<div class="rq" style="margin-top:6px">${c.q}</div>
+        <div class="yours">${p === null ? "Pas de réponse" : "Votre réponse : " + S.opts[i][p].h}</div>
+        <div class="right">Bonne réponse : ${c.c}</div>${c.d ? `<div class="d">${c.d}</div>` : ""}<div>${refLine(c)}</div></div>`;
+    }).join("")}</div>` : `<p class="empty" style="text-align:center;margin-top:16px">Aucune erreur. Bravo !</p>`}`;
+}
+
+function renderDone(title, text, again) {
+  setBar(S.mode === "cards" ? scopeLabel(scope) : "Quiz · " + scopeLabel(scope), "", 1);
+  $("#stage").innerHTML = `<div class="panel done-card"><h2>${title}</h2><p class="lbl" style="font-size:15px;margin:0 auto;max-width:42ch">${text}</p>
+    <div class="row-btns"><button class="btn primary" data-act="${again}">Encore 20 questions</button><button class="btn" data-act="home">Accueil</button></div></div>`;
+}
+
+/* ---------- Actions ---------- */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  const a = b.dataset.act, i = +b.dataset.i;
+  switch (a) {
+    case "home": if (S && S.mode === "exam" && !S.over) { S.leave = true; renderExam(); } else goHome(); break;
+    case "leave-yes": goHome(); break;
+    case "leave-no": S.leave = false; renderExam(); break;
+    case "start-cards": startCards(); break;
+    case "start-quiz": startQuiz(); break;
+    case "start-exam": startExam(); break;
+    case "reveal": S.open = true; renderCards(); break;
+    case "know": cardAnswer(true); break;
+    case "again": cardAnswer(false); break;
+    case "choose": quizChoose(i); break;
+    case "qnext": S.i++; S.pick = null; renderQuiz(); break;
+    case "epick": S.pick[S.i] = i; S.finishAsk = false; renderExam(); break;
+    case "eprev": S.i = Math.max(0, S.i - 1); renderExam(); break;
+    case "enext": S.i = Math.min(EXAM_N - 1, S.i + 1); renderExam(); break;
+    case "ego": S.i = i; renderExam(); break;
+    case "finish": if (S.pick.some(x => x === null)) { S.finishAsk = true; renderExam(); } else finishExam(); break;
+    case "finish-yes": finishExam(); break;
+    case "finish-no": S.finishAsk = false; S.i = Math.max(0, S.pick.indexOf(null)); renderExam(); break;
+    case "speak": if (S) speak(plain(BY_K[S.q[S.i]].q)); break;
+    case "ask-reset": $("#resetZone").innerHTML = `<div class="confirm"><span>Effacer toute votre progression sur cet appareil ?</span><button class="btn small bad" data-act="reset-yes">Effacer</button><button class="btn small" data-act="reset-no">Annuler</button></div>`; break;
+    case "reset-no": $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; break;
+    case "reset-yes": { const t = Date.now(); P = empty(); P.reset = t; touch(); $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; refreshHome(); break; }
+  }
+});
+document.addEventListener("keydown", e => {
+  if (!S || e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (S.mode === "cards") {
+    if (!S.open && (e.key === " " || e.key === "Enter") && tag !== "button") { e.preventDefault(); S.open = true; renderCards(); }
+    else if (S.open && e.key === "1") cardAnswer(false);
+    else if (S.open && e.key === "2") cardAnswer(true);
+  } else if (S.mode === "quiz" && S.i < S.q.length) {
+    if (S.pick === null && /^[1-4]$/.test(e.key)) quizChoose(+e.key - 1);
+    else if (S.pick !== null && e.key === "Enter" && tag !== "button") { e.preventDefault(); S.i++; S.pick = null; renderQuiz(); }
+  } else if (S.mode === "exam" && !S.over) {
+    if (/^[1-4]$/.test(e.key)) { S.pick[S.i] = +e.key - 1; renderExam(); }
+    else if (e.key === "ArrowRight") { S.i = Math.min(EXAM_N - 1, S.i + 1); renderExam(); }
+    else if (e.key === "ArrowLeft") { S.i = Math.max(0, S.i - 1); renderExam(); }
+  }
+});
+
+/* ---------- Démarrage ---------- */
+refreshHome();
+window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS };
+})();
+</script>
+</body>
+</html>
