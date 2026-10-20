@@ -2,6 +2,7 @@
 // Usage : node scripts/build.mjs [--base-url https://exemple.com]
 import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
+import { createHash } from "node:crypto";
 import { ROOT, loadJSON, esc, typo, plain, detailHtml, questionSlugs } from "./lib.mjs";
 
 const data = loadJSON("data/questions.json");
@@ -46,12 +47,14 @@ for (const q of natQ) member.get(q.id).push({ code: "nat", theme: q.theme, numer
 for (const code of ["cr", "csp"]) for (const e of listes[code].questions) member.get(e.id).push({ code, theme: e.theme, numero: e.numero, texte: e.texte });
 
 const sitemap = [];
+// Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
+const V = createHash("sha256").update(readFileSync(join(ROOT, "src/site/site.css"))).update(readFileSync(join(ROOT, "src/site/coq.js"))).digest("hex").slice(0, 10);
 const SB = config.supabase || {};
 // Adresse email + progression en ligne + livret PDF : actifs si l'adresse et la clé publique Supabase sont renseignées.
 const SB_ON = Boolean(SB.url && SB.cle_publique && SB.actif !== false);
 const PDF_PATH = "/assets/coq-civique-examen-civique.pdf";
 const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), logo: href("/assets/icon-192.png"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
-<script src="${href("/assets/coq.js")}" defer></script>` : "";
+<script src="${href("/assets/coq.js")}?v=${V}" defer></script>` : "";
 
 function write(path, html) {
   const file = join(DIST, path.endsWith("/") ? path + "index.html" : path);
@@ -72,7 +75,7 @@ const crumbs = (items) => `<nav class="crumbs" aria-label="Fil d’Ariane"><ol>$
 const reportLink = (what, path) => `mailto:${esc(config.editeur.contact)}?subject=${encodeURIComponent(`Erreur signalée : ${what}`)}&body=${encodeURIComponent(`Page : ${abs(path)}\n\nCe qui me semble faux :\n`)}`;
 const mascotImg = (cls = "") => `<img class="${cls}" src="${href("/assets/mascotte-fin.jpg")}" width="480" height="480" alt="" loading="lazy">`;
 
-function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true, ogType = "website" }) {
+function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true, ogType = "website", wide = false }) {
   if (index && canonical === path && !path.endsWith(".html")) sitemap.push(path);
   const color = theme ? ` style="--c:var(--t${theme})"` : "";
   return `<!doctype html>
@@ -99,13 +102,13 @@ ${index ? "" : '<meta name="robots" content="noindex">\n'}<meta property="og:typ
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="${href("/assets/fonts/atkinson-400.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${href("/assets/fonts/fraunces-800.woff2")}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${href("/assets/site.css")}">
+<link rel="stylesheet" href="${href("/assets/site.css")}?v=${V}">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, "\\u003c")}</script>`).join("\n")}
 </head>
-<body${color}>
+<body${color}${wide ? ' class="home"' : ""}>
 <a class="skip" href="#contenu">Aller au contenu</a>
 <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
-<header class="wrap top">
+<header class="site-head"><div class="wrap wide top">
   <a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt="">${esc(NAME)}</a>
   <nav class="nav" aria-label="Navigation principale">
     <a class="hide-sm" href="${href("/questions/")}">Questions</a>
@@ -113,31 +116,39 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
     <a class="btn small" href="${href(PDF_PATH)}" data-pdf-link download>PDF</a>
     <a class="btn primary small" href="${href("/reviser/")}">Réviser</a>
   </nav>
-</header>
-<main id="contenu" class="wrap">
+</div></header>
+<main id="contenu" class="wrap${wide ? " wide" : ""}">
 ${body}
 </main>
-<footer class="wrap">
-  <div class="links">
-    <a href="${href("/questions/")}">Naturalisation</a>
-    <a href="${href(LIST.cr.path)}">Carte de résident</a>
-    <a href="${href(LIST.csp.path)}">Carte de séjour pluriannuelle</a>
-    <a href="${href("/reviser/")}">QCM et examen blanc</a>
-    <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
-    <a href="${href("/guide/")}">Guides</a>
-    <a href="${href("/a-propos/")}">À propos</a>
-    <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
-    <a href="${href("/mentions-legales/")}">Mentions légales et confidentialité</a>
+<footer class="site-foot"><div class="wrap wide">
+  <div class="fcols">
+    <div class="fbrand"><a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt="">${esc(NAME)}</a>
+      <p>Le QCM gratuit de l’examen civique, créé par Jovan pour se préparer en 7 jours, avec ses proches.</p></div>
+    <div><h3>Listes officielles</h3>
+      <a href="${href("/questions/")}">Naturalisation</a>
+      <a href="${href(LIST.cr.path)}">Carte de résident</a>
+      <a href="${href(LIST.csp.path)}">Carte de séjour pluriannuelle</a></div>
+    <div><h3>Réviser</h3>
+      <a href="${href("/reviser/")}">QCM et examen blanc</a>
+      <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
+      <a href="${href("/guide/")}">Guides</a>
+      <a href="${href(PDF_PATH)}" data-pdf-link download>Livret PDF</a></div>
+    <div><h3>Le site</h3>
+      <a href="${href("/a-propos/")}">À propos</a>
+      <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
+      <a href="${href("/mentions-legales/")}">Mentions légales et confidentialité</a>
+      <a href="mailto:${esc(config.editeur.contact)}">Contact</a></div>
   </div>
-  <p>${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : listes officielles des questions de connaissance (naturalisation, carte de résident, carte de séjour pluriannuelle). Réponses rédigées par ${esc(NAME)}, notamment d’après le Livret du citoyen (édition mai 2026).</p>
-</footer>
+  <p class="fnote">${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : listes officielles des questions de connaissance (naturalisation, carte de résident, carte de séjour pluriannuelle). Réponses rédigées par ${esc(NAME)}, notamment d’après le Livret du citoyen (édition mai 2026).</p>
+</div></footer>
 ${sbScripts()}
 </body>
 </html>
 `;
 }
 
-const listCards = (current = "") => `<div class="lists">${LISTS.map((l) => `<a class="list-card${l.code === current ? " on" : ""}" href="${href(l.path)}"><b>${esc(l.nom)}</b><span>${l.count}\u00a0questions</span><small>${esc(l.sous)}</small></a>`).join("")}</div>`;
+const LIST_COLOR = { nat: "var(--t1)", cr: "var(--red)", csp: "var(--t2)" };
+const listCards = (current = "") => `<div class="lists">${LISTS.map((l) => `<a class="list-card${l.code === current ? " on" : ""}" href="${href(l.path)}" style="--lc:${LIST_COLOR[l.code]}"><span class="lk">Liste officielle</span><b>${esc(l.nom)}</b><span class="num">${l.count}<small> questions</small></span><small>${esc(l.sous)}</small><span class="go">${l.code === current ? "Vous êtes ici" : "Voir les questions →"}</span></a>`).join("")}</div>`;
 
 /* ---------- Accueil ---------- */
 function home() {
@@ -155,15 +166,20 @@ function home() {
     ["Ce site est-il officiel ?", "Non. C’est un site indépendant et gratuit de révision, sans lien avec le ministère de l’Intérieur. L’inscription à l’examen se fait auprès d’un centre agréé."],
     ["Faut-il créer un compte ?", "Non. Il suffit d’indiquer votre adresse email, sans mot de passe : votre progression y est liée et vous la retrouvez sur votre téléphone comme sur votre ordinateur. La même adresse donne accès au livret PDF."],
   ];
+  const days = [["Principes et valeurs de la République", "/reviser/?theme=1"], ["Système institutionnel et politique", "/reviser/?theme=2"], ["Droits et devoirs", "/reviser/?theme=3"], ["Histoire, géographie et culture", "/reviser/?theme=4"], ["Vivre dans la société française", "/reviser/?theme=5"], ["Examens blancs et questions manquées", "/reviser/"], ["Dernier examen blanc et mises en situation", "/guide/mises-en-situation-examen-civique/"]];
+  const CHECK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
   const body = `
-<section class="hero hero-m">
-  <div class="hero-text">
-  <div class="eyebrow">Examen civique 2026 · listes officielles</div>
-  <h1>Examen civique : QCM gratuit, questions et réponses</h1>
-  <p class="lead">Les questions officielles de l’examen civique pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle, avec une réponse claire pour chacune. Révisez avec des cartes, des quiz et des examens blancs chronométrés.</p>
-  <div class="ctas"><a class="btn primary" href="${href("/reviser/")}">Commencer le QCM</a><a class="btn" href="${href("/preparer-examen-civique-en-7-jours/")}">Mon plan en 7 jours</a></div>
+<section class="band band-hero">
+  <div class="hero hero-m">
+    <div class="hero-text">
+      <div class="eyebrow">Examen civique 2026 · listes officielles</div>
+      <h1>${typo("Examen civique : QCM gratuit, questions et réponses")}</h1>
+      <p class="lead">Les questions officielles de l’examen civique pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle, avec une réponse claire pour chacune.</p>
+      <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}">Commencer le QCM</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}">Mon plan en 7 jours</a></div>
+      <ul class="trust"><li>${CHECK}Gratuit</li><li>${CHECK}Sans mot de passe</li><li>${CHECK}Listes officielles 2026</li></ul>
+    </div>
+    <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
   </div>
-  <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
   <script>(function(){var v=document.querySelector(".mascot video");if(!v)return;var end=${JSON.stringify(href("/assets/mascotte-fin.jpg"))};function still(){v.removeAttribute("src");v.poster=end;v.querySelectorAll("source").forEach(function(s){s.remove()});v.load();}if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){still();return;}var p=v.play();if(p&&p.catch)p.catch(still);})();</script>
   <div class="facts">
     <div class="fact"><b>40</b><span>questions à l’examen</span></div>
@@ -172,47 +188,66 @@ function home() {
     <div class="fact"><b>3</b><span>listes officielles</span></div>
   </div>
 </section>
-<section class="block"><h2>Choisissez votre liste</h2>
-<p class="sub">Les questions de connaissance de l’examen sont tirées de la liste officielle de votre démarche.</p>
-${listCards()}
+
+<section class="band alt" id="listes">
+  <div class="shead"><div class="eyebrow">Votre démarche</div><h2>Choisissez votre liste</h2>
+  <p>Les 28 questions de connaissance de l’examen sont tirées de la liste officielle de votre démarche. Beaucoup de questions sont communes aux trois listes.</p></div>
+  ${listCards()}
 </section>
-<section class="block story">
-  ${mascotImg("story-img")}
-  <div><h2>Pourquoi j’ai créé Coq Civique</h2>
-  <p>Je m’appelle Jovan. Comme vous, je dois passer l’examen civique. Quand j’ai ouvert la liste officielle, j’ai trouvé des centaines de questions… et aucune réponse. Je voulais être prêt en 7 jours, et aider mes proches qui devaient le passer eux aussi.</p>
-  <p>Alors j’ai rédigé une réponse claire pour chaque question, puis j’ai construit l’outil dont nous avions besoin : des cartes qui reviennent quand on se trompe, des quiz comme le jour de l’examen et des examens blancs chronométrés. Le voici, gratuit, pour vous aussi.</p>
-  <p class="sign">— Jovan, créateur de ${esc(NAME)} · <a href="${href("/a-propos/")}">Lire l’histoire</a></p></div>
-</section>
-<section class="block"><h2>Prêt en 7 jours</h2>
-  <ol class="plan7">
-    <li><b>Jour 1</b> Principes et valeurs de la République</li>
-    <li><b>Jour 2</b> Système institutionnel et politique</li>
-    <li><b>Jour 3</b> Droits et devoirs</li>
-    <li><b>Jour 4</b> Histoire, géographie et culture</li>
-    <li><b>Jour 5</b> Vivre dans la société française</li>
-    <li><b>Jour 6</b> Examens blancs et questions manquées</li>
-    <li><b>Jour 7</b> Dernier examen blanc et mises en situation</li>
-  </ol>
-  <p style="margin-top:14px"><a class="btn primary" href="${href("/preparer-examen-civique-en-7-jours/")}">Voir le plan jour par jour</a></p>
-</section>
-<section class="block"><h2>Les 5 thèmes de l’examen</h2><p class="sub">Liste « naturalisation » ; les listes carte de résident et carte de séjour pluriannuelle suivent les mêmes thèmes.</p><div class="themes">${rows}</div></section>
-<section class="block"><h2>Trois façons de réviser</h2>
-  <div class="modes">
-    <div><h3>Cartes</h3><p>Lisez la question, retrouvez la réponse, dites si vous la saviez. Les questions manquées reviennent plus souvent.</p></div>
-    <div><h3>Quiz QCM</h3><p>Quatre propositions et une seule bonne réponse, comme le jour de l’examen, avec l’explication après chaque question.</p></div>
-    <div><h3>Examen blanc</h3><p>40 questions des 5 thèmes en 45 minutes. Votre score, et la liste des questions à retravailler.</p></div>
+
+<section class="band">
+  <div class="story">
+    ${mascotImg("story-img")}
+    <div>
+      <div class="eyebrow">Notre histoire</div>
+      <h2>Pourquoi j’ai créé Coq Civique</h2>
+      <p>Je m’appelle Jovan. Comme vous, je dois passer l’examen civique. Quand j’ai ouvert la liste officielle, j’ai trouvé des centaines de questions… et aucune réponse. Je voulais être prêt en 7 jours, et aider mes proches qui devaient le passer eux aussi.</p>
+      <p>Alors j’ai rédigé une réponse claire pour chaque question, puis j’ai construit l’outil dont nous avions besoin. Le voici, gratuit, pour vous aussi.</p>
+      <p class="sign">— Jovan, créateur de ${esc(NAME)}</p>
+      <a class="btn" href="${href("/a-propos/")}">Lire l’histoire</a>
+    </div>
   </div>
-  <p style="margin-top:16px"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant</a></p>
 </section>
-<section class="block pdf" id="pdf">
-  <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
-  <div><h2>Le livret de révision en PDF</h2>
-  <p class="pdf-lead">Les ${TOTAL} questions de la liste « naturalisation » et leurs réponses sur 27 pages A4, à imprimer : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
-  <p><a class="btn primary" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF (27 pages)</a></p>
-  <p class="pdf-note">Gratuit : il suffit d’indiquer votre adresse email.</p></div>
+
+<section class="band alt">
+  <div class="shead"><div class="eyebrow">La méthode</div><h2>Prêt en 7 jours</h2>
+  <p>Un thème par jour pendant cinq jours, puis deux jours en conditions réelles. Comptez 45 minutes à une heure par jour.</p></div>
+  <ol class="plan7">${days.map(([t, u], i) => `<li><a href="${href(u)}"><span class="d">Jour ${i + 1}</span><span class="t">${typo(t)}</span></a></li>`).join("")}</ol>
+  <p class="more"><a class="btn primary" href="${href("/preparer-examen-civique-en-7-jours/")}">Voir le plan jour par jour</a></p>
 </section>
-<section class="block faq"><h2>Questions fréquentes</h2>
+
+<section class="band">
+  <div class="shead"><div class="eyebrow">Le programme</div><h2>Les 5 thèmes de l’examen</h2>
+  <p>Les trois listes suivent les mêmes thèmes. Exemples tirés de la liste « naturalisation ».</p></div>
+  <div class="themes">${rows}</div>
+</section>
+
+<section class="band alt">
+  <div class="shead"><div class="eyebrow">L’entraînement</div><h2>Trois façons de réviser</h2>
+  <p>Votre progression est enregistrée : les questions que vous ne savez pas encore reviennent plus souvent.</p></div>
+  <div class="modes">
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span><h3>Cartes</h3><p>Lisez la question, retrouvez la réponse, dites si vous la saviez. Les questions manquées reviennent plus souvent.</p></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><h3>Quiz QCM</h3><p>Quatre propositions et une seule bonne réponse, comme le jour de l’examen, avec l’explication après chaque question.</p></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>Examen blanc</h3><p>40 questions des 5 thèmes en 45 minutes. Votre score, et la liste des questions à retravailler.</p></div>
+  </div>
+  <p class="more"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant</a></p>
+</section>
+
+<section class="band" id="pdf">
+  <div class="pdf">
+    <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
+    <div><div class="eyebrow">À imprimer</div><h2>Le livret de révision en PDF</h2>
+    <p class="pdf-lead">Les ${TOTAL} questions de la liste « naturalisation » et leurs réponses sur 27 pages A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
+    <p><a class="btn primary" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF (27 pages)</a></p>
+    <p class="pdf-note">${typo("Gratuit : il suffit d’indiquer votre adresse email.")}</p></div>
+  </div>
+</section>
+
+<section class="band alt faq">
+  <div class="shead"><div class="eyebrow">FAQ</div><h2>Questions fréquentes</h2></div>
+  <div class="faq-list">
 ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></details>`).join("\n")}
+  </div>
 </section>`;
   const ld = [
     { "@context": "https://schema.org", "@type": "WebSite", name: NAME, url: abs("/"), inLanguage: "fr" },
@@ -221,7 +256,7 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   write("/", layout({
     title: `Examen civique 2026 : QCM gratuit, questions officielles et réponses | ${NAME}`,
     description: `QCM gratuit de l’examen civique : les questions officielles (naturalisation, carte de résident, carte de séjour pluriannuelle) avec leurs réponses, examens blancs et livret PDF.`,
-    path: "/", body, jsonld: ld,
+    path: "/", body, jsonld: ld, wide: true,
   }));
 }
 
@@ -238,7 +273,7 @@ function questionsIndex() {
     title: `Examen civique naturalisation : les ${TOTAL} questions et réponses (QCM) | ${NAME}`,
     description: `La liste officielle des ${TOTAL} questions de connaissance de l’examen civique pour la naturalisation, classées par thème, avec leurs réponses et un QCM gratuit.`,
     path: "/questions/", jsonld: [breadcrumbLd(items)],
-    body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">Examen civique naturalisation : les ${TOTAL} questions</h1>
+    body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Examen civique naturalisation : les ${TOTAL} questions`)}</h1>
 <p class="lead">La liste officielle des questions de connaissance pour la naturalisation (publiée le 12 décembre 2025), dans l’ordre de la liste, avec un lien vers chaque réponse.</p>
 <div class="cta"><p>Révisez cette liste avec des cartes, un QCM et des examens blancs de 40 questions.</p><a class="btn primary" href="${href("/reviser/?liste=nat")}">QCM naturalisation</a></div>
 <h2 class="sr-title">Autres listes</h2>${listCards("nat")}
@@ -266,7 +301,7 @@ function listPage(code) {
     description: clip(`Les ${info.count} questions officielles de l’examen civique pour la ${longName}, avec leurs réponses, classées par thème. QCM et examen blanc gratuits.`),
     path: info.path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="eyebrow">Liste officielle · ${esc(info.court)}</div>
-<h1 style="font-size:clamp(28px,6vw,40px)">Examen civique ${esc(longName)} : les ${info.count} questions et réponses</h1>
+<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Examen civique ${longName} : les ${info.count} questions et réponses`)}</h1>
 <p class="lead">La liste officielle des questions de connaissance pour une ${esc(code === "csp" ? "première carte de séjour pluriannuelle" : "première carte de résident")}, dans l’ordre publié par le ministère de l’Intérieur, avec une réponse courte pour chacune. ${common} de ces questions figurent aussi dans la liste « naturalisation ».</p>
 <div class="cta"><p>À l’examen : 40 questions en 45 minutes, dont 28 questions de connaissance tirées de cette liste et 12 mises en situation. Il faut 32 bonnes réponses.</p><a class="btn primary" href="${href(`/reviser/?liste=${code}`)}">QCM ${esc(info.court)}</a></div>
 ${listCards(code)}
