@@ -1,0 +1,2082 @@
+{
+  "csp": {
+    "nom": "Carte de séjour pluriannuelle",
+    "court": "CSP",
+    "slug": "carte-de-sejour-pluriannuelle",
+    "source": "formation-civique.interieur.gouv.fr, liste officielle des questions de connaissance (relevé du 21 octobre 2026)",
+    "questions": [
+      {
+        "theme": 1,
+        "numero": 1,
+        "id": "csp-1-1"
+      },
+      {
+        "theme": 1,
+        "numero": 2,
+        "id": "1-8",
+        "texte": "Quel est l'un des symboles de la République française ?"
+      },
+      {
+        "theme": 1,
+        "numero": 3,
+        "id": "1-22",
+        "texte": "Le principe d'égalité signifie que :"
+      },
+      {
+        "theme": 1,
+        "numero": 4,
+        "id": "csp-1-4"
+      },
+      {
+        "theme": 1,
+        "numero": 5,
+        "id": "csp-1-5"
+      },
+      {
+        "theme": 1,
+        "numero": 6,
+        "id": "csp-1-6"
+      },
+      {
+        "theme": 1,
+        "numero": 7,
+        "id": "csp-1-7"
+      },
+      {
+        "theme": 1,
+        "numero": 8,
+        "id": "csp-1-8"
+      },
+      {
+        "theme": 1,
+        "numero": 9,
+        "id": "1-8",
+        "texte": "Lequel de ces symboles représente officiellement la République française ?"
+      },
+      {
+        "theme": 1,
+        "numero": 10,
+        "id": "1-9"
+      },
+      {
+        "theme": 1,
+        "numero": 11,
+        "id": "1-10",
+        "texte": "Quels sont des symboles officiels de la République française ?"
+      },
+      {
+        "theme": 1,
+        "numero": 12,
+        "id": "1-22",
+        "texte": "Qu'est-ce que l'égalité ?"
+      },
+      {
+        "theme": 1,
+        "numero": 13,
+        "id": "1-19",
+        "texte": "Que signifie la liberté ?"
+      },
+      {
+        "theme": 1,
+        "numero": 14,
+        "id": "1-15"
+      },
+      {
+        "theme": 1,
+        "numero": 15,
+        "id": "csp-1-15"
+      },
+      {
+        "theme": 1,
+        "numero": 16,
+        "id": "csp-1-16"
+      },
+      {
+        "theme": 1,
+        "numero": 17,
+        "id": "csp-1-17"
+      },
+      {
+        "theme": 1,
+        "numero": 18,
+        "id": "csp-1-18"
+      },
+      {
+        "theme": 1,
+        "numero": 19,
+        "id": "csp-1-19"
+      },
+      {
+        "theme": 1,
+        "numero": 20,
+        "id": "1-17"
+      },
+      {
+        "theme": 1,
+        "numero": 21,
+        "id": "csp-1-21"
+      },
+      {
+        "theme": 1,
+        "numero": 22,
+        "id": "csp-1-22"
+      },
+      {
+        "theme": 1,
+        "numero": 23,
+        "id": "csp-1-23"
+      },
+      {
+        "theme": 1,
+        "numero": 24,
+        "id": "3-14",
+        "texte": "Quelle proposition est correcte ? La liberté d'expression :"
+      },
+      {
+        "theme": 1,
+        "numero": 25,
+        "id": "csp-1-25"
+      },
+      {
+        "theme": 1,
+        "numero": 26,
+        "id": "csp-1-26"
+      },
+      {
+        "theme": 1,
+        "numero": 27,
+        "id": "csp-1-27"
+      },
+      {
+        "theme": 1,
+        "numero": 28,
+        "id": "csp-1-28"
+      },
+      {
+        "theme": 1,
+        "numero": 29,
+        "id": "1-23",
+        "texte": "Une personne peut-elle changer librement de religion ?"
+      },
+      {
+        "theme": 1,
+        "numero": 30,
+        "id": "csp-1-30"
+      },
+      {
+        "theme": 1,
+        "numero": 31,
+        "id": "1-27"
+      },
+      {
+        "theme": 1,
+        "numero": 32,
+        "id": "1-29",
+        "texte": "Que permet le principe de laïcité ?"
+      },
+      {
+        "theme": 1,
+        "numero": 33,
+        "id": "1-29",
+        "texte": "Quel droit est garanti par la laïcité ?"
+      },
+      {
+        "theme": 1,
+        "numero": 34,
+        "id": "csp-1-34"
+      },
+      {
+        "theme": 1,
+        "numero": 35,
+        "id": "1-35"
+      },
+      {
+        "theme": 1,
+        "numero": 36,
+        "id": "csp-1-36"
+      },
+      {
+        "theme": 1,
+        "numero": 37,
+        "id": "csp-1-37"
+      },
+      {
+        "theme": 2,
+        "numero": 1,
+        "id": "csp-2-1"
+      },
+      {
+        "theme": 2,
+        "numero": 2,
+        "id": "csp-2-2"
+      },
+      {
+        "theme": 2,
+        "numero": 3,
+        "id": "csp-2-3"
+      },
+      {
+        "theme": 2,
+        "numero": 4,
+        "id": "csp-2-4"
+      },
+      {
+        "theme": 2,
+        "numero": 5,
+        "id": "2-14"
+      },
+      {
+        "theme": 2,
+        "numero": 6,
+        "id": "csp-2-6"
+      },
+      {
+        "theme": 2,
+        "numero": 7,
+        "id": "csp-2-7"
+      },
+      {
+        "theme": 2,
+        "numero": 8,
+        "id": "csp-2-8"
+      },
+      {
+        "theme": 2,
+        "numero": 9,
+        "id": "csp-2-9"
+      },
+      {
+        "theme": 2,
+        "numero": 10,
+        "id": "csp-2-10"
+      },
+      {
+        "theme": 2,
+        "numero": 11,
+        "id": "2-20"
+      },
+      {
+        "theme": 2,
+        "numero": 12,
+        "id": "csp-2-12"
+      },
+      {
+        "theme": 2,
+        "numero": 13,
+        "id": "csp-2-13"
+      },
+      {
+        "theme": 2,
+        "numero": 14,
+        "id": "2-4"
+      },
+      {
+        "theme": 2,
+        "numero": 15,
+        "id": "csp-2-15"
+      },
+      {
+        "theme": 2,
+        "numero": 16,
+        "id": "csp-2-16"
+      },
+      {
+        "theme": 2,
+        "numero": 17,
+        "id": "csp-2-17"
+      },
+      {
+        "theme": 2,
+        "numero": 18,
+        "id": "csp-2-18"
+      },
+      {
+        "theme": 2,
+        "numero": 19,
+        "id": "csp-2-19"
+      },
+      {
+        "theme": 2,
+        "numero": 20,
+        "id": "csp-2-20"
+      },
+      {
+        "theme": 2,
+        "numero": 21,
+        "id": "2-6",
+        "texte": "Quelle condition est nécessaire pour voter aux élections ?"
+      },
+      {
+        "theme": 2,
+        "numero": 22,
+        "id": "csp-2-22"
+      },
+      {
+        "theme": 2,
+        "numero": 23,
+        "id": "csp-2-23"
+      },
+      {
+        "theme": 2,
+        "numero": 24,
+        "id": "csp-2-24"
+      },
+      {
+        "theme": 2,
+        "numero": 25,
+        "id": "csp-2-25"
+      },
+      {
+        "theme": 2,
+        "numero": 26,
+        "id": "2-17"
+      },
+      {
+        "theme": 2,
+        "numero": 27,
+        "id": "csp-2-27"
+      },
+      {
+        "theme": 2,
+        "numero": 28,
+        "id": "2-26"
+      },
+      {
+        "theme": 2,
+        "numero": 29,
+        "id": "csp-2-29"
+      },
+      {
+        "theme": 2,
+        "numero": 30,
+        "id": "2-16"
+      },
+      {
+        "theme": 2,
+        "numero": 31,
+        "id": "csp-2-31"
+      },
+      {
+        "theme": 2,
+        "numero": 32,
+        "id": "2-35"
+      },
+      {
+        "theme": 2,
+        "numero": 33,
+        "id": "2-37"
+      },
+      {
+        "theme": 2,
+        "numero": 34,
+        "id": "csp-2-34"
+      },
+      {
+        "theme": 2,
+        "numero": 35,
+        "id": "csp-2-35"
+      },
+      {
+        "theme": 2,
+        "numero": 36,
+        "id": "csp-2-36"
+      },
+      {
+        "theme": 2,
+        "numero": 37,
+        "id": "csp-2-37"
+      },
+      {
+        "theme": 2,
+        "numero": 38,
+        "id": "csp-1-8",
+        "texte": "Quel est le régime politique de la France aujourd'hui ?"
+      },
+      {
+        "theme": 2,
+        "numero": 39,
+        "id": "2-49"
+      },
+      {
+        "theme": 2,
+        "numero": 40,
+        "id": "csp-2-40"
+      },
+      {
+        "theme": 2,
+        "numero": 41,
+        "id": "csp-2-41"
+      },
+      {
+        "theme": 2,
+        "numero": 42,
+        "id": "csp-2-42"
+      },
+      {
+        "theme": 2,
+        "numero": 43,
+        "id": "4-6",
+        "texte": "Quel pays est un pays fondateur de l'Union européenne ?"
+      },
+      {
+        "theme": 2,
+        "numero": 44,
+        "id": "csp-2-44"
+      },
+      {
+        "theme": 2,
+        "numero": 45,
+        "id": "2-56"
+      },
+      {
+        "theme": 2,
+        "numero": 46,
+        "id": "2-44",
+        "texte": "Quand célèbre-t-on la journée de l'Europe ?"
+      },
+      {
+        "theme": 3,
+        "numero": 1,
+        "id": "csp-3-1"
+      },
+      {
+        "theme": 3,
+        "numero": 2,
+        "id": "csp-3-2"
+      },
+      {
+        "theme": 3,
+        "numero": 3,
+        "id": "csp-3-3"
+      },
+      {
+        "theme": 3,
+        "numero": 4,
+        "id": "csp-3-4"
+      },
+      {
+        "theme": 3,
+        "numero": 5,
+        "id": "csp-3-5"
+      },
+      {
+        "theme": 3,
+        "numero": 6,
+        "id": "csp-3-6"
+      },
+      {
+        "theme": 3,
+        "numero": 7,
+        "id": "3-14"
+      },
+      {
+        "theme": 3,
+        "numero": 8,
+        "id": "csp-3-8"
+      },
+      {
+        "theme": 3,
+        "numero": 9,
+        "id": "3-11",
+        "texte": "Quel est le texte fondateur établissant en France les droits et les devoirs de chaque citoyen ?"
+      },
+      {
+        "theme": 3,
+        "numero": 10,
+        "id": "csp-3-10"
+      },
+      {
+        "theme": 3,
+        "numero": 11,
+        "id": "csp-3-11"
+      },
+      {
+        "theme": 3,
+        "numero": 12,
+        "id": "csp-3-12"
+      },
+      {
+        "theme": 3,
+        "numero": 13,
+        "id": "csp-3-13"
+      },
+      {
+        "theme": 3,
+        "numero": 14,
+        "id": "csp-3-14"
+      },
+      {
+        "theme": 3,
+        "numero": 15,
+        "id": "csp-3-15"
+      },
+      {
+        "theme": 3,
+        "numero": 16,
+        "id": "3-21",
+        "texte": "En France, est-ce légal d'être marié à plusieurs personnes en même temps ?"
+      },
+      {
+        "theme": 3,
+        "numero": 17,
+        "id": "csp-3-17"
+      },
+      {
+        "theme": 3,
+        "numero": 18,
+        "id": "csp-3-18"
+      },
+      {
+        "theme": 3,
+        "numero": 19,
+        "id": "csp-3-19"
+      },
+      {
+        "theme": 3,
+        "numero": 20,
+        "id": "csp-3-20"
+      },
+      {
+        "theme": 3,
+        "numero": 21,
+        "id": "csp-3-21"
+      },
+      {
+        "theme": 3,
+        "numero": 22,
+        "id": "csp-3-22"
+      },
+      {
+        "theme": 3,
+        "numero": 23,
+        "id": "csp-3-23"
+      },
+      {
+        "theme": 3,
+        "numero": 24,
+        "id": "csp-3-24"
+      },
+      {
+        "theme": 3,
+        "numero": 25,
+        "id": "csp-3-25"
+      },
+      {
+        "theme": 3,
+        "numero": 26,
+        "id": "csp-3-26"
+      },
+      {
+        "theme": 3,
+        "numero": 27,
+        "id": "csp-3-27"
+      },
+      {
+        "theme": 3,
+        "numero": 28,
+        "id": "csp-3-28"
+      },
+      {
+        "theme": 3,
+        "numero": 29,
+        "id": "csp-3-29"
+      },
+      {
+        "theme": 3,
+        "numero": 30,
+        "id": "3-33"
+      },
+      {
+        "theme": 4,
+        "numero": 1,
+        "id": "4-11"
+      },
+      {
+        "theme": 4,
+        "numero": 2,
+        "id": "csp-4-2"
+      },
+      {
+        "theme": 4,
+        "numero": 3,
+        "id": "csp-4-3"
+      },
+      {
+        "theme": 4,
+        "numero": 4,
+        "id": "csp-4-4"
+      },
+      {
+        "theme": 4,
+        "numero": 5,
+        "id": "4-15"
+      },
+      {
+        "theme": 4,
+        "numero": 6,
+        "id": "4-16",
+        "texte": "Quel pays ou région du monde a été colonisé par la France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 7,
+        "id": "4-17"
+      },
+      {
+        "theme": 4,
+        "numero": 8,
+        "id": "4-20"
+      },
+      {
+        "theme": 4,
+        "numero": 9,
+        "id": "4-21"
+      },
+      {
+        "theme": 4,
+        "numero": 10,
+        "id": "csp-4-10"
+      },
+      {
+        "theme": 4,
+        "numero": 11,
+        "id": "4-26"
+      },
+      {
+        "theme": 4,
+        "numero": 12,
+        "id": "csp-4-12"
+      },
+      {
+        "theme": 4,
+        "numero": 13,
+        "id": "4-27",
+        "texte": "En quelle année l'esclavage a-t-il été aboli définitivement en France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 14,
+        "id": "4-29"
+      },
+      {
+        "theme": 4,
+        "numero": 15,
+        "id": "csp-4-15"
+      },
+      {
+        "theme": 4,
+        "numero": 16,
+        "id": "4-10",
+        "texte": "Qui était le roi de France au moment de la Révolution française ?"
+      },
+      {
+        "theme": 4,
+        "numero": 17,
+        "id": "csp-4-17"
+      },
+      {
+        "theme": 4,
+        "numero": 18,
+        "id": "csp-4-18"
+      },
+      {
+        "theme": 4,
+        "numero": 19,
+        "id": "csp-4-19"
+      },
+      {
+        "theme": 4,
+        "numero": 20,
+        "id": "4-5"
+      },
+      {
+        "theme": 4,
+        "numero": 21,
+        "id": "csp-4-21"
+      },
+      {
+        "theme": 4,
+        "numero": 22,
+        "id": "csp-4-22"
+      },
+      {
+        "theme": 4,
+        "numero": 23,
+        "id": "csp-4-23"
+      },
+      {
+        "theme": 4,
+        "numero": 24,
+        "id": "csp-4-24"
+      },
+      {
+        "theme": 4,
+        "numero": 25,
+        "id": "csp-4-25"
+      },
+      {
+        "theme": 4,
+        "numero": 26,
+        "id": "csp-4-26"
+      },
+      {
+        "theme": 4,
+        "numero": 27,
+        "id": "4-71"
+      },
+      {
+        "theme": 4,
+        "numero": 28,
+        "id": "4-75"
+      },
+      {
+        "theme": 4,
+        "numero": 29,
+        "id": "4-74",
+        "texte": "Quelle ville est un grand port maritime ?"
+      },
+      {
+        "theme": 4,
+        "numero": 30,
+        "id": "csp-4-30"
+      },
+      {
+        "theme": 4,
+        "numero": 31,
+        "id": "csp-4-31"
+      },
+      {
+        "theme": 4,
+        "numero": 32,
+        "id": "csp-4-32"
+      },
+      {
+        "theme": 4,
+        "numero": 33,
+        "id": "4-49"
+      },
+      {
+        "theme": 4,
+        "numero": 34,
+        "id": "4-50"
+      },
+      {
+        "theme": 4,
+        "numero": 35,
+        "id": "4-51"
+      },
+      {
+        "theme": 4,
+        "numero": 36,
+        "id": "4-52"
+      },
+      {
+        "theme": 4,
+        "numero": 37,
+        "id": "4-53"
+      },
+      {
+        "theme": 4,
+        "numero": 38,
+        "id": "4-54"
+      },
+      {
+        "theme": 4,
+        "numero": 39,
+        "id": "4-56"
+      },
+      {
+        "theme": 4,
+        "numero": 40,
+        "id": "csp-4-40"
+      },
+      {
+        "theme": 4,
+        "numero": 41,
+        "id": "csp-4-41"
+      },
+      {
+        "theme": 4,
+        "numero": 42,
+        "id": "csp-4-42"
+      },
+      {
+        "theme": 4,
+        "numero": 43,
+        "id": "csp-4-43"
+      },
+      {
+        "theme": 4,
+        "numero": 44,
+        "id": "csp-4-44"
+      },
+      {
+        "theme": 4,
+        "numero": 45,
+        "id": "csp-4-45"
+      },
+      {
+        "theme": 4,
+        "numero": 46,
+        "id": "csp-4-46"
+      },
+      {
+        "theme": 4,
+        "numero": 47,
+        "id": "csp-4-47"
+      },
+      {
+        "theme": 5,
+        "numero": 1,
+        "id": "5-9"
+      },
+      {
+        "theme": 5,
+        "numero": 2,
+        "id": "csp-5-2"
+      },
+      {
+        "theme": 5,
+        "numero": 3,
+        "id": "csp-5-3"
+      },
+      {
+        "theme": 5,
+        "numero": 4,
+        "id": "csp-5-4"
+      },
+      {
+        "theme": 5,
+        "numero": 5,
+        "id": "5-7",
+        "texte": "Quand faut-il déclarer son enfant au service d'état civil de la mairie ?"
+      },
+      {
+        "theme": 5,
+        "numero": 6,
+        "id": "5-22",
+        "texte": "Le travail non déclaré est :"
+      },
+      {
+        "theme": 5,
+        "numero": 7,
+        "id": "csp-5-7"
+      },
+      {
+        "theme": 5,
+        "numero": 8,
+        "id": "5-23"
+      },
+      {
+        "theme": 5,
+        "numero": 9,
+        "id": "5-24"
+      },
+      {
+        "theme": 5,
+        "numero": 10,
+        "id": "5-25"
+      },
+      {
+        "theme": 5,
+        "numero": 11,
+        "id": "csp-5-11"
+      },
+      {
+        "theme": 5,
+        "numero": 12,
+        "id": "5-27"
+      },
+      {
+        "theme": 5,
+        "numero": 13,
+        "id": "5-28"
+      },
+      {
+        "theme": 5,
+        "numero": 14,
+        "id": "csp-5-14"
+      },
+      {
+        "theme": 5,
+        "numero": 15,
+        "id": "5-14"
+      },
+      {
+        "theme": 5,
+        "numero": 16,
+        "id": "csp-5-16"
+      },
+      {
+        "theme": 5,
+        "numero": 17,
+        "id": "csp-5-17"
+      },
+      {
+        "theme": 5,
+        "numero": 18,
+        "id": "csp-5-18"
+      },
+      {
+        "theme": 5,
+        "numero": 19,
+        "id": "csp-5-19"
+      },
+      {
+        "theme": 5,
+        "numero": 20,
+        "id": "csp-5-20"
+      },
+      {
+        "theme": 5,
+        "numero": 21,
+        "id": "csp-5-21"
+      },
+      {
+        "theme": 5,
+        "numero": 22,
+        "id": "5-17"
+      },
+      {
+        "theme": 5,
+        "numero": 23,
+        "id": "5-18"
+      },
+      {
+        "theme": 5,
+        "numero": 24,
+        "id": "5-37"
+      },
+      {
+        "theme": 5,
+        "numero": 25,
+        "id": "csp-5-25"
+      },
+      {
+        "theme": 5,
+        "numero": 26,
+        "id": "csp-5-26"
+      },
+      {
+        "theme": 5,
+        "numero": 27,
+        "id": "csp-5-27"
+      },
+      {
+        "theme": 5,
+        "numero": 28,
+        "id": "5-39",
+        "texte": "Dans quels établissements scolaires vont les élèves après l'école élémentaire ?"
+      },
+      {
+        "theme": 5,
+        "numero": 29,
+        "id": "csp-5-26"
+      },
+      {
+        "theme": 5,
+        "numero": 30,
+        "id": "csp-5-30"
+      },
+      {
+        "theme": 5,
+        "numero": 31,
+        "id": "5-41",
+        "texte": "Les enfants qui ne parlent pas français :"
+      }
+    ]
+  },
+  "cr": {
+    "nom": "Carte de résident",
+    "court": "CR",
+    "slug": "carte-de-resident",
+    "source": "formation-civique.interieur.gouv.fr, liste officielle des questions de connaissance (relevé du 21 octobre 2026)",
+    "questions": [
+      {
+        "theme": 1,
+        "numero": 1,
+        "id": "cr-1-1"
+      },
+      {
+        "theme": 1,
+        "numero": 2,
+        "id": "3-14",
+        "texte": "Que garantit la liberté d'expression ?"
+      },
+      {
+        "theme": 1,
+        "numero": 3,
+        "id": "cr-1-3"
+      },
+      {
+        "theme": 1,
+        "numero": 4,
+        "id": "3-7",
+        "texte": "La liberté de circulation permet à toute personne de :"
+      },
+      {
+        "theme": 1,
+        "numero": 5,
+        "id": "cr-1-5"
+      },
+      {
+        "theme": 1,
+        "numero": 6,
+        "id": "cr-1-6"
+      },
+      {
+        "theme": 1,
+        "numero": 7,
+        "id": "1-1"
+      },
+      {
+        "theme": 1,
+        "numero": 8,
+        "id": "cr-1-8"
+      },
+      {
+        "theme": 1,
+        "numero": 9,
+        "id": "cr-1-9"
+      },
+      {
+        "theme": 1,
+        "numero": 10,
+        "id": "cr-1-10"
+      },
+      {
+        "theme": 1,
+        "numero": 11,
+        "id": "1-17",
+        "texte": "Quelle est la devise de la France ?"
+      },
+      {
+        "theme": 1,
+        "numero": 12,
+        "id": "cr-1-12"
+      },
+      {
+        "theme": 1,
+        "numero": 13,
+        "id": "1-4",
+        "texte": "Les impôts permettent de financer les dépenses publiques. Quelle proposition est correcte ?"
+      },
+      {
+        "theme": 1,
+        "numero": 14,
+        "id": "1-11"
+      },
+      {
+        "theme": 1,
+        "numero": 15,
+        "id": "cr-1-15"
+      },
+      {
+        "theme": 1,
+        "numero": 16,
+        "id": "csp-1-28",
+        "texte": "Que représente Marianne ?"
+      },
+      {
+        "theme": 1,
+        "numero": 17,
+        "id": "1-18"
+      },
+      {
+        "theme": 1,
+        "numero": 18,
+        "id": "1-19",
+        "texte": "Qu'est-ce que la liberté ?"
+      },
+      {
+        "theme": 1,
+        "numero": 19,
+        "id": "csp-1-26"
+      },
+      {
+        "theme": 1,
+        "numero": 20,
+        "id": "1-21"
+      },
+      {
+        "theme": 1,
+        "numero": 21,
+        "id": "cr-1-21"
+      },
+      {
+        "theme": 1,
+        "numero": 22,
+        "id": "1-22"
+      },
+      {
+        "theme": 1,
+        "numero": 23,
+        "id": "csp-1-22"
+      },
+      {
+        "theme": 1,
+        "numero": 24,
+        "id": "1-10",
+        "texte": "Quels sont des symboles officiels de la République française ?"
+      },
+      {
+        "theme": 1,
+        "numero": 25,
+        "id": "csp-1-5"
+      },
+      {
+        "theme": 1,
+        "numero": 26,
+        "id": "csp-1-8"
+      },
+      {
+        "theme": 1,
+        "numero": 27,
+        "id": "csp-1-34"
+      },
+      {
+        "theme": 1,
+        "numero": 28,
+        "id": "1-27"
+      },
+      {
+        "theme": 1,
+        "numero": 29,
+        "id": "csp-1-37"
+      },
+      {
+        "theme": 1,
+        "numero": 30,
+        "id": "1-29",
+        "texte": "Quel droit est garanti par la laïcité ?"
+      },
+      {
+        "theme": 1,
+        "numero": 31,
+        "id": "cr-1-31"
+      },
+      {
+        "theme": 1,
+        "numero": 32,
+        "id": "1-24"
+      },
+      {
+        "theme": 1,
+        "numero": 33,
+        "id": "1-25"
+      },
+      {
+        "theme": 1,
+        "numero": 34,
+        "id": "1-37",
+        "texte": "Qui doit respecter le principe de neutralité religieuse dans une préfecture ?"
+      },
+      {
+        "theme": 1,
+        "numero": 35,
+        "id": "cr-1-35"
+      },
+      {
+        "theme": 1,
+        "numero": 36,
+        "id": "1-29"
+      },
+      {
+        "theme": 1,
+        "numero": 37,
+        "id": "1-23",
+        "texte": "A-t-on le droit de changer de religion ?"
+      },
+      {
+        "theme": 1,
+        "numero": 38,
+        "id": "1-35",
+        "texte": "Que représente la laïcité ?"
+      },
+      {
+        "theme": 1,
+        "numero": 39,
+        "id": "cr-1-39"
+      },
+      {
+        "theme": 1,
+        "numero": 40,
+        "id": "3-5"
+      },
+      {
+        "theme": 2,
+        "numero": 1,
+        "id": "2-18"
+      },
+      {
+        "theme": 2,
+        "numero": 2,
+        "id": "cr-2-2"
+      },
+      {
+        "theme": 2,
+        "numero": 3,
+        "id": "cr-2-3"
+      },
+      {
+        "theme": 2,
+        "numero": 4,
+        "id": "2-19",
+        "texte": "Quelle est la durée du mandat du conseil municipal et du maire ?"
+      },
+      {
+        "theme": 2,
+        "numero": 5,
+        "id": "2-18",
+        "texte": "Que garantit l'État de droit ?"
+      },
+      {
+        "theme": 2,
+        "numero": 6,
+        "id": "cr-2-6"
+      },
+      {
+        "theme": 2,
+        "numero": 7,
+        "id": "cr-2-7"
+      },
+      {
+        "theme": 2,
+        "numero": 8,
+        "id": "cr-2-8"
+      },
+      {
+        "theme": 2,
+        "numero": 9,
+        "id": "2-24"
+      },
+      {
+        "theme": 2,
+        "numero": 10,
+        "id": "csp-2-1"
+      },
+      {
+        "theme": 2,
+        "numero": 11,
+        "id": "2-36",
+        "texte": "Quelle est l'organisation administrative de la France ?"
+      },
+      {
+        "theme": 2,
+        "numero": 12,
+        "id": "cr-2-12"
+      },
+      {
+        "theme": 2,
+        "numero": 13,
+        "id": "cr-2-13"
+      },
+      {
+        "theme": 2,
+        "numero": 14,
+        "id": "2-26"
+      },
+      {
+        "theme": 2,
+        "numero": 15,
+        "id": "cr-2-15"
+      },
+      {
+        "theme": 2,
+        "numero": 16,
+        "id": "csp-2-10"
+      },
+      {
+        "theme": 2,
+        "numero": 17,
+        "id": "csp-2-12"
+      },
+      {
+        "theme": 2,
+        "numero": 18,
+        "id": "csp-2-22"
+      },
+      {
+        "theme": 2,
+        "numero": 19,
+        "id": "csp-2-19"
+      },
+      {
+        "theme": 2,
+        "numero": 20,
+        "id": "2-17"
+      },
+      {
+        "theme": 2,
+        "numero": 21,
+        "id": "csp-2-35"
+      },
+      {
+        "theme": 2,
+        "numero": 22,
+        "id": "csp-2-36"
+      },
+      {
+        "theme": 2,
+        "numero": 23,
+        "id": "2-6",
+        "texte": "Quelle condition est nécessaire pour voter aux élections ?"
+      },
+      {
+        "theme": 2,
+        "numero": 24,
+        "id": "csp-2-34"
+      },
+      {
+        "theme": 2,
+        "numero": 25,
+        "id": "csp-1-8",
+        "texte": "Quel est le régime politique de la France aujourd'hui ?"
+      },
+      {
+        "theme": 2,
+        "numero": 26,
+        "id": "cr-2-26"
+      },
+      {
+        "theme": 2,
+        "numero": 27,
+        "id": "csp-2-2"
+      },
+      {
+        "theme": 2,
+        "numero": 28,
+        "id": "2-38"
+      },
+      {
+        "theme": 2,
+        "numero": 29,
+        "id": "2-39"
+      },
+      {
+        "theme": 2,
+        "numero": 30,
+        "id": "2-24",
+        "texte": "Qui est le chef du Gouvernement ?"
+      },
+      {
+        "theme": 2,
+        "numero": 31,
+        "id": "cr-2-31"
+      },
+      {
+        "theme": 2,
+        "numero": 32,
+        "id": "2-40"
+      },
+      {
+        "theme": 2,
+        "numero": 33,
+        "id": "4-32",
+        "texte": "Depuis quand l'euro est-elle la monnaie unique ?"
+      },
+      {
+        "theme": 2,
+        "numero": 34,
+        "id": "cr-2-34"
+      },
+      {
+        "theme": 2,
+        "numero": 35,
+        "id": "cr-2-35"
+      },
+      {
+        "theme": 2,
+        "numero": 36,
+        "id": "cr-2-36"
+      },
+      {
+        "theme": 2,
+        "numero": 37,
+        "id": "2-51"
+      },
+      {
+        "theme": 2,
+        "numero": 38,
+        "id": "2-52"
+      },
+      {
+        "theme": 2,
+        "numero": 39,
+        "id": "2-53"
+      },
+      {
+        "theme": 2,
+        "numero": 40,
+        "id": "2-54"
+      },
+      {
+        "theme": 2,
+        "numero": 41,
+        "id": "2-55"
+      },
+      {
+        "theme": 2,
+        "numero": 42,
+        "id": "2-55",
+        "texte": "De quelle couleur est le drapeau européen ?"
+      },
+      {
+        "theme": 2,
+        "numero": 43,
+        "id": "2-50"
+      },
+      {
+        "theme": 2,
+        "numero": 44,
+        "id": "2-57"
+      },
+      {
+        "theme": 2,
+        "numero": 45,
+        "id": "2-46"
+      },
+      {
+        "theme": 2,
+        "numero": 46,
+        "id": "csp-2-40"
+      },
+      {
+        "theme": 2,
+        "numero": 47,
+        "id": "2-44",
+        "texte": "Quand célèbre-t-on la journée de l'Europe ?"
+      },
+      {
+        "theme": 2,
+        "numero": 48,
+        "id": "csp-2-42"
+      },
+      {
+        "theme": 2,
+        "numero": 49,
+        "id": "csp-2-41"
+      },
+      {
+        "theme": 2,
+        "numero": 50,
+        "id": "4-6",
+        "texte": "Quel pays est un pays fondateur de l'Union européenne ?"
+      },
+      {
+        "theme": 3,
+        "numero": 1,
+        "id": "cr-3-1"
+      },
+      {
+        "theme": 3,
+        "numero": 2,
+        "id": "3-2"
+      },
+      {
+        "theme": 3,
+        "numero": 3,
+        "id": "cr-3-3"
+      },
+      {
+        "theme": 3,
+        "numero": 4,
+        "id": "csp-3-13"
+      },
+      {
+        "theme": 3,
+        "numero": 5,
+        "id": "csp-3-14"
+      },
+      {
+        "theme": 3,
+        "numero": 6,
+        "id": "3-3"
+      },
+      {
+        "theme": 3,
+        "numero": 7,
+        "id": "csp-3-12",
+        "texte": "Le recours à l'avortement est-il autorisé ?"
+      },
+      {
+        "theme": 3,
+        "numero": 8,
+        "id": "cr-3-8"
+      },
+      {
+        "theme": 3,
+        "numero": 9,
+        "id": "3-6"
+      },
+      {
+        "theme": 3,
+        "numero": 10,
+        "id": "cr-3-10"
+      },
+      {
+        "theme": 3,
+        "numero": 11,
+        "id": "cr-3-11"
+      },
+      {
+        "theme": 3,
+        "numero": 12,
+        "id": "cr-3-12"
+      },
+      {
+        "theme": 3,
+        "numero": 13,
+        "id": "cr-3-13"
+      },
+      {
+        "theme": 3,
+        "numero": 14,
+        "id": "cr-3-14"
+      },
+      {
+        "theme": 3,
+        "numero": 15,
+        "id": "csp-3-11",
+        "texte": "Quelle liberté permet à une personne de croire en la religion de son choix ?"
+      },
+      {
+        "theme": 3,
+        "numero": 16,
+        "id": "3-1",
+        "texte": "Qu'est-ce que le droit de grève ?"
+      },
+      {
+        "theme": 3,
+        "numero": 17,
+        "id": "cr-3-17"
+      },
+      {
+        "theme": 3,
+        "numero": 18,
+        "id": "cr-3-18"
+      },
+      {
+        "theme": 3,
+        "numero": 19,
+        "id": "cr-3-19"
+      },
+      {
+        "theme": 3,
+        "numero": 20,
+        "id": "cr-3-20"
+      },
+      {
+        "theme": 3,
+        "numero": 21,
+        "id": "cr-3-21"
+      },
+      {
+        "theme": 3,
+        "numero": 22,
+        "id": "cr-3-22"
+      },
+      {
+        "theme": 3,
+        "numero": 23,
+        "id": "cr-3-23"
+      },
+      {
+        "theme": 3,
+        "numero": 24,
+        "id": "cr-3-24"
+      },
+      {
+        "theme": 3,
+        "numero": 25,
+        "id": "3-29"
+      },
+      {
+        "theme": 3,
+        "numero": 26,
+        "id": "cr-3-26"
+      },
+      {
+        "theme": 3,
+        "numero": 27,
+        "id": "csp-3-29"
+      },
+      {
+        "theme": 3,
+        "numero": 28,
+        "id": "cr-3-28"
+      },
+      {
+        "theme": 3,
+        "numero": 29,
+        "id": "csp-3-24"
+      },
+      {
+        "theme": 3,
+        "numero": 30,
+        "id": "cr-3-30"
+      },
+      {
+        "theme": 3,
+        "numero": 31,
+        "id": "cr-3-31"
+      },
+      {
+        "theme": 3,
+        "numero": 32,
+        "id": "cr-3-32"
+      },
+      {
+        "theme": 3,
+        "numero": 33,
+        "id": "3-33"
+      },
+      {
+        "theme": 3,
+        "numero": 34,
+        "id": "cr-3-34"
+      },
+      {
+        "theme": 3,
+        "numero": 35,
+        "id": "cr-3-35"
+      },
+      {
+        "theme": 3,
+        "numero": 36,
+        "id": "cr-3-36"
+      },
+      {
+        "theme": 3,
+        "numero": 37,
+        "id": "cr-3-37"
+      },
+      {
+        "theme": 3,
+        "numero": 38,
+        "id": "cr-3-38"
+      },
+      {
+        "theme": 4,
+        "numero": 1,
+        "id": "cr-4-1"
+      },
+      {
+        "theme": 4,
+        "numero": 2,
+        "id": "4-10",
+        "texte": "Quel roi de France a été exécuté pendant la Révolution française ?"
+      },
+      {
+        "theme": 4,
+        "numero": 3,
+        "id": "4-12"
+      },
+      {
+        "theme": 4,
+        "numero": 4,
+        "id": "4-13"
+      },
+      {
+        "theme": 4,
+        "numero": 5,
+        "id": "4-14"
+      },
+      {
+        "theme": 4,
+        "numero": 6,
+        "id": "cr-4-6"
+      },
+      {
+        "theme": 4,
+        "numero": 7,
+        "id": "4-16",
+        "texte": "Quel pays a été colonisé par la France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 8,
+        "id": "4-18"
+      },
+      {
+        "theme": 4,
+        "numero": 9,
+        "id": "4-24"
+      },
+      {
+        "theme": 4,
+        "numero": 10,
+        "id": "cr-4-10"
+      },
+      {
+        "theme": 4,
+        "numero": 11,
+        "id": "cr-4-11"
+      },
+      {
+        "theme": 4,
+        "numero": 12,
+        "id": "4-25"
+      },
+      {
+        "theme": 4,
+        "numero": 13,
+        "id": "4-30"
+      },
+      {
+        "theme": 4,
+        "numero": 14,
+        "id": "4-31",
+        "texte": "Quelle organisation internationale a été créée en 1945 après la Seconde Guerre mondiale ?"
+      },
+      {
+        "theme": 4,
+        "numero": 15,
+        "id": "cr-4-15"
+      },
+      {
+        "theme": 4,
+        "numero": 16,
+        "id": "4-32",
+        "texte": "En quelle année l'euro est-elle devenue la monnaie utilisée en France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 17,
+        "id": "cr-4-17"
+      },
+      {
+        "theme": 4,
+        "numero": 18,
+        "id": "cr-4-18"
+      },
+      {
+        "theme": 4,
+        "numero": 19,
+        "id": "cr-4-19"
+      },
+      {
+        "theme": 4,
+        "numero": 20,
+        "id": "4-23",
+        "texte": "Que fête-t-on le 8 mai ?"
+      },
+      {
+        "theme": 4,
+        "numero": 21,
+        "id": "4-69"
+      },
+      {
+        "theme": 4,
+        "numero": 22,
+        "id": "cr-4-22"
+      },
+      {
+        "theme": 4,
+        "numero": 23,
+        "id": "4-74",
+        "texte": "Quelle ville française est un port maritime ?"
+      },
+      {
+        "theme": 4,
+        "numero": 24,
+        "id": "4-70"
+      },
+      {
+        "theme": 4,
+        "numero": 25,
+        "id": "4-72"
+      },
+      {
+        "theme": 4,
+        "numero": 26,
+        "id": "4-76"
+      },
+      {
+        "theme": 4,
+        "numero": 27,
+        "id": "4-66",
+        "texte": "Quelle île française se trouve dans l'océan Indien ?"
+      },
+      {
+        "theme": 4,
+        "numero": 28,
+        "id": "4-73"
+      },
+      {
+        "theme": 4,
+        "numero": 29,
+        "id": "4-83"
+      },
+      {
+        "theme": 4,
+        "numero": 30,
+        "id": "cr-4-22",
+        "texte": "Lequel de ces pays partage des frontières terrestres avec la France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 31,
+        "id": "cr-4-31"
+      },
+      {
+        "theme": 4,
+        "numero": 32,
+        "id": "cr-4-32"
+      },
+      {
+        "theme": 4,
+        "numero": 33,
+        "id": "cr-4-33"
+      },
+      {
+        "theme": 4,
+        "numero": 34,
+        "id": "cr-4-34"
+      },
+      {
+        "theme": 4,
+        "numero": 35,
+        "id": "cr-4-35"
+      },
+      {
+        "theme": 4,
+        "numero": 36,
+        "id": "4-62"
+      },
+      {
+        "theme": 4,
+        "numero": 37,
+        "id": "cr-4-37"
+      },
+      {
+        "theme": 4,
+        "numero": 38,
+        "id": "4-45",
+        "texte": "Quand peut-on visiter gratuitement des lieux culturels en France ?"
+      },
+      {
+        "theme": 4,
+        "numero": 39,
+        "id": "cr-4-39"
+      },
+      {
+        "theme": 4,
+        "numero": 40,
+        "id": "4-55"
+      },
+      {
+        "theme": 4,
+        "numero": 41,
+        "id": "4-37"
+      },
+      {
+        "theme": 4,
+        "numero": 42,
+        "id": "4-60"
+      },
+      {
+        "theme": 4,
+        "numero": 43,
+        "id": "4-57"
+      },
+      {
+        "theme": 4,
+        "numero": 44,
+        "id": "cr-4-44"
+      },
+      {
+        "theme": 4,
+        "numero": 45,
+        "id": "cr-4-45"
+      },
+      {
+        "theme": 4,
+        "numero": 46,
+        "id": "cr-4-46"
+      },
+      {
+        "theme": 4,
+        "numero": 47,
+        "id": "4-58",
+        "texte": "Qui était un célèbre musicien français ?"
+      },
+      {
+        "theme": 4,
+        "numero": 48,
+        "id": "4-59"
+      },
+      {
+        "theme": 4,
+        "numero": 49,
+        "id": "cr-4-49"
+      },
+      {
+        "theme": 5,
+        "numero": 1,
+        "id": "5-3",
+        "texte": "Quel mariage est reconnu par l'État ?"
+      },
+      {
+        "theme": 5,
+        "numero": 2,
+        "id": "5-10",
+        "texte": "Auprès de quelle institution les parents peuvent-ils inscrire leur enfant à l'école publique ?"
+      },
+      {
+        "theme": 5,
+        "numero": 3,
+        "id": "5-11"
+      },
+      {
+        "theme": 5,
+        "numero": 4,
+        "id": "5-12"
+      },
+      {
+        "theme": 5,
+        "numero": 5,
+        "id": "5-1"
+      },
+      {
+        "theme": 5,
+        "numero": 6,
+        "id": "cr-5-6"
+      },
+      {
+        "theme": 5,
+        "numero": 7,
+        "id": "cr-5-7"
+      },
+      {
+        "theme": 5,
+        "numero": 8,
+        "id": "5-5",
+        "texte": "Où peut-on déposer un lave-vaisselle cassé ?"
+      },
+      {
+        "theme": 5,
+        "numero": 9,
+        "id": "5-8"
+      },
+      {
+        "theme": 5,
+        "numero": 10,
+        "id": "csp-5-17"
+      },
+      {
+        "theme": 5,
+        "numero": 11,
+        "id": "5-15",
+        "texte": "À qui est accessible la contraception ?"
+      },
+      {
+        "theme": 5,
+        "numero": 12,
+        "id": "5-16"
+      },
+      {
+        "theme": 5,
+        "numero": 13,
+        "id": "5-20"
+      },
+      {
+        "theme": 5,
+        "numero": 14,
+        "id": "5-26"
+      },
+      {
+        "theme": 5,
+        "numero": 15,
+        "id": "5-30"
+      },
+      {
+        "theme": 5,
+        "numero": 16,
+        "id": "5-22"
+      },
+      {
+        "theme": 5,
+        "numero": 17,
+        "id": "cr-5-17"
+      },
+      {
+        "theme": 5,
+        "numero": 18,
+        "id": "cr-5-18"
+      },
+      {
+        "theme": 5,
+        "numero": 19,
+        "id": "cr-5-19"
+      },
+      {
+        "theme": 5,
+        "numero": 20,
+        "id": "3-1",
+        "texte": "Dans une entreprise, le droit de grève autorise :"
+      },
+      {
+        "theme": 5,
+        "numero": 21,
+        "id": "cr-5-21"
+      },
+      {
+        "theme": 5,
+        "numero": 22,
+        "id": "cr-5-22"
+      },
+      {
+        "theme": 5,
+        "numero": 23,
+        "id": "cr-5-23"
+      },
+      {
+        "theme": 5,
+        "numero": 24,
+        "id": "cr-5-24"
+      },
+      {
+        "theme": 5,
+        "numero": 25,
+        "id": "cr-5-25"
+      },
+      {
+        "theme": 5,
+        "numero": 26,
+        "id": "5-38"
+      },
+      {
+        "theme": 5,
+        "numero": 27,
+        "id": "3-31",
+        "texte": "Quel est l'âge de la majorité ?"
+      },
+      {
+        "theme": 5,
+        "numero": 28,
+        "id": "cr-5-28"
+      },
+      {
+        "theme": 5,
+        "numero": 29,
+        "id": "5-36"
+      },
+      {
+        "theme": 5,
+        "numero": 30,
+        "id": "5-34"
+      },
+      {
+        "theme": 5,
+        "numero": 31,
+        "id": "cr-5-31"
+      },
+      {
+        "theme": 5,
+        "numero": 32,
+        "id": "cr-5-32"
+      }
+    ]
+  }
+}

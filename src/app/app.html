@@ -89,6 +89,10 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 
 h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px 0 10px; }
 .scopes{ display:grid; gap:8px; }
+.listsw{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:-4px 0 14px; }
+.listsw .lbl{ font-size:13.5px; color:var(--muted); margin-right:2px; }
+.lsw{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 13px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+.lsw.on{ background:var(--accent); border-color:var(--accent); color:var(--on-accent, #fff); }
 .scope{ position:relative; display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px;
   background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:11px 14px; cursor:pointer; }
 .scope input{ position:absolute; opacity:0; pointer-events:none; }
@@ -236,12 +240,13 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
   <section id="home">
     <header class="head">
       <div>
-        <div class="eyebrow">Naturalisation · 259 questions officielles</div>
+        <div class="eyebrow" id="listEyebrow">Examen civique · QCM</div>
         <h1>Réviser l’examen civique</h1>
       </div>
       <span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span>
     </header>
 
+    <div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
     <div class="panel summary" id="summary"></div>
     <div id="account"></div>
 
@@ -271,7 +276,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     <div class="panel history" id="history"></div>
 
     <div class="foot">
-      <div>Site indépendant et non officiel. Questions : liste officielle du 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (mai 2026). Sans mot de passe ni cookie : votre progression est enregistrée dans ce navigateur et, si vous avez indiqué votre email, liée à cette adresse.</div>
+      <div>À l’examen officiel, les 40 questions comprennent 28 questions de connaissance tirées de votre liste et 12 mises en situation. Site indépendant et non officiel. Questions : listes officielles du ministère de l’Intérieur. Réponses rédigées par Coq Civique, notamment d’après le Livret du citoyen (mai 2026). Sans mot de passe ni cookie : votre progression est enregistrée dans ce navigateur et, si vous avez indiqué votre email, liée à cette adresse.</div>
       <div id="pdfLink"></div>
       <div id="resetZone"><button class="linkbtn" data-act="ask-reset">Effacer ma progression</button></div>
     </div>
@@ -295,9 +300,19 @@ __SUPABASE__
 (() => {
 "use strict";
 const DATA = JSON.parse(document.getElementById("qdata").textContent);
-const THEMES = DATA.themes;
-const CARDS = DATA.cards.map(c => Object.assign({}, c, { k: c.t + "-" + c.n }));
-const BY_K = Object.fromEntries(CARDS.map(c => [c.k, c]));
+/* Liste choisie : naturalisation, carte de résident ou carte de séjour pluriannuelle */
+const PARAMS = new URLSearchParams(location.search);
+const LISTS = DATA.lists;
+let LIST = PARAMS.get("liste");
+if (!LIST) { try { LIST = localStorage.getItem("coq:liste"); } catch (e) {} }
+if (!LISTS.some(l => l.code === LIST)) LIST = "nat";
+try { localStorage.setItem("coq:liste", LIST); } catch (e) {}
+const LIST_INFO = LISTS.find(l => l.code === LIST);
+const at = (c, code) => c.l[code] || c.l[Object.keys(c.l)[0]];
+const asCard = (c, code) => { const m = at(c, code); return Object.assign({}, c, { k: c.i, t: m[0], n: m[1], q: m[2] || c.q }); };
+const CARDS = DATA.cards.filter(c => c.l[LIST]).map(c => asCard(c, LIST));
+const BY_K = Object.fromEntries(DATA.cards.map(c => [c.i, asCard(c, LIST)]));
+const THEMES = DATA.themes.map(t => Object.assign({}, t, { count: CARDS.filter(c => c.t === t.t).length }));
 const TOTAL = CARDS.length;
 const MIN = 60e3, DAY = 864e5;
 const INTERVALS = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
@@ -411,6 +426,7 @@ function initAccount() {
 /* ---------- Accueil ---------- */
 let scope = "all";
 try { scope = localStorage.getItem(LS_KEY + ":scope") || "all"; } catch (e) {}
+if (/^[1-5]$/.test(PARAMS.get("theme") || "")) scope = PARAMS.get("theme");
 function scopeCards(s) {
   if (s === "weak") return weakList();
   if (/^[1-5]$/.test(String(s))) return CARDS.filter(c => c.t === +s);
@@ -467,7 +483,12 @@ function renderHistory() {
     return `<div class="hrow"><span>${when}</span><span class="sc">${e.s} / ${e.n}</span><span class="pill ${ok ? "ok" : "ko"}">${ok ? "Réussi" : "Pas encore"}</span></div>`;
   }).join("");
 }
-function refreshHome() { if (!$("#home").hidden) { renderSummary(); renderScopes(); renderHistory(); } }
+function renderLists() {
+  const ey = $("#listEyebrow"); if (ey) ey.textContent = `${LIST_INFO.nom} · ${LIST_INFO.count} questions officielles` + (LIST_INFO.count !== TOTAL ? ` (${TOTAL} différentes)` : "");
+  const box = $("#listsw"); if (!box) return;
+  box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("");
+}
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderScopes(); renderHistory(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
@@ -522,7 +543,7 @@ function speak(text) {
 }
 const speakBtn = () => ttsOK ? `<button class="speak" data-act="speak" aria-label="Écouter la question" title="Écouter la question"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>` : "";
 const metaChip = c => `<span class="chip" style="--c:${tcol(c.t)}">Thème ${c.t} <b>n° ${c.n}</b></span>`;
-const refLine = c => (c.h ? `<span class="tag">hors livret</span> ` : "") + (c.p ? `<span class="ref">Livret p. ${esc(c.p)}</span>` : "");
+const refLine = c => (c.h ? `<span class="tag">hors livret</span> ` : "") + (c.p ? `<span class="ref">Livret p. ${esc(c.p)}</span>` : "") + (c.l[LIST] && c.l[LIST][2] ? ` <span class="ref">Formulation de la liste ${esc(LIST_INFO.court)}</span>` : "");
 const detail = c => (c.d ? `<div class="d">${c.d}</div>` : "") + `<div>${refLine(c)}<a class="more" href="${c.u}" target="_blank" rel="noopener">Fiche de la question ›</a></div>`;
 
 /* Cartes */
@@ -670,6 +691,7 @@ document.addEventListener("click", e => {
   switch (a) {
     case "home": if (S && S.mode === "exam" && !S.over) { S.leave = true; renderExam(); } else goHome(); break;
     case "leave-yes": goHome(); break;
+    case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
     case "start-cards": startCards(); break;
     case "start-quiz": startQuiz(); break;

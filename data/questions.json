@@ -2,7 +2,9 @@
   "source": {
     "liste": "Liste officielle des questions de connaissance, naturalisation, ministère de l'Intérieur, 12 décembre 2025",
     "livret": "Livret du citoyen, édition mai 2026, ministère de l'Intérieur",
-    "charte": "Charte des droits et devoirs du citoyen français"
+    "charte": "Charte des droits et devoirs du citoyen français",
+    "mise_a_jour": "2026-10-21",
+    "listes_cr_csp": "formation-civique.interieur.gouv.fr, listes officielles CSP et CR (relevé du 21 octobre 2026)"
   },
   "themes": [
     {
@@ -4990,6 +4992,3939 @@
           "Oui, si l'enfant désobéit",
           "Oui, à la maison seulement",
           "Oui, avant 10 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-1",
+      "theme": 1,
+      "numero": 1,
+      "question": "À quoi correspond la date du 14 juillet ?",
+      "reponse": "À la fête nationale française.",
+      "explication": "Elle rappelle la prise de la Bastille, le 14 juillet 1789, et la fête de la Fédération, le 14 juillet 1790.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "À la fête nationale",
+        "mauvaises": [
+          "À la fête du Travail",
+          "À la fin de la Seconde Guerre mondiale",
+          "À la journée de l'Europe"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-4",
+      "theme": 1,
+      "numero": 4,
+      "question": "« Liberté, égalité, fraternité », c'est :",
+      "reponse": "La devise de la République française.",
+      "explication": "Elle est inscrite dans la Constitution (article 2) et sur la façade des mairies et des écoles.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La devise de la République",
+        "mauvaises": [
+          "L'hymne national",
+          "Le titre de la Constitution",
+          "La devise de l'Union européenne"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-5",
+      "theme": 1,
+      "numero": 5,
+      "question": "A-t-on le droit d'insulter publiquement quelqu'un parce qu'il est différent (handicap, apparence physique, sexe…) ?",
+      "reponse": "Non. Insulter quelqu'un en raison de son handicap, de son apparence, de son sexe ou de son origine est une infraction punie par la loi.",
+      "explication": "Les injures et les discriminations fondées sur ces critères sont sanctionnées par le Code pénal.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, c'est puni par la loi",
+        "mauvaises": [
+          "Oui, c'est la liberté d'expression",
+          "Oui, si on le pense vraiment",
+          "Oui, sur les réseaux sociaux"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-6",
+      "theme": 1,
+      "numero": 6,
+      "question": "Certains métiers peuvent-ils être réservés aux hommes ?",
+      "reponse": "Non. Les femmes et les hommes ont accès aux mêmes métiers.",
+      "explication": "L'égalité entre les femmes et les hommes s'applique au travail : refuser un emploi à cause du sexe est une discrimination interdite.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, tous les métiers sont ouverts aux femmes",
+        "mauvaises": [
+          "Oui, les métiers de la sécurité",
+          "Oui, si l'employeur le décide",
+          "Oui, les métiers du bâtiment"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-7",
+      "theme": 1,
+      "numero": 7,
+      "question": "De quand date la Constitution de la Ve République ?",
+      "reponse": "De 1958 (Constitution du 4 octobre 1958).",
+      "explication": "Elle a été approuvée par référendum le 28 septembre 1958, à l'initiative du général de Gaulle.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "De 1958",
+        "mauvaises": [
+          "De 1789",
+          "De 1946",
+          "De 1905"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-8",
+      "theme": 1,
+      "numero": 8,
+      "question": "Le régime de la France est :",
+      "reponse": "Une République démocratique.",
+      "explication": "« La France est une République indivisible, laïque, démocratique et sociale » (article 1er de la Constitution). Les dirigeants sont élus par les citoyens.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Une République démocratique",
+        "mauvaises": [
+          "Une monarchie",
+          "Une dictature",
+          "Une théocratie"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-15",
+      "theme": 1,
+      "numero": 15,
+      "question": "Quel animal est un symbole de la France ?",
+      "reponse": "Le coq.",
+      "explication": "Le coq gaulois est un emblème traditionnel de la France, souvent utilisé par les équipes sportives. Ce n'est pas un symbole officiel inscrit dans la Constitution.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le coq",
+        "mauvaises": [
+          "L'aigle",
+          "Le lion",
+          "L'ours"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-16",
+      "theme": 1,
+      "numero": 16,
+      "question": "Quel est l'un des rôles des associations ?",
+      "reponse": "Rassembler des personnes autour d'un projet commun, sans chercher à faire des bénéfices : sport, culture, solidarité, aide aux personnes…",
+      "explication": "La liberté d'association est garantie par la loi du 1er juillet 1901. Les associations jouent un grand rôle dans l'entraide et la vie locale.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Réunir des personnes autour d'un projet commun",
+        "mauvaises": [
+          "Faire des bénéfices pour ses membres",
+          "Remplacer la police",
+          "Voter les lois"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-17",
+      "theme": 1,
+      "numero": 17,
+      "question": "Quel est le nom de l'hymne national ?",
+      "reponse": "La Marseillaise.",
+      "explication": "Écrite par Rouget de Lisle en 1792, elle est l'hymne national selon l'article 2 de la Constitution.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Marseillaise",
+        "mauvaises": [
+          "Le Chant des partisans",
+          "L'Ode à la joie",
+          "La Carmagnole"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-18",
+      "theme": 1,
+      "numero": 18,
+      "question": "Quel symbole de la République française est tricolore ?",
+      "reponse": "Le drapeau bleu, blanc, rouge.",
+      "explication": "Le drapeau tricolore est l'emblème national (article 2 de la Constitution).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le drapeau",
+        "mauvaises": [
+          "Le bonnet phrygien",
+          "Le coq gaulois",
+          "La fleur de lys"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-19",
+      "theme": 1,
+      "numero": 19,
+      "question": "Quelle est la date de la fête nationale française ?",
+      "reponse": "Le 14 juillet.",
+      "explication": "Le 14 juillet est la fête nationale depuis 1880 ; c'est un jour férié.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le 14 juillet",
+        "mauvaises": [
+          "Le 8 mai",
+          "Le 11 novembre",
+          "Le 1er mai"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-21",
+      "theme": 1,
+      "numero": 21,
+      "question": "Quelle est la langue officielle de la République française ?",
+      "reponse": "Le français.",
+      "explication": "« La langue de la République est le français » (article 2 de la Constitution).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le français",
+        "mauvaises": [
+          "Le français et l'anglais",
+          "Le latin",
+          "Il n'y a pas de langue officielle"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-22",
+      "theme": 1,
+      "numero": 22,
+      "question": "Quelle est la place de la langue française dans la République ?",
+      "reponse": "Le français est la langue de la République : c'est la langue de l'administration, de l'école, de la justice et des services publics.",
+      "explication": "Article 2 de la Constitution : « La langue de la République est le français ». Les langues régionales appartiennent au patrimoine de la France (article 75-1).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "C'est la langue officielle de la République",
+        "mauvaises": [
+          "Elle est facultative dans l'administration",
+          "Elle est réservée à l'école",
+          "Elle est à égalité avec l'anglais"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-23",
+      "theme": 1,
+      "numero": 23,
+      "question": "Quelle liberté permet à chacun d'exprimer ses idées ?",
+      "reponse": "La liberté d'expression.",
+      "explication": "Chacun peut exprimer ses idées et ses opinions, dans les limites fixées par la loi (article 11 de la Déclaration des droits de l'homme et du citoyen).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La liberté d'expression",
+        "mauvaises": [
+          "La liberté de circulation",
+          "La liberté d'association",
+          "Le droit de grève"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-25",
+      "theme": 1,
+      "numero": 25,
+      "question": "Quelles sont les couleurs du drapeau français ?",
+      "reponse": "Bleu, blanc, rouge.",
+      "explication": "Le drapeau tricolore est formé de trois bandes verticales : bleu, blanc et rouge.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Bleu, blanc, rouge",
+        "mauvaises": [
+          "Vert, blanc, rouge",
+          "Bleu, jaune, rouge",
+          "Noir, rouge, or"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-26",
+      "theme": 1,
+      "numero": 26,
+      "question": "Qu'est-ce que la Marseillaise ?",
+      "reponse": "L'hymne national de la France.",
+      "explication": "Composée en 1792 par Rouget de Lisle, elle est l'hymne national selon l'article 2 de la Constitution.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'hymne national",
+        "mauvaises": [
+          "Un plat traditionnel",
+          "Une région de France",
+          "La devise de la République"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-27",
+      "theme": 1,
+      "numero": 27,
+      "question": "Qu'est ce qui est traditionnellement organisé sur les Champs Élysées le 14 juillet pour célébrer la fête nationale ?",
+      "reponse": "Un grand défilé militaire.",
+      "explication": "Chaque 14 juillet, les armées défilent sur les Champs-Élysées, à Paris, en présence du président de la République.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un défilé militaire",
+        "mauvaises": [
+          "Une course cycliste",
+          "Un marathon",
+          "Un marché de Noël"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-28",
+      "theme": 1,
+      "numero": 28,
+      "question": "Qui est Marianne ?",
+      "reponse": "La figure qui représente la République française.",
+      "explication": "Femme coiffée du bonnet phrygien, elle figure sur les timbres, les pièces et dans les mairies. C'est un symbole, pas une personne réelle.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le symbole de la République",
+        "mauvaises": [
+          "Une reine de France",
+          "L'épouse du premier président",
+          "Une sainte patronne de la France"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-30",
+      "theme": 1,
+      "numero": 30,
+      "question": "« La France est une République indivisible, ..., démocratique et sociale ». Complétez cette phrase extraite de l'article 1er de la Constitution :",
+      "reponse": "Laïque.",
+      "explication": "Article 1er : « La France est une République indivisible, laïque, démocratique et sociale. »",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Laïque",
+        "mauvaises": [
+          "Catholique",
+          "Fédérale",
+          "Monarchique"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-34",
+      "theme": 1,
+      "numero": 34,
+      "question": "Pourquoi le principe de laïcité doit-il être respecté à l'école ?",
+      "reponse": "Pour protéger la liberté de conscience des élèves et garantir la neutralité de l'école publique.",
+      "explication": "À l'école publique, les enseignants sont neutres et les élèves ne peuvent pas porter de signes religieux ostensibles (loi de 2004).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour protéger la liberté de conscience des élèves",
+        "mauvaises": [
+          "Pour interdire les religions en France",
+          "Pour imposer une religion",
+          "Pour que les parents choisissent les cours"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-36",
+      "theme": 1,
+      "numero": 36,
+      "question": "Un enfant peut-il refuser d'aller à l'école pour une raison religieuse ?",
+      "reponse": "Non. L'instruction est obligatoire pour tous les enfants de 3 à 16 ans, quelle que soit leur religion.",
+      "explication": "Les convictions religieuses ne permettent pas de refuser l'école ni un enseignement obligatoire.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, l'instruction est obligatoire",
+        "mauvaises": [
+          "Oui, si les parents le demandent",
+          "Oui, pendant les fêtes religieuses",
+          "Oui, à partir de 10 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-1-37",
+      "theme": 1,
+      "numero": 37,
+      "question": "Une personne a-t-elle le droit de ne pas croire en une religion ?",
+      "reponse": "Oui. Chacun est libre de croire ou de ne pas croire.",
+      "explication": "La liberté de conscience, garantie par la laïcité, permet d'avoir une religion, d'en changer ou de n'en avoir aucune.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui",
+        "mauvaises": [
+          "Non, une religion est obligatoire",
+          "Oui, seulement après 18 ans",
+          "Non, sauf autorisation du préfet"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-1",
+      "theme": 2,
+      "numero": 1,
+      "question": "Qui nomme le Premier ministre ?",
+      "reponse": "Le président de la République.",
+      "explication": "Il nomme le Premier ministre (article 8 de la Constitution) puis, sur sa proposition, les autres ministres.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le président de la République",
+        "mauvaises": [
+          "Les députés",
+          "Le Sénat",
+          "Les citoyens, par référendum"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-2",
+      "theme": 2,
+      "numero": 2,
+      "question": "Le Parlement est composé :",
+      "reponse": "De l'Assemblée nationale et du Sénat.",
+      "explication": "Le Parlement vote les lois et contrôle l'action du Gouvernement.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "De l'Assemblée nationale et du Sénat",
+        "mauvaises": [
+          "Du Gouvernement et des préfets",
+          "Des maires et des conseillers municipaux",
+          "Du Conseil constitutionnel"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-3",
+      "theme": 2,
+      "numero": 3,
+      "question": "Qu'est-ce que le pouvoir exécutif ? Le pouvoir :",
+      "reponse": "Le pouvoir de faire appliquer les lois et de diriger la politique du pays.",
+      "explication": "Il est exercé par le président de la République et par le Gouvernement (Premier ministre et ministres).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "De faire appliquer les lois",
+        "mauvaises": [
+          "De voter les lois",
+          "De juger les personnes",
+          "De contrôler la Constitution"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-4",
+      "theme": 2,
+      "numero": 4,
+      "question": "Les dirigeants sont élus par les citoyens dans :",
+      "reponse": "Une démocratie.",
+      "explication": "En démocratie, le pouvoir vient du peuple : les citoyens choisissent leurs représentants par des élections libres.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Une démocratie",
+        "mauvaises": [
+          "Une monarchie absolue",
+          "Une dictature",
+          "Une théocratie"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-6",
+      "theme": 2,
+      "numero": 6,
+      "question": "Qui doit respecter la loi ?",
+      "reponse": "Tout le monde : les personnes qui vivent en France, françaises ou étrangères, et l'État lui-même.",
+      "explication": "Personne n'est au-dessus des lois, y compris les responsables politiques.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Tout le monde",
+        "mauvaises": [
+          "Seulement les Français",
+          "Seulement les étrangers",
+          "Seulement les fonctionnaires"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-7",
+      "theme": 2,
+      "numero": 7,
+      "question": "Quel est le rôle de l'autorité judiciaire ?",
+      "reponse": "Rendre la justice : trancher les litiges et sanctionner les infractions.",
+      "explication": "Selon la Constitution, l'autorité judiciaire est indépendante et gardienne de la liberté individuelle.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Rendre la justice",
+        "mauvaises": [
+          "Voter les lois",
+          "Diriger le Gouvernement",
+          "Collecter les impôts"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-8",
+      "theme": 2,
+      "numero": 8,
+      "question": "Quel pouvoir détient un juge ? Le pouvoir :",
+      "reponse": "Judiciaire.",
+      "explication": "Le juge appartient à l'autorité judiciaire : il tranche les litiges et applique les sanctions prévues par la loi.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Judiciaire",
+        "mauvaises": [
+          "Législatif",
+          "Exécutif",
+          "Religieux"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-9",
+      "theme": 2,
+      "numero": 9,
+      "question": "L'autorité judiciaire est exercée par :",
+      "reponse": "Les magistrats (juges et procureurs).",
+      "explication": "Les juges sont indépendants du pouvoir politique quand ils jugent.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les magistrats",
+        "mauvaises": [
+          "Les préfets",
+          "Les députés",
+          "Les maires"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-10",
+      "theme": 2,
+      "numero": 10,
+      "question": "Que se passe-t-il si un ministre ne respecte pas la loi ?",
+      "reponse": "Il peut être poursuivi et jugé, comme tout le monde.",
+      "explication": "Pour les actes commis dans l'exercice de leurs fonctions, les ministres sont jugés par la Cour de justice de la République ; pour les autres, par les tribunaux ordinaires.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Il peut être jugé",
+        "mauvaises": [
+          "Rien, il est protégé",
+          "Il change seulement de ministère",
+          "Il est jugé par le président"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-12",
+      "theme": 2,
+      "numero": 12,
+      "question": "Combien de députés composent l'Assemblée nationale ?",
+      "reponse": "577 députés.",
+      "explication": "Ils sont élus au suffrage universel direct pour 5 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "577",
+        "mauvaises": [
+          "348",
+          "100",
+          "925"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-13",
+      "theme": 2,
+      "numero": 13,
+      "question": "Quand sont élus les sénateurs ?",
+      "reponse": "Tous les 3 ans, pour la moitié des sièges.",
+      "explication": "Les sénateurs sont élus pour 6 ans au suffrage universel indirect, par des « grands électeurs » (surtout des élus locaux) ; le Sénat est renouvelé par moitié tous les 3 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Tous les 3 ans, par moitié",
+        "mauvaises": [
+          "En même temps que le président",
+          "Chaque année",
+          "Tous les 10 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-15",
+      "theme": 2,
+      "numero": 15,
+      "question": "Qui est élu lors des élections présidentielles ?",
+      "reponse": "Le président de la République.",
+      "explication": "Il est élu au suffrage universel direct pour 5 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le président de la République",
+        "mauvaises": [
+          "Le Premier ministre",
+          "Les députés",
+          "Les sénateurs"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-16",
+      "theme": 2,
+      "numero": 16,
+      "question": "À partir de quel âge a-t-on le droit de voter ?",
+      "reponse": "À 18 ans.",
+      "explication": "Il faut aussi être de nationalité française et inscrit sur les listes électorales. Les citoyens de l'Union européenne peuvent voter aux élections municipales et européennes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "18 ans",
+        "mauvaises": [
+          "16 ans",
+          "21 ans",
+          "25 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-17",
+      "theme": 2,
+      "numero": 17,
+      "question": "Pour combien de temps est élu le président de la République française ?",
+      "reponse": "5 ans.",
+      "explication": "C'est le quinquennat, en vigueur depuis 2002 (auparavant 7 ans). Le président ne peut pas faire plus de deux mandats consécutifs.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "5 ans",
+        "mauvaises": [
+          "7 ans",
+          "4 ans",
+          "6 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-18",
+      "theme": 2,
+      "numero": 18,
+      "question": "Pour combien de temps sont élus les députés ?",
+      "reponse": "5 ans.",
+      "explication": "Les 577 députés sont élus au suffrage universel direct lors des élections législatives.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "5 ans",
+        "mauvaises": [
+          "6 ans",
+          "7 ans",
+          "3 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-19",
+      "theme": 2,
+      "numero": 19,
+      "question": "Pour combien de temps sont élus les sénateurs ?",
+      "reponse": "6 ans.",
+      "explication": "Les sénateurs sont élus au suffrage universel indirect ; le Sénat est renouvelé par moitié tous les 3 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "6 ans",
+        "mauvaises": [
+          "5 ans",
+          "9 ans",
+          "4 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-20",
+      "theme": 2,
+      "numero": 20,
+      "question": "Qui possède le pouvoir exécutif ?",
+      "reponse": "Le président de la République et le Gouvernement.",
+      "explication": "Le Gouvernement, dirigé par le Premier ministre, détermine et conduit la politique de la Nation.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le président et le Gouvernement",
+        "mauvaises": [
+          "Le Parlement",
+          "Les juges",
+          "Le Conseil constitutionnel"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-22",
+      "theme": 2,
+      "numero": 22,
+      "question": "Qui peut voter aux élections en France ?",
+      "reponse": "Les citoyens français majeurs inscrits sur les listes électorales.",
+      "explication": "Les citoyens de l'Union européenne qui résident en France peuvent aussi voter aux élections municipales et européennes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les Français majeurs inscrits sur les listes",
+        "mauvaises": [
+          "Toutes les personnes qui résident en France",
+          "Seulement les propriétaires",
+          "Seulement les personnes qui travaillent"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-23",
+      "theme": 2,
+      "numero": 23,
+      "question": "Que signifie « suffrage universel » ?",
+      "reponse": "Tous les citoyens majeurs peuvent voter, sans distinction de sexe, d'origine, de religion ou de fortune.",
+      "explication": "En France, le suffrage universel masculin date de 1848 ; les femmes votent depuis 1944.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Tous les citoyens majeurs peuvent voter",
+        "mauvaises": [
+          "Seuls les hommes peuvent voter",
+          "Seuls les diplômés peuvent voter",
+          "Le vote est réservé aux élus"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-24",
+      "theme": 2,
+      "numero": 24,
+      "question": "Concernant les partis politiques, quelle proposition est correcte ?",
+      "reponse": "Ils se forment et exercent leur activité librement.",
+      "explication": "Selon l'article 4 de la Constitution, ils concourent à l'expression du suffrage et doivent respecter la démocratie. Le pluralisme est garanti.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Ils se créent et agissent librement",
+        "mauvaises": [
+          "Un seul parti est autorisé",
+          "Ils sont créés par le Gouvernement",
+          "Ils sont interdits pendant les élections"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-25",
+      "theme": 2,
+      "numero": 25,
+      "question": "Quel est le rôle des députés ?",
+      "reponse": "Voter les lois et contrôler l'action du Gouvernement.",
+      "explication": "Les députés siègent à l'Assemblée nationale ; ils peuvent renverser le Gouvernement par une motion de censure.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Voter les lois et contrôler le Gouvernement",
+        "mauvaises": [
+          "Juger les délits",
+          "Nommer les préfets",
+          "Diriger les communes"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-27",
+      "theme": 2,
+      "numero": 27,
+      "question": "Qui possède le pouvoir législatif ?",
+      "reponse": "Le Parlement (Assemblée nationale et Sénat).",
+      "explication": "Le pouvoir législatif consiste à voter les lois.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le Parlement",
+        "mauvaises": [
+          "Le président de la République",
+          "Les juges",
+          "Les préfets"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-29",
+      "theme": 2,
+      "numero": 29,
+      "question": "Qui élit les députés ?",
+      "reponse": "Les citoyens, au suffrage universel direct, lors des élections législatives.",
+      "explication": "Les électeurs de chaque circonscription élisent leur député pour 5 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les citoyens",
+        "mauvaises": [
+          "Les sénateurs",
+          "Le président de la République",
+          "Les maires"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-31",
+      "theme": 2,
+      "numero": 31,
+      "question": "Qui réside au palais de l'Élysée ?",
+      "reponse": "Le président de la République.",
+      "explication": "Le palais de l'Élysée, à Paris, est la résidence officielle et le lieu de travail du président.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le président de la République",
+        "mauvaises": [
+          "Le Premier ministre",
+          "Le maire de Paris",
+          "Le président du Sénat"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-34",
+      "theme": 2,
+      "numero": 34,
+      "question": "Qui dirige la commune ?",
+      "reponse": "Le maire, avec le conseil municipal.",
+      "explication": "Le maire et les conseillers municipaux sont élus pour 6 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le maire",
+        "mauvaises": [
+          "Le préfet",
+          "Le député",
+          "Le président de la région"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-35",
+      "theme": 2,
+      "numero": 35,
+      "question": "Est-ce que le président de la République a tous les pouvoirs ?",
+      "reponse": "Non. Les pouvoirs sont séparés et le président doit respecter la Constitution.",
+      "explication": "Le Parlement vote les lois et la justice est indépendante. Le président est élu pour 5 ans et ne peut pas faire plus de deux mandats consécutifs.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, les pouvoirs sont séparés",
+        "mauvaises": [
+          "Oui, il décide de tout",
+          "Oui, pendant la première année",
+          "Oui, s'il a la majorité"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-36",
+      "theme": 2,
+      "numero": 36,
+      "question": "Qui est le préfet ?",
+      "reponse": "Le représentant de l'État dans le département (et dans la région).",
+      "explication": "Nommé par le président de la République, il veille au respect des lois et à l'ordre public ; la préfecture délivre notamment les titres de séjour.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le représentant de l'État dans le département",
+        "mauvaises": [
+          "Le maire de la plus grande ville",
+          "Un député élu",
+          "Un juge"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-37",
+      "theme": 2,
+      "numero": 37,
+      "question": "Quel est le rôle du Parlement ?",
+      "reponse": "Voter les lois, contrôler l'action du Gouvernement et évaluer les politiques publiques.",
+      "explication": "Il est composé de l'Assemblée nationale et du Sénat (article 24 de la Constitution) ; il vote aussi le budget de l'État.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Voter les lois et contrôler le Gouvernement",
+        "mauvaises": [
+          "Rendre la justice",
+          "Nommer le président",
+          "Diriger l'armée"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-40",
+      "theme": 2,
+      "numero": 40,
+      "question": "Quel État n'est pas membre de l'Union européenne ?",
+      "reponse": "Par exemple la Suisse, la Norvège ou le Royaume-Uni.",
+      "explication": "L'Union européenne compte 27 États membres. Le Royaume-Uni l'a quittée en 2020.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Suisse",
+        "mauvaises": [
+          "L'Allemagne",
+          "L'Espagne",
+          "La Belgique"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-41",
+      "theme": 2,
+      "numero": 41,
+      "question": "Quelle condition est nécessaire pour voter aux élections européennes ?",
+      "reponse": "Être citoyen de l'Union européenne, majeur et inscrit sur les listes électorales.",
+      "explication": "En France, les Français et les citoyens d'un autre pays de l'UE qui résident en France peuvent voter aux élections européennes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Être citoyen de l'Union européenne",
+        "mauvaises": [
+          "Être propriétaire",
+          "Parler plusieurs langues",
+          "Avoir un emploi"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-42",
+      "theme": 2,
+      "numero": 42,
+      "question": "À quelle fréquence les élections européennes sont-elles organisées ?",
+      "reponse": "Tous les 5 ans.",
+      "explication": "Les citoyens européens élisent les députés du Parlement européen ; les dernières élections ont eu lieu en juin 2024.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Tous les 5 ans",
+        "mauvaises": [
+          "Tous les 2 ans",
+          "Tous les 7 ans",
+          "Tous les 10 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-2-44",
+      "theme": 2,
+      "numero": 44,
+      "question": "Quelle est la monnaie utilisée en France ?",
+      "reponse": "L'euro.",
+      "explication": "Les pièces et les billets en euros circulent en France depuis le 1er janvier 2002 ; l'euro a remplacé le franc.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'euro",
+        "mauvaises": [
+          "Le franc",
+          "Le dollar",
+          "La livre"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-1",
+      "theme": 3,
+      "numero": 1,
+      "question": "Comment s'appelle la Constitution actuelle de la France ?",
+      "reponse": "La Constitution de la Ve République, du 4 octobre 1958.",
+      "explication": "C'est le texte le plus important de la République ; elle a été modifiée plusieurs fois depuis 1958.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Constitution de la Ve République",
+        "mauvaises": [
+          "La Charte de 1814",
+          "La Constitution de 1793",
+          "Le Code civil"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-2",
+      "theme": 3,
+      "numero": 2,
+      "question": "Comment s'appelle le texte qui énonce les droits et devoirs des personnes résidant en France ?",
+      "reponse": "La Déclaration des droits de l'homme et du citoyen de 1789, qui fait partie de la Constitution.",
+      "explication": "Ses droits s'appliquent à toute personne qui vit en France. Le préambule de la Constitution de 1946 et la Charte de l'environnement les complètent.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Déclaration des droits de l'homme et du citoyen",
+        "mauvaises": [
+          "Le Code de la route",
+          "Le traité de Rome",
+          "Le règlement de la mairie"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-3",
+      "theme": 3,
+      "numero": 3,
+      "question": "Concernant les droits individuels, quelle proposition est correcte ?",
+      "reponse": "Ils sont garantis par la loi mais s'exercent dans le respect des droits des autres et de l'ordre public.",
+      "explication": "La liberté consiste à pouvoir faire tout ce qui ne nuit pas à autrui (article 4 de la Déclaration des droits de l'homme et du citoyen).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Ils s'exercent dans le respect des droits des autres",
+        "mauvaises": [
+          "Ils sont réservés aux Français",
+          "Ils peuvent être retirés par l'employeur",
+          "Ils n'ont aucune limite"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-4",
+      "theme": 3,
+      "numero": 4,
+      "question": "De quelle année date la Déclaration des droits de l'homme et du citoyen ?",
+      "reponse": "De 1789.",
+      "explication": "Elle a été adoptée le 26 août 1789, pendant la Révolution française ; elle fait partie de la Constitution actuelle.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "1789",
+        "mauvaises": [
+          "1848",
+          "1905",
+          "1958"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-5",
+      "theme": 3,
+      "numero": 5,
+      "question": "Lequel de ces droits est un droit fondamental ?",
+      "reponse": "Par exemple la liberté d'expression, l'égalité devant la loi ou le droit à la sûreté.",
+      "explication": "Les droits fondamentaux sont protégés par la Constitution et par les textes européens et internationaux.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La liberté d'expression",
+        "mauvaises": [
+          "Le droit de conduire sans permis",
+          "Le droit de ne pas payer d'impôts",
+          "Le droit de se faire justice soi-même"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-6",
+      "theme": 3,
+      "numero": 6,
+      "question": "Parmi ces textes, lequel garantit les droits et libertés en France ?",
+      "reponse": "La Constitution, avec la Déclaration des droits de l'homme et du citoyen de 1789.",
+      "explication": "Le Conseil constitutionnel vérifie que les lois respectent ces droits et libertés.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Constitution",
+        "mauvaises": [
+          "Le Code de la route",
+          "Le règlement intérieur d'une entreprise",
+          "Un contrat de travail"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-8",
+      "theme": 3,
+      "numero": 8,
+      "question": "Quel droit permet à une personne de se défendre devant la justice ?",
+      "reponse": "Les droits de la défense, notamment le droit d'être assisté par un avocat.",
+      "explication": "Toute personne a droit à un procès équitable et est présumée innocente tant qu'elle n'a pas été déclarée coupable. L'aide juridictionnelle peut prendre en charge l'avocat des personnes aux revenus modestes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les droits de la défense",
+        "mauvaises": [
+          "Le droit de grève",
+          "Le droit de vote",
+          "La liberté de circulation"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-10",
+      "theme": 3,
+      "numero": 10,
+      "question": "Quel texte a été adopté pendant la Révolution française ?",
+      "reponse": "La Déclaration des droits de l'homme et du citoyen (1789).",
+      "explication": "Adoptée le 26 août 1789, elle proclame que les hommes naissent et demeurent libres et égaux en droits.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Déclaration des droits de l'homme et du citoyen",
+        "mauvaises": [
+          "Le Code civil",
+          "La Constitution de 1958",
+          "Le traité de Rome"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-11",
+      "theme": 3,
+      "numero": 11,
+      "question": "Quelle liberté permet à une personne de ne pas avoir de religion ?",
+      "reponse": "La liberté de conscience (ou liberté religieuse).",
+      "explication": "Garantie par la laïcité, elle permet de croire, de ne pas croire ou de changer de religion.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La liberté de conscience",
+        "mauvaises": [
+          "La liberté de la presse",
+          "La liberté de circulation",
+          "Le droit de grève"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-12",
+      "theme": 3,
+      "numero": 12,
+      "question": "Une femme peut avorter :",
+      "reponse": "Si elle le souhaite, jusqu'à la fin de la 14e semaine de grossesse.",
+      "explication": "L'interruption volontaire de grossesse (IVG) est autorisée depuis la loi Veil de 1975 ; la liberté d'y recourir est inscrite dans la Constitution depuis 2024.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Si elle le décide, jusqu'à 14 semaines de grossesse",
+        "mauvaises": [
+          "Seulement avec l'accord de son mari",
+          "Seulement si elle est majeure",
+          "Jamais, c'est interdit"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-13",
+      "theme": 3,
+      "numero": 13,
+      "question": "Est-il toujours possible de divorcer ?",
+      "reponse": "Oui. Chacun des époux peut demander le divorce.",
+      "explication": "Le divorce peut être prononcé par consentement mutuel ou par un juge, même si l'autre époux n'est pas d'accord.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui",
+        "mauvaises": [
+          "Non, le mariage est définitif",
+          "Oui, mais seulement le mari",
+          "Oui, seulement après 10 ans de mariage"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-14",
+      "theme": 3,
+      "numero": 14,
+      "question": "La peine de mort est :",
+      "reponse": "Abolie en France, depuis 1981.",
+      "explication": "La loi du 9 octobre 1981, portée par Robert Badinter, a aboli la peine de mort ; son interdiction est inscrite dans la Constitution depuis 2007.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Abolie",
+        "mauvaises": [
+          "Appliquée pour les crimes graves",
+          "Décidée par le président",
+          "Autorisée en temps de paix"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-15",
+      "theme": 3,
+      "numero": 15,
+      "question": "Concernant les limites aux libertés individuelles, quelle proposition est correcte ?",
+      "reponse": "Les libertés individuelles peuvent être limitées par la loi, pour protéger l'ordre public ou les droits des autres.",
+      "explication": "Par exemple, la liberté d'expression ne permet pas d'injurier ni d'appeler à la haine.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Elles peuvent être limitées par la loi",
+        "mauvaises": [
+          "Elles n'ont aucune limite",
+          "Chacun fixe ses propres limites",
+          "Seule la religion peut les limiter"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-17",
+      "theme": 3,
+      "numero": 17,
+      "question": "Faut-il réduire ses déchets ?",
+      "reponse": "Oui. Réduire ses déchets protège l'environnement.",
+      "explication": "Moins de déchets, c'est moins de pollution et de ressources gaspillées : on peut trier, réutiliser et éviter les emballages inutiles.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui, pour protéger l'environnement",
+        "mauvaises": [
+          "Non, ce n'est pas utile",
+          "Non, la mairie s'en occupe",
+          "Seulement pour les entreprises"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-18",
+      "theme": 3,
+      "numero": 18,
+      "question": "Jeter une bouteille dans la rue est :",
+      "reponse": "Interdit et puni d'une amende.",
+      "explication": "Jeter ses déchets sur la voie publique est une infraction ; il faut utiliser les poubelles ou les conteneurs de tri.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Interdit et puni d'une amende",
+        "mauvaises": [
+          "Autorisé",
+          "Autorisé la nuit",
+          "Conseillé pour aider les agents de propreté"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-19",
+      "theme": 3,
+      "numero": 19,
+      "question": "Pourquoi les libertés individuelles peuvent-elles être limitées ?",
+      "reponse": "Pour protéger l'ordre public, la sécurité, la santé publique et les droits des autres.",
+      "explication": "Ces limites doivent être prévues par la loi et proportionnées : par exemple le code de la route ou l'interdiction de fumer dans les lieux publics.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour protéger l'ordre public et les droits des autres",
+        "mauvaises": [
+          "Pour favoriser une religion",
+          "Pour punir les étrangers",
+          "Selon l'humeur du Gouvernement"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-20",
+      "theme": 3,
+      "numero": 20,
+      "question": "Que doit faire une personne en cas d'accident ?",
+      "reponse": "Protéger, alerter les secours et, si possible, porter les premiers secours.",
+      "explication": "Les numéros d'urgence sont le 15 (SAMU), le 17 (police), le 18 (pompiers) et le 112 (numéro européen). Ne pas porter assistance à une personne en danger est puni par la loi.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Alerter les secours",
+        "mauvaises": [
+          "Partir sans rien faire",
+          "Déplacer immédiatement la victime",
+          "Attendre le lendemain"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-21",
+      "theme": 3,
+      "numero": 21,
+      "question": "Que permet la citoyenneté française ?",
+      "reponse": "Elle donne des droits, comme voter et être élu, et des devoirs, comme respecter les lois et participer à la défense du pays.",
+      "explication": "Certains emplois publics sont aussi réservés aux citoyens français.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Voter et être élu",
+        "mauvaises": [
+          "Ne plus payer d'impôts",
+          "Ne plus respecter certaines lois",
+          "Obtenir un logement gratuit"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-22",
+      "theme": 3,
+      "numero": 22,
+      "question": "Que risque une personne qui ne respecte pas la loi ?",
+      "reponse": "Une sanction : une amende, voire une peine de prison selon la gravité.",
+      "explication": "Les infractions sont classées en contraventions, délits et crimes ; les peines sont prononcées par la justice.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Une sanction prévue par la loi",
+        "mauvaises": [
+          "Rien du tout",
+          "Une simple remarque",
+          "Une récompense"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-23",
+      "theme": 3,
+      "numero": 23,
+      "question": "Quel est le rôle de la gendarmerie ?",
+      "reponse": "Assurer la sécurité et l'ordre public, surtout dans les zones rurales et périurbaines.",
+      "explication": "La gendarmerie nationale est une force militaire placée sous l'autorité du ministère de l'Intérieur ; elle protège les personnes et les biens et mène des enquêtes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Assurer la sécurité des personnes et des biens",
+        "mauvaises": [
+          "Rendre la justice",
+          "Voter les lois",
+          "Délivrer les diplômes"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-24",
+      "theme": 3,
+      "numero": 24,
+      "question": "Quel est le rôle de la police ?",
+      "reponse": "Assurer la sécurité des personnes et des biens, maintenir l'ordre public et faire respecter la loi.",
+      "explication": "La police nationale agit surtout dans les villes ; en cas d'urgence, on l'appelle au 17 ou au 112.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Protéger les personnes et faire respecter la loi",
+        "mauvaises": [
+          "Juger les délits",
+          "Voter les lois",
+          "Collecter les impôts"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-25",
+      "theme": 3,
+      "numero": 25,
+      "question": "Qu'est-ce qu'une infraction ?",
+      "reponse": "Un acte interdit par la loi et puni d'une sanction.",
+      "explication": "Il en existe trois catégories, de la moins grave à la plus grave : la contravention, le délit et le crime.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un acte interdit et puni par la loi",
+        "mauvaises": [
+          "Un acte autorisé la nuit",
+          "Une erreur sans conséquence",
+          "Un contrat entre deux personnes"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-26",
+      "theme": 3,
+      "numero": 26,
+      "question": "Comment peut-on réduire ses déchets ?",
+      "reponse": "En triant, en réutilisant et en évitant les emballages inutiles et le gaspillage.",
+      "explication": "Par exemple : acheter en vrac, réparer, donner les objets dont on ne se sert plus, composter les déchets alimentaires.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En évitant les emballages et le gaspillage",
+        "mauvaises": [
+          "En jetant tout dans la même poubelle",
+          "En brûlant ses déchets dans le jardin",
+          "En les déposant dans la nature"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-27",
+      "theme": 3,
+      "numero": 27,
+      "question": "Déposer une machine à laver cassée sur le trottoir est :",
+      "reponse": "Interdit : c'est un dépôt sauvage, puni d'une amende.",
+      "explication": "Les appareils cassés doivent être apportés à la déchèterie ou repris par le vendeur lors de l'achat d'un appareil neuf.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Interdit",
+        "mauvaises": [
+          "Autorisé",
+          "Autorisé le dimanche",
+          "Autorisé si on prévient les voisins"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-28",
+      "theme": 3,
+      "numero": 28,
+      "question": "En quoi consiste la traite des êtres humains ?",
+      "reponse": "Exploiter une personne, par exemple en la forçant à travailler ou à se prostituer, après l'avoir recrutée, transportée ou hébergée.",
+      "explication": "C'est une infraction très grave, punie par la loi. Les victimes peuvent être protégées et accompagnées.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Exploiter des personnes",
+        "mauvaises": [
+          "Un commerce légal",
+          "Un échange culturel",
+          "Une aide au voyage"
+        ]
+      }
+    },
+    {
+      "id": "csp-3-29",
+      "theme": 3,
+      "numero": 29,
+      "question": "Que doit faire une victime de violences ?",
+      "reponse": "Appeler la police ou la gendarmerie (17 ou 112) et porter plainte ; elle peut aussi se faire accompagner.",
+      "explication": "Pour les violences faites aux femmes, le 3919 est un numéro d'écoute gratuit et anonyme. Les victimes ont droit à une protection.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Appeler la police et porter plainte",
+        "mauvaises": [
+          "Ne rien dire",
+          "Se venger elle-même",
+          "Quitter la France"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-2",
+      "theme": 4,
+      "numero": 2,
+      "question": "Qui était Napoléon Ier ?",
+      "reponse": "Un général devenu empereur des Français en 1804.",
+      "explication": "Il a notamment créé le Code civil (1804), les lycées et la Légion d'honneur.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un empereur des Français",
+        "mauvaises": [
+          "Un roi de la Renaissance",
+          "Un président de la Ve République",
+          "Un écrivain du XXe siècle"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-3",
+      "theme": 4,
+      "numero": 3,
+      "question": "Lequel de ces personnages historiques est français ?",
+      "reponse": "Par exemple Jeanne d'Arc, Napoléon Ier ou le général de Gaulle.",
+      "explication": "Ce sont des personnages importants de l'histoire de France.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Jeanne d'Arc",
+        "mauvaises": [
+          "Christophe Colomb",
+          "Abraham Lincoln",
+          "Jules César"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-4",
+      "theme": 4,
+      "numero": 4,
+      "question": "Dans quelle République est-on aujourd'hui ?",
+      "reponse": "Dans la Ve République.",
+      "explication": "Elle a été fondée en 1958 par le général de Gaulle.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Ve République",
+        "mauvaises": [
+          "La IIIe République",
+          "La IVe République",
+          "La VIe République"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-10",
+      "theme": 4,
+      "numero": 10,
+      "question": "En quelle année a été créée la Communauté Économique Européenne (CEE) ?",
+      "reponse": "En 1957, par le traité de Rome.",
+      "explication": "La France, l'Allemagne, l'Italie, la Belgique, les Pays-Bas et le Luxembourg l'ont créée ; elle est à l'origine de l'Union européenne.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En 1957",
+        "mauvaises": [
+          "En 1945",
+          "En 1992",
+          "En 2002"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-12",
+      "theme": 4,
+      "numero": 12,
+      "question": "Qui a été le premier Président élu sous la Ve République ?",
+      "reponse": "Le général Charles de Gaulle.",
+      "explication": "Il a été élu président de la République en décembre 1958, puis réélu en 1965.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Charles de Gaulle",
+        "mauvaises": [
+          "François Mitterrand",
+          "Georges Pompidou",
+          "Valéry Giscard d'Estaing"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-15",
+      "theme": 4,
+      "numero": 15,
+      "question": "Combien y a-t-il eu de républiques en France ?",
+      "reponse": "Cinq.",
+      "explication": "La France a connu cinq Républiques ; la Ve République existe depuis 1958.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Cinq",
+        "mauvaises": [
+          "Trois",
+          "Deux",
+          "Sept"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-17",
+      "theme": 4,
+      "numero": 17,
+      "question": "Qui a fondé la Ve République ?",
+      "reponse": "Le général Charles de Gaulle, en 1958.",
+      "explication": "La Constitution de la Ve République a été approuvée par référendum le 28 septembre 1958.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Charles de Gaulle",
+        "mauvaises": [
+          "Napoléon Ier",
+          "Jean Jaurès",
+          "Jules Ferry"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-18",
+      "theme": 4,
+      "numero": 18,
+      "question": "Que célèbre-t-on le 14 juillet ?",
+      "reponse": "La fête nationale, qui rappelle la prise de la Bastille (1789) et la fête de la Fédération (1790).",
+      "explication": "Ces deux événements symbolisent la fin de la monarchie absolue et l'unité de la Nation.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La fête nationale",
+        "mauvaises": [
+          "La fin de la Première Guerre mondiale",
+          "La naissance de Napoléon",
+          "La fête du Travail"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-19",
+      "theme": 4,
+      "numero": 19,
+      "question": "Quelle guerre a eu lieu entre 1914 et 1918 ?",
+      "reponse": "La Première Guerre mondiale.",
+      "explication": "Elle s'est terminée par l'armistice du 11 novembre 1918 ; près de 1,4 million de soldats français y sont morts.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Première Guerre mondiale",
+        "mauvaises": [
+          "La Seconde Guerre mondiale",
+          "La guerre de Cent Ans",
+          "La guerre d'Algérie"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-21",
+      "theme": 4,
+      "numero": 21,
+      "question": "Quel fleuve coule en France ?",
+      "reponse": "Par exemple la Loire, la Seine, le Rhône ou la Garonne.",
+      "explication": "La Loire est le plus long fleuve de France ; la Seine traverse Paris.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Loire",
+        "mauvaises": [
+          "Le Danube",
+          "Le Nil",
+          "Le Tage"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-22",
+      "theme": 4,
+      "numero": 22,
+      "question": "Quelle ville est française ?",
+      "reponse": "Par exemple Lyon, Marseille, Bordeaux ou Toulouse.",
+      "explication": "Attention aux villes francophones d'autres pays : Bruxelles (Belgique), Genève (Suisse) ou Québec (Canada) ne sont pas en France.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Lyon",
+        "mauvaises": [
+          "Bruxelles",
+          "Genève",
+          "Turin"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-23",
+      "theme": 4,
+      "numero": 23,
+      "question": "Quel océan borde la côte ouest française ?",
+      "reponse": "L'océan Atlantique.",
+      "explication": "La France métropolitaine est bordée par l'océan Atlantique à l'ouest, la Manche au nord-ouest, la mer du Nord au nord et la Méditerranée au sud.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'océan Atlantique",
+        "mauvaises": [
+          "L'océan Indien",
+          "L'océan Pacifique",
+          "L'océan Arctique"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-24",
+      "theme": 4,
+      "numero": 24,
+      "question": "Qu'est-ce que Paris ?",
+      "reponse": "La capitale de la France.",
+      "explication": "C'est la plus grande ville du pays et le siège des institutions nationales : Élysée, Gouvernement, Parlement.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La capitale de la France",
+        "mauvaises": [
+          "Une région",
+          "Un département d'outre-mer",
+          "Un fleuve"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-25",
+      "theme": 4,
+      "numero": 25,
+      "question": "Quelle est la capitale de la France ?",
+      "reponse": "Paris.",
+      "explication": "Paris est le siège du président de la République, du Gouvernement et du Parlement.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Paris",
+        "mauvaises": [
+          "Lyon",
+          "Marseille",
+          "Strasbourg"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-26",
+      "theme": 4,
+      "numero": 26,
+      "question": "Sur quel continent se situe la France métropolitaine ?",
+      "reponse": "En Europe.",
+      "explication": "La France métropolitaine est située en Europe de l'Ouest ; la France compte aussi des territoires d'outre-mer sur d'autres continents et océans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En Europe",
+        "mauvaises": [
+          "En Afrique",
+          "En Amérique",
+          "En Asie"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-30",
+      "theme": 4,
+      "numero": 30,
+      "question": "Quelle est la mer au sud de la France métropolitaine ?",
+      "reponse": "La mer Méditerranée.",
+      "explication": "Elle borde la côte sud de la France, de la frontière espagnole à l'Italie, ainsi que la Corse.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La mer Méditerranée",
+        "mauvaises": [
+          "La mer du Nord",
+          "La Manche",
+          "La mer Baltique"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-31",
+      "theme": 4,
+      "numero": 31,
+      "question": "Quelle ville est située au bord de la mer Méditerranée ?",
+      "reponse": "Par exemple Marseille, Nice ou Montpellier.",
+      "explication": "Marseille, au bord de la Méditerranée, est le principal port de France.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Marseille",
+        "mauvaises": [
+          "Lille",
+          "Strasbourg",
+          "Brest"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-32",
+      "theme": 4,
+      "numero": 32,
+      "question": "Où se situe la Corse ?",
+      "reponse": "Dans la mer Méditerranée.",
+      "explication": "La Corse est une île française située au sud-est de la France continentale.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Dans la mer Méditerranée",
+        "mauvaises": [
+          "Dans l'océan Atlantique",
+          "Dans la Manche",
+          "Dans l'océan Indien"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-40",
+      "theme": 4,
+      "numero": 40,
+      "question": "Qui était Marc Chagall ?",
+      "reponse": "Un peintre né en Russie et devenu français.",
+      "explication": "Marc Chagall (1887-1985) est connu pour ses tableaux colorés et ses vitraux ; il a peint le plafond de l'Opéra Garnier, à Paris.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un peintre",
+        "mauvaises": [
+          "Un président de la République",
+          "Un chanteur",
+          "Un général"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-41",
+      "theme": 4,
+      "numero": 41,
+      "question": "Qui était Joséphine Baker ?",
+      "reponse": "Une artiste de music-hall née aux États-Unis, devenue française et résistante pendant la Seconde Guerre mondiale.",
+      "explication": "Engagée contre le racisme, elle est entrée au Panthéon en 2021.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Une artiste et résistante",
+        "mauvaises": [
+          "Une reine de France",
+          "Une Première ministre",
+          "Une scientifique prix Nobel"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-42",
+      "theme": 4,
+      "numero": 42,
+      "question": "Qui était une chanteuse française célèbre ?",
+      "reponse": "Par exemple Édith Piaf.",
+      "explication": "Édith Piaf (1915-1963) est célèbre pour « La Vie en rose » et « Non, je ne regrette rien ». On peut aussi citer Barbara ou Dalida.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Édith Piaf",
+        "mauvaises": [
+          "Marie Curie",
+          "Simone Veil",
+          "George Sand"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-43",
+      "theme": 4,
+      "numero": 43,
+      "question": "Qu'est-ce que le Louvre ?",
+      "reponse": "Un grand musée situé à Paris, l'un des plus visités au monde.",
+      "explication": "Ancien palais royal, il expose notamment La Joconde.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un musée à Paris",
+        "mauvaises": [
+          "Un château de la Loire",
+          "Un fleuve",
+          "Un stade"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-44",
+      "theme": 4,
+      "numero": 44,
+      "question": "Qui était Jean de la Fontaine ?",
+      "reponse": "Un poète français du XVIIe siècle, célèbre pour ses Fables.",
+      "explication": "Par exemple « Le Corbeau et le Renard » ou « La Cigale et la Fourmi ».",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un poète, auteur de fables",
+        "mauvaises": [
+          "Un roi de France",
+          "Un peintre",
+          "Un explorateur"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-45",
+      "theme": 4,
+      "numero": 45,
+      "question": "Quel écrivain est français ?",
+      "reponse": "Par exemple Victor Hugo, Molière ou Albert Camus.",
+      "explication": "Victor Hugo a écrit Les Misérables, Molière des comédies, et Albert Camus a reçu le prix Nobel de littérature.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Victor Hugo",
+        "mauvaises": [
+          "William Shakespeare",
+          "Miguel de Cervantes",
+          "Goethe"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-46",
+      "theme": 4,
+      "numero": 46,
+      "question": "Dans quelle ville se trouve la tour Eiffel ?",
+      "reponse": "À Paris.",
+      "explication": "Construite par Gustave Eiffel pour l'Exposition universelle de 1889, elle est devenue le symbole de Paris.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "À Paris",
+        "mauvaises": [
+          "À Lyon",
+          "À Marseille",
+          "À Bordeaux"
+        ]
+      }
+    },
+    {
+      "id": "csp-4-47",
+      "theme": 4,
+      "numero": 47,
+      "question": "Quand célèbre-t-on Noël ?",
+      "reponse": "Le 25 décembre.",
+      "explication": "Noël est une fête chrétienne devenue aussi une fête familiale ; le 25 décembre est un jour férié.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le 25 décembre",
+        "mauvaises": [
+          "Le 1er janvier",
+          "Le 14 juillet",
+          "Le 1er novembre"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-2",
+      "theme": 5,
+      "numero": 2,
+      "question": "Quel numéro d'urgence permet d'appeler les pompiers ?",
+      "reponse": "Le 18 (ou le 112).",
+      "explication": "Le 112 est le numéro d'urgence européen, valable dans toute l'Union européenne.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le 18",
+        "mauvaises": [
+          "Le 15",
+          "Le 17",
+          "Le 115"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-3",
+      "theme": 5,
+      "numero": 3,
+      "question": "Après avoir obtenu le permis de conduire, que faut-il faire pour pouvoir conduire sa voiture ?",
+      "reponse": "L'assurer : l'assurance automobile est obligatoire.",
+      "explication": "Il faut aussi que le certificat d'immatriculation (carte grise) soit à jour. Conduire sans assurance est un délit.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'assurer",
+        "mauvaises": [
+          "Repasser le code",
+          "Prévenir la mairie",
+          "Rien d'autre"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-4",
+      "theme": 5,
+      "numero": 4,
+      "question": "À quelles conditions un mariage est-il reconnu juridiquement ?",
+      "reponse": "Il doit être célébré à la mairie par un officier d'état civil, avec le libre consentement des deux époux, majeurs.",
+      "explication": "Le mariage civil est le seul reconnu par l'État ; un mariage religieux ne peut avoir lieu qu'après. Le mariage forcé et la polygamie sont interdits.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Célébré à la mairie, avec le consentement des deux époux",
+        "mauvaises": [
+          "Célébré uniquement par un religieux",
+          "Décidé par les familles",
+          "Enregistré par un notaire"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-7",
+      "theme": 5,
+      "numero": 7,
+      "question": "Que doit faire un employeur pour fixer un salaire ?",
+      "reponse": "Respecter au moins le SMIC et les minimums prévus par la convention collective.",
+      "explication": "Le salaire est fixé dans le contrat de travail ; à travail égal, il doit être le même pour les femmes et pour les hommes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Respecter au moins le SMIC",
+        "mauvaises": [
+          "Payer ce qu'il veut",
+          "Demander l'accord du maire",
+          "Payer moins les femmes"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-11",
+      "theme": 5,
+      "numero": 11,
+      "question": "Qui est aidé par France Travail ?",
+      "reponse": "Les personnes qui cherchent un emploi.",
+      "explication": "France Travail (anciennement Pôle emploi) accompagne les demandeurs d'emploi, verse les allocations chômage et aide aussi les entreprises à recruter.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les personnes qui cherchent un emploi",
+        "mauvaises": [
+          "Les retraités",
+          "Les touristes",
+          "Les élus"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-14",
+      "theme": 5,
+      "numero": 14,
+      "question": "À partir de quel âge un mineur peut-il travailler ?",
+      "reponse": "En principe à 16 ans.",
+      "explication": "Dès 14 ans, un jeune peut faire de petits travaux pendant les vacances scolaires, avec l'accord de ses parents et sous conditions ; des règles protègent les mineurs au travail.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "16 ans",
+        "mauvaises": [
+          "12 ans",
+          "18 ans",
+          "10 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-16",
+      "theme": 5,
+      "numero": 16,
+      "question": "Qu'est-ce qu'un numéro d'urgence ?",
+      "reponse": "Un numéro gratuit, joignable 24 heures sur 24, pour obtenir de l'aide en cas de danger ou d'urgence.",
+      "explication": "Les principaux sont le 15 (SAMU), le 17 (police), le 18 (pompiers) et le 112 (urgence européenne).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un numéro gratuit pour appeler les secours",
+        "mauvaises": [
+          "Un numéro payant de renseignements",
+          "Le numéro de la mairie",
+          "Un numéro réservé aux médecins"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-17",
+      "theme": 5,
+      "numero": 17,
+      "question": "Concernant l'accès aux soins, quelle proposition est correcte ?",
+      "reponse": "Toute personne qui réside en France de façon stable et régulière a droit à la prise en charge de ses frais de santé.",
+      "explication": "C'est la protection universelle maladie (PUMa). Les soins urgents sont toujours assurés.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Toute personne résidant régulièrement en France est couverte",
+        "mauvaises": [
+          "Seuls les Français sont soignés",
+          "Il faut payer tous les soins soi-même",
+          "Les soins sont réservés aux salariés"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-18",
+      "theme": 5,
+      "numero": 18,
+      "question": "En cas de problème de santé non urgent, à qui faut-il s'adresser en premier ?",
+      "reponse": "À son médecin traitant (ou à un pharmacien pour un conseil).",
+      "explication": "En dehors des heures d'ouverture, on peut appeler le 116 117 (permanence des soins). Les urgences de l'hôpital sont réservées aux situations graves.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "À son médecin traitant",
+        "mauvaises": [
+          "Aux urgences de l'hôpital",
+          "Aux pompiers",
+          "À la police"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-19",
+      "theme": 5,
+      "numero": 19,
+      "question": "Quel est le rôle du médecin traitant ?",
+      "reponse": "Suivre la santé du patient, coordonner ses soins et l'orienter vers des spécialistes.",
+      "explication": "Déclarer un médecin traitant auprès de l'Assurance maladie permet d'être mieux remboursé.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Suivre et coordonner les soins du patient",
+        "mauvaises": [
+          "Délivrer les cartes Vitale",
+          "Remplacer les urgences",
+          "Vendre des médicaments"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-20",
+      "theme": 5,
+      "numero": 20,
+      "question": "Dans quelles situations doit-on se rendre aux urgences de l'hôpital ?",
+      "reponse": "En cas de situation grave ou de danger vital : blessure grave, malaise, douleur intense…",
+      "explication": "En cas d'urgence vitale, il faut appeler le 15 (SAMU) ou le 112. Pour un problème non urgent, mieux vaut consulter son médecin traitant.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En cas d'urgence grave",
+        "mauvaises": [
+          "Pour un simple rhume",
+          "Pour obtenir une ordonnance",
+          "Pour un certificat de sport"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-21",
+      "theme": 5,
+      "numero": 21,
+      "question": "Quel est l'objectif des vaccinations obligatoires ?",
+      "reponse": "Protéger chaque personne et toute la population contre des maladies graves et contagieuses.",
+      "explication": "Onze vaccins sont obligatoires pour les enfants nés depuis 2018 ; ils sont exigés pour l'entrée en crèche et à l'école.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Protéger la santé de tous",
+        "mauvaises": [
+          "Vendre des médicaments",
+          "Remplacer le médecin",
+          "Rendre l'école payante"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-25",
+      "theme": 5,
+      "numero": 25,
+      "question": "L'autorité parentale prévoit l'obligation :",
+      "reponse": "De protéger l'enfant et d'assurer son éducation, sa santé et sa sécurité.",
+      "explication": "L'autorité parentale est un ensemble de droits et de devoirs exercés par les deux parents, dans l'intérêt de l'enfant, jusqu'à sa majorité. Les violences éducatives sont interdites.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "De protéger l'enfant et de l'éduquer",
+        "mauvaises": [
+          "De faire travailler l'enfant",
+          "De choisir son futur conjoint",
+          "De le frapper s'il désobéit"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-26",
+      "theme": 5,
+      "numero": 26,
+      "question": "Pour qui l'école est-elle obligatoire ?",
+      "reponse": "Pour tous les enfants de 3 à 16 ans qui vivent en France, quelle que soit leur nationalité.",
+      "explication": "Les jeunes de 16 à 18 ans doivent aussi être en formation : école, apprentissage, emploi ou service civique.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour tous les enfants de 3 à 16 ans",
+        "mauvaises": [
+          "Seulement pour les enfants français",
+          "Seulement pour les garçons",
+          "Seulement à partir de 6 ans"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-27",
+      "theme": 5,
+      "numero": 27,
+      "question": "Quel diplôme obtient-on à la fin du lycée ?",
+      "reponse": "Le baccalauréat.",
+      "explication": "Il permet de poursuivre des études supérieures : université, BTS, écoles.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le baccalauréat",
+        "mauvaises": [
+          "Le brevet",
+          "La licence",
+          "Le CAP"
+        ]
+      }
+    },
+    {
+      "id": "csp-5-30",
+      "theme": 5,
+      "numero": 30,
+      "question": "Un enfant inscrit à l'école :",
+      "reponse": "Doit aller en classe régulièrement (obligation d'assiduité) et respecter le règlement de l'école.",
+      "explication": "Les absences doivent être justifiées par les parents ; des absences répétées sans motif sont signalées.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Doit être assidu",
+        "mauvaises": [
+          "Peut venir quand il veut",
+          "Peut refuser certains cours",
+          "Doit payer chaque mois"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-1",
+      "theme": 1,
+      "numero": 1,
+      "question": "Parmi les propositions suivantes, laquelle constitue une participation citoyenne ?",
+      "reponse": "Par exemple voter, être bénévole dans une association ou participer à la vie de son quartier.",
+      "explication": "La participation citoyenne, c'est s'impliquer dans la vie collective et démocratique.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Être bénévole dans une association",
+        "mauvaises": [
+          "Ne pas payer ses impôts",
+          "Rester chez soi le jour du vote",
+          "Refuser de respecter la loi"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-3",
+      "theme": 1,
+      "numero": 3,
+      "question": "À quoi sert un titre de séjour ?",
+      "reponse": "À autoriser une personne étrangère à séjourner régulièrement en France.",
+      "explication": "Il est délivré par la préfecture ; selon sa nature, il permet aussi de travailler.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "À séjourner légalement en France",
+        "mauvaises": [
+          "À voter aux élections",
+          "À obtenir la nationalité française",
+          "À ne pas payer d'impôts"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-5",
+      "theme": 1,
+      "numero": 5,
+      "question": "Sur quel site internet peut-on retrouver le symbole de la République française ?",
+      "reponse": "Sur les sites officiels de l'État, par exemple service-public.fr ou les sites en « gouv.fr ».",
+      "explication": "Le logo de l'État associe Marianne, le drapeau tricolore et la devise « Liberté, Égalité, Fraternité ».",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Sur les sites officiels de l'État",
+        "mauvaises": [
+          "Sur les sites de vente en ligne",
+          "Sur les réseaux sociaux de célébrités",
+          "Sur les sites de jeux"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-6",
+      "theme": 1,
+      "numero": 6,
+      "question": "Complétez les paroles de la Marseillaise « Aux armes, citoyens... »",
+      "reponse": "« … formez vos bataillons ! Marchons, marchons ! »",
+      "explication": "C'est le refrain de La Marseillaise (1792) : « Aux armes, citoyens, formez vos bataillons ! Marchons, marchons ! Qu'un sang impur abreuve nos sillons ! »",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Formez vos bataillons",
+        "mauvaises": [
+          "Le jour de gloire est arrivé",
+          "Contre nous de la tyrannie",
+          "Liberté, liberté chérie"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-8",
+      "theme": 1,
+      "numero": 8,
+      "question": "En application de la liberté individuelle, quelle proposition est correcte ? Une personne peut :",
+      "reponse": "Choisir librement sa vie personnelle : sa religion, son conjoint, son lieu de vie ou ses opinions, dans le respect de la loi.",
+      "explication": "La liberté consiste à pouvoir faire tout ce qui ne nuit pas à autrui.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Choisir librement son conjoint",
+        "mauvaises": [
+          "Ne pas respecter le code de la route",
+          "Entrer chez ses voisins sans accord",
+          "Imposer sa religion aux autres"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-9",
+      "theme": 1,
+      "numero": 9,
+      "question": "Concernant la pratique de la religion, quelle proposition est correcte ?",
+      "reponse": "Chacun peut pratiquer la religion de son choix, à condition de respecter la loi et l'ordre public.",
+      "explication": "La laïcité garantit le libre exercice des cultes ; l'État ne reconnaît et ne finance aucun culte (loi de 1905).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Elle est libre, dans le respect de la loi",
+        "mauvaises": [
+          "Une religion est obligatoire",
+          "Elle est interdite en public",
+          "L'État choisit la religion de chacun"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-10",
+      "theme": 1,
+      "numero": 10,
+      "question": "En tant que parent, peut-on refuser que son enfant participe aux cours de sport à l'école car ils sont mixtes ?",
+      "reponse": "Non. Les cours d'éducation physique et sportive sont obligatoires et mixtes pour tous les élèves.",
+      "explication": "Les convictions religieuses ne permettent pas de refuser un enseignement à l'école.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, ces cours sont obligatoires",
+        "mauvaises": [
+          "Oui, si les parents l'écrivent",
+          "Oui, pour les filles",
+          "Oui, pendant les fêtes religieuses"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-12",
+      "theme": 1,
+      "numero": 12,
+      "question": "La répudiation de sa femme est :",
+      "reponse": "Interdite et sans valeur en France.",
+      "explication": "Seul un juge peut prononcer un divorce. L'égalité entre les femmes et les hommes s'applique aussi dans le mariage.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Interdite en France",
+        "mauvaises": [
+          "Autorisée par la loi",
+          "Autorisée avec l'accord du maire",
+          "Autorisée pour les étrangers"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-15",
+      "theme": 1,
+      "numero": 15,
+      "question": "Que fait l'État pour lutter contre les discriminations ?",
+      "reponse": "Il les interdit par la loi, les sanctionne et aide les victimes, notamment grâce au Défenseur des droits.",
+      "explication": "Une discrimination à l'embauche ou au logement, par exemple en raison de l'origine, du sexe ou de la religion, est punie par la loi.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Il les interdit et les sanctionne",
+        "mauvaises": [
+          "Il les autorise dans le privé",
+          "Il ne fait rien",
+          "Il les autorise envers les étrangers"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-21",
+      "theme": 1,
+      "numero": 21,
+      "question": "Un employeur refuse d'embaucher des femmes dans son entreprise. Que dit la loi ?",
+      "reponse": "C'est interdit : il s'agit d'une discrimination punie par la loi.",
+      "explication": "Les femmes et les hommes doivent avoir les mêmes chances d'être embauchés et le même salaire à travail égal. Les victimes peuvent saisir le Défenseur des droits ou la justice.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "C'est une discrimination interdite",
+        "mauvaises": [
+          "C'est son droit",
+          "C'est autorisé dans les petites entreprises",
+          "C'est autorisé si le travail est physique"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-31",
+      "theme": 1,
+      "numero": 31,
+      "question": "À l'école publique, qui peut porter des signes religieux très visibles ?",
+      "reponse": "Personne : ni les élèves ni le personnel.",
+      "explication": "La loi de 2004 interdit aux élèves des écoles, collèges et lycées publics les signes religieux ostensibles ; les enseignants doivent rester neutres.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Personne",
+        "mauvaises": [
+          "Les élèves",
+          "Les enseignants",
+          "Les élèves majeurs"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-35",
+      "theme": 1,
+      "numero": 35,
+      "question": "La laïcité impose-t-elle aux agents publics d'être neutres vis-à-vis des usagers ?",
+      "reponse": "Oui. Les agents publics doivent être neutres et ne pas manifester leurs convictions religieuses dans leur travail.",
+      "explication": "Ils doivent traiter tous les usagers de la même manière, quelles que soient leurs croyances.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui",
+        "mauvaises": [
+          "Non, ils peuvent faire du prosélytisme",
+          "Seulement à l'école",
+          "Seulement le dimanche"
+        ]
+      }
+    },
+    {
+      "id": "cr-1-39",
+      "theme": 1,
+      "numero": 39,
+      "question": "Qu'est ce qui est interdit par la Charte de la laïcité à l'école ?",
+      "reponse": "Le prosélytisme, refuser un enseignement au nom de sa religion et, pour les élèves, porter des signes religieux ostensibles.",
+      "explication": "La Charte de la laïcité à l'école (2013) rappelle que l'école protège les élèves de toute pression.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Refuser un cours pour des raisons religieuses",
+        "mauvaises": [
+          "Pratiquer une religion chez soi",
+          "Étudier l'histoire des religions",
+          "Parler de ses opinions en famille"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-2",
+      "theme": 2,
+      "numero": 2,
+      "question": "Le président de la République a commis un crime. Quelle proposition est correcte ?",
+      "reponse": "Pendant son mandat, il ne peut pas être poursuivi devant les tribunaux, mais le Parlement réuni en Haute Cour peut le destituer. Après son mandat, il peut être jugé.",
+      "explication": "C'est ce que prévoient les articles 67 et 68 de la Constitution : personne n'est au-dessus des lois.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Il pourra être jugé à la fin de son mandat",
+        "mauvaises": [
+          "Il ne pourra jamais être jugé",
+          "Il se juge lui-même",
+          "Il est jugé par le Premier ministre"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-3",
+      "theme": 2,
+      "numero": 3,
+      "question": "La loi est l'expression de :",
+      "reponse": "De la volonté générale.",
+      "explication": "Article 6 de la Déclaration des droits de l'homme et du citoyen : « La loi est l'expression de la volonté générale. »",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La volonté générale",
+        "mauvaises": [
+          "La volonté du président",
+          "La volonté des juges",
+          "La volonté des religions"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-6",
+      "theme": 2,
+      "numero": 6,
+      "question": "Une personne peut-elle voter à la place d'une autre ?",
+      "reponse": "Non, le vote est personnel, sauf procuration.",
+      "explication": "On peut donner procuration à un autre électeur pour voter à sa place ; elle s'établit au commissariat, à la gendarmerie ou en ligne (maprocuration.gouv.fr).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non, sauf procuration",
+        "mauvaises": [
+          "Oui, toujours",
+          "Oui, pour un membre de sa famille",
+          "Oui, si on montre sa carte d'identité"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-7",
+      "theme": 2,
+      "numero": 7,
+      "question": "Est-ce que le vote est obligatoire ?",
+      "reponse": "Non. Voter est un droit et un devoir civique, mais ce n'est pas obligatoire en France.",
+      "explication": "Les jeunes Français sont inscrits automatiquement sur les listes électorales à 18 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non",
+        "mauvaises": [
+          "Oui, sous peine d'amende",
+          "Oui, pour les plus de 25 ans",
+          "Oui, pour les fonctionnaires"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-8",
+      "theme": 2,
+      "numero": 8,
+      "question": "À la fin de son mandat, le président de la République peut-il décider de rester au pouvoir ?",
+      "reponse": "Non. Le président est élu pour 5 ans et ne peut pas exercer plus de deux mandats consécutifs.",
+      "explication": "À la fin de son mandat, une nouvelle élection présidentielle a lieu au suffrage universel direct.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Non",
+        "mauvaises": [
+          "Oui, s'il le souhaite",
+          "Oui, avec l'accord de l'armée",
+          "Oui, s'il a la majorité au Sénat"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-12",
+      "theme": 2,
+      "numero": 12,
+      "question": "Qu'est-ce que le pouvoir législatif ? Le pouvoir :",
+      "reponse": "Le pouvoir de voter les lois.",
+      "explication": "Il appartient au Parlement, composé de l'Assemblée nationale et du Sénat.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "De voter les lois",
+        "mauvaises": [
+          "De faire appliquer les lois",
+          "De juger",
+          "De diriger l'armée"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-13",
+      "theme": 2,
+      "numero": 13,
+      "question": "Pourquoi séparer les trois pouvoirs dans une démocratie ?",
+      "reponse": "Pour éviter qu'une seule personne ou institution ait tous les pouvoirs, et pour protéger les libertés.",
+      "explication": "Le pouvoir législatif vote les lois, le pouvoir exécutif les applique et le pouvoir judiciaire juge (idée défendue par Montesquieu).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour éviter les abus de pouvoir",
+        "mauvaises": [
+          "Pour avoir plus d'élections",
+          "Pour économiser de l'argent",
+          "Pour donner tous les pouvoirs au président"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-15",
+      "theme": 2,
+      "numero": 15,
+      "question": "Quel est le rôle du gouvernement ?",
+      "reponse": "Déterminer et conduire la politique de la Nation.",
+      "explication": "Le Gouvernement, dirigé par le Premier ministre, applique les lois et dispose de l'administration (article 20 de la Constitution).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Conduire la politique de la Nation",
+        "mauvaises": [
+          "Voter les lois",
+          "Juger les délits",
+          "Élire le président"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-26",
+      "theme": 2,
+      "numero": 26,
+      "question": "Qu'est-ce que l'Hôtel de Matignon ?",
+      "reponse": "La résidence et le lieu de travail du Premier ministre, à Paris.",
+      "explication": "Le palais de l'Élysée est celui du président de la République.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La résidence du Premier ministre",
+        "mauvaises": [
+          "La résidence du président",
+          "Le siège du Sénat",
+          "Un grand musée"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-31",
+      "theme": 2,
+      "numero": 31,
+      "question": "Combien y a-t-il de régions en France ?",
+      "reponse": "18 régions : 13 en métropole et 5 en outre-mer.",
+      "explication": "Les régions s'occupent notamment des lycées, des trains régionaux (TER) et du développement économique.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "18",
+        "mauvaises": [
+          "13",
+          "22",
+          "101"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-34",
+      "theme": 2,
+      "numero": 34,
+      "question": "Quel est le rôle principal du département ?",
+      "reponse": "L'action sociale et la solidarité (RSA, aide à l'enfance, personnes âgées et handicapées), ainsi que les collèges et les routes départementales.",
+      "explication": "La France compte 101 départements, dont 5 en outre-mer.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'action sociale et la solidarité",
+        "mauvaises": [
+          "Voter les lois",
+          "Rendre la justice",
+          "Battre monnaie"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-35",
+      "theme": 2,
+      "numero": 35,
+      "question": "Quel est le rôle principal des communes ?",
+      "reponse": "Gérer les services de proximité : état civil, écoles maternelles et élémentaires, urbanisme, voirie, cantine…",
+      "explication": "Le maire et le conseil municipal sont élus pour 6 ans.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les services de proximité",
+        "mauvaises": [
+          "La défense nationale",
+          "La politique étrangère",
+          "La monnaie"
+        ]
+      }
+    },
+    {
+      "id": "cr-2-36",
+      "theme": 2,
+      "numero": 36,
+      "question": "Combien de communes environ existe-t-il en France ?",
+      "reponse": "Environ 35 000.",
+      "explication": "La France compte 34 875 communes au 1er janvier 2025.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Environ 35 000",
+        "mauvaises": [
+          "Environ 3 500",
+          "Environ 350 000",
+          "Environ 1 000"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-1",
+      "theme": 3,
+      "numero": 1,
+      "question": "À quelle liberté la PMA fait-elle référence ?",
+      "reponse": "À la liberté d'avoir des enfants et de fonder une famille.",
+      "explication": "La procréation médicalement assistée aide à avoir un enfant ; depuis la loi de bioéthique de 2021, elle est ouverte à toutes les femmes, en couple ou seules.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La liberté d'avoir des enfants",
+        "mauvaises": [
+          "La liberté de la presse",
+          "La liberté de circulation",
+          "La liberté de réunion"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-3",
+      "theme": 3,
+      "numero": 3,
+      "question": "Concernant le droit de se marier, quelle proposition est correcte ?",
+      "reponse": "Chacun est libre de se marier avec la personne de son choix, à condition d'être majeur et consentant.",
+      "explication": "Le mariage forcé est interdit ; depuis 2013, le mariage est ouvert aux couples de même sexe.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "On choisit librement son conjoint",
+        "mauvaises": [
+          "La famille choisit le conjoint",
+          "On peut avoir plusieurs époux",
+          "Il faut avoir la même religion"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-8",
+      "theme": 3,
+      "numero": 8,
+      "question": "Que contient la Constitution ?",
+      "reponse": "L'organisation des pouvoirs publics et les droits et libertés fondamentaux.",
+      "explication": "Son préambule renvoie à la Déclaration des droits de l'homme et du citoyen de 1789, au préambule de 1946 et à la Charte de l'environnement.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'organisation de l'État et les droits fondamentaux",
+        "mauvaises": [
+          "La liste des impôts locaux",
+          "Le code de la route",
+          "Les horaires des services publics"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-10",
+      "theme": 3,
+      "numero": 10,
+      "question": "Que prévoit la Charte de l'environnement ?",
+      "reponse": "Que chacun a le droit de vivre dans un environnement sain et le devoir de participer à sa préservation.",
+      "explication": "Adoptée en 2004, elle fait partie de la Constitution depuis 2005.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le droit à un environnement sain et le devoir de le protéger",
+        "mauvaises": [
+          "L'interdiction des voitures",
+          "La fermeture des usines",
+          "Le droit de polluer en payant"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-11",
+      "theme": 3,
+      "numero": 11,
+      "question": "Que signifie la dignité humaine ?",
+      "reponse": "Que tout être humain doit être respecté et ne peut pas être traité comme un objet.",
+      "explication": "La dignité humaine interdit par exemple la torture, l'esclavage ou les traitements humiliants.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Chaque personne doit être respectée",
+        "mauvaises": [
+          "Seuls les riches ont des droits",
+          "On peut vendre une personne",
+          "Les enfants n'ont pas de droits"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-12",
+      "theme": 3,
+      "numero": 12,
+      "question": "Que signifie le droit de manifester ?",
+      "reponse": "Le droit de se rassembler sur la voie publique pour exprimer collectivement ses opinions.",
+      "explication": "Une manifestation doit être déclarée à l'avance en mairie ou en préfecture et se dérouler sans violence.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Exprimer collectivement ses idées dans la rue",
+        "mauvaises": [
+          "Bloquer les routes sans autorisation",
+          "Casser des vitrines",
+          "Empêcher les autres de travailler"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-13",
+      "theme": 3,
+      "numero": 13,
+      "question": "Que signifie PMA ?",
+      "reponse": "Procréation médicalement assistée.",
+      "explication": "Ce sont des techniques médicales qui aident à avoir un enfant ; depuis 2021, la PMA est ouverte aux couples de femmes et aux femmes seules.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Procréation médicalement assistée",
+        "mauvaises": [
+          "Protection maternelle et assistance",
+          "Prime de maternité accordée",
+          "Plan médical d'adoption"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-14",
+      "theme": 3,
+      "numero": 14,
+      "question": "Quel texte est le plus difficile à modifier ?",
+      "reponse": "La Constitution.",
+      "explication": "Sa révision suit une procédure spéciale : vote par les deux assemblées, puis référendum ou majorité des trois cinquièmes du Parlement réuni en Congrès.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Constitution",
+        "mauvaises": [
+          "Une loi ordinaire",
+          "Un décret",
+          "Un arrêté municipal"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-17",
+      "theme": 3,
+      "numero": 17,
+      "question": "Qu'est-ce que la Constitution ?",
+      "reponse": "Le texte le plus important de la République : elle fixe l'organisation des pouvoirs et garantit les droits et libertés.",
+      "explication": "La Constitution actuelle est celle de la Ve République, du 4 octobre 1958. Toutes les lois doivent la respecter.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le texte suprême de la République",
+        "mauvaises": [
+          "Un règlement de la mairie",
+          "Un traité de commerce",
+          "Le code du travail"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-18",
+      "theme": 3,
+      "numero": 18,
+      "question": "Qui peut demander à avorter ?",
+      "reponse": "Toute femme enceinte qui ne veut pas poursuivre sa grossesse, majeure ou mineure.",
+      "explication": "Une mineure peut demander une IVG sans l'accord de ses parents, accompagnée d'un adulte de son choix. L'IVG est possible jusqu'à la fin de la 14e semaine de grossesse.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Toute femme enceinte, majeure ou mineure",
+        "mauvaises": [
+          "Seulement les femmes mariées",
+          "Seulement avec l'accord du mari",
+          "Seulement les femmes de nationalité française"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-19",
+      "theme": 3,
+      "numero": 19,
+      "question": "Une femme majeure de nationalité française a-t-elle le droit de voter aux élections ?",
+      "reponse": "Oui. Les femmes ont le droit de vote en France depuis 1944.",
+      "explication": "Elles ont voté pour la première fois en 1945 ; elles ont les mêmes droits politiques que les hommes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui",
+        "mauvaises": [
+          "Non",
+          "Seulement aux élections municipales",
+          "Seulement avec l'accord de son mari"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-20",
+      "theme": 3,
+      "numero": 20,
+      "question": "Concernant l'utilisation des réseaux sociaux, quelle proposition est correcte ?",
+      "reponse": "Les lois s'appliquent aussi sur les réseaux sociaux : le harcèlement, les injures ou les menaces en ligne sont punis.",
+      "explication": "On peut signaler les contenus illicites sur la plateforme PHAROS (internet-signalement.gouv.fr).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les mêmes lois s'appliquent en ligne",
+        "mauvaises": [
+          "Tout est permis sur internet",
+          "Les insultes sont autorisées si on est anonyme",
+          "Les lois ne s'appliquent pas aux jeunes"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-21",
+      "theme": 3,
+      "numero": 21,
+      "question": "Jeter un mégot par terre est :",
+      "reponse": "Interdit et puni d'une amende.",
+      "explication": "Jeter un mégot, un papier ou tout autre déchet sur la voie publique est une infraction.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Interdit et puni d'une amende",
+        "mauvaises": [
+          "Autorisé",
+          "Autorisé dans les parcs",
+          "Autorisé le soir"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-22",
+      "theme": 3,
+      "numero": 22,
+      "question": "L'État peut-il limiter les droits et libertés ?",
+      "reponse": "Oui, mais seulement par la loi et pour des motifs précis, comme l'ordre public, la sécurité ou la santé publique.",
+      "explication": "Ces limites doivent être nécessaires et proportionnées ; le juge peut les contrôler.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Oui, par la loi, pour l'intérêt général",
+        "mauvaises": [
+          "Non, jamais",
+          "Oui, sans aucune règle",
+          "Oui, selon la religion des personnes"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-23",
+      "theme": 3,
+      "numero": 23,
+      "question": "Parmi ces actions, laquelle permet d'adopter une attitude respectueuse de l'environnement ?",
+      "reponse": "Par exemple trier ses déchets, économiser l'eau et l'énergie ou utiliser les transports en commun.",
+      "explication": "La Charte de l'environnement rappelle que chacun doit participer à la préservation de l'environnement.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Trier ses déchets",
+        "mauvaises": [
+          "Laisser les lumières allumées",
+          "Jeter ses déchets dans la rivière",
+          "Brûler ses déchets dans le jardin"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-24",
+      "theme": 3,
+      "numero": 24,
+      "question": "Quelle proposition constitue une obligation ?",
+      "reponse": "Par exemple respecter la loi, payer ses impôts ou scolariser ses enfants.",
+      "explication": "Voter, en revanche, est un droit et un devoir civique, mais pas une obligation légale.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Payer ses impôts",
+        "mauvaises": [
+          "Voter à toutes les élections",
+          "Adhérer à un parti politique",
+          "Être membre d'une association"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-26",
+      "theme": 3,
+      "numero": 26,
+      "question": "Pourquoi doit-on trier ses déchets ?",
+      "reponse": "Pour recycler les matériaux, réduire la pollution et préserver les ressources naturelles.",
+      "explication": "Les consignes de tri sont données par la commune ; les erreurs de tri compliquent le recyclage.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour recycler et protéger l'environnement",
+        "mauvaises": [
+          "Pour payer moins d'impôts",
+          "Pour remplir la poubelle plus vite",
+          "Ce n'est pas utile"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-28",
+      "theme": 3,
+      "numero": 28,
+      "question": "Que doit-on faire face aux ordres des policiers ou gendarmes ?",
+      "reponse": "S'y conformer ; on peut ensuite contester par les voies légales.",
+      "explication": "Refuser d'obtempérer, par exemple lors d'un contrôle routier, est un délit.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Obéir aux ordres",
+        "mauvaises": [
+          "Partir en courant",
+          "Refuser de donner son identité",
+          "Les insulter"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-30",
+      "theme": 3,
+      "numero": 30,
+      "question": "Quel est un exemple d'assistance à personne en danger ?",
+      "reponse": "Appeler les secours (15, 18 ou 112) pour une personne blessée ou victime d'un malaise, et lui porter secours si on peut le faire sans danger.",
+      "explication": "Ne pas porter assistance à une personne en danger est puni par la loi (article 223-6 du Code pénal).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Appeler les secours pour une personne blessée",
+        "mauvaises": [
+          "Filmer la scène sans aider",
+          "Passer son chemin",
+          "Attendre que quelqu'un d'autre agisse"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-31",
+      "theme": 3,
+      "numero": 31,
+      "question": "Quel exemple illustre une limitation de liberté pour protéger l'intérêt général ?",
+      "reponse": "Par exemple l'obligation de porter la ceinture de sécurité ou l'interdiction de fumer dans les lieux publics.",
+      "explication": "Ces règles limitent la liberté individuelle pour protéger la santé et la sécurité de tous.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'interdiction de fumer dans les lieux publics",
+        "mauvaises": [
+          "Le droit de vote",
+          "La liberté de religion",
+          "Le droit de se marier"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-32",
+      "theme": 3,
+      "numero": 32,
+      "question": "Quelle est l'attitude à avoir lorsque qu'on est témoin de violences ?",
+      "reponse": "Alerter la police ou la gendarmerie (17 ou 112) et aider la victime sans se mettre en danger.",
+      "explication": "Ne pas agir alors qu'on peut le faire sans risque est puni par la loi. Pour les violences faites aux femmes, le 3919 écoute et conseille.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Alerter la police",
+        "mauvaises": [
+          "Ne rien faire",
+          "Filmer et publier la vidéo",
+          "Se battre avec l'agresseur"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-34",
+      "theme": 3,
+      "numero": 34,
+      "question": "Quelle obligation concerne toutes les personnes résidant en France quelle que soit leur nationalité ?",
+      "reponse": "Respecter les lois françaises.",
+      "explication": "Toute personne qui vit en France, quelle que soit sa nationalité, doit respecter la loi ; elle doit aussi, par exemple, déclarer ses revenus et scolariser ses enfants.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Respecter les lois",
+        "mauvaises": [
+          "Voter",
+          "Faire le service militaire",
+          "Parler plusieurs langues"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-35",
+      "theme": 3,
+      "numero": 35,
+      "question": "Quelle proposition représente un exemple de crime ?",
+      "reponse": "Par exemple un meurtre ou un viol.",
+      "explication": "Les crimes sont les infractions les plus graves ; ils sont jugés par une cour d'assises ou une cour criminelle départementale.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un meurtre",
+        "mauvaises": [
+          "Un vol à l'étalage",
+          "Un léger excès de vitesse",
+          "Un stationnement interdit"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-36",
+      "theme": 3,
+      "numero": 36,
+      "question": "Quelle proposition représente un exemple de délit ?",
+      "reponse": "Par exemple un vol ou la conduite sans permis.",
+      "explication": "Les délits sont jugés par le tribunal correctionnel ; ils sont punis d'amendes et parfois de prison.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Un vol",
+        "mauvaises": [
+          "Un meurtre",
+          "Un stationnement gênant",
+          "Une promenade la nuit"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-37",
+      "theme": 3,
+      "numero": 37,
+      "question": "Qui veille au maintien de l'ordre public ?",
+      "reponse": "Les forces de l'ordre : la police et la gendarmerie, sous l'autorité de l'État.",
+      "explication": "Elles protègent les personnes et les biens et font respecter la loi.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La police et la gendarmerie",
+        "mauvaises": [
+          "Les associations",
+          "Les enseignants",
+          "Les médecins"
+        ]
+      }
+    },
+    {
+      "id": "cr-3-38",
+      "theme": 3,
+      "numero": 38,
+      "question": "S'agissant des déchets, quelle proposition est correcte ?",
+      "reponse": "Il faut les trier et les déposer aux endroits prévus : poubelles, conteneurs de tri, déchèterie.",
+      "explication": "Les dépôts sauvages et les déchets jetés sur la voie publique sont punis d'amendes.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Il faut les trier et les jeter aux endroits prévus",
+        "mauvaises": [
+          "On peut les laisser dans la rue",
+          "On peut les brûler dans son jardin",
+          "On peut les jeter dans la rivière"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-1",
+      "theme": 4,
+      "numero": 1,
+      "question": "Quel était le surnom de Louis XIV ?",
+      "reponse": "Le Roi-Soleil.",
+      "explication": "Louis XIV a régné de 1643 à 1715 et a fait construire le château de Versailles.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le Roi-Soleil",
+        "mauvaises": [
+          "Le Bien-Aimé",
+          "Le Lion",
+          "Le Grand Empereur"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-6",
+      "theme": 4,
+      "numero": 6,
+      "question": "Pourquoi la Shoah est-elle étudiée à l'école ?",
+      "reponse": "Pour transmettre la mémoire du génocide des Juifs et lutter contre le racisme et l'antisémitisme.",
+      "explication": "C'est le devoir de mémoire : environ 6 millions de Juifs d'Europe ont été assassinés par les nazis, dont près de 76 000 déportés depuis la France.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Pour le devoir de mémoire",
+        "mauvaises": [
+          "Pour apprendre une langue",
+          "Pour célébrer une victoire",
+          "Elle n'est pas étudiée à l'école"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-10",
+      "theme": 4,
+      "numero": 10,
+      "question": "Durant le mandat de quel président la peine de mort a-t-elle été abolie ?",
+      "reponse": "François Mitterrand, en 1981.",
+      "explication": "La loi d'abolition a été défendue par le garde des Sceaux, Robert Badinter.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "François Mitterrand",
+        "mauvaises": [
+          "Charles de Gaulle",
+          "Jacques Chirac",
+          "Valéry Giscard d'Estaing"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-11",
+      "theme": 4,
+      "numero": 11,
+      "question": "Quel régime politique a été mis en place pendant la Révolution française en 1792 ?",
+      "reponse": "La République (Ire République).",
+      "explication": "Elle a été proclamée en septembre 1792, après la chute de la monarchie.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La République",
+        "mauvaises": [
+          "L'Empire",
+          "La monarchie absolue",
+          "La dictature militaire"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-15",
+      "theme": 4,
+      "numero": 15,
+      "question": "Quelle peine a été supprimée en 1981 ?",
+      "reponse": "La peine de mort.",
+      "explication": "La loi du 9 octobre 1981, portée par Robert Badinter, l'a abolie.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La peine de mort",
+        "mauvaises": [
+          "La prison à perpétuité",
+          "Le service militaire",
+          "Les amendes"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-17",
+      "theme": 4,
+      "numero": 17,
+      "question": "En quelle année a commencé la Première Guerre mondiale ?",
+      "reponse": "En 1914.",
+      "explication": "La Première Guerre mondiale a duré de 1914 à 1918 ; elle s'est terminée par l'armistice du 11 novembre 1918.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "1914",
+        "mauvaises": [
+          "1939",
+          "1870",
+          "1918"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-18",
+      "theme": 4,
+      "numero": 18,
+      "question": "Où a eu lieu le débarquement en 1944 ?",
+      "reponse": "En Normandie, le 6 juin 1944.",
+      "explication": "Le débarquement allié a ouvert la voie à la libération de la France ; un autre débarquement a eu lieu en Provence en août 1944.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En Normandie",
+        "mauvaises": [
+          "En Bretagne",
+          "Dans le Nord",
+          "En Corse"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-19",
+      "theme": 4,
+      "numero": 19,
+      "question": "Quel continent a été le plus concerné par la décolonisation française après la Seconde Guerre mondiale ?",
+      "reponse": "L'Afrique.",
+      "explication": "De nombreux pays d'Afrique sont devenus indépendants, surtout autour de 1960 ; l'Algérie en 1962.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'Afrique",
+        "mauvaises": [
+          "L'Amérique",
+          "L'Océanie",
+          "L'Europe"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-22",
+      "theme": 4,
+      "numero": 22,
+      "question": "Quel pays a une frontière terrestre avec la France métropolitaine ?",
+      "reponse": "Par exemple la Belgique, le Luxembourg, l'Allemagne, la Suisse, l'Italie, l'Espagne, Andorre ou Monaco.",
+      "explication": "La France métropolitaine partage des frontières terrestres avec ces huit pays.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'Espagne",
+        "mauvaises": [
+          "Le Portugal",
+          "Les Pays-Bas",
+          "L'Autriche"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-31",
+      "theme": 4,
+      "numero": 31,
+      "question": "Quel pays a une frontière avec la France métropolitaine au nord-est ?",
+      "reponse": "L'Allemagne (ainsi que la Belgique et le Luxembourg).",
+      "explication": "À l'est, la France a aussi une frontière avec la Suisse ; au sud-est, avec l'Italie.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'Allemagne",
+        "mauvaises": [
+          "L'Espagne",
+          "Le Portugal",
+          "L'Irlande"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-32",
+      "theme": 4,
+      "numero": 32,
+      "question": "Où se trouvent les principales activités économiques en France ?",
+      "reponse": "Surtout dans les grandes villes et leurs alentours, en particulier en Île-de-France.",
+      "explication": "La région parisienne produit environ 30 % de la richesse du pays ; les grandes métropoles comme Lyon, Marseille ou Toulouse sont aussi des centres économiques importants.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Dans les grandes villes, surtout en Île-de-France",
+        "mauvaises": [
+          "Uniquement en montagne",
+          "Uniquement à la campagne",
+          "Uniquement en outre-mer"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-33",
+      "theme": 4,
+      "numero": 33,
+      "question": "Parmi ces pays, lequel attire le plus de visiteurs chaque année ?",
+      "reponse": "La France.",
+      "explication": "C'est le pays le plus visité au monde, avec environ 100 millions de touristes internationaux par an.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La France",
+        "mauvaises": [
+          "Le Portugal",
+          "La Belgique",
+          "La Suède"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-34",
+      "theme": 4,
+      "numero": 34,
+      "question": "Où habite la majorité des Français ?",
+      "reponse": "En ville : environ 80 % des Français vivent dans des villes ou leurs agglomérations.",
+      "explication": "Les grandes agglomérations (Paris, Lyon, Marseille…) rassemblent une grande partie de la population.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "En ville",
+        "mauvaises": [
+          "À la montagne",
+          "Dans des fermes isolées",
+          "Sur les îles"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-35",
+      "theme": 4,
+      "numero": 35,
+      "question": "Quelle région est la plus peuplée ?",
+      "reponse": "L'Île-de-France.",
+      "explication": "Avec plus de 12 millions d'habitants, elle rassemble près d'un Français sur cinq.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'Île-de-France",
+        "mauvaises": [
+          "La Corse",
+          "La Bretagne",
+          "La Normandie"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-37",
+      "theme": 4,
+      "numero": 37,
+      "question": "Lequel de ces départements de France est le plus touristique ?",
+      "reponse": "Paris.",
+      "explication": "Paris accueille chaque année des dizaines de millions de visiteurs : tour Eiffel, Louvre, Notre-Dame… La Seine-et-Marne, avec Disneyland Paris, est aussi très visitée.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Paris",
+        "mauvaises": [
+          "La Creuse",
+          "La Lozère",
+          "Le Cantal"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-39",
+      "theme": 4,
+      "numero": 39,
+      "question": "Combien de personnes parlent français dans le monde ?",
+      "reponse": "Environ 400 millions de personnes.",
+      "explication": "Selon le rapport de l'Organisation internationale de la Francophonie publié en 2026, 396 millions de personnes parlent français, en grande partie en Afrique.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Environ 400 millions",
+        "mauvaises": [
+          "Environ 40 millions",
+          "Environ 4 milliards",
+          "Environ 4 millions"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-44",
+      "theme": 4,
+      "numero": 44,
+      "question": "Quel est le classement de la langue française parmi les langues les plus parlées dans le monde ?",
+      "reponse": "Elle fait partie des cinq langues les plus parlées au monde.",
+      "explication": "Selon le rapport de l'Organisation internationale de la Francophonie publié en 2026, le français est la 4e langue la plus parlée, après l'anglais, le mandarin et l'espagnol ; il était 5e dans le rapport précédent.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Parmi les cinq premières",
+        "mauvaises": [
+          "Vers la 20e place",
+          "Vers la 50e place",
+          "Parmi les dernières"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-45",
+      "theme": 4,
+      "numero": 45,
+      "question": "Quelle cathédrale célèbre a été en partie détruite par un incendie en 2019 ?",
+      "reponse": "Notre-Dame de Paris.",
+      "explication": "Touchée par un incendie le 15 avril 2019, elle a rouvert au public en décembre 2024 après sa restauration.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Notre-Dame de Paris",
+        "mauvaises": [
+          "La cathédrale de Chartres",
+          "La cathédrale de Strasbourg",
+          "Le Mont-Saint-Michel"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-46",
+      "theme": 4,
+      "numero": 46,
+      "question": "Qui était une écrivaine française célèbre ?",
+      "reponse": "Par exemple George Sand, Colette, Simone de Beauvoir ou Marguerite Yourcenar.",
+      "explication": "Marguerite Yourcenar a été la première femme élue à l'Académie française, en 1980.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Colette",
+        "mauvaises": [
+          "Marie Curie",
+          "Édith Piaf",
+          "Joséphine Baker"
+        ]
+      }
+    },
+    {
+      "id": "cr-4-49",
+      "theme": 4,
+      "numero": 49,
+      "question": "Quelle fête est française ?",
+      "reponse": "Par exemple la fête nationale du 14 juillet ou la Fête de la musique, le 21 juin.",
+      "explication": "La Fête de la musique a été créée en France en 1982 et s'est ensuite répandue dans le monde entier.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "La Fête de la musique",
+        "mauvaises": [
+          "Thanksgiving",
+          "La Saint-Patrick",
+          "Le Nouvel An chinois"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-6",
+      "theme": 5,
+      "numero": 6,
+      "question": "Quelle est l'une des conditions pour passer l'examen du permis de conduire ?",
+      "reponse": "Avoir au moins 17 ans pour le permis B (voiture).",
+      "explication": "Il faut aussi réussir l'examen du code de la route puis l'épreuve de conduite ; l'apprentissage peut commencer dès 15 ans en conduite accompagnée.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Avoir au moins 17 ans",
+        "mauvaises": [
+          "Avoir au moins 21 ans",
+          "Avoir la nationalité française",
+          "Posséder déjà une voiture"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-7",
+      "theme": 5,
+      "numero": 7,
+      "question": "Un bail locatif est valide s'il est :",
+      "reponse": "Écrit et signé par le locataire et le propriétaire.",
+      "explication": "Le bail précise notamment le loyer, la durée et le dépôt de garantie ; un état des lieux est fait à l'entrée et à la sortie.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Écrit et signé par les deux parties",
+        "mauvaises": [
+          "Seulement oral",
+          "Signé par le maire",
+          "Signé par le locataire seul"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-17",
+      "theme": 5,
+      "numero": 17,
+      "question": "Lorsqu'un employeur veut qu'un salarié travaille plus longtemps que la durée prévue dans le contrat de travail :",
+      "reponse": "Ce sont des heures supplémentaires : elles doivent être payées davantage ou compensées par du repos.",
+      "explication": "En principe, la majoration est de 25 % pour les 8 premières heures supplémentaires de la semaine, puis de 50 %, sauf accord collectif différent.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Les heures en plus sont payées davantage",
+        "mauvaises": [
+          "Le salarié travaille gratuitement",
+          "Le salarié doit payer l'employeur",
+          "C'est interdit dans tous les cas"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-18",
+      "theme": 5,
+      "numero": 18,
+      "question": "Quelle est la mission de France Travail ?",
+      "reponse": "Accompagner les personnes qui cherchent un emploi, les indemniser et aider les entreprises à recruter.",
+      "explication": "France Travail a remplacé Pôle emploi en 2024 ; l'inscription peut se faire en ligne.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Aider les demandeurs d'emploi",
+        "mauvaises": [
+          "Délivrer les titres de séjour",
+          "Payer les retraites",
+          "Juger les conflits du travail"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-19",
+      "theme": 5,
+      "numero": 19,
+      "question": "Dans une entreprise, le droit syndical permet :",
+      "reponse": "Aux salariés de créer un syndicat ou d'y adhérer pour défendre leurs intérêts.",
+      "explication": "La liberté syndicale est garantie par la Constitution ; un salarié ne peut pas être sanctionné parce qu'il est syndiqué.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "D'adhérer à un syndicat",
+        "mauvaises": [
+          "De ne jamais travailler",
+          "De fixer seul son salaire",
+          "De licencier son employeur"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-21",
+      "theme": 5,
+      "numero": 21,
+      "question": "Quelles sont les conditions pour toucher les allocations chômage ?",
+      "reponse": "Avoir perdu son emploi sans l'avoir choisi, avoir suffisamment travaillé auparavant, être inscrit à France Travail et chercher activement un emploi.",
+      "explication": "En général, il faut avoir travaillé au moins 6 mois (130 jours) au cours des 24 derniers mois. Une démission ne donne en principe pas droit au chômage, sauf exceptions.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Avoir perdu son emploi et être inscrit à France Travail",
+        "mauvaises": [
+          "Avoir démissionné sans raison",
+          "Être propriétaire",
+          "Avoir plus de 60 ans"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-22",
+      "theme": 5,
+      "numero": 22,
+      "question": "Qu'est-ce que l'école maternelle ?",
+      "reponse": "L'école des enfants de 3 à 6 ans.",
+      "explication": "L'instruction est obligatoire dès 3 ans depuis 2019 ; l'école maternelle publique est gratuite.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "L'école des enfants de 3 à 6 ans",
+        "mauvaises": [
+          "Une crèche pour les bébés",
+          "Une école pour les mères",
+          "Le début du collège"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-23",
+      "theme": 5,
+      "numero": 23,
+      "question": "Comment s'appelle le diplôme passé par les élèves à la fin du collège ?",
+      "reponse": "Le diplôme national du brevet (DNB).",
+      "explication": "Il est passé à la fin de la classe de 3e.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Le brevet",
+        "mauvaises": [
+          "Le baccalauréat",
+          "La licence",
+          "Le permis de conduire"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-24",
+      "theme": 5,
+      "numero": 24,
+      "question": "Les parents d'élève ont le droit de :",
+      "reponse": "Par exemple être informés des résultats de leur enfant, rencontrer les enseignants et élire leurs représentants au conseil d'école ou au conseil d'administration.",
+      "explication": "Les parents sont membres de la communauté éducative.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Rencontrer les enseignants de leur enfant",
+        "mauvaises": [
+          "Choisir les programmes scolaires",
+          "Noter les enseignants",
+          "Changer les horaires de l'école"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-25",
+      "theme": 5,
+      "numero": 25,
+      "question": "Qui peut manger à la cantine scolaire ?",
+      "reponse": "Tous les enfants scolarisés, sans discrimination, lorsque la commune propose ce service.",
+      "explication": "Depuis 2017, la loi prévoit que l'inscription à la cantine des écoles primaires est un droit pour tous les enfants scolarisés. Le prix dépend souvent des revenus de la famille.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Tous les élèves, sans discrimination",
+        "mauvaises": [
+          "Seulement les enfants dont les parents travaillent",
+          "Seulement les enfants français",
+          "Seulement les enfants de plus de 10 ans"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-28",
+      "theme": 5,
+      "numero": 28,
+      "question": "À l'école, il est interdit aux parents de :",
+      "reponse": "Par exemple de perturber le fonctionnement de l'école, de faire du prosélytisme ou d'empêcher leur enfant de suivre un enseignement obligatoire.",
+      "explication": "Les parents doivent respecter le règlement de l'école, les enseignants et le principe de laïcité.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Empêcher leur enfant de suivre un cours obligatoire",
+        "mauvaises": [
+          "Rencontrer l'enseignant",
+          "Participer au conseil d'école",
+          "Consulter les notes de leur enfant"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-31",
+      "theme": 5,
+      "numero": 31,
+      "question": "Quand ont lieu les vacances scolaires de Noël ?",
+      "reponse": "Pendant deux semaines, à la fin du mois de décembre et au début du mois de janvier.",
+      "explication": "Les dates sont fixées par le ministère de l'Éducation nationale et sont les mêmes dans toute la France métropolitaine.",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "Fin décembre, pendant deux semaines",
+        "mauvaises": [
+          "En juillet et en août",
+          "En février",
+          "À Pâques"
+        ]
+      }
+    },
+    {
+      "id": "cr-5-32",
+      "theme": 5,
+      "numero": 32,
+      "question": "À l'école, un enfant en situation de handicap :",
+      "reponse": "A le droit d'être scolarisé, avec les aménagements nécessaires.",
+      "explication": "L'école est inclusive : l'enfant peut être aidé, par exemple, par un accompagnant d'élève en situation de handicap (AESH).",
+      "complement_hors_livret": "",
+      "reponse_hors_livret": false,
+      "livret_pages": "",
+      "qcm": {
+        "bonne": "A le droit d'être scolarisé avec des aménagements",
+        "mauvaises": [
+          "Ne peut pas aller à l'école",
+          "Doit aller dans une école privée payante",
+          "Doit rester à la maison"
         ]
       }
     }

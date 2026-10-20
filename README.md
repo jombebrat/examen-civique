@@ -1,12 +1,14 @@
 # Coq Civique — examen civique : les 259 questions et réponses
 
-Site de révision pour l’examen civique (naturalisation), publié sur https://coqcivique.com : une page par question, une page par thème et une application de révision (cartes, quiz QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages ; compte facultatif et livret PDF via Supabase (voir plus bas).
+Site de révision pour l’examen civique, publié sur https://coqcivique.com : les trois listes officielles de questions (naturalisation, carte de résident, carte de séjour pluriannuelle) avec une page par question, des guides, et une application de révision (cartes, QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages ; compte facultatif et livret PDF via Supabase (voir plus bas).
 
 ## Organisation
 
 | Dossier / fichier | Rôle |
 |---|---|
-| `data/questions.json` | **Le contenu** : thèmes, questions, réponses, explications, propositions du QCM. C’est le seul fichier à modifier pour corriger une réponse. |
+| `data/questions.json` | **Les réponses** : thèmes, questions, réponses, explications, propositions du QCM. C’est le fichier à modifier pour corriger une réponse. |
+| `data/listes.json` | Listes officielles carte de résident (CR) et carte de séjour pluriannuelle (CSP) : ordre, numéro et formulation exacte de chaque question, avec l’id de la question qui porte la réponse. |
+| `content/guides/`, `content/pages/` | Guides et pages (À propos, plan en 7 jours, conditions d’utilisation) en HTML simple, avec un en-tête JSON (titre, description, date). |
 | `site.config.json` | Nom du site, éditeur (mentions légales), connexion Supabase. |
 | `src/site/site.css` | Apparence des pages du site. |
 | `src/site/coq.js` | Fenêtre « votre email », liens PDF, sauvegarde en ligne. |
@@ -15,6 +17,16 @@ Site de révision pour l’examen civique (naturalisation), publié sur https://
 | `scripts/validate.mjs` | Vérifie les données (lancé automatiquement avant chaque publication). |
 | `scripts/build.mjs` | Génère le site dans `dist/`. |
 | `.github/workflows/deploy.yml` | Vérifie, génère et publie le site à chaque modification de `main`. |
+
+## Les trois listes
+
+- **Naturalisation** : les questions dont l’id est « thème-numéro » (par exemple `1-17`) dans `data/questions.json`.
+- **Carte de résident et CSP** : `data/listes.json`. Une question déjà présente dans la liste naturalisation est simplement référencée (avec sa formulation officielle si elle diffère) ; les questions propres à ces listes ont un id `csp-…` ou `cr-…` dans `data/questions.json`.
+- Si le ministère modifie les listes : mettre à jour `data/sources/listes-csp-cr.txt` et les réponses dans `tools/listes/contenu_a.py` / `contenu_b.py`, puis lancer `python3 tools/listes/fusion.py`.
+
+## Modifier un guide ou une page
+
+Ouvrez le fichier dans `content/guides/` ou `content/pages/` (directement sur GitHub, icône crayon). Le texte est en HTML simple (`<p>`, `<h2>`, `<ul>`). Mettez à jour la date `"maj"` dans l’en-tête. Pour ajouter un guide, créez un nouveau fichier : il apparaît automatiquement dans `/guide/` et dans le sitemap. Raccourcis utilisables : `{{href:/reviser/}}` (lien interne), `{{nat}}`, `{{cr}}`, `{{csp}}` (nombre de questions), `{{contact}}`.
 
 ## Corriger ou modifier une question
 
@@ -70,7 +82,7 @@ cd dist && python3 -m http.server  # le voir sur http://localhost:8000
 
 Projet Supabase `coq-civique` (région Paris), déjà configuré ; les fichiers du dépôt servent de référence.
 
-- `supabase/migrations/0003_progression_par_email.sql` : table `learners` (email, accord pour les nouvelles, progression) et fonctions `coq_open` / `coq_save`. La table n’est pas lisible depuis le site ; les deux fonctions sont le seul accès, ce que signalent (normalement) les avertissements « SECURITY DEFINER » de Supabase.
+- `supabase/migrations/0003_progression_par_email.sql` et `0004_preuve_consentement.sql` : table `learners` (email, accord pour les nouvelles et sa date `newsletter_at`, progression) et fonctions `coq_open` / `coq_save`. La table n’est pas lisible depuis le site ; les deux fonctions sont le seul accès, ce que signalent (normalement) les avertissements « SECURITY DEFINER » de Supabase.
 - Les adresses se consultent dans Supabase → Table Editor → `learners` (colonne `newsletter` = accord pour les nouvelles).
 - `site.config.json` → `supabase` : adresse du projet, clé publique (« publishable », jamais la clé secrète) et `"actif"` (`false` pour tout désactiver).
 - Anciens éléments non utilisés : tables `progress` et `pdf_downloads`, fonction `delete-account`, modèle `supabase/emails/` (connexion par code, si on veut un jour des comptes vérifiés).
