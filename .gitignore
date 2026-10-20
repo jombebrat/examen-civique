@@ -2,3 +2,4 @@ dist/
 node_modules/
 .DS_Store
 tools/pdf/out/
+__pycache__/
