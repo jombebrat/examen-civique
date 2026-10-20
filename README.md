@@ -1,6 +1,6 @@
-# Examen civique : les 259 questions et réponses
+# Coq Civique — examen civique : les 259 questions et réponses
 
-Site de révision pour l’examen civique (naturalisation) : une page par question, une page par thème et une application de révision (cartes, quiz QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages, sans compte ni cookie.
+Site de révision pour l’examen civique (naturalisation), publié sur https://coqcivique.com : une page par question, une page par thème et une application de révision (cartes, quiz QCM, examen blanc de 40 questions en 45 minutes). Site statique publié sur GitHub Pages, sans compte ni cookie.
 
 ## Organisation
 
