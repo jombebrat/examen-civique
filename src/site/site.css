@@ -111,6 +111,7 @@ section.block > h2{ font-size:26px; margin-bottom:14px; }
 
 /* Texte courant (mentions légales) */
 .prose h2{ font-size:22px; margin:28px 0 8px; }
+.prose h3{ font-size:18px; margin:18px 0 4px; }
 .prose p, .prose li{ color:var(--ink); }
 
 /* Pied de page */
@@ -127,3 +128,20 @@ footer a{ color:var(--muted); }
   .pager{ grid-template-columns:1fr; } .pager .next{ text-align:left; }
 }
 @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+
+/* Livret PDF */
+.pdf{ display:grid; grid-template-columns:150px 1fr; gap:22px; align-items:start; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px; }
+.pdf[hidden]{ display:none; }
+.pdf img{ width:100%; height:auto; border-radius:6px; box-shadow:0 1px 0 var(--line), 0 6px 18px rgba(21,32,59,.12); background:#fff; }
+.pdf h2{ font-size:24px; margin-bottom:6px; }
+.pdf .pdf-lead{ margin:0 0 14px; color:var(--muted); }
+.pdf-form label[for]{ display:block; font-weight:700; font-size:15px; margin-bottom:6px; }
+.pdf-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.pdf-row input{ flex:1 1 220px; min-width:0; min-height:46px; padding:10px 12px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font:inherit; }
+.pdf-row input:focus{ outline:2.5px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
+.pdf-check{ display:flex; gap:10px; align-items:flex-start; margin-top:12px; font-size:14.5px; color:var(--ink); }
+.pdf-check input{ margin-top:4px; width:18px; height:18px; flex:none; accent-color:var(--accent); }
+.pdf-note{ font-size:13.5px; color:var(--muted); margin:10px 0 0; }
+.pdf-err{ color:var(--red); font-weight:700; font-size:14.5px; margin:10px 0 0; }
+.pdf-ok{ font-weight:700; margin:0 0 12px; }
+@media (max-width:640px){ .pdf{ grid-template-columns:1fr; } .pdf img{ max-width:150px; } }

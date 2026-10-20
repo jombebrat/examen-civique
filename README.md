@@ -65,6 +65,24 @@ cd dist && python3 -m http.server  # le voir sur http://localhost:8000
 
 Avant une diffusion publique, renseigner `editeur` dans `site.config.json` (mentions légales obligatoires en France).
 
+## Comptes et livret PDF (Supabase)
+
+- `supabase/migrations/0001_comptes_et_livret.sql` : tables `progress` (progression de chaque compte) et `pdf_downloads` (demandes du livret), règles de sécurité (RLS) et fonction `delete_my_account()`.
+- `supabase/emails/code-de-connexion.html` : modèle d’email (code à 6 chiffres) pour **Magic Link** et **Confirm signup**.
+- Dans `site.config.json`, renseigner `supabase.url` et `supabase.cle_publique` (clé publique « anon/publishable », jamais la clé secrète). Sans ces deux valeurs, la connexion et le formulaire du livret sont masqués et le site fonctionne sans compte.
+- Supabase n’envoie les emails à tous les utilisateurs qu’avec un service SMTP configuré (par exemple Brevo) : Authentication → Emails → SMTP Settings.
+
+## Régénérer le livret PDF
+
+Le PDF (`assets/coq-civique-examen-civique.pdf`) est produit à partir de `data/questions.json` :
+
+```bash
+pip install playwright pypdf pdfplumber reportlab fonttools brotli
+python3 tools/pdf/render_pdf.py      # crée le PDF
+python3 tools/pdf/check_pdf.py assets/coq-civique-examen-civique.pdf   # vérifie les chevauchements
+```
+Après une modification importante des réponses, régénérer le PDF puis la vignette : `pdftoppm -r 40 -png -f 1 -l 1 -singlefile assets/coq-civique-examen-civique.pdf assets/livret-couverture`.
+
 ## Sources
 
 - Liste officielle des questions de connaissance (naturalisation), ministère de l’Intérieur, 12 décembre 2025.

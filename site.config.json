@@ -5,7 +5,13 @@
   "langue": "fr",
   "editeur": {
     "nom": "À COMPLÉTER",
-    "contact": "À COMPLÉTER"
+    "contact": "pavlovicjov@yahoo.com"
   },
-  "hebergeur": "GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis"
+  "hebergeur": "GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis",
+  "supabase": {
+    "url": "",
+    "cle_publique": "",
+    "region": ""
+  },
+  "emails": "À COMPLÉTER (prestataire d'envoi des emails, ex. Brevo)"
 }

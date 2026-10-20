@@ -1,0 +1,8 @@
+<!-- Modèle pour Authentication → Emails → « Magic Link » ET « Confirm signup ». Sujet : Votre code Coq Civique : {{ .Token }} -->
+<div style="font-family:Arial,Helvetica,sans-serif;max-width:480px;margin:0 auto;color:#15203B">
+  <p style="font-size:18px;font-weight:bold;margin:0 0 12px">Coq Civique</p>
+  <p>Voici votre code de connexion :</p>
+  <p style="font-size:32px;font-weight:bold;letter-spacing:6px;margin:16px 0">{{ .Token }}</p>
+  <p>Saisissez-le sur la page « Réviser » pour retrouver votre progression. Vous pouvez aussi <a href="{{ .ConfirmationURL }}">vous connecter directement avec ce lien</a>.</p>
+  <p style="color:#56607A;font-size:13px">Ce code est valable une heure. Si vous n’avez rien demandé, ignorez simplement cet email.</p>
+</div>

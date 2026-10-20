@@ -27,6 +27,12 @@ const tPath = (t) => `/questions/${t.slug}/`;
 const byTheme = (id) => questions.filter((q) => q.theme === id);
 const TOTAL = questions.length;
 const sitemap = [];
+const SB = config.supabase || {};
+const SB_ON = Boolean(SB.url && SB.cle_publique);
+const PDF_PATH = "/assets/coq-civique-examen-civique.pdf";
+const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfPage: href("/#pdf"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
+<script src="${href("/assets/vendor/supabase.js")}"></script>
+<script src="${href("/assets/coq.js")}"></script>` : "";
 
 function write(path, html) {
   const file = join(DIST, path.endsWith("/") ? path + "index.html" : path);
@@ -45,7 +51,7 @@ const breadcrumbLd = (items) => ({
 const crumbs = (items) => `<nav class="crumbs" aria-label="Fil d’Ariane"><ol>${items.map(([name, path], i) =>
   i === items.length - 1 ? `<li aria-current="page">${esc(name)}</li>` : `<li><a href="${href(path)}">${esc(name)}</a></li>`).join("")}</ol></nav>`;
 
-function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true }) {
+function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true, sb = false }) {
   if (index && canonical === path && !path.endsWith(".html")) sitemap.push(path);
   const color = theme ? ` style="--c:var(--t${theme})"` : "";
   return `<!doctype html>
@@ -91,6 +97,7 @@ ${body}
   </div>
   <p>${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : liste officielle publiée le 12 décembre 2025. Réponses rédigées d’après le Livret du citoyen (édition mai 2026).</p>
 </footer>
+${sb ? sbScripts() : ""}
 </body>
 </html>
 `;
@@ -133,6 +140,12 @@ function home() {
   </div>
   <p style="margin-top:16px"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant, sans inscription</a></p>
 </section>
+${SB_ON ? `<section class="block pdf" id="pdf" data-pdf hidden>
+  <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
+  <div><h2>Le livret de révision en PDF</h2>
+  <p class="pdf-lead">Les ${TOTAL} questions et réponses sur 27 pages A4, à imprimer : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
+  <div class="pdf-body"><noscript>Activez JavaScript pour télécharger le livret.</noscript></div></div>
+</section>` : ""}
 <section class="block faq"><h2>Questions fréquentes</h2>
 ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></details>`).join("\n")}
 </section>`;
@@ -142,7 +155,7 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   write("/", layout({
     title: `Examen civique 2026 : les ${TOTAL} questions et réponses | ${NAME}`,
     description: `Les ${TOTAL} questions officielles de l’examen civique pour la naturalisation, avec leurs réponses expliquées. Cartes, quiz et examens blancs gratuits, sans inscription.`,
-    path: "/", body, jsonld: ld,
+    path: "/", body, jsonld: ld, sb: true,
   }));
 }
 
@@ -179,7 +192,8 @@ function themePage(t) {
 <h1>${typo(t.titre)}</h1></div>
 <div class="essentiel"><h2>L’essentiel à retenir</h2><ul>${t.essentiel.map((e) => `<li>${typo(e)}</li>`).join("")}</ul></div>
 <section class="block"><h2>Les ${qs.length} questions et leurs réponses</h2><ol class="qlist">${list}</ol></section>
-<div class="cta"><p>Entraînez-vous sur ce thème avec des cartes et des quiz.</p><a class="btn primary" href="${href("/reviser/")}">Réviser</a></div>`,
+<div class="cta"><p>Entraînez-vous sur ce thème avec des cartes et des quiz.</p><a class="btn primary" href="${href("/reviser/")}">Réviser</a></div>
+${SB_ON ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href("/#pdf")}">Obtenir le PDF</a></div>` : ""}`,
   }));
 }
 
@@ -242,6 +256,7 @@ function appPage() {
     .replaceAll("__HOME__", href("/"))
     .replaceAll("__QUESTIONS__", href("/questions/"))
     .replaceAll("__ASSETS__", href("/assets"))
+    .replace("__SUPABASE__", () => sbScripts())
     .replace("__DATA__", () => JSON.stringify(appData).replace(/<\//g, "<\\/")));
 }
 
@@ -249,16 +264,30 @@ function appPage() {
 function legal() {
   const e = config.editeur;
   const items = [["Accueil", "/"], ["Mentions légales", "/mentions-legales/"]];
+  const contact = `<a href="mailto:${esc(e.contact)}">${esc(e.contact)}</a>`;
+  const donnees = SB_ON ? `
+<p><b>Responsable du traitement :</b> ${esc(e.nom)}, joignable à ${contact}.</p>
+<h3>Compte (facultatif)</h3>
+<p>Si vous créez un compte, nous enregistrons votre adresse email et votre progression de révision (questions vues, réponses sues, résultats des examens blancs). Finalité : vous connecter avec un code reçu par email et retrouver votre progression sur tous vos appareils. Base légale : l’exécution du service que vous demandez. Durée : jusqu’à la suppression de votre compte, possible à tout moment depuis la page « Réviser ».</p>
+<h3>Livret PDF</h3>
+<p>Pour télécharger le livret, vous indiquez votre adresse email ; nous enregistrons aussi la date et votre choix concernant les nouvelles. Finalité : donner accès au livret et, uniquement si vous avez coché la case, vous envoyer des nouvelles de ${esc(NAME)}. Base légale : votre consentement, que vous pouvez retirer à tout moment. Durée : 3 ans après la collecte ou votre dernier contact avec nous.</p>
+<h3>Prestataires</h3>
+<p>Base de données et connexion : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Envoi des emails de connexion : ${esc(config.emails)}. Ces prestataires agissent pour notre compte dans le cadre d’accords de traitement des données. Vos données ne sont ni vendues ni cédées à des tiers.</p>
+<h3>Vos droits</h3>
+<p>Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l’utilisation, vous y opposer, en demander la portabilité et retirer votre consentement : écrivez à ${contact}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
+<h3>Stockage dans votre navigateur</h3>
+<p>Le site n’utilise ni cookie publicitaire ni outil de mesure d’audience. Il enregistre dans votre navigateur votre progression et, si vous êtes connecté, votre session de connexion. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
+<p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée uniquement dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
   write("/mentions-legales/", layout({
     title: `Mentions légales et confidentialité | ${NAME}`,
     description: `Mentions légales, hébergement et politique de confidentialité du site ${NAME}.`,
     path: "/mentions-legales/", jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="prose">
 <h1 style="font-size:clamp(28px,6vw,38px)">Mentions légales et confidentialité</h1>
-<h2>Éditeur du site</h2><p>${esc(e.nom)}<br>Contact : ${esc(e.contact)}</p>
-<h2>Hébergement</h2><p>${esc(config.hebergeur)}</p>
+<h2>Éditeur du site</h2><p>${esc(e.nom)}, à titre non professionnel.<br>Contact : ${contact}</p>
+<h2>Hébergement</h2><p>Site : ${esc(config.hebergeur)}</p>
 <h2>Site non officiel</h2><p>${esc(NAME)} est un site indépendant de révision. Il n’est ni édité ni validé par le ministère de l’Intérieur ou par un centre d’examen. Les questions reprennent la liste officielle des questions de connaissance publiée le 12 décembre 2025 ; les réponses sont rédigées par le site d’après le Livret du citoyen (édition mai 2026) et la Charte des droits et devoirs du citoyen français. Malgré le soin apporté, une erreur reste possible : en cas de doute, reportez-vous aux documents officiels.</p>
-<h2>Données personnelles</h2><p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée uniquement dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>
+<h2 id="donnees">Données personnelles</h2>${donnees}
 <h2>Polices de caractères</h2><p>Fraunces et Atkinson Hyperlegible, sous licence SIL Open Font License, hébergées sur ce site.</p>
 </div>`,
   }));
@@ -274,6 +303,7 @@ rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "assets"), join(DIST, "assets"), { recursive: true });
 cpSync(join(ROOT, "src/site/site.css"), join(DIST, "assets/site.css"));
+cpSync(join(ROOT, "src/site/coq.js"), join(DIST, "assets/coq.js"));
 mkdirSync(join(DIST, "data"), { recursive: true });
 cpSync(join(ROOT, "data/questions.json"), join(DIST, "data/questions.json"));
 home();
