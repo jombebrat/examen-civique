@@ -163,7 +163,8 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 
 /* ---------- Compte ---------- */
 #account:empty{ display:none; }
-#account{ margin-top:12px; }
+#account{ margin:0 0 12px; }
+.acct.ask{ background:var(--accent-weak); border-color:color-mix(in srgb, var(--accent) 35%, transparent); }
 .acct{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px; display:grid; gap:10px; }
 .acct h3{ font-family:var(--display); font-size:18px; margin:0; }
 .acct p{ margin:0; font-size:15px; color:var(--muted); }
@@ -342,13 +343,12 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 
     <div class="listrow"><div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
       <button type="button" class="entog" data-act="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button></div>
+    <div id="account"></div>
     <div class="panel today" id="today"></div>
 
     <h2 class="sec">Mon parcours</h2>
     <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
     <div id="path"></div>
-
-    <div id="account"></div>
 
     <h2 class="sec">Ma progression</h2>
     <div class="panel summary" id="summary"></div>
@@ -565,7 +565,9 @@ function renderAccount() {
   const e = ID.email();
   box.innerHTML = e
     ? `<div class="acct compact"><div><p>Progression liée à</p><div class="who">${esc(e)}</div></div><div class="row"><button class="btn small" data-act="acct-change">Changer d’adresse</button></div></div>`
-    : `<div class="acct compact"><div><h3>Gardez votre progression</h3><p>Indiquez votre email, sans mot de passe : rien de ce que vous avez appris n’est perdu, et vous le retrouvez sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
+    : Object.keys(P.cards).length
+      ? `<div class="acct compact ask"><div><h3>Gardez votre progression</h3><p>Indiquez votre email, sans mot de passe : rien de ce que vous avez appris n’est perdu, et vous le retrouvez sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`
+      : `<div class="acct compact ask"><div><h3>Déjà commencé ailleurs ?</h3><p>Indiquez votre email pour retrouver votre progression. Sinon, commencez simplement votre première leçon ci-dessous.</p></div><div class="row"><button class="btn small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
 }
 function initAccount() {
   ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
@@ -902,7 +904,7 @@ async function shareResult(score, pass) {
   } catch (e) { if (e && e.name === "AbortError") return; }
   window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
 }
-function refreshHome() { if (!$("#home").hidden) { renderLists(); renderToday(); renderPath(); renderSummary(); renderScopes(); renderHistory(); renderReport(); } }
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderAccount(); renderToday(); renderPath(); renderSummary(); renderScopes(); renderHistory(); renderReport(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
