@@ -184,6 +184,30 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .acct.compact{ grid-template-columns:1fr auto; align-items:center; }
 @media (max-width:480px){ .acct.compact{ grid-template-columns:1fr; } .acct.compact .row{ justify-content:flex-start; } }
 
+/* ---------- Onglets ---------- */
+.tabs{ display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; background:var(--sunk); border:1px solid var(--line); border-radius:14px; padding:4px; margin:4px 0 14px; position:sticky; top:env(safe-area-inset-top, 0px); z-index:4; }
+.tabs button{ border:0; background:transparent; border-radius:10px; padding:10px 6px; font:inherit; font-size:15px; font-weight:700; color:var(--muted); cursor:pointer; }
+.tabs button[aria-selected="true"]{ background:var(--accent); color:var(--on-accent); box-shadow:0 1px 3px rgba(12,18,32,.18); }
+.pane > .mode.primary{ width:100%; }
+/* Réviser un thème : le thème s'ouvre et propose cartes ou quiz */
+.sc2{ background:var(--surface); border:1.5px solid var(--line); border-radius:12px; overflow:hidden; }
+.sc2.open{ border-color:var(--c, var(--accent)); box-shadow:0 0 0 1px var(--c, var(--accent)) inset; }
+.sc2-h{ display:grid; grid-template-columns:34px minmax(0,1fr) auto 18px; align-items:center; gap:10px; width:100%; text-align:left; background:none; border:0; padding:11px 14px; font:inherit; color:var(--ink); cursor:pointer; }
+.sc2-h .num{ font-family:var(--display); font-weight:800; font-size:20px; color:var(--c, var(--accent)); }
+.sc2-h .nm{ font-weight:700; min-width:0; }
+.sc2-h .mini{ display:flex; height:5px; border-radius:99px; overflow:hidden; background:var(--sunk); margin-top:6px; }
+.sc2-h .mini span{ height:100%; } .sc2-h .mini .m{ background:var(--c, var(--good)); } .sc2-h .mini .l{ background:var(--c, var(--accent)); opacity:.35; }
+.sc2-h .ct{ font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.sc2-h .chev{ color:var(--muted); transition:transform .2s; } .sc2.open .chev{ transform:rotate(90deg); }
+.sc2-b{ display:grid; gap:8px; padding:2px 12px 12px; animation:rise .2s ease-out; }
+.go2{ display:grid; grid-template-columns:40px minmax(0,1fr) auto; gap:12px; align-items:center; width:100%; text-align:left; background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; font:inherit; color:var(--ink); cursor:pointer; }
+.go2:hover{ border-color:var(--c, var(--accent)); }
+.go2 .ic{ width:40px; height:40px; border-radius:10px; display:grid; place-items:center; background:var(--accent-weak); color:var(--accent); }
+.go2 .t{ font-weight:700; } .go2 .s{ display:block; font-size:13.5px; color:var(--muted); }
+.go2 .go{ color:var(--muted); }
+.go2.main{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); }
+.go2.main .ic{ background:color-mix(in srgb, var(--on-accent) 18%, transparent); color:var(--on-accent); } .go2.main .s, .go2.main .go{ color:var(--on-accent); opacity:.85; }
+
 /* ---------- Parcours : leçon du jour et chemin des leçons ---------- */
 .today{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px 14px; align-items:center; }
 .today .coq{ width:68px; height:68px; border-radius:20px; background:#fff; object-fit:cover; }
@@ -351,43 +375,39 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     <div class="listrow"><div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
       <div class="helpsw"><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية"><b>AR</b>مساعدة بالعربية</button></div></div>
     <div id="account"></div>
-    <div class="panel today" id="today"></div>
 
-    <h2 class="sec">Mon parcours</h2>
-    <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
-    <div id="path"></div>
-
-    <h2 class="sec">Ma progression</h2>
-    <div class="panel summary" id="summary"></div>
-
-    <h2 class="sec">Entraînement libre</h2>
-    <p class="sub">Choisissez un thème, puis une façon de réviser.</p>
-    <div class="scopes" id="scopes" role="radiogroup" aria-label="Thème à réviser"></div>
-
-    <div class="modes" style="margin-top:10px">
-      <button class="mode" data-act="start-cards">
-        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span>
-        <span><span class="t">Cartes</span><br><span class="s">Lisez la question, retrouvez la réponse</span></span>
-        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
-      <button class="mode" data-act="start-quiz">
-        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span>
-        <span><span class="t">Quiz QCM</span><br><span class="s">4 propositions, une seule bonne réponse</span></span>
-        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
-      <button class="mode" data-act="start-exam">
-        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
-        <span><span class="t">Examen blanc</span><br><span class="s">28 questions + 12 mises en situation · 45 min · 32 pour réussir</span></span>
-        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button type="button" role="tab" id="tab-apprendre" aria-controls="pane-apprendre" data-act="tab" data-tab="apprendre">Apprendre</button>
+      <button type="button" role="tab" id="tab-entrainement" aria-controls="pane-entrainement" data-act="tab" data-tab="entrainement">S’entraîner</button>
+      <button type="button" role="tab" id="tab-progres" aria-controls="pane-progres" data-act="tab" data-tab="progres">Mes progrès</button>
     </div>
 
-    <h2 class="sec">Mes examens blancs</h2>
-    <div class="panel history" id="history"></div>
+    <div class="pane" id="pane-apprendre" role="tabpanel" aria-labelledby="tab-apprendre">
+      <div class="panel today" id="today"></div>
+      <h2 class="sec">Mon parcours</h2>
+      <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
+      <div id="path"></div>
+    </div>
 
-    <div id="reportZone" hidden>
-      <h2 class="sec">J’ai passé l’examen</h2>
-      <div class="panel report" id="report"></div>
+    <div class="pane" id="pane-entrainement" role="tabpanel" aria-labelledby="tab-entrainement" hidden>
+      <button class="mode primary" data-act="start-exam">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
+        <span><span class="t">Examen blanc</span><br><span class="s">Comme le jour J : 28 questions de votre liste + 12 mises en situation · 45 min · 32 pour réussir</span></span>
+        <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <h2 class="sec">Réviser un thème</h2>
+      <p class="sub">Touchez un thème, puis choisissez : cartes ou quiz.</p>
+      <div class="scopes" id="scopes"></div>
+    </div>
+
+    <div class="pane" id="pane-progres" role="tabpanel" aria-labelledby="tab-progres" hidden>
+      <div class="panel summary" id="summary"></div>
+      <h2 class="sec">Mes examens blancs</h2>
+      <div class="panel history" id="history"></div>
+      <div id="reportZone" hidden>
+        <h2 class="sec">J’ai passé l’examen</h2>
+        <div class="panel report" id="report"></div>
+      </div>
     </div>
 
     <div class="foot">
@@ -678,27 +698,49 @@ function renderSummary() {
       <div><div class="lbl">Prêt pour l’examen <span class="est">estimation</span></div><p>${readyMsg(rd)}</p></div>
     </div>`;
 }
+let OPEN_SCOPE = /^([1-5]|sit)$/.test(PARAMS.get("theme") || "") ? PARAMS.get("theme") : null;
+const GO_SVG = `<svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>`;
 function renderScopes() {
   const rows = [];
-  const all = stats(CARDS);
   const row = (val, num, name, st, color, extra) => {
+    const open = String(OPEN_SCOPE) === String(val);
     const pm = st.total ? 100 * st.m / st.total : 0, pl = st.total ? 100 * st.l / st.total : 0;
-    return `<label class="scope" style="--c:${color}">
-      <input type="radio" name="scope" id="scope-${val}" value="${val}" ${String(scope) === String(val) ? "checked" : ""}>
-      <span class="num">${num}</span>
-      <span class="nm">${name}<span class="mini"><span class="m" style="width:${pm}%"></span><span class="l" style="width:${pl}%"></span></span></span>
-      <span class="ct">${extra || st.m + " / " + st.total}</span>
-    </label>`;
+    const body = open ? `<div class="sc2-b">
+        <button type="button" class="go2 main" data-act="start-cards" data-scope="${val}"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span><span><span class="t">Cartes</span><span class="s">Lisez la question, retrouvez la réponse, dites si vous la saviez</span></span>${GO_SVG}</button>
+        <button type="button" class="go2" data-act="start-quiz" data-scope="${val}"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><span><span class="t">Quiz QCM</span><span class="s">20 questions, 4 propositions, une seule bonne réponse</span></span>${GO_SVG}</button>
+        ${val === "all" ? `<button type="button" class="go2" data-act="start-exam"><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><span><span class="t">Examen blanc</span><span class="s">40 questions en 45 minutes, comme le jour J</span></span>${GO_SVG}</button>` : ""}
+      </div>` : "";
+    return `<div class="sc2${open ? " open" : ""}" style="--c:${color}" id="sc-${val}">
+      <button type="button" class="sc2-h" data-act="scope-open" data-scope="${val}" aria-expanded="${open}">
+        <span class="num">${num}</span>
+        <span class="nm">${name}<span class="mini"><span class="m" style="width:${pm}%"></span><span class="l" style="width:${pl}%"></span></span></span>
+        <span class="ct">${extra || st.m + " / " + st.total}</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>${body}</div>`;
   };
-  rows.push(row("all", "∗", "Tous les thèmes", all, "var(--accent)"));
+  rows.push(row("all", "∗", "Tous les thèmes", stats(CARDS), "var(--accent)"));
   THEMES.forEach(t => rows.push(row(t.t, "0" + t.t, t.name, stats(CARDS.filter(c => c.t === t.t)), tcol(t.t))));
   if (SITS.length) rows.push(row("sit", "?", "Mises en situation <small>(exercices du site)</small>", stats(SITS), "var(--bad)"));
   const weak = weakList();
   if (weak.length) rows.push(row("weak", "!", "Mes erreurs", { m: 0, l: 0, n: weak.length, total: weak.length }, "var(--bad)", weak.length + " question" + (weak.length > 1 ? "s" : "")));
-  else if (scope === "weak") scope = "all";
+  else if (OPEN_SCOPE === "weak") OPEN_SCOPE = null;
   $("#scopes").innerHTML = rows.join("");
-  const checked = document.querySelector('#scopes input:checked') || document.querySelector('#scope-all');
-  if (checked) checked.checked = true;
+}
+/* Onglets de l'accueil : Apprendre, S'entraîner, Mes progrès */
+const TABS = ["apprendre", "entrainement", "progres"];
+// L'onglet est retenu pendant la visite ; chaque nouvelle visite s'ouvre sur « Apprendre »
+const ssGet = k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) {} };
+let TAB = OPEN_SCOPE ? "entrainement" : (ssGet("coq:onglet") || "apprendre");
+if (!TABS.includes(TAB)) TAB = "apprendre";
+function showTab(t, focus) {
+  TAB = TABS.includes(t) ? t : "apprendre"; ssSet("coq:onglet", TAB);
+  TABS.forEach(x => {
+    const b = $("#tab-" + x), pane = $("#pane-" + x);
+    if (b) { b.setAttribute("aria-selected", String(x === TAB)); b.tabIndex = x === TAB ? 0 : -1; }
+    if (pane) pane.hidden = x !== TAB;
+  });
+  if (focus) { const b = $("#tab-" + TAB); if (b) b.focus(); }
 }
 function renderHistory() {
   if (!P.exams.length) { $("#history").innerHTML = `<p class="empty" style="margin:0">Aucun examen blanc pour l’instant. Faites-en un pour voir où vous en êtes : il faut 32 bonnes réponses sur 40.</p>`; return; }
@@ -1168,8 +1210,14 @@ document.addEventListener("click", e => {
     case "lquiz": if (S && S.mode === "lesson") { S.phase = "quiz"; prepQuestion(); renderLesson(); } break;
     case "lpick": if (S && S.mode === "lesson") lessonPick(i); break;
     case "lcont": if (S && S.mode === "lesson") { lessonContinue(); window.scrollTo(0, 0); } break;
-    case "start-cards": startCards(); break;
-    case "start-quiz": startQuiz(); break;
+    case "tab": showTab(b.dataset.tab); window.scrollTo(0, 0); break;
+    case "scope-open": {
+      const v = b.dataset.scope; OPEN_SCOPE = String(OPEN_SCOPE) === v ? null : v; renderScopes();
+      const el = document.getElementById("sc-" + v); if (el && OPEN_SCOPE) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      break;
+    }
+    case "start-cards": if (b.dataset.scope) { scope = b.dataset.scope; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} } startCards(); break;
+    case "start-quiz": if (b.dataset.scope) { scope = b.dataset.scope; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} } startQuiz(); break;
     case "start-exam": startExam(); break;
     case "reveal": S.open = true; renderCards(); break;
     case "know": cardAnswer(true); break;
@@ -1192,6 +1240,10 @@ document.addEventListener("click", e => {
   }
 });
 document.addEventListener("keydown", e => {
+  if (!S && e.target.getAttribute && e.target.getAttribute("role") === "tab" && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+    const i = TABS.indexOf(TAB), n = TABS[(i + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length];
+    showTab(n, true); e.preventDefault(); return;
+  }
   if (!S || e.metaKey || e.ctrlKey || e.altKey) return;
   const tag = (e.target.tagName || "").toLowerCase();
   if (S.mode === "lesson") {
@@ -1214,6 +1266,7 @@ document.addEventListener("keydown", e => {
 });
 
 /* ---------- Démarrage ---------- */
+showTab(TAB);
 paintHelpButtons();
 if (HELP) { lsSet("coq:aide", HELP); loadHelp(HELP); }
 refreshHome();
