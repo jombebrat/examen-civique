@@ -86,22 +86,6 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .streak{ display:grid; justify-items:center; gap:0; color:var(--muted); font-size:12px; text-align:center; }
 .streak svg{ color:var(--line); } .streak.on svg{ color:#F08A24; }
 .streak b{ font-family:var(--display); font-size:22px; line-height:1; color:var(--ink); }
-.qdj{ margin-top:12px; display:grid; gap:10px; }
-.qdj.folded{ display:flex; align-items:center; gap:10px; padding:12px 16px; animation:coq-fold .35s ease-out; }
-@keyframes coq-fold{ from{ opacity:.4; transform:scaleY(.96) } to{ opacity:1; transform:none } }
-.qdj .qmark{ display:grid; place-items:center; width:26px; height:26px; border-radius:50%; font-weight:800; flex:none; }
-.qdj .qmark.good{ background:var(--good-weak); color:var(--good); } .qdj .qmark.bad{ background:var(--bad-weak); color:var(--bad); }
-.qdj .qline{ flex:1; min-width:0; font-size:14.5px; color:var(--muted); } .qdj .qline b{ color:var(--ink); }
-.qdj .q{ margin:0; font-weight:700; font-size:17px; }
-.qopts{ display:grid; gap:8px; }
-.qo{ text-align:left; font:inherit; font-size:15px; padding:11px 14px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer; }
-.qo:hover:not([disabled]){ border-color:var(--accent); }
-.qo.ok{ border-color:var(--good); background:var(--good-weak); font-weight:700; }
-.qo.ko{ border-color:var(--bad); background:var(--bad-weak); }
-.qo[disabled]{ cursor:default; }
-.qres{ margin:0; font-size:15px; } .qres.good{ color:var(--good); } .qres.bad{ color:var(--bad); }
-.qres span{ display:block; color:var(--muted); margin-top:4px; } .qres a{ font-size:14px; }
-.qnext{ margin:0; font-size:13.5px; color:var(--muted); }
 .celebrate{ display:block; margin:0 auto 6px; border-radius:24px; background:#fff; animation:coq-pop .6s cubic-bezier(.2,1.4,.4,1) both; }
 @keyframes coq-pop{ from{ transform:scale(.4) rotate(-8deg); opacity:0 } to{ transform:none; opacity:1 } }
 @media (max-width:420px){ .ready{ grid-template-columns:auto minmax(0,1fr); } .streak{ grid-column:1/-1; grid-auto-flow:column; justify-content:start; gap:6px; align-items:center; } }
@@ -138,7 +122,6 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .en{ margin-top:12px; padding:10px 13px; border-radius:10px; background:var(--sunk); border-left:3px solid var(--accent); font-size:14.5px; line-height:1.45; color:var(--ink); text-align:left; }
 .en .enh{ font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
 .en p{ margin:3px 0 0; } .en .enq{ color:var(--muted); } .en .end{ color:var(--muted); }
-.qdj .en, .rv .en{ font-size:14px; }
 .listsw .lbl{ font-size:13.5px; color:var(--muted); margin-right:2px; }
 .lsw{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 13px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
 .lsw.on{ background:var(--accent); border-color:var(--accent); color:var(--on-accent, #fff); }
@@ -365,7 +348,6 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
     <div id="path"></div>
 
-    <div class="panel qdj" id="qdj"></div>
     <div id="account"></div>
 
     <h2 class="sec">Ma progression</h2>
@@ -486,7 +468,7 @@ function enBlock(c, full) {
     + (full ? `<p class="ena"><b>Answer:</b> ${esc(a)}</p>${d ? `<p class="end">${esc(d)}</p>` : ""}` : "") + `</div>`;
 }
 function rerender() {
-  if (!S) { if (!$("#home").hidden) renderQdj(); return; }
+  if (!S) return;
   if (S.mode === "cards") renderCards(); else if (S.mode === "quiz") renderQuiz(); else if (S.mode === "exam") renderExam(); else if (S.mode === "lesson") renderLesson();
 }
 
@@ -845,35 +827,6 @@ function lessonContinue() {
   prepQuestion(); renderLesson();
 }
 
-/* Question du jour : la même pour tous, chaque jour, dans la liste choisie */
-let QDJ = null;
-function qdjCard() {
-  const key = dayKey() + LIST; let h = 0; for (const ch of key) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return CARDS[h % CARDS.length];
-}
-function renderQdj() {
-  const box = $("#qdj"); if (!box || !CARDS.length) return;
-  const c = qdjCard();
-  let done = null; try { done = JSON.parse(localStorage.getItem("coq:qdj:" + dayKey() + ":" + LIST) || "null"); } catch (e) {}
-  if (!QDJ || QDJ.k !== c.k) {
-    // ordre des propositions fixe pour la journée (la réponse enregistrée reste juste après rechargement)
-    const seed = dayKey() + LIST, hsh = s => { let h = 0; for (const ch of seed + s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
-    const opts = [{ h: c.c, ok: true }, ...c.w.map(h => ({ h, ok: false }))].sort((x, y) => hsh(x.h) - hsh(y.h));
-    QDJ = { k: c.k, opts, pick: done ? done.pick : null, folded: !!done };
-  }
-  const answered = QDJ.pick !== null && QDJ.pick !== undefined;
-  const good = answered && QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok;
-  box.classList.toggle("folded", !!(answered && QDJ.folded));
-  if (answered && QDJ.folded) {
-    box.innerHTML = `<span class="qmark ${good ? "good" : "bad"}" aria-hidden="true">${good ? "✓" : "✗"}</span>
-      <span class="qline"><b>Question du jour</b> · ${good ? "bonne réponse" : "à revoir"} · nouvelle question demain</span>
-      <button type="button" class="linkbtn" data-act="qdj-open">Revoir</button>`;
-    return;
-  }
-  box.innerHTML = `<div class="lbl">Question du jour</div><p class="q">${c.q}</p>${answered ? "" : enBlock(c, false)}
-    <div class="qopts">${QDJ.opts.map((o, i) => `<button type="button" class="qo${answered ? (o.ok ? " ok" : i === QDJ.pick ? " ko" : "") : ""}" data-act="qdj" data-i="${i}" ${answered ? "disabled" : ""}>${o.h}</button>`).join("")}</div>
-    ${answered ? `<p class="qres ${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "good" : "bad"}">${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "Bonne réponse !" : "Pas tout à fait."} ${c.d ? `<span>${c.d}</span>` : ""} <a href="${c.u}">Fiche de la question ›</a></p>${enBlock(c, true)}<p class="qnext">Nouvelle question demain. Votre série : <b>${streak()} jour${streak() > 1 ? "s" : ""}</b>.</p>` : ""}`;
-}
 /* « J'ai passé l'examen » : résultat réel, témoignage publié seulement avec accord et après validation */
 const RK = "coq:resultat-envoye";
 let REP = { open: false, reussi: null, busy: false, err: "" };
@@ -949,7 +902,7 @@ async function shareResult(score, pass) {
   } catch (e) { if (e && e.name === "AbortError") return; }
   window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
 }
-function refreshHome() { if (!$("#home").hidden) { renderLists(); renderToday(); renderPath(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); renderReport(); } }
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderToday(); renderPath(); renderSummary(); renderScopes(); renderHistory(); renderReport(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
@@ -1166,14 +1119,6 @@ document.addEventListener("click", e => {
     case "rep-ok": REP.reussi = true; REP.err = ""; renderReport(); break;
     case "rep-ko": REP.reussi = false; REP.err = ""; renderReport(); break;
     case "share-result": if (S && S.over) shareResult(S.score, S.score >= EXAM_PASS); break;
-    case "qdj": if (QDJ && (QDJ.pick === null || QDJ.pick === undefined)) {
-      QDJ.pick = i; const ok = QDJ.opts[i].ok; grade(QDJ.k, ok);
-      try { localStorage.setItem("coq:qdj:" + dayKey() + ":" + LIST, JSON.stringify({ pick: i })); } catch (er) {}
-      renderQdj(); renderSummary();
-      clearTimeout(QDJ.timer); QDJ.timer = setTimeout(() => { if (QDJ) { QDJ.folded = true; renderQdj(); } }, 10000);
-    } break;
-    case "en": setEn(!EN); break;
-    case "qdj-open": if (QDJ) { QDJ.folded = false; clearTimeout(QDJ.timer); renderQdj(); } break;
     case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
     case "lesson": startLesson(b.dataset.l); break;
