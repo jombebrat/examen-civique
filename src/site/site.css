@@ -457,3 +457,17 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .hq-go{ width:100%; }
 .hq-again{ display:block; margin:10px auto 0; background:none; border:0; color:var(--muted); text-decoration:underline; font:inherit; cursor:pointer; }
 @media (min-width:820px){ .hero-m{ grid-template-columns:minmax(0,1fr) 380px; } }
+
+/* Outil « Quelle liste pour moi ? » */
+.ql{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:6px 18px 16px; margin:18px 0 24px; box-shadow:var(--shadow); }
+.ql h2{ margin-top:14px; }
+.ql fieldset{ border:0; padding:0; margin:0 0 14px; display:grid; gap:8px; }
+.ql fieldset[hidden]{ display:none; }
+.ql legend{ font-weight:700; margin-bottom:8px; padding:0; }
+.ql label{ display:flex; align-items:center; gap:10px; min-height:44px; padding:6px 12px; border:1.5px solid var(--line); border-radius:12px; cursor:pointer; }
+.ql label:has(input:checked){ border-color:var(--accent); background:var(--accent-weak); }
+.ql input{ width:20px; height:20px; margin:0; accent-color:var(--accent); flex:none; }
+.ql-res{ background:var(--accent-weak); border-radius:12px; padding:12px 14px; }
+.ql-res p{ margin:0 0 8px; }
+.ql-links{ display:flex; flex-wrap:wrap; gap:8px; }
+.ql-note{ font-size:14px; color:var(--muted); }

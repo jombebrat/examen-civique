@@ -131,6 +131,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .en p{ margin:3px 0 0; } .en .enq{ color:var(--muted); } .en .end{ color:var(--muted); }
 .listsw .lbl{ font-size:13.5px; color:var(--muted); margin-right:2px; }
 .lsw{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 13px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+.lsw-help{ align-self:center; font-size:14px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; padding:6px 4px; }
 .lsw.on{ background:var(--accent); border-color:var(--accent); color:var(--on-accent, #fff); }
 .scope{ position:relative; display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px;
   background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:11px 14px; cursor:pointer; }
@@ -758,7 +759,7 @@ function renderHistory() {
 function renderLists() {
   const ey = $("#listEyebrow"); if (ey) ey.textContent = `${LIST_INFO.nom} · ${LIST_INFO.count} questions officielles` + (LIST_INFO.count !== TOTAL ? ` (${TOTAL} différentes)` : "");
   const box = $("#listsw"); if (!box) return;
-  box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("");
+  box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("") + `<a class="lsw-help" href="${DATA.site}guide/qui-doit-passer-examen-civique/#quelle-liste">Je ne sais pas</a>`;
 }
 /* ---------- Parcours : des leçons courtes, comme une application de langue ----------
    Chaque thème est découpé en leçons d'environ 8 questions, dans l'ordre de la liste officielle.

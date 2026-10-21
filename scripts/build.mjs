@@ -923,6 +923,41 @@ const fillVars = (html) => frSpaces(html)
   .replace(/\{\{href:([^}]+)\}\}/g, (_, p) => href(p.trim()))
   .replaceAll("{{nat}}", String(LIST.nat.count)).replaceAll("{{cr}}", String(LIST.cr.count)).replaceAll("{{csp}}", String(LIST.csp.count))
   .replaceAll("{{nom}}", esc(NAME)).replaceAll("{{contact}}", esc(config.editeur.contact)).replaceAll("{{editeur}}", esc(config.editeur.nom));
+// Outil « Quelle liste pour moi ? » (guide « Qui doit passer l'examen civique »), d'après formation-civique.interieur.gouv.fr
+function outilListe() {
+  const L = (code) => LIST[code];
+  const res = {
+    csp: `<p><b>${typo("Vous passez l’examen civique « carte de séjour pluriannuelle ».")}</b> ${typo(`Liste officielle : ${L("csp").count} questions de connaissance. Niveau de français demandé : A2.`)}</p><p class="ql-links"><a class="btn primary" href="${href("/reviser/?liste=csp")}">Apprendre cette liste</a> <a class="btn" href="${href(L("csp").path)}">Voir les questions</a></p>`,
+    cr: `<p><b>${typo("Vous passez l’examen civique « carte de résident ».")}</b> ${typo(`Liste officielle : ${L("cr").count} questions de connaissance. Niveau de français demandé : B1. L’attestation vaudra aussi pour une carte pluriannuelle.`)}</p><p class="ql-links"><a class="btn primary" href="${href("/reviser/?liste=cr")}">Apprendre cette liste</a> <a class="btn" href="${href(L("cr").path)}">Voir les questions</a></p>`,
+    nat: `<p><b>${typo("Vous passez l’examen civique « naturalisation ».")}</b> ${typo(`Liste officielle : ${L("nat").count} questions de connaissance. Niveau de français demandé : B2. Ensuite vient l’entretien d’assimilation en préfecture.`)}</p><p class="ql-links"><a class="btn primary" href="${href("/reviser/?liste=nat")}">Apprendre cette liste</a> <a class="btn" href="${href("/guide/questions-entretien-naturalisation/")}">Préparer l’entretien</a></p>`,
+    renouv: `<p><b>${typo("Pour un renouvellement, l’examen civique n’est pas demandé.")}</b> ${typo("Il concerne la première demande de carte de séjour pluriannuelle ou de carte de résident, et la naturalisation.")}</p>`,
+    bpi: `<p><b>${typo("En principe, vous êtes dispensé(e) de l’examen civique.")}</b> ${typo("Les bénéficiaires d’une protection internationale (réfugiés, protection subsidiaire) ne sont pas concernés pour la carte pluriannuelle ou la carte de résident. Gardez une preuve de votre statut pour votre demande.")}</p>`,
+    age: `<p><b>${typo("Vous n’êtes sans doute pas tenu(e) de passer l’examen.")}</b> ${typo("Selon la CCI Paris Île-de-France, les personnes étrangères de plus de 65 ans ne sont pas tenues de le passer pour un titre de séjour. Le ministère ne le précise pas sur sa page : confirmez auprès de votre préfecture.")}</p>`,
+    autre: `<p><b>${typo("L’examen civique n’est pas demandé pour tous les titres.")}</b> ${typo("Il est exigé pour une première carte de séjour pluriannuelle, une première carte de résident et la naturalisation. Pour un autre titre (par exemple une carte temporaire d’un an), il n’est pas demandé : il le sera pour votre future carte pluriannuelle. En cas de doute, demandez à votre préfecture.")}</p>`,
+  };
+  const note = `<p class="ql-note">${typo("Certains pays ont un accord bilatéral avec la France qui dispense de l’examen : si c’est votre cas, votre préfecture vous le confirmera. Cet outil ne remplace pas l’administration.")}</p>`;
+  return `<div class="ql" id="quelle-liste">
+<h2>${typo("Quelle liste pour moi ? Le test en 3 questions")}</h2>
+<form class="ql-form" onsubmit="return false">
+<fieldset><legend>${typo("1. Que demandez-vous ?")}</legend>
+<label><input type="radio" name="dem" value="csp"> ${typo("Une première carte de séjour pluriannuelle")}</label>
+<label><input type="radio" name="dem" value="cr"> ${typo("Une première carte de résident (10 ans)")}</label>
+<label><input type="radio" name="dem" value="nat"> ${typo("La nationalité française (naturalisation)")}</label>
+<label><input type="radio" name="dem" value="renouv"> ${typo("Le renouvellement de ma carte pluriannuelle ou de résident")}</label>
+<label><input type="radio" name="dem" value="autre"> ${typo("Un autre titre de séjour, ou je ne sais pas")}</label>
+</fieldset>
+<fieldset class="ql-more" hidden><legend>${typo("2. Êtes-vous réfugié(e) ou bénéficiaire de la protection subsidiaire ?")}</legend>
+<label><input type="radio" name="bpi" value="oui"> Oui</label> <label><input type="radio" name="bpi" value="non"> Non</label>
+</fieldset>
+<fieldset class="ql-more" hidden><legend>${typo("3. Avez-vous plus de 65 ans ?")}</legend>
+<label><input type="radio" name="age" value="oui"> Oui</label> <label><input type="radio" name="age" value="non"> Non</label>
+</fieldset>
+</form>
+<div class="ql-res" aria-live="polite" hidden></div>
+${Object.entries(res).map(([k, v]) => `<template data-r="${k}">${v}${k === "csp" || k === "cr" ? note : ""}</template>`).join("")}
+<script>(function(){var w=document.getElementById("quelle-liste");if(!w)return;var f=w.querySelector("form"),out=w.querySelector(".ql-res"),more=w.querySelectorAll(".ql-more"),sent=false;function val(n){var x=f.querySelector("input[name="+n+"]:checked");return x?x.value:"";}function show(k){var t=w.querySelector("template[data-r="+k+"]");out.innerHTML="";if(t){out.appendChild(t.content.cloneNode(true));out.hidden=false;if(!sent){sent=true;try{if(window.COQ_ID&&window.COQ_ID.event)window.COQ_ID.event("quelle-liste-"+k);}catch(e){}}}}f.addEventListener("change",function(){var d=val("dem"),titre=d==="csp"||d==="cr";more.forEach(function(m){m.hidden=!titre;});if(!d)return;if(!titre){show(d);return;}var b=val("bpi"),a=val("age");if(b==="oui"){show("bpi");return;}if(!b){out.hidden=true;return;}if(a==="oui"){show("age");return;}if(!a){out.hidden=true;return;}show(d);});})();</script>
+</div>`;
+}
 function contentPages() {
   const guides = readContent("content/guides");
   for (const g of guides) {
@@ -931,7 +966,7 @@ function contentPages() {
     write(path, layout({
       title: `${g.meta.titre} | ${NAME}`, description: g.meta.description, path, ogType: "article",
       jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: g.meta.h1, description: g.meta.description, inLanguage: "fr", dateModified: g.meta.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
-      body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(g.meta.maj)}</div><h1>${typo(g.meta.h1)}</h1>${g.meta.chapo ? `<p class="lead">${typo(g.meta.chapo)}</p>` : ""}${fillVars(g.html)}
+      body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(g.meta.maj)}</div><h1>${typo(g.meta.h1)}</h1>${g.meta.chapo ? `<p class="lead">${typo(g.meta.chapo)}</p>` : ""}${fillVars(g.html).replace("{{outil-liste}}", () => outilListe())}
 <p class="src">Par Jovan, créateur de ${esc(NAME)}. Site indépendant et non officiel : en cas de doute, référez-vous aux sites officiels cités. <a href="${reportLink(g.meta.h1, path)}">Signaler une erreur</a></p></article>
 <div class="cta"><p>Prêt à vous entraîner ? QCM, cartes et examens blancs gratuits.</p><a class="btn primary" href="${href("/reviser/")}">Faire le QCM</a></div>`,
     }));
