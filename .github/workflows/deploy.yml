@@ -29,6 +29,11 @@ jobs:
         id: pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
+      - name: Pages déjà en ligne (dates de mise à jour du sitemap)
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p build-cache
+          curl -fsSL "${{ steps.pages.outputs.base_url }}/pages.json" -o build-cache/pages.json || echo "{}" > build-cache/pages.json
       - name: Générer le site
         run: node scripts/build.mjs --base-url "${{ steps.pages.outputs.base_url || 'https://example.com' }}"
       - name: Préparer la publication
@@ -36,6 +41,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+      - name: Garder la liste des pages modifiées
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-modifiees
+          path: build-cache/changed-urls.json
+          retention-days: 3
 
   deploy:
     if: github.event_name != 'pull_request'
@@ -48,3 +60,20 @@ jobs:
       - name: Publier sur GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  indexnow:
+    if: github.event_name != 'pull_request'
+    needs: deploy
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: pages-modifiees
+          path: build-cache
+      - name: Prévenir les moteurs de recherche (IndexNow)
+        run: node scripts/indexnow.mjs build-cache/changed-urls.json

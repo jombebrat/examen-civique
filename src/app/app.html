@@ -1001,6 +1001,11 @@ document.querySelectorAll(".entog").forEach(b => b.setAttribute("aria-pressed", 
 if (EN) { try { localStorage.setItem("coq:en", "1"); } catch (e) {} loadEn(); }
 refreshHome();
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAccount); else initAccount();
+// Lien direct vers un examen blanc (page /examen-blanc/) : ?start=examen
+if (PARAMS.get("start") === "examen") {
+  try { const u = new URL(location.href); u.searchParams.delete("start"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) {}
+  startExam();
+}
 window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS, streak, readiness };
 })();
 </script>

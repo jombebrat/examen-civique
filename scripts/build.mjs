@@ -8,6 +8,7 @@ import { ROOT, loadJSON, esc, typo, plain, detailHtml, questionSlugs } from "./l
 const data = loadJSON("data/questions.json");
 const listes = loadJSON("data/listes.json");
 const situations = loadJSON("data/situations.json").situations;
+const EN = existsSync(join(ROOT, "data/en.json")) ? loadJSON("data/en.json") : { q: {}, s: {} };
 const config = loadJSON("site.config.json");
 const argUrl = (() => { const i = process.argv.indexOf("--base-url"); return i > 0 ? process.argv[i + 1] : ""; })();
 // Toujours https en ligne (GitHub Pages peut annoncer http:// tant que le certificat n'est pas prêt).
@@ -70,10 +71,15 @@ const LIVRET = Object.fromEntries(LIVRETS.map((l) => [l.code, l]));
 const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfs: LIVRETS.map((l) => ({ code: l.code, nom: { nat: "Naturalisation", cr: "Carte de résident", csp: "Carte de séjour pluriannuelle" }[l.code], url: href(l.url), pages: l.pages })), logo: href("/assets/icon-192.png"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
 <script src="${href("/assets/coq.js")}?v=${V}" defer></script>` : "";
 
+// Empreinte du contenu de chaque page (titre, description, <main>) : sert aux dates du sitemap et à IndexNow
+const PAGE_HASH = new Map();
 function write(path, html) {
   const file = join(DIST, path.endsWith("/") ? path + "index.html" : path);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);
+  const main = html.match(/<main[\s\S]*?<\/main>/);
+  const head = (html.match(/<title>[\s\S]*?<\/title>/) || [""])[0] + (html.match(/<meta name="description"[^>]*>/) || [""])[0];
+  if (main) PAGE_HASH.set(path, createHash("sha256").update(head + main[0]).digest("hex").slice(0, 16));
 }
 function clip(s, n = 155) {
   s = s.replace(/\s+/g, " ").trim();
@@ -129,7 +135,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
   <nav class="nav" aria-label="Navigation principale">
     <a class="hide-sm" href="${href("/questions/")}">Questions</a>
     <a class="hide-sm" href="${href("/guide/")}">Guides</a>
-    <a class="btn small" href="${href("/#pdf")}">PDF</a>
+    <a class="btn small" href="${href("/examen-civique-pdf/")}">PDF</a>
     <a class="btn primary small" href="${href("/reviser/")}">Réviser</a>
   </nav>
 </div></header>
@@ -145,12 +151,19 @@ ${body}
       <a href="${href(LIST.cr.path)}">Carte de résident</a>
       <a href="${href(LIST.csp.path)}">Carte de séjour pluriannuelle</a></div>
     <div><h3>Réviser</h3>
-      <a href="${href("/reviser/")}">QCM et examen blanc</a>
-      <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
+      <a href="${href("/reviser/")}">QCM gratuit</a>
+      <a href="${href("/examen-blanc/")}">Examen blanc</a>
       <a href="${href("/mises-en-situation/")}">Mises en situation</a>
-      <a href="${href("/guide/")}">Guides</a>
-      <a href="${href("/#pdf")}">Livrets PDF</a>
-      <a href="${href("/installer-application/")}">Installer l’application</a></div>
+      <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
+      <a href="${href("/examen-civique-pdf/")}">Livrets PDF</a>
+      <a href="${href("/installer-application/")}">Application</a></div>
+    <div><h3>Comprendre</h3>
+      <a href="${href("/guide/deroulement-examen-civique/")}">Déroulement de l’examen</a>
+      <a href="${href("/guide/qui-doit-passer-examen-civique/")}">Qui doit le passer</a>
+      <a href="${href("/guide/inscription-examen-civique/")}">Inscription</a>
+      <a href="${href("/livret-du-citoyen/")}">Livret du citoyen</a>
+      <a href="${href("/guide/entretien-naturalisation/")}">Entretien de naturalisation</a>
+      <a href="${href("/guide/")}">Tous les guides</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
       <a href="${href("/mises-a-jour/")}">Mises à jour</a>
@@ -252,7 +265,7 @@ function home() {
   <div class="modes">
     <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span><h3>Cartes</h3><p>Lisez la question, retrouvez la réponse, dites si vous la saviez. Les questions manquées reviennent plus souvent.</p></div>
     <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><h3>Quiz QCM</h3><p>Quatre propositions et une seule bonne réponse, comme le jour de l’examen, avec l’explication après chaque question.</p></div>
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>Examen blanc</h3><p>Au format officiel : 28 questions de votre liste et 12 mises en situation, en 45 minutes. Votre score et les questions à retravailler.</p></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>Examen blanc</h3><p>Au format officiel : 28 questions de votre liste et 12 mises en situation, en 45 minutes. Votre score et les questions à retravailler. <a href="${href("/examen-blanc/")}">En savoir plus</a></p></div>
     <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M9 9h6M9 12h4"/></svg></span><h3>Mises en situation</h3><p>${situations.length} cas de la vie quotidienne pour s’entraîner aux 12 questions non publiées de l’examen. <a href="${href("/mises-en-situation/")}">Voir les exemples</a></p></div>
   </div>
   <p class="more"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant</a></p>
@@ -262,9 +275,24 @@ function home() {
   <div class="shead"><div class="eyebrow">À imprimer</div><h2>Les livrets de révision en PDF</h2>
   <p>${typo("Toutes les questions de votre liste et leurs réponses, au format A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen. Gratuit : il suffit d’indiquer votre adresse email.")}</p></div>
   <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
+  <p class="more"><a href="${href("/examen-civique-pdf/")}">Le contenu des livrets et les documents officiels en PDF ›</a></p>
 </section>
 
-<section class="band alt faq">
+<section class="band alt" id="guides">
+  <div class="shead"><div class="eyebrow">Guides</div><h2>Tout savoir sur l’examen civique</h2>
+  <p>Les réponses aux questions pratiques, vérifiées sur les sites officiels.</p></div>
+  <ul class="guides">${[
+    ["/guide/deroulement-examen-civique/", "Comment se passe l’examen", "Format, durée, score à obtenir et attestation."],
+    ["/guide/qui-doit-passer-examen-civique/", "Qui doit le passer ?", "Carte de séjour pluriannuelle, carte de résident, naturalisation et dispenses."],
+    ["/guide/inscription-examen-civique/", "S’inscrire à l’examen", "Les centres agréés et les étapes de l’inscription."],
+    ["/guide/niveau-de-francais-titre-de-sejour-naturalisation/", "Niveau de français exigé", "A2, B1 ou B2 selon votre démarche, et comment le prouver."],
+    ["/livret-du-citoyen/", "Le Livret du citoyen", "Le sommaire du livret officiel et les questions de l’examen par chapitre."],
+    ["/guide/entretien-naturalisation/", "L’entretien de naturalisation", "Comment se passe l’entretien en préfecture et comment s’y préparer."],
+  ].map(([u, t, d]) => `<li><a href="${href(u)}"><b>${typo(t)}</b><span>${typo(d)}</span></a></li>`).join("")}</ul>
+  <p class="more"><a class="btn" href="${href("/guide/")}">Tous les guides</a></p>
+</section>
+
+<section class="band faq">
   <div class="shead"><div class="eyebrow">FAQ</div><h2>Questions fréquentes</h2></div>
   <div class="faq-list">
 ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></details>`).join("\n")}
@@ -367,7 +395,8 @@ function questionPage(q, i) {
   const items = [["Accueil", "/"], [LIST[main.code].nom, LIST[main.code].path], [plain(t.titre_court), main.code === "nat" ? tPath(t) : `${LIST[main.code].path}#theme-${main.theme}`], [`Question ${main.numero}`, qPath(q)]];
   const src = [];
   if (q.reponse_hors_livret) src.push(`<span class="tag">hors livret</span> Cette réponse ne figure pas dans le Livret du citoyen.`);
-  if (q.livret_pages) src.push(`Source : Livret du citoyen (édition mai 2026), p.\u00a0${esc(q.livret_pages)}.`);
+  const chap = livretChap(q.livret_pages);
+  if (q.livret_pages) src.push(`Source : <a href="${href(`/livret-du-citoyen/${chap ? `#${chap.id}` : ""}`)}">Livret du citoyen</a> (édition mai 2026), p.\u00a0${esc(q.livret_pages)}.`);
   if (!q.livret_pages && !q.reponse_hors_livret) src.push(`Réponse rédigée par ${esc(NAME)} d’après les textes officiels.`);
   src.push(`Mis à jour le ${dateFr(UPDATED)} · <a href="${reportLink(plain(q.question), qPath(q))}">Signaler une erreur</a>`);
   const det = detailHtml(q);
@@ -375,6 +404,14 @@ function questionPage(q, i) {
   const seen = new Set();
   const badges = ms.filter((m) => !seen.has(m.code) && seen.add(m.code)).map((m) => `<a class="lbadge" href="${href(LIST[m.code].path)}">${esc(LIST[m.code].nom)} <b>n°\u00a0${m.theme}-${m.numero}</b></a>`).join("");
   const variants = [...new Map(ms.filter((m) => m.texte).map((m) => [m.texte, m])).values()];
+  // Les 4 propositions du QCM, dans un ordre fixe propre à chaque question (la bonne n'est pas toujours la première)
+  const hsh = (s) => createHash("md5").update(q.id + s).digest("hex");
+  const opts = [{ t: q.qcm.bonne, ok: true }, ...q.qcm.mauvaises.map((t) => ({ t, ok: false }))].sort((a, b) => (hsh(a.t) < hsh(b.t) ? -1 : 1));
+  const qcm = `<section class="qcm-block" aria-labelledby="qcm-${q.id}"><h2 id="qcm-${q.id}">Les 4 propositions du QCM</h2>
+  <ol class="qopts">${opts.map((o, k) => `<li${o.ok ? ' class="ok"' : ""}><span class="L">${"ABCD"[k]}</span><span>${typo(o.t)}</span>${o.ok ? '<span class="okl">✓ Bonne réponse</span>' : ""}</li>`).join("")}</ol>
+  <p class="note">${typo("À l’examen, chaque question propose 4 réponses dont une seule est juste. Ces propositions sont celles de notre QCM d’entraînement.")}</p></section>`;
+  const en = EN.q[q.id];
+  const enHelp = en ? `<details class="en-help" lang="en"><summary><b>EN</b>In English</summary><p>${esc(en[0])}</p><p><b>Answer:</b> ${esc(en[1])}</p>${en[2] ? `<p class="end">${esc(en[2])}</p>` : ""}</details>` : "";
   write(qPath(q), layout({
     title: `${plain(q.question)} | QCM examen civique`,
     description: desc, path: qPath(q), canonical: qPath(canonicalQ), theme: t.id, jsonld: [breadcrumbLd(items)],
@@ -389,6 +426,8 @@ function questionPage(q, i) {
     ${det ? `<p class="d">${det}</p>` : ""}
     <p class="src">${src.join("<br>")}</p>
   </div>
+  ${qcm}
+  ${enHelp}
   ${variants.length ? `<div class="variants"><h2>Autres formulations officielles</h2><ul>${variants.map((m) => `<li>« ${typo(m.texte)} » <small>(${esc(LIST[m.code].nom)}, n°\u00a0${m.theme}-${m.numero})</small></li>`).join("")}</ul></div>` : ""}
 </article>
 <div class="cta"><p>Entraînez-vous avec un QCM sur les questions de votre liste : cartes, quiz et examen blanc, gratuit.</p><a class="btn primary" href="${href(`/reviser/?liste=${main.code}&theme=${main.theme}`)}">Faire le QCM</a></div>
@@ -399,6 +438,179 @@ function questionPage(q, i) {
 <section class="block"><h2 style="font-size:21px">Dans le même thème</h2>
 <ul class="related">${related.map((r) => `<li><a href="${href(qPath(r))}">${typo(r.question)}</a></li>`).join("")}</ul>
 <p><a href="${href(main.code === "nat" ? tPath(t) : `${LIST[main.code].path}#theme-${main.theme}`)}">Toutes les questions du thème « ${typo(t.titre_court)} » (${esc(LIST[main.code].nom)}) ›</a></p></section>`,
+  }));
+}
+
+/* ---------- Livret du citoyen : sommaire et questions par chapitre ---------- */
+const LIVRET_URL = "https://www.immigration.interieur.gouv.fr/sites/dgef/files/medias/documents/2026-07/LIVRET-DU-CITOYEN-2026.pdf";
+const LIVRET_NEWS = "https://www.immigration.interieur.gouv.fr/actualites/actualites/mise-a-jour-du-livret-du-citoyen";
+// Pages d'après le sommaire du livret (édition mai 2026)
+const LIVRET_PARTS = [
+  { n: 1, titre: "Principes et valeurs de la République", p: [5, 14], chaps: [
+    { id: "devise-et-symboles", num: "I", titre: "La devise et les symboles de la République", p: [6, 9], txt: "Ce que veulent dire liberté, égalité et fraternité, puis les symboles de la France : la fête nationale du 14 juillet, La Marseillaise (avec ses paroles), la langue française, Marianne, le drapeau tricolore et le coq." },
+    { id: "principes", num: "II", titre: "Les principes de la République", p: [10, 14], txt: "L’article 1er de la Constitution du 4 octobre 1958 : une République indivisible, laïque, démocratique et sociale. La laïcité y est expliquée en détail." },
+  ] },
+  { n: 2, titre: "Système institutionnel et politique", p: [15, 23], chaps: [
+    { id: "democratie", num: "I", titre: "Démocratie et État de droit", p: [16, 18], txt: "Les principales institutions de l’État et le droit de vote." },
+    { id: "territoires", num: "II", titre: "Organisation territoriale de la République", p: [19, 21], txt: "Les communes, les départements, les régions et l’outre-mer." },
+    { id: "union-europeenne", num: "III", titre: "L’Union européenne et ses institutions", p: [22, 23], txt: "Les pays membres et leur date d’entrée, et les étapes clés de la construction européenne." },
+  ] },
+  { n: 3, titre: "Droits et devoirs des citoyens", p: [24, 36], chaps: [
+    { id: "droits", num: "I", titre: "Les droits fondamentaux", p: [25, 31], txt: "Les droits liés à la liberté individuelle, à la dignité, à la sûreté et à la justice, les droits politiques et les droits environnementaux." },
+    { id: "devoirs", num: "II", titre: "Les obligations et devoirs des citoyens", p: [32, 36], txt: "Respecter les lois, les institutions et les principes de la République, participer à la vie démocratique, contribuer aux charges publiques, défendre la patrie, protéger l’environnement, transmettre les valeurs, l’entraide et la solidarité." },
+  ] },
+  { n: 4, titre: "Histoire, géographie et culture", p: [37, 60], chaps: [
+    { id: "histoire", num: "I", titre: "Principales périodes et personnages", p: [38, 48], txt: "Les grandes étapes de l’histoire de France, du Moyen Âge à nos jours, et les principaux personnages historiques." },
+    { id: "geographie", num: "II", titre: "Territoire et géographie", p: [49, 52], txt: "La place de la France dans le monde, son économie et quelques éléments remarquables du territoire." },
+    { id: "culture", num: "III", titre: "La culture et le patrimoine", p: [53, 60], txt: "Les musées, des artistes français célèbres, le patrimoine architectural, la langue française, les fêtes nationales, les grands événements sportifs et la gastronomie." },
+  ] },
+  { n: 5, titre: "Vivre dans la société française", p: [61, 76], chaps: [
+    { id: "vie-quotidienne", num: "I", titre: "La vie quotidienne", p: [62, 69], txt: "Se loger, se déplacer, s’assurer (responsabilité civile), vivre ensemble dans l’espace public, préserver l’environnement, la santé et les numéros d’urgence." },
+    { id: "travail", num: "II", titre: "Travailler en France", p: [70, 72], txt: "Les règles du travail, le contrat de travail, l’insertion professionnelle, la création d’entreprise et l’accès à l’emploi public." },
+    { id: "famille", num: "III", titre: "La vie familiale", p: [73, 76], txt: "Le mariage, les droits des parents et des enfants, les obligations parentales, l’éducation, le numérique et les enfants." },
+  ] },
+  { n: 0, titre: "Annexes", p: [77, 83], chaps: [
+    { id: "annexes", num: "", titre: "Déclaration de 1789, Charte des droits et devoirs, ressources", p: [77, 83], txt: "La Déclaration des droits de l’homme et du citoyen de 1789, la Charte des droits et devoirs du citoyen français (que le candidat signe à l’issue de l’entretien de naturalisation) et des liens vers les textes officiels." },
+  ] },
+];
+const LIVRET_CHAPS = LIVRET_PARTS.flatMap((part) => part.chaps.map((c) => ({ ...c, part })));
+function livretChap(pages) {
+  const m = String(pages || "").match(/\d+/); if (!m) return null;
+  const p = +m[0];
+  return LIVRET_CHAPS.find((c) => p >= c.p[0] && p <= c.p[1])
+    || (LIVRET_PARTS.find((part) => p >= part.p[0] && p <= part.p[1]) || { chaps: [null] }).chaps[0];
+}
+const pagesFr = ([a, b]) => (a === b ? `p. ${a}` : `p. ${a} à ${b}`);
+
+function livretPage() {
+  const path = "/livret-du-citoyen/";
+  const items = [["Accueil", "/"], ["Guides", "/guide/"], ["Livret du citoyen", path]];
+  const qOf = (c) => natQ.filter((q) => { const x = livretChap(q.livret_pages); return x && x.id === c.id; });
+  const hors = natQ.filter((q) => q.reponse_hors_livret).length;
+  const withPage = natQ.filter((q) => q.livret_pages).length;
+  const MAJ = "2026-10-21";
+  const h1 = "Livret du citoyen 2026 : sommaire et questions de l’examen civique";
+  const desc = "Le Livret du citoyen (édition mai 2026) expliqué partie par partie : sommaire, pages clés et questions de l’examen civique qui s’y rapportent. Lien vers le PDF officiel.";
+  const rows = LIVRET_PARTS.map((part) => {
+    const n = part.chaps.reduce((s, c) => s + qOf(c).length, 0);
+    return `<tr><td><a href="#${part.n ? `partie-${part.n}` : "annexes"}">${part.n ? `Partie ${part.n} — ` : ""}${typo(part.titre)}</a></td><td class="n">${pagesFr(part.p)}</td><td class="n">${n || "—"}</td></tr>`;
+  }).join("");
+  const parts = LIVRET_PARTS.map((part) => {
+    const theme = part.n ? themes[part.n - 1] : null;
+    return `<h2 id="${part.n ? `partie-${part.n}` : "annexes-titre"}">${part.n ? `Partie ${part.n} — ` : ""}${typo(part.titre)}</h2>
+${theme ? `<p>${typo(`Cette partie correspond au thème ${part.n} de l’examen civique :`)} <a href="${href(tPath(theme))}">${typo(theme.titre)}</a>.</p>` : ""}
+${part.chaps.map((c) => {
+    const qs = qOf(c);
+    return `<section class="chap" id="${c.id}"><h3>${c.num ? `${c.num}. ` : ""}${typo(c.titre)} <span class="pg">${pagesFr(c.p)}</span></h3>
+<p>${typo(c.txt)}</p>
+${qs.length ? `<p><b>${qs.length} question${qs.length > 1 ? "s" : ""} de l’examen</b> (liste naturalisation) s’appuie${qs.length > 1 ? "nt" : ""} sur ces pages :</p>
+<ul>${qs.map((q) => `<li><a href="${href(qPath(q))}">${typo(q.question)}</a> <small>p. ${esc(q.livret_pages)}</small></li>`).join("")}</ul>` : ""}</section>`;
+  }).join("\n")}`;
+  }).join("\n");
+  write(path, layout({
+    title: `Livret du citoyen 2026 : sommaire, résumé et questions de l’examen civique | ${NAME}`,
+    description: desc, path, ogType: "article",
+    jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: h1, description: desc, inLanguage: "fr", dateModified: MAJ, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path), about: { "@type": "CreativeWork", name: "Livret du citoyen", url: LIVRET_URL } }],
+    body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(MAJ)}</div><h1>${typo(h1)}</h1>
+<p class="lead">${typo("Le Livret du citoyen est le document de référence du ministère de l’Intérieur pour la naturalisation. Voici son contenu partie par partie, avec, pour chaque chapitre, les questions de l’examen civique qui s’y rapportent.")}</p>
+<div class="offbtn"><a class="btn primary" href="${LIVRET_URL}" rel="noopener">Livret officiel en PDF (ministère de l’Intérieur)</a><a class="btn" href="${href("/reviser/?liste=nat")}">Réviser avec le QCM</a></div>
+<h2>Qu’est-ce que le Livret du citoyen ?</h2>
+<p>${typo("Publié par le ministère de l’Intérieur, il présente les connaissances attendues des candidats à la naturalisation : les principes et valeurs de la République, les institutions, les droits et devoirs, l’histoire, la géographie, la culture et la vie quotidienne en France. Selon son introduction, il « illustre le niveau de connaissances attendues de tout(e) candidat(e) à la naturalisation », invité à l’étudier avant l’examen civique et l’entretien en préfecture.")}</p>
+<p>${typo("La version actuelle porte la mention « édition mai 2026 ». Elle a été approuvée par un arrêté du 3 juillet 2026, qui remplace le livret de 2022, et mise en ligne par le ministère le 16 juillet 2026. Elle compte 83 pages et cinq parties, qui suivent les cinq thèmes de l’examen civique.")} <a href="${LIVRET_NEWS}" rel="noopener">Annonce du ministère</a>.</p>
+<p>${typo("Le livret est écrit pour la naturalisation, mais ses cinq parties suivent les mêmes thèmes que l’examen pour la carte de séjour pluriannuelle et la carte de résident : il est utile à tous les candidats.")}</p>
+<h2>Le sommaire</h2>
+<table class="toc-table"><thead><tr><th>Partie</th><th>Pages</th><th>Questions</th></tr></thead><tbody>${rows}</tbody></table>
+<p class="src">${typo(`Colonne « Questions » : nombre de questions de la liste naturalisation dont la réponse renvoie à ces pages (${withPage} questions sur ${TOTAL}).`)}</p>
+${parts}
+<h2>Comment l’utiliser pour réviser ?</h2>
+<ul>
+<li>${typo("Lisez une partie par jour, en suivant le")} <a href="${href("/preparer-examen-civique-en-7-jours/")}">plan en 7 jours</a>.</li>
+<li>${typo("Après chaque partie, faites le QCM du thème correspondant, puis un")} <a href="${href("/examen-blanc/")}">examen blanc</a>.</li>
+<li>${typo("Chaque réponse de Coq Civique indique la page du livret : en cas de doute, vérifiez dans le livret officiel.")}</li>
+<li>${typo(`${hors} questions de la liste naturalisation portent sur des informations absentes du livret : elles sont signalées « hors livret » sur leur page.`)}</li>
+<li>${typo("Pour la naturalisation, le livret sert aussi à préparer")} <a href="${href("/guide/entretien-naturalisation/")}">l’entretien en préfecture</a>.</li>
+</ul>
+<p class="src">${typo(`Résumé rédigé par ${NAME} d’après le sommaire et le contenu du livret ; il ne remplace pas le document officiel. Site indépendant et non officiel.`)} <a href="${reportLink("Livret du citoyen", path)}">Signaler une erreur</a></p>
+</article>
+<div class="cta"><p>Révisez les questions du livret avec des cartes, un QCM et des examens blancs gratuits.</p><a class="btn primary" href="${href("/reviser/?liste=nat")}">Faire le QCM</a></div>`,
+  }));
+}
+
+/* ---------- Livrets PDF ---------- */
+function pdfPage() {
+  const path = "/examen-civique-pdf/";
+  const items = [["Accueil", "/"], ["Livrets PDF", path]];
+  const desc = "Les questions officielles de l’examen civique et leurs réponses en PDF gratuit, à imprimer : naturalisation, carte de résident et carte de séjour pluriannuelle.";
+  write(path, layout({
+    title: `Examen civique PDF 2026 : questions et réponses à imprimer, gratuit | ${NAME}`,
+    description: desc, path, jsonld: [breadcrumbLd(items)],
+    body: `${crumbs(items)}<article class="prose"><div class="eyebrow">À imprimer · gratuit</div><h1>${typo("Examen civique en PDF : les questions et réponses à imprimer")}</h1>
+<p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille.")}</p>
+</article>
+<div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
+<article class="prose">
+<h2>Ce que contient chaque livret</h2>
+<ul>
+<li>${typo("Toutes les questions de la liste officielle, dans l’ordre et avec leur numéro, et une réponse claire pour chacune.")}</li>
+<li>${typo("L’essentiel de chaque thème en début de chapitre.")}</li>
+<li>${typo("Une colonne réponse à cacher avec une feuille, pour vous interroger.")}</li>
+<li>${typo("Une fiche mémo pour la veille de l’examen.")}</li>
+</ul>
+<h2>Quel livret choisir ?</h2>
+<p>${typo("Celui de votre démarche : les 28 questions de connaissance de l’examen sont tirées de la liste correspondante.")}</p>
+<ul>
+<li><b>Carte de séjour pluriannuelle</b> : <a href="${href(LIST.csp.path)}">${LIST.csp.count} questions</a>.</li>
+<li><b>Carte de résident</b> : <a href="${href(LIST.cr.path)}">${LIST.cr.count} questions</a>.</li>
+<li><b>Naturalisation</b> : <a href="${href("/questions/")}">${LIST.nat.count} questions</a>.</li>
+</ul>
+<p>${typo("Pas sûr de votre liste ? Lisez")} <a href="${href("/guide/qui-doit-passer-examen-civique/")}">qui doit passer l’examen civique</a>.</p>
+<h2>Comment le télécharger ?</h2>
+<p>${typo("Cliquez sur « Télécharger le PDF » et indiquez votre adresse email : le téléchargement démarre aussitôt, sans mot de passe et sans attendre de message. La même adresse garde votre progression dans l’application.")}</p>
+<h2>Les 12 mises en situation</h2>
+<p>${typo("Elles ne sont pas publiées par le ministère et ne figurent donc pas dans les livrets. Entraînez-vous avec nos")} <a href="${href("/mises-en-situation/")}">${situations.length} mises en situation corrigées</a>.</p>
+<h2>Les documents officiels en PDF</h2>
+<ul>
+<li><a href="${LIVRET_URL}" rel="noopener">Livret du citoyen</a> (ministère de l’Intérieur) — ${typo("voir aussi notre")} <a href="${href("/livret-du-citoyen/")}">${typo("sommaire avec les questions de l’examen")}</a>.</li>
+<li><a href="https://formation-civique.interieur.gouv.fr/examen-civique/" rel="noopener">formation-civique.interieur.gouv.fr</a> : ${typo("programme et listes officielles des questions.")}</li>
+<li><a href="https://www.france-education-international.fr/document/manuelcandidatexamencivique" rel="noopener">${typo("Manuel du candidat")}</a> (France Éducation International).</li>
+</ul>
+<h2>Plutôt sur téléphone ?</h2>
+<p>${typo("L’application de révision fonctionne même sans internet, sur iPhone comme sur Android :")} <a href="${href("/installer-application/")}">installer l’application</a>.</p>
+</article>`,
+  }));
+}
+
+/* ---------- Examen blanc ---------- */
+function examBlancPage() {
+  const path = "/examen-blanc/";
+  const items = [["Accueil", "/"], ["Examen blanc", path]];
+  const desc = "Examen blanc gratuit de l’examen civique : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
+  write(path, layout({
+    title: `Examen blanc examen civique 2026 : simulation gratuite de 40 questions | ${NAME}`,
+    description: desc, path, jsonld: [breadcrumbLd(items)],
+    body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulation · gratuit</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
+<p class="lead">${typo("40 questions en 45 minutes, comme le jour de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Votre score sur 40 et la correction de chaque erreur.")}</p>
+<div class="offbtn">${LISTS.map((l, k) => `<a class="btn${k === 0 ? " primary" : ""}" href="${href(`/reviser/?liste=${l.code}&start=examen`)}">Examen blanc ${esc(l.nom.toLowerCase())}</a>`).join("")}</div>
+<h2>Comment se passe l’examen blanc ?</h2>
+<ul>
+<li>${typo("40 questions à choix multiples, quatre propositions, une seule bonne réponse.")}</li>
+<li>${typo("Un chronomètre de 45 minutes ; vous pouvez revenir sur une question avant de terminer.")}</li>
+<li>${typo("28 questions tirées de la liste officielle que vous avez choisie, réparties sur les cinq thèmes, et 12 mises en situation de la vie quotidienne.")}</li>
+<li>${typo("Il faut 32 bonnes réponses sur 40 pour réussir ; une question sans réponse compte comme une erreur.")}</li>
+<li>${typo("À la fin : votre score, le seuil de 32, et la correction de chaque erreur avec son explication (et une aide en anglais si vous le souhaitez).")}</li>
+<li>${typo("Vos résultats sont enregistrés : les questions manquées reviennent plus souvent dans vos révisions.")}</li>
+</ul>
+<h2>Combien d’examens blancs faire ?</h2>
+<p>${typo("Commencez quand vous avez révisé chaque thème une fois. Visez au moins 35 sur 40 pour avoir de la marge le jour J, puis faites un examen blanc par jour jusqu’à l’examen. Les questions se mélangent à chaque fois.")}</p>
+<h2>Les 12 mises en situation</h2>
+<p>${typo("Le ministère ne les publie pas. Nos exemples reprennent les principes de l’examen : laïcité, égalité, respect de la loi, droits et devoirs. Voir les")} <a href="${href("/mises-en-situation/")}">${situations.length} mises en situation corrigées</a> ${typo("et notre")} <a href="${href("/guide/mises-en-situation-examen-civique/")}">${typo("méthode")}</a>.</p>
+<h2>Avant l’examen blanc</h2>
+<ul>
+<li><a href="${href("/guide/deroulement-examen-civique/")}">${typo("Comment se passe le vrai examen")}</a></li>
+<li><a href="${href("/preparer-examen-civique-en-7-jours/")}">${typo("Le plan de révision en 7 jours")}</a></li>
+<li><a href="${href("/examen-civique-pdf/")}">${typo("Les questions et réponses en PDF")}</a></li>
+</ul>
+</article>`,
   }));
 }
 
@@ -501,11 +713,17 @@ function contentPages() {
   const hubItems = [["Accueil", "/"], ["Guides", "/guide/"]];
   write("/guide/", layout({
     title: `Guides de l’examen civique 2026 : déroulement, inscription, dispenses | ${NAME}`,
-    description: "Tout comprendre de l’examen civique : déroulement, inscription, qui doit le passer, mises en situation et plan de révision en 7 jours.",
+    description: "Tout comprendre de l’examen civique : déroulement, inscription, qui doit le passer, niveau de français, Livret du citoyen, entretien de naturalisation et plan de révision.",
     path: "/guide/", jsonld: [breadcrumbLd(hubItems)],
     body: `${crumbs(hubItems)}<h1 style="font-size:clamp(28px,6vw,40px)">Guides de l’examen civique</h1>
 <p class="lead">Les réponses aux questions pratiques, vérifiées sur les sites officiels.</p>
-<ul class="guides">${[{ slug: null, meta: { h1: "Préparer l’examen civique en 7 jours", description: "Le plan de révision jour par jour, avec les questions à travailler." } }, ...guides].map((g) => `<li><a href="${href(g.slug ? `/guide/${g.slug}/` : "/preparer-examen-civique-en-7-jours/")}"><b>${typo(g.meta.h1)}</b><span>${typo(g.meta.description)}</span></a></li>`).join("")}</ul>`,
+<ul class="guides">${[
+      { url: "/preparer-examen-civique-en-7-jours/", meta: { h1: "Préparer l’examen civique en 7 jours", description: "Le plan de révision jour par jour, avec les questions à travailler." } },
+      ...guides.map((g) => ({ url: `/guide/${g.slug}/`, meta: g.meta })),
+      { url: "/livret-du-citoyen/", meta: { h1: "Livret du citoyen 2026 : sommaire et questions de l’examen", description: "Le livret officiel partie par partie, avec les questions de l’examen civique qui s’y rapportent." } },
+      { url: "/examen-blanc/", meta: { h1: "Examen blanc : la simulation en conditions réelles", description: "40 questions en 45 minutes, score sur 40 et correction de chaque erreur." } },
+      { url: "/examen-civique-pdf/", meta: { h1: "Les questions et réponses en PDF", description: "Un livret gratuit à imprimer pour chaque liste officielle." } },
+    ].map((g) => `<li><a href="${href(g.url)}"><b>${typo(g.meta.h1)}</b><span>${typo(g.meta.description)}</span></a></li>`).join("")}</ul>`,
   }));
   for (const p of readContent("content/en")) {
     const path = p.slug === "index" ? "/en/" : `/en/${p.slug}/`;
@@ -605,13 +823,30 @@ themes.forEach(themePage);
 questions.forEach(questionPage);
 sitPage();
 appPage();
+livretPage();
+pdfPage();
+examBlancPage();
 contentPages();
 legal();
+// Date de dernière modification réelle : celle de la version publiée si le contenu n'a pas changé.
+// En publication automatique, build-cache/pages.json est la copie de /pages.json du site en ligne.
+const PREV = (() => { try { return JSON.parse(readFileSync(process.env.PREV_PAGES || join(ROOT, "build-cache/pages.json"), "utf8")); } catch { return {}; } })();
+const PAGES = {};
+for (const p of new Set(sitemap)) {
+  const h = PAGE_HASH.get(p) || "";
+  const prev = PREV[p];
+  PAGES[p] = { h, d: prev && prev.h === h && prev.d ? prev.d : TODAY };
+}
+writeFileSync(join(DIST, "pages.json"), JSON.stringify(PAGES));
+const CHANGED = Object.keys(PAGES).filter((p) => !PREV[p] || PREV[p].h !== PAGES[p].h).map(abs);
+mkdirSync(join(ROOT, "build-cache"), { recursive: true });
+writeFileSync(join(ROOT, "build-cache/changed-urls.json"), JSON.stringify(CHANGED, null, 1));
+if (config.indexnow) writeFileSync(join(DIST, `${config.indexnow}.txt`), config.indexnow);
 writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...new Set(sitemap)].map((p) => `  <url><loc>${abs(p)}</loc><lastmod>${TODAY}</lastmod></url>`).join("\n")}
+${Object.entries(PAGES).map(([p, x]) => `  <url><loc>${abs(p)}</loc><lastmod>${x.d}</lastmod></url>`).join("\n")}
 </urlset>
 `);
 writeFileSync(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${abs("/sitemap.xml")}\n`);
 writeFileSync(join(DIST, ".nojekyll"), "");
-console.log(`Site généré dans dist/ : ${new Set(sitemap).size} pages indexables, adresse ${SITE_URL}`);
+console.log(`Site généré dans dist/ : ${new Set(sitemap).size} pages indexables, ${CHANGED.length} nouvelles ou modifiées, adresse ${SITE_URL}`);

@@ -79,6 +79,7 @@ cd dist && python3 -m http.server  # le voir sur http://localhost:8000
 1. Dans **Settings → Pages**, choisir **Source : GitHub Actions**.
 2. Chaque modification de la branche `main` publie le site.
 3. Domaine personnalisé : **Settings → Pages → Custom domain**, puis les enregistrements DNS indiqués par GitHub. L’adresse du site est prise en compte automatiquement.
+4. Référencement automatique : le sitemap donne pour chaque page la date de sa dernière vraie modification (comparaison avec `/pages.json` du site en ligne), et les pages nouvelles ou modifiées sont signalées à Bing, Yandex et aux autres moteurs IndexNow (`scripts/indexnow.mjs`, clé `indexnow` dans `site.config.json`). Google lit le sitemap déclaré dans la Search Console.
 
 ## Adresse email, progression et livret PDF (Supabase)
 

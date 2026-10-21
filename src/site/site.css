@@ -10,6 +10,7 @@
   --paper:#F4F6FA; --surface:#FFFFFF; --sunk:#EDF0F6; --ink:#15203B; --muted:#56607A; --line:#DADFE9;
   --accent:#1F4E9C; --on-accent:#FFFFFF; --accent-weak:#E6EDF9; --red:#C8102E;
   --t1:#1F4E9C; --t2:#2B6B5E; --t3:#A8432F; --t4:#86621A; --t5:#5B3F8E;
+  --good:#17744A; --good-weak:#E3F3EA;
   --display:"Fraunces", Georgia, "Times New Roman", serif;
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r:14px; color-scheme:light;
@@ -17,7 +18,8 @@
 @media (prefers-color-scheme: dark){ :root{
   --paper:#0C1220; --surface:#141C2F; --sunk:#10182A; --ink:#E6EBF5; --muted:#9BA6BD; --line:#253049;
   --accent:#8FB1F5; --on-accent:#0C1220; --accent-weak:#1B2843; --red:#FF6F80;
-  --t1:#8FB1F5; --t2:#6FC4AF; --t3:#F2937C; --t4:#E5BD62; --t5:#BBA0F2; color-scheme:dark; } }
+  --t1:#8FB1F5; --t2:#6FC4AF; --t3:#F2937C; --t4:#E5BD62; --t5:#BBA0F2;
+  --good:#5CCB92; --good-weak:#12301F; color-scheme:dark; } }
 
 *{ box-sizing:border-box; }
 html{ -webkit-text-size-adjust:100%; }
@@ -170,6 +172,33 @@ h2 .count{ font-family:var(--body, inherit); font-size:14px; font-weight:700; co
 .lbadge{ display:inline-flex; gap:5px; align-items:center; padding:4px 10px; border-radius:999px; background:var(--surface); border:1px solid var(--line); color:var(--ink); text-decoration:none; }
 .lbadge:hover{ border-color:var(--accent); }
 .lbadge b{ color:var(--accent); font-weight:700; }
+/* Question : propositions du QCM et aide en anglais */
+.qcm-block{ margin-top:22px; }
+.qcm-block h2{ font-size:19px; margin:0 0 10px; }
+.qopts{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.qopts li{ display:flex; align-items:flex-start; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 14px; line-height:1.45; }
+.qopts .L{ flex:none; width:1.3em; font-weight:800; color:var(--muted); }
+.qopts li.ok{ border-color:var(--good); background:var(--good-weak); }
+.qopts li.ok .L{ color:var(--good); }
+.qopts .okl{ margin-left:auto; padding-left:10px; font-size:13px; font-weight:700; color:var(--good); white-space:nowrap; }
+.qcm-block .note{ margin:8px 0 0; font-size:14px; color:var(--muted); }
+.en-help{ margin-top:16px; border:1px solid var(--line); border-radius:12px; background:var(--surface); padding:0 16px; }
+.en-help summary{ cursor:pointer; padding:12px 0; font-weight:700; color:var(--accent); }
+.en-help summary b{ font-size:12px; letter-spacing:.04em; border-radius:5px; padding:1px 5px; margin-right:6px; background:var(--accent); color:var(--on-accent); }
+.en-help p{ margin:0 0 10px; }
+.en-help .end{ color:var(--muted); }
+/* Livret du citoyen : sommaire et questions par chapitre */
+.toc-table{ width:100%; border-collapse:collapse; font-size:15.5px; margin:14px 0 6px; }
+.toc-table th, .toc-table td{ text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+.toc-table th{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.toc-table td.n{ white-space:nowrap; font-variant-numeric:tabular-nums; }
+.chap{ margin:22px 0 0; padding:16px 18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); }
+.chap h3{ font-size:19px; }
+.chap .pg{ font-family:var(--body); font-size:14px; font-weight:400; color:var(--muted); }
+.chap p{ margin:8px 0 0; }
+.chap ul{ margin:10px 0 0; padding-left:20px; columns:2 300px; column-gap:28px; }
+.chap li{ break-inside:avoid; margin-bottom:5px; font-size:15.5px; }
+.offbtn{ display:flex; flex-wrap:wrap; gap:10px; margin:16px 0; }
 .variants{ margin-top:16px; padding:14px 18px; border-radius:var(--r); border:1px dashed var(--line); }
 .variants h2{ font-size:16px; margin:0 0 6px; }
 .variants ul{ margin:0; padding-left:18px; }
@@ -188,6 +217,7 @@ h2 .count{ font-family:var(--body, inherit); font-size:14px; font-weight:700; co
 .guides a:hover{ border-color:var(--accent); }
 .guides b{ font-family:var(--display); font-size:19px; }
 .guides span{ color:var(--muted); }
+.band .guides{ grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); margin:0; }
 .prose table{ width:100%; border-collapse:collapse; margin:12px 0 18px; font-size:15px; }
 .prose th, .prose td{ text-align:left; vertical-align:top; padding:9px 10px; border-bottom:1px solid var(--line); }
 .prose thead th{ font-size:13.5px; color:var(--muted); }
@@ -290,7 +320,7 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .site-foot a{ color:var(--foot-ink); text-decoration:none; }
 .site-foot a:hover{ color:var(--foot-head); text-decoration:underline; }
 .site-foot .brand{ color:var(--foot-head); }
-.fcols{ display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:28px; }
+.fcols{ display:grid; grid-template-columns:1.4fr repeat(4, 1fr); gap:28px; }
 .fcols > div{ display:flex; flex-direction:column; gap:9px; }
 .fcols h3{ font-family:var(--body); font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--foot-head); margin-bottom:4px; }
 .fbrand p{ margin:6px 0 0; max-width:34ch; line-height:1.5; }

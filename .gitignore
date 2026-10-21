@@ -3,3 +3,4 @@ node_modules/
 .DS_Store
 tools/pdf/out/
 __pycache__/
+build-cache/
