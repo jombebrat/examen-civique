@@ -183,6 +183,7 @@ ${body}
       <a href="${href("/guide/resultat-examen-civique/")}">Résultat et attestation</a>
       <a href="${href("/livret-du-citoyen/")}">Livret du citoyen</a>
       <a href="${href("/guide/entretien-naturalisation/")}">Entretien de naturalisation</a>
+      <a href="${href(ENT_PATH)}">Questions de l’entretien</a>
       <a href="${href("/guide/")}">Tous les guides</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
@@ -667,6 +668,70 @@ function examen40Data() {
   const s = situations.map((x) => [x.id, x.theme, pdfText(x.situation), pdfText(x.question), pdfText(x.qcm.bonne), x.qcm.mauvaises.map(pdfText), abs(`/mises-en-situation/#${x.id}`)]);
   return { v: 1, themes: themes.map((t) => ({ t: t.id })), lists, q, s };
 }
+/* ---------- Questions d'entraînement pour l'entretien de naturalisation (data/entretien.json) ---------- */
+const ENTRETIEN = existsSync(join(ROOT, "data/entretien.json")) ? JSON.parse(readFileSync(join(ROOT, "data/entretien.json"), "utf8")) : null;
+const ENT_PATH = "/guide/questions-entretien-naturalisation/";
+const ENT_PDF = "/assets/coq-civique-questions-entretien-naturalisation.pdf";
+// Chaque élément : question de l'oral, puis réponse (fiche vérifiée) et/ou conseil
+function entretienItems() {
+  const sitById = new Map(situations.map((x) => [x.id, x]));
+  return ENTRETIEN.sections.map((s) => ({
+    ...s,
+    items: s.items.map((it) => {
+      if (it.id && it.id.startsWith("s")) {
+        const x = sitById.get(it.id); if (!x) throw new Error(`entretien.json : situation inconnue ${it.id}`);
+        const end = /[.!?»…]$/.test(x.qcm.bonne.trim()) ? "" : ".";
+        return { q: `${x.situation} ${x.question}`, a: x.qcm.bonne + end, d: x.explication, url: `/mises-en-situation/#${x.id}`, conseil: it.conseil };
+      }
+      if (it.id) {
+        const q = qById.get(it.id); if (!q) throw new Error(`entretien.json : question inconnue ${it.id}`);
+        return { q: it.q || q.question, a: q.reponse, url: qPath(q), conseil: it.conseil };
+      }
+      return { q: it.q, conseil: it.conseil };
+    }),
+  }));
+}
+function entretienPage() {
+  if (!ENTRETIEN) return;
+  const path = ENT_PATH, secs = entretienItems(), n = secs.reduce((a, s) => a + s.items.length, 0);
+  // Version texte pour le PDF (tools/entretien/pdf.mjs)
+  const pt = (s) => (s ? plain(s).replace(/[  ]/g, " ") : "");
+  writeFileSync(join(DIST, "data/entretien.json"), JSON.stringify({ maj: ENTRETIEN.maj, n, site: abs("/"), page: abs(path), sections: secs.map((s) => ({ titre: pt(s.titre), chapo: pt(s.chapo), items: s.items.map((it) => ({ q: pt(it.q), a: pt([it.a, it.d].filter(Boolean).join(" ")), c: pt(it.conseil), u: it.url ? abs(it.url) : "" })) })) }));
+  const items = [["Accueil", "/"], ["Guides", "/guide/"], ["Questions de l’entretien", path]];
+  const desc = `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner, avec réponses et conseils, en PDF gratuit. Parcours, valeurs, institutions, histoire, vie quotidienne.`;
+  const pdf = existsSync(join(ROOT, ENT_PDF.slice(1)));
+  let k = 0;
+  const body = secs.map((s) => `<h2>${typo(s.titre)}</h2>${s.chapo ? `<p>${typo(s.chapo)}</p>` : ""}
+<div class="qa">${s.items.map((it) => { k++; return `<details><summary><span class="qn">${k}</span>${typo(it.q)}</summary><div>${it.a ? `<p><b>Réponse :</b> ${typo(it.a)}${it.d ? ` ${typo(it.d)}` : ""}${it.url ? ` <a href="${href(it.url)}">${it.url.startsWith("/mises") ? "L’exercice" : "La fiche"} ›</a>` : ""}</p>` : ""}${it.conseil ? `<p><b>Conseil :</b> ${typo(it.conseil)}</p>` : ""}</div></details>`; }).join("\n")}</div>`).join("\n");
+  write(path, layout({
+    title: `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner (PDF gratuit) | ${NAME}`,
+    description: desc, path, ogType: "article",
+    jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner`, description: desc, inLanguage: "fr", dateModified: ENTRETIEN.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
+    body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · gratuit · mis à jour le ${dateFr(ENTRETIEN.maj)}</div>
+<h1>${typo(`Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner`)}</h1>
+<p class="lead">${typo("Après l’examen civique, l’entretien d’assimilation en préfecture. Voici des questions pour vous y préparer à voix haute, avec les réponses à connaître et des conseils pour les questions personnelles.")}</p>
+<div class="note"><p>${typo("Il n’existe pas de liste officielle des questions de l’entretien. Ces questions d’entraînement sont rédigées par Coq Civique à partir du Livret du citoyen et de ce que le Code civil demande de vérifier (article 21-24) : connaissance de l’histoire, de la culture et de la société françaises, des droits et devoirs du citoyen, et adhésion aux principes et valeurs de la République. Les réponses de connaissance reprennent nos fiches, vérifiées sur le Livret du citoyen.")}</p></div>
+${pdf ? `<div class="cta"><p>${typo(`Les ${n} questions, avec réponses et conseils, en PDF à imprimer. Gratuit, sans inscription.`)}</p><a class="btn primary" href="${href(ENT_PDF)}" download>Télécharger le PDF</a></div>` : ""}
+<p>${typo("Comment l’entretien se déroule, ce qui est évalué et la Charte à signer :")} <a href="${href("/guide/entretien-naturalisation/")}">${typo("notre guide de l’entretien de naturalisation")}</a>. ${typo("Ce qui se passe ensuite :")} <a href="${href("/guide/apres-entretien-naturalisation/")}">${typo("délai, décision et décret au Journal officiel")}</a>.</p>
+<h2>${typo("Comment s’entraîner")}</h2>
+<ul>
+<li>${typo("Lisez la question à voix haute, répondez sans regarder, puis ouvrez la réponse.")}</li>
+<li>${typo("Pour les questions personnelles, ne récitez pas : préparez des idées et des exemples vrais, cohérents avec votre dossier.")}</li>
+<li>${typo("Entraînez-vous avec quelqu’un qui joue l’agent : l’entretien se passe en français, à l’oral.")}</li>
+<li>${typo("Pour les questions de connaissance, révisez la liste « naturalisation » :")} <a href="${href("/reviser/?liste=nat")}">${typo("leçons de 5 minutes et quiz gratuits")}</a>.</li>
+</ul>
+${body}
+<h2>${typo("Sources")}</h2>
+<ul>
+<li><a href="${LIVRET_URL}" rel="noopener">Livret du citoyen</a>, ${typo("ministère de l’Intérieur (édition mai 2026)")}</li>
+<li>${typo("Code civil, article 21-24 (assimilation et Charte des droits et devoirs du citoyen français), sur legifrance.gouv.fr")}</li>
+<li><a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2213" rel="noopener">service-public.gouv.fr</a> : ${typo("naturalisation française par décret")}</li>
+</ul>
+<p class="src">${typo(`Par Jovan, créateur de ${NAME}. Site indépendant et non officiel.`)} <a href="${reportLink("Questions de l’entretien", path)}">Signaler une erreur</a></p>
+</article>`,
+  }));
+}
+
 /* Données ouvertes (publiées aussi sur data.gouv.fr, en ressources distantes) : questions des trois listes mises en correspondance, et mises en situation */
 function openData() {
   const dir = join(DIST, "data/opendata");
@@ -865,6 +930,7 @@ function contentPages() {
       { url: "/examen-blanc/", meta: { h1: "Examen blanc : la simulation en conditions réelles", description: "40 questions en 45 minutes, score sur 40 et correction de chaque erreur." } },
       { url: "/examen-civique-pdf/", meta: { h1: "Les questions et réponses en PDF", description: "Un livret gratuit à imprimer pour chaque liste officielle." } },
       { url: EX40_PATH, meta: { h1: "Sujets de 40 questions en PDF", description: "Un nouveau sujet au format de l’examen à chaque clic, avec corrigé." } },
+      ...(ENTRETIEN ? [{ url: ENT_PATH, meta: { h1: "Questions de l’entretien de naturalisation", description: "Des questions pour s’entraîner à l’oral, avec réponses et conseils, en PDF gratuit." } }] : []),
     ].map((g) => `<li><a href="${href(g.url)}"><b>${typo(g.meta.h1)}</b><span>${typo(g.meta.description)}</span></a></li>`).join("")}</ul>`,
   }));
   for (const p of readContent("content/en")) {
@@ -987,6 +1053,7 @@ livretPage();
 pdfPage();
 examBlancPage();
 examen40Page();
+entretienPage();
 contentPages();
 legal();
 // Date de dernière modification réelle : celle de la version publiée si le contenu n'a pas changé.

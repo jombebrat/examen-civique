@@ -1,0 +1,141 @@
+{
+  "note": "Questions d'entraînement pour l'entretien d'assimilation (naturalisation), rédigées par Coq Civique. Non officielles : il n'existe pas de liste officielle des questions de l'entretien. Les éléments marqués id reprennent les questions et réponses vérifiées de data/questions.json (ou situations.json pour les id s...). q remplace la formulation pour l'oral ; conseil = conseil de préparation.",
+  "maj": "2026-10-21",
+  "sections": [
+    {
+      "titre": "Votre parcours et votre vie en France",
+      "chapo": "L’agent veut comprendre votre parcours et votre vie en France. Il n’y a pas de « bonne réponse » à apprendre par cœur : répondez simplement, avec vos mots, des exemples vrais et des dates cohérentes avec votre dossier.",
+      "items": [
+        { "q": "Présentez-vous.", "conseil": "Deux ou trois phrases : votre nom, votre pays d’origine, depuis quand vous vivez en France, votre famille, votre travail." },
+        { "q": "Depuis quand vivez-vous en France ? Pourquoi êtes-vous venu(e) ?", "conseil": "Donnez les dates exactes : elles doivent correspondre à votre dossier." },
+        { "q": "Quel est votre travail ? Comment l’avez-vous trouvé ?", "conseil": "Décrivez simplement votre emploi, votre employeur et vos horaires. Si vous ne travaillez pas, expliquez votre situation (études, recherche d’emploi, enfants)." },
+        { "q": "Parlez-moi de votre famille. Où vivent vos proches ?", "conseil": "Répondez précisément : conjoint, enfants, parents. Les liens familiaux en France font partie de votre parcours." },
+        { "q": "Vos enfants vont-ils à l’école ? Comment cela se passe-t-il ?", "conseil": "Nom de l’école ou du collège, classe, réunions de parents, activités : montrez que vous suivez leur scolarité." },
+        { "q": "Comment avez-vous appris le français ?", "conseil": "Cours, travail, télévision, amis : racontez votre parcours. L’entretien se déroule en français ; parlez calmement et demandez de répéter si vous ne comprenez pas." },
+        { "q": "Que faites-vous pendant votre temps libre ?", "conseil": "Sport, sorties, lecture, famille, bénévolat : citez ce que vous faites vraiment." },
+        { "q": "Faites-vous partie d’une association ? Faites-vous du bénévolat ?", "conseil": "Si oui, expliquez ce que vous y faites. Si non, ce n’est pas une faute : parlez d’autres façons de participer (école des enfants, voisins, quartier)." },
+        { "q": "Quelles villes ou régions de France connaissez-vous ?", "conseil": "Citez les endroits où vous êtes allé(e) et ce que vous y avez aimé." },
+        { "q": "Avez-vous des amis en France ? Comment les avez-vous rencontrés ?", "conseil": "Travail, voisinage, école, sport : des exemples simples suffisent." },
+        { "q": "Quels liens gardez-vous avec votre pays d’origine ?", "conseil": "Garder des liens avec son pays est normal. Montrez que votre vie, votre travail et vos projets sont en France." },
+        { "q": "Avez-vous déjà eu des problèmes avec la justice ou avec l’administration ?", "conseil": "Répondez avec franchise : l’administration connaît votre dossier. Une réponse inexacte est plus grave que la situation elle-même." }
+      ]
+    },
+    {
+      "titre": "Votre projet de devenir français",
+      "chapo": "C’est souvent le cœur de l’entretien. Préparez vos idées, sans réciter un texte appris.",
+      "items": [
+        { "q": "Pourquoi voulez-vous devenir français(e) ?", "conseil": "Parlez de votre attachement à la France et à ses valeurs, de votre vie ici, de votre envie de participer à la vie du pays (voter, s’engager). Évitez de ne donner que des raisons pratiques (passeport, démarches)." },
+        { "q": "Que représente pour vous la nationalité française ?", "conseil": "Appartenir à une communauté de citoyens qui partagent des droits, des devoirs et des valeurs : dites-le avec vos mots et un exemple." },
+        { "q": "Qu’est-ce qui va changer pour vous en devenant français(e) ?", "conseil": "De nouveaux droits (voter à toutes les élections, se présenter à une élection) et de nouveaux devoirs (participer à la vie démocratique, être juré d’assises si l’on est tiré au sort…)." },
+        { "id": "2-13", "q": "Allez-vous voter ? Est-ce obligatoire ?", "conseil": "Pour voter, il faut être inscrit sur les listes électorales, à la mairie ou en ligne." },
+        { "q": "Connaissez-vous la Charte des droits et devoirs du citoyen français ?", "conseil": "Vous la signerez à la fin de l’entretien. Son texte figure en annexe du Livret du citoyen : lisez-la avant et soyez capable de l’expliquer simplement." }
+      ]
+    },
+    {
+      "titre": "Les principes et valeurs de la République",
+      "chapo": "L’agent vérifie que vous connaissez les valeurs de la République et que vous y adhérez. Donnez la réponse, puis un exemple de votre vie quotidienne.",
+      "items": [
+        { "id": "1-17", "q": "Quelle est la devise de la République ? Que signifie-t-elle pour vous ?", "conseil": "Donnez un exemple concret pour chacun des trois mots." },
+        { "id": "1-22", "q": "Que veut dire l’égalité ?" },
+        { "id": "1-15", "q": "Que veut dire la fraternité ?" },
+        { "id": "1-20", "q": "Comment la Constitution définit-elle la République ?" },
+        { "id": "1-35", "q": "Qu’est-ce que la laïcité ? Qu’en pensez-vous ?", "conseil": "La laïcité protège toutes les croyances et le droit de ne pas croire. Vous pouvez dire ce qu’elle vous apporte." },
+        { "id": "1-27", "q": "Quelle loi fonde la laïcité ? De quelle année date-t-elle ?" },
+        { "id": "1-29", "q": "Que garantit la laïcité à chacun ?" },
+        { "id": "1-10", "q": "Quels sont les symboles de la République ?" },
+        { "id": "4-47", "q": "Qui a écrit La Marseillaise ?" },
+        { "id": "1-13", "q": "Que fête-t-on le 14 juillet ?" },
+        { "q": "Comment l’égalité entre les femmes et les hommes se vit-elle dans votre famille ?", "conseil": "Mêmes droits pour les femmes et les hommes : travail, argent, études, décisions de la famille, tâches de la maison. Donnez des exemples vrais." },
+        { "q": "Votre enfant veut épouser une personne d’une autre religion, ou sans religion. Qu’en pensez-vous ?", "conseil": "Chacun choisit librement son conjoint ; le mariage forcé est interdit. Vous pouvez avoir un avis, mais la décision appartient à votre enfant." },
+        { "id": "3-21", "q": "Peut-on être marié à plusieurs personnes en France ?" }
+      ]
+    },
+    {
+      "titre": "Les institutions",
+      "chapo": "Questions de connaissance : ce sont les mêmes que celles de l’examen civique. Vérifiez la veille les noms des personnes en fonction.",
+      "items": [
+        { "q": "Qui est le président de la République ? Et le Premier ministre ?", "conseil": "Vérifiez les noms la veille de l’entretien, sur elysee.fr et gouvernement.fr." },
+        { "q": "Qui est le maire de votre commune ?", "conseil": "Cherchez son nom sur le site de votre mairie." },
+        { "id": "2-38", "q": "Quel est le rôle du président de la République ?" },
+        { "id": "2-21", "q": "Pour combien de temps le président est-il élu ?" },
+        { "id": "2-16", "q": "Qui vote les lois ?" },
+        { "id": "2-17", "q": "Quels sont les trois pouvoirs ?" },
+        { "id": "2-15", "q": "Comment sont désignés les députés ?" },
+        { "id": "2-9", "q": "Quel est le rôle du maire ?" },
+        { "id": "2-37", "q": "Qui représente l’État dans le département ?" },
+        { "id": "2-12", "q": "À quel âge peut-on voter ?" },
+        { "id": "2-49", "q": "Combien de pays font partie de l’Union européenne ?" },
+        { "id": "2-53", "q": "Quelle est la devise de l’Union européenne ?" }
+      ]
+    },
+    {
+      "titre": "Les droits et les devoirs du citoyen",
+      "chapo": "L’entretien porte notamment sur votre connaissance des droits et devoirs du citoyen (Livret du citoyen).",
+      "items": [
+        { "id": "3-11", "q": "Quel texte de 1789 énonce les droits de l’homme et du citoyen ?" },
+        { "id": "3-3", "q": "Citez une phrase de la Déclaration des droits de l’homme et du citoyen." },
+        { "id": "3-32", "q": "Quel est le premier devoir d’un citoyen ?" },
+        { "q": "Quels droits aurez-vous en devenant français(e) ?", "conseil": "Par exemple : voter à toutes les élections, se présenter à une élection, avoir une carte d’identité et un passeport français, circuler librement dans l’Union européenne." },
+        { "q": "Et quels devoirs ?", "conseil": "Respecter les lois et les principes de la République, payer ses impôts, participer à la vie démocratique, être juré d’assises si l’on est tiré au sort, participer à la défense du pays." },
+        { "id": "3-24", "q": "Être juré d’assises, qu’est-ce que c’est ?" },
+        { "id": "3-22", "q": "Faut-il déclarer ses revenus chaque année ?" },
+        { "id": "3-14", "q": "Qu’est-ce que la liberté d’expression ?" },
+        { "id": "3-29", "q": "La liberté d’expression a-t-elle des limites ?" },
+        { "id": "3-31", "q": "À quel âge devient-on majeur ?" }
+      ]
+    },
+    {
+      "titre": "Histoire, géographie et culture",
+      "chapo": "Les grandes dates, quelques personnages, la géographie de la France. Rattachez-les à ce que vous connaissez : une ville visitée, un film, un livre.",
+      "items": [
+        { "id": "4-11", "q": "En quelle année a commencé la Révolution française ?" },
+        { "id": "4-1", "q": "Quel texte important a été adopté sous Napoléon Ier ?" },
+        { "id": "4-17", "q": "Qui a rendu l’école gratuite, laïque et obligatoire ?" },
+        { "id": "4-28", "q": "Qui a aboli l’esclavage en France ? En quelle année ?" },
+        { "id": "4-14", "q": "Que s’est-il passé le 18 juin 1940 ?" },
+        { "id": "4-30", "q": "Depuis quand les femmes votent-elles en France ?" },
+        { "id": "4-5", "q": "Que s’est-il passé en 1958 ?" },
+        { "id": "4-22", "q": "Quand la peine de mort a-t-elle été abolie, et sous quel président ?" },
+        { "id": "4-7", "q": "Qui était Simone Veil ?" },
+        { "id": "4-39", "q": "Qui était Marie Curie ?" },
+        { "id": "4-36", "q": "Citez une œuvre de Victor Hugo." },
+        { "id": "4-50", "q": "Qui était Molière ?" },
+        { "q": "Citez un écrivain, un artiste ou un sportif français que vous aimez.", "conseil": "Choisissez quelqu’un que vous connaissez vraiment et dites pourquoi vous l’aimez." },
+        { "id": "4-83", "q": "Quel fleuve traverse Paris ?" },
+        { "id": "4-65", "q": "Quelle est la plus haute montagne de France ?" },
+        { "id": "4-75", "q": "Combien y a-t-il de régions en France ?" },
+        { "id": "2-35", "q": "Et combien de départements ?" },
+        { "id": "4-71", "q": "Citez un département d’outre-mer." },
+        { "id": "4-38", "q": "Citez un plat typique de la cuisine française." }
+      ]
+    },
+    {
+      "titre": "La vie quotidienne",
+      "chapo": "Les règles de la vie de tous les jours : santé, école, travail, famille.",
+      "items": [
+        { "id": "5-8", "q": "Quel numéro faut-il appeler pour la police ?" },
+        { "id": "5-9", "q": "Et pour le SAMU ?" },
+        { "id": "5-38", "q": "À partir de quel âge l’instruction est-elle obligatoire ?" },
+        { "id": "5-37", "q": "Jusqu’à quel âge ?" },
+        { "id": "5-3", "q": "Quel mariage est reconnu par la loi ?" },
+        { "id": "5-44", "q": "A-t-on le droit de frapper ses enfants pour les punir ?" },
+        { "id": "5-22", "q": "Peut-on travailler sans être déclaré ?" },
+        { "id": "5-25", "q": "Quelle est la durée légale du travail par semaine ?" },
+        { "id": "5-17", "q": "À quoi sert la carte Vitale ?" }
+      ]
+    },
+    {
+      "titre": "Mises en situation à l’oral",
+      "chapo": "L’agent peut vous décrire une situation et vous demander ce que vous feriez. Répondez en vous appuyant sur la loi et les valeurs de la République.",
+      "items": [
+        { "id": "s1-4" },
+        { "id": "s1-9" },
+        { "id": "s1-13" },
+        { "id": "s1-18" },
+        { "id": "s3-4" },
+        { "id": "s1-17" },
+        { "id": "s3-17" }
+      ]
+    }
+  ]
+}

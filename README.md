@@ -114,6 +114,19 @@ Les trois sujets d'exemple (`assets/examens/`, sujet n° 2026) se régénèrent 
 node scripts/build.mjs && node tools/examen40/exemples.mjs && node scripts/build.mjs
 ```
 
+
+## Questions de l'entretien de naturalisation
+
+`data/entretien.json` : questions d'entraînement (non officielles) par section. Un élément avec `id` reprend la question et la réponse vérifiées de `data/questions.json` (ou une mise en situation `s…`), `q` donne la formulation orale, `conseil` un conseil. Page : `/guide/questions-entretien-naturalisation/`. Après une modification, régénérer le PDF :
+
+```bash
+node scripts/build.mjs && node tools/entretien/pdf.mjs && node scripts/build.mjs
+```
+
+## Données ouvertes
+
+Le build écrit `dist/data/opendata/` (questions des trois listes mises en correspondance, mises en situation, en CSV et JSON), publiées sur data.gouv.fr comme ressources distantes : voir `datagouv/README.md`.
+
 ## Sources
 
 - Liste officielle des questions de connaissance (naturalisation), ministère de l’Intérieur, 12 décembre 2025.

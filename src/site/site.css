@@ -415,3 +415,16 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .gen40 .btn[disabled]{ opacity:.6; cursor:progress; }
 .gen-status{ min-height:1.4em; margin:12px 0 0; }
 .gen-status:empty{ margin:0; min-height:0; }
+
+/* Questions de l'entretien : questions dépliables */
+.note{ background:var(--sunk); border-left:4px solid var(--accent); border-radius:10px; padding:12px 16px; margin:16px 0; }
+.note p{ margin:0; }
+.qa{ display:grid; gap:8px; margin:12px 0 8px; }
+.qa details{ background:var(--surface); border:1px solid var(--line); border-radius:12px; }
+.qa summary{ cursor:pointer; padding:12px 14px; font-weight:700; display:flex; gap:10px; align-items:baseline; list-style:none; }
+.qa summary::-webkit-details-marker{ display:none; }
+.qa summary::after{ content:"+"; margin-left:auto; color:var(--muted); font-weight:400; font-size:20px; line-height:1; }
+.qa details[open] summary::after{ content:"–"; }
+.qa .qn{ flex:none; min-width:26px; color:var(--accent); font-variant-numeric:tabular-nums; }
+.qa details > div{ padding:0 14px 12px 50px; }
+.qa details > div p{ margin:6px 0; }
