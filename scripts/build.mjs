@@ -66,7 +66,7 @@ const LESSON_OF = Object.fromEntries(LISTS.map((l) => {
 
 const sitemap = [];
 // Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
-const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json", "data/en.json", "data/ar.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
+const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/site/examen40.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json", "data/en.json", "data/ar.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
 // Application installable (PWA) : manifeste, service worker, invitation à installer
 const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest")}">
 <meta name="mobile-web-app-capable" content="yes">
@@ -130,7 +130,8 @@ ${alternates.map(([l, p]) => `<link rel="alternate" hreflang="${l}" href="${abs(
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${abs(canonical)}">
 <meta name="theme-color" content="#1F4E9C">
-<link rel="icon" type="image/png" sizes="32x32" href="${href("/assets/icon-32.png")}">
+<link rel="icon" href="${href("/favicon.ico")}" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="${href("/assets/icon-96.png")}">
 <link rel="icon" type="image/png" sizes="192x192" href="${href("/assets/icon-192.png")}">
 <link rel="apple-touch-icon" href="${href("/assets/icon-180.png")}">
 ${pwaHead()}
@@ -172,6 +173,7 @@ ${body}
       <a href="${href("/mises-en-situation/")}">Mises en situation</a>
       <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
       <a href="${href("/examen-civique-pdf/")}">Livrets PDF</a>
+      <a href="${href(EX40_PATH)}">Sujets PDF de 40 questions</a>
       <a href="${href("/installer-application/")}">Application</a></div>
     <div><h3>Comprendre</h3>
       <a href="${href("/guide/deroulement-examen-civique/")}">Déroulement de l’examen</a>
@@ -216,6 +218,7 @@ function home() {
     ["Quel score faut-il pour réussir ?", "Il faut au moins 32 bonnes réponses sur 40, soit 80 %. Une absence de réponse compte comme une erreur : répondez à toutes les questions."],
     ["Quelle liste de questions dois-je réviser ?", `Celle de votre démarche : naturalisation (${LIST.nat.count} questions), carte de résident (${LIST.cr.count} questions) ou carte de séjour pluriannuelle (${LIST.csp.count} questions). Beaucoup de questions sont communes aux trois listes. Sur la page « Réviser », choisissez votre liste : les cartes, les quiz et les examens blancs s’adaptent.`],
     ["D’où viennent les questions et les réponses ?", "Les questions sont celles des listes officielles publiées par le ministère de l’Intérieur. Les réponses sont rédigées par Coq Civique, notamment d’après le Livret du citoyen (édition mai 2026) et les textes officiels ; chaque page indique sa source et permet de signaler une erreur."],
+    ["Est-ce vraiment gratuit ?", "Oui : leçons, QCM, examens blancs, livrets PDF et sujets de 40 questions sont gratuits, sans inscription et sans publicité. Le ministère de l’Intérieur rappelle d’ailleurs que la préparation à l’examen civique peut se faire gratuitement, et que les sites qui font payer l’accès à des contenus ne sont pas gérés par le ministère."],
     ["Ce site est-il officiel ?", "Non. C’est un site indépendant et gratuit de révision, sans lien avec le ministère de l’Intérieur. L’inscription à l’examen se fait auprès d’un centre agréé."],
     ["Comment fonctionne l’apprentissage ?", "Comme une application de langue : chaque thème est découpé en leçons de 5 minutes. Vous lisez d’abord les réponses, puis un petit quiz vérifie que vous les avez retenues ; les erreurs reviennent jusqu’à ce qu’elles soient sues. Un objectif du jour et votre série de jours vous aident à garder le rythme."],
     ["Faut-il créer un compte ?", "Non. Vous pouvez commencer à apprendre tout de suite. Pour ne rien perdre et retrouver votre progression sur votre téléphone comme sur votre ordinateur, indiquez simplement votre adresse email, sans mot de passe : ce que vous avez déjà appris est conservé. La même adresse donne accès au livret PDF."],
@@ -228,9 +231,9 @@ function home() {
     <div class="hero-text">
       <div class="eyebrow">Examen civique 2026 · listes officielles</div>
       <h1>${typo("Apprenez l’examen civique, 5 minutes par jour")}</h1>
-      <p class="lead">${typo("L’appli gratuite pour apprendre les questions officielles pas à pas : des leçons courtes, un quiz après chaque leçon et des examens blancs. Pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle.")}</p>
+      <p class="lead">${typo("L’appli 100 % gratuite et sans inscription pour apprendre les questions officielles pas à pas : des leçons courtes, un quiz après chaque leçon et des examens blancs. Pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle.")}</p>
       <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}">Commencer à apprendre</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}">Mon plan en 7 jours</a></div>
-      <ul class="trust"><li>${CHECK}Gratuit</li><li>${CHECK}Leçons de 5 minutes</li><li>${CHECK}Listes officielles 2026</li></ul>
+      <ul class="trust"><li>${CHECK}100 % gratuit</li><li>${CHECK}Sans inscription</li><li>${CHECK}Leçons de 5 minutes</li><li>${CHECK}Listes officielles 2026</li></ul>
       <p class="proof" data-chiffres hidden></p>
     </div>
     <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
@@ -293,9 +296,9 @@ function home() {
 
 <section class="band" id="pdf">
   <div class="shead"><div class="eyebrow">À imprimer</div><h2>Les livrets de révision en PDF</h2>
-  <p>${typo("Toutes les questions de votre liste et leurs réponses, au format A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen. Gratuit : il suffit d’indiquer votre adresse email.")}</p></div>
+  <p>${typo("Toutes les questions de votre liste et leurs réponses, au format A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen. Gratuit, sans inscription.")}</p></div>
   <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
-  <p class="more"><a href="${href("/examen-civique-pdf/")}">Le contenu des livrets et les documents officiels en PDF ›</a></p>
+  <p class="more"><a href="${href(EX40_PATH)}">${typo("Un sujet de 40 questions comme à l’examen, en PDF ›")}</a> · <a href="${href("/examen-civique-pdf/")}">${typo("Le contenu des livrets et les documents officiels ›")}</a></p>
 </section>
 
 <section class="band alt" id="guides">
@@ -321,12 +324,12 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   </div>
 </section>`;
   const ld = [
-    { "@context": "https://schema.org", "@type": "WebSite", name: NAME, url: abs("/"), inLanguage: "fr" },
+    { "@context": "https://schema.org", "@type": "WebSite", name: NAME, alternateName: ["CoqCivique", "coqcivique.com"], url: abs("/"), inLanguage: "fr" },
     { "@context": "https://schema.org", "@type": "Organization", name: NAME, url: abs("/"), logo: abs("/assets/icon-512.png"), founder: { "@type": "Person", name: "Jovan Pavlovic" } },
   ];
   write("/", layout({
     title: `Examen civique 2026 : test gratuit et QCM pour apprendre les questions officielles | ${NAME}`,
-    description: `Test civique gratuit pour apprendre l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles et leurs réponses, QCM, examens blancs et PDF.`,
+    description: `Test civique gratuit et sans inscription pour apprendre l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles, QCM, examens blancs et PDF.`,
     path: "/", body, jsonld: ld, wide: true, alternates: ALTS,
   }));
 }
@@ -341,7 +344,7 @@ function questionsIndex() {
 </section>`).join("");
   const items = [["Accueil", "/"], ["Naturalisation", "/questions/"]];
   write("/questions/", layout({
-    title: `Examen civique naturalisation : les ${TOTAL} questions et réponses (QCM) | ${NAME}`,
+    title: `Examen civique naturalisation : les ${TOTAL} questions et réponses (QCM gratuit) | ${NAME}`,
     description: `La liste officielle des ${TOTAL} questions de connaissance de l’examen civique pour la naturalisation, classées par thème, avec leurs réponses et un QCM gratuit.`,
     path: "/questions/", jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Examen civique naturalisation : les ${TOTAL} questions`)}</h1>
@@ -369,7 +372,7 @@ function listPage(code) {
   }).join("");
   const common = new Set(L.questions.map((e) => e.id).filter((id) => /^[1-5]-\d+$/.test(id))).size;
   write(info.path, layout({
-    title: `Examen civique ${longName} : ${info.count} questions-réponses et QCM | ${NAME}`,
+    title: `Examen civique ${longName} : ${info.count} questions-réponses et QCM gratuit | ${NAME}`,
     description: clip(`Les ${info.count} questions officielles de l’examen civique pour la ${longName}, avec leurs réponses, classées par thème. QCM et examen blanc gratuits.`),
     path: info.path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="eyebrow">Liste officielle · ${esc(info.court)}</div>
@@ -565,12 +568,13 @@ ${parts}
 function pdfPage() {
   const path = "/examen-civique-pdf/";
   const items = [["Accueil", "/"], ["Livrets PDF", path]];
-  const desc = "Les questions officielles de l’examen civique et leurs réponses en PDF gratuit, à imprimer : naturalisation, carte de résident et carte de séjour pluriannuelle.";
+  const desc = "Examen civique 2026 en PDF gratuit, sans inscription : toutes les questions officielles et leurs réponses (naturalisation 259, carte de résident, CSP) et des sujets de 40 questions avec corrigé.";
   write(path, layout({
-    title: `Examen civique 2026 PDF gratuit : questions et réponses à imprimer | ${NAME}`,
+    title: `Examen civique 2026 PDF gratuit : questions et réponses à imprimer, sans inscription | ${NAME}`,
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">À imprimer · gratuit</div><h1>${typo("Examen civique en PDF : les questions et réponses à imprimer")}</h1>
-<p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille.")}</p>
+<p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille. Gratuit, sans inscription.")}</p>
+<div class="cta"><p>${typo("Besoin d’un sujet de 40 questions comme à l’examen, avec corrigé ? Un nouveau sujet à chaque clic.")}</p><a class="btn primary" href="${href(EX40_PATH)}">${typo("Sujets de 40 questions en PDF")}</a></div>
 </article>
 <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
 <article class="prose">
@@ -590,9 +594,11 @@ function pdfPage() {
 </ul>
 <p>${typo("Pas sûr de votre liste ? Lisez")} <a href="${href("/guide/qui-doit-passer-examen-civique/")}">qui doit passer l’examen civique</a>.</p>
 <h2>Comment le télécharger ?</h2>
-<p>${typo("Cliquez sur « Télécharger le PDF » et indiquez votre adresse email : le téléchargement démarre aussitôt, sans mot de passe et sans attendre de message. La même adresse garde votre progression dans l’application.")}</p>
+<p>${typo("Cliquez sur « Télécharger le PDF », puis sur « Télécharger sans email » : c’est gratuit et sans inscription. Si vous le souhaitez, indiquez votre adresse email : elle garde votre progression dans l’application sur tous vos appareils, sans mot de passe.")}</p>
+<h2>${typo("« 300 questions » : combien y en a-t-il vraiment ?")}</h2>
+<p>${typo("Beaucoup de recherches parlent de « 300 questions » : c’est le titre de guides payants vendus en ligne, pas un chiffre officiel. La liste officielle de la naturalisation compte")} ${LIST.nat.count} ${typo("questions, celle de la carte de résident")} ${LIST.cr.count} ${typo("et celle de la carte de séjour pluriannuelle")} ${LIST.csp.count}. ${typo("Nos livrets les contiennent toutes, avec leurs réponses, gratuitement.")}</p>
 <h2>Les 12 mises en situation</h2>
-<p>${typo("Elles ne sont pas publiées par le ministère et ne figurent donc pas dans les livrets. Entraînez-vous avec nos")} <a href="${href("/mises-en-situation/")}">${situations.length} mises en situation corrigées</a>.</p>
+<p>${typo("Elles ne sont pas publiées par le ministère et ne figurent donc pas dans les livrets. Entraînez-vous avec nos")} <a href="${href("/mises-en-situation/")}">${situations.length} mises en situation corrigées</a>, ${typo("ou avec un")} <a href="${href(EX40_PATH)}">${typo("sujet complet de 40 questions en PDF")}</a> ${typo("qui en contient 12.")}</p>
 <h2>Les documents officiels en PDF</h2>
 <ul>
 <li><a href="${LIVRET_URL}" rel="noopener">Livret du citoyen</a> (ministère de l’Intérieur) — ${typo("voir aussi notre")} <a href="${href("/livret-du-citoyen/")}">${typo("sommaire avec les questions de l’examen")}</a>.</li>
@@ -609,11 +615,11 @@ function pdfPage() {
 function examBlancPage() {
   const path = "/examen-blanc/";
   const items = [["Accueil", "/"], ["Examen blanc", path]];
-  const desc = "Examen blanc gratuit de l’examen civique : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
+  const desc = "Simulateur gratuit de l’examen civique, sans inscription : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
   write(path, layout({
-    title: `Examen civique test gratuit : examen blanc de 40 questions (simulation 2026) | ${NAME}`,
+    title: `Examen civique test gratuit : simulateur d’examen blanc de 40 questions (2026) | ${NAME}`,
     description: desc, path, jsonld: [breadcrumbLd(items)],
-    body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulation · gratuit</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
+    body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulateur · gratuit · sans inscription</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
 <p class="lead">${typo("40 questions en 45 minutes, comme le jour de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Votre score sur 40 et la correction de chaque erreur.")}</p>
 <div class="offbtn">${LISTS.map((l, k) => `<a class="btn${k === 0 ? " primary" : ""}" href="${href(`/reviser/?liste=${l.code}&start=examen`)}">Examen blanc ${esc(l.nom.toLowerCase())}</a>`).join("")}</div>
 <h2>Comment se passe l’examen blanc ?</h2>
@@ -634,8 +640,85 @@ function examBlancPage() {
 <li><a href="${href("/guide/deroulement-examen-civique/")}">${typo("Comment se passe le vrai examen")}</a></li>
 <li><a href="${href("/preparer-examen-civique-en-7-jours/")}">${typo("Le plan de révision en 7 jours")}</a></li>
 <li><a href="${href("/examen-civique-pdf/")}">${typo("Les questions et réponses en PDF")}</a></li>
+<li><a href="${href(EX40_PATH)}">${typo("Un examen blanc de 40 questions en PDF, à imprimer")}</a></li>
 </ul>
 </article>`,
+  }));
+}
+
+/* ---------- Sujets de 40 questions en PDF (générateur dans le navigateur) ---------- */
+const EX40_PATH = "/examen-civique-40-questions-pdf/";
+// Sujets d'exemple produits par tools/examen40/exemples.mjs (inventaire dans assets/examens/examens.json)
+const EX40_INV = existsSync(join(ROOT, "assets/examens/examens.json")) ? JSON.parse(readFileSync(join(ROOT, "assets/examens/examens.json"), "utf8")) : {};
+function examen40Data() {
+  const pdfText = (s) => plain(s).replace(/[  ]/g, " ");
+  const used = new Set();
+  const lists = Object.fromEntries(LISTS.map((l) => {
+    const seen = new Set(), q = [];
+    for (const qq of questions) {
+      const m = member.get(qq.id).find((x) => x.code === l.code);
+      if (!m || seen.has(qq.id)) continue;
+      seen.add(qq.id); used.add(qq.id);
+      q.push(m.texte ? [qq.id, m.theme, m.numero, pdfText(m.texte)] : [qq.id, m.theme, m.numero]);
+    }
+    return [l.code, { nom: l.nom, q }];
+  }));
+  const q = Object.fromEntries(questions.filter((x) => used.has(x.id)).map((x) => [x.id, [pdfText(x.question), pdfText(x.qcm.bonne), x.qcm.mauvaises.map(pdfText), abs(qPath(x))]]));
+  const s = situations.map((x) => [x.id, x.theme, pdfText(x.situation), pdfText(x.question), pdfText(x.qcm.bonne), x.qcm.mauvaises.map(pdfText), abs(`/mises-en-situation/#${x.id}`)]);
+  return { v: 1, themes: themes.map((t) => ({ t: t.id })), lists, q, s };
+}
+function examen40Page() {
+  const path = EX40_PATH;
+  const items = [["Accueil", "/"], ["Livrets PDF", "/examen-civique-pdf/"], ["Sujets de 40 questions", path]];
+  const desc = "Examen civique 40 questions en PDF gratuit : un nouveau sujet à chaque clic, au format officiel (28 questions de votre liste + 12 mises en situation), avec corrigé. Sans inscription.";
+  const cfg = { data: `${href("/data/examen40.json")}?v=${V}`, lib: href("/assets/vendor/jspdf.umd.min.js"), site: abs("/") };
+  const examples = LISTS.filter((l) => EX40_INV[l.code]).map((l) => {
+    const e = EX40_INV[l.code];
+    return `<li><a href="${href(`/assets/examens/${e.fichier}`)}" download>${esc(l.nom)} : sujet ${esc(e.sujet)}</a> <span class="muted">(PDF, ${e.pages} pages, avec corrigé)</span></li>`;
+  }).join("");
+  write(path, layout({
+    title: `Examen civique 40 questions PDF gratuit : sujets avec corrigé | ${NAME}`,
+    description: desc, path, jsonld: [breadcrumbLd(items)],
+    body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Gratuit · sans inscription · à imprimer</div>
+<h1>${typo("Examen civique : 40 questions en PDF, gratuit, avec corrigé")}</h1>
+<p class="lead">${typo("Un nouveau sujet à chaque clic, au format de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Imprimez-le, chronométrez 45 minutes, puis corrigez-vous. Sans email, sans compte.")}</p>
+<form id="gen40" class="gen40" data-cfg="${esc(JSON.stringify(cfg))}">
+<fieldset><legend>Votre démarche</legend>
+${LISTS.map((l, i) => `<label class="opt"><input type="radio" name="liste" value="${l.code}"${i === 0 ? " checked" : ""}> <span>${esc(l.nom)}</span> <small>${l.count} questions</small></label>`).join("\n")}
+</fieldset>
+<label class="chk"><input type="checkbox" name="corrige" checked> ${typo("Ajouter le corrigé à la fin du sujet")}</label>
+<button class="btn primary big" type="submit">Télécharger mon sujet PDF</button>
+<p class="gen-status" role="status" aria-live="polite"></p>
+<noscript><p>${typo("Le générateur a besoin de JavaScript. Vous pouvez télécharger un des sujets prêts à imprimer ci-dessous.")}</p></noscript>
+</form>
+${examples ? `<h2>${typo("Trois sujets prêts à imprimer")}</h2>
+<p>${typo("Pas envie de générer ? Voici un sujet complet pour chaque liste, corrigé compris :")}</p>
+<ul>${examples}</ul>` : ""}
+<h2>${typo("Comment est fait chaque sujet ?")}</h2>
+<ul>
+<li>${typo("40 questions à choix multiples, quatre propositions, une seule bonne réponse, comme à l’examen.")}</li>
+<li>${typo("28 questions de connaissance tirées de la liste officielle de votre démarche (naturalisation, carte de résident ou carte de séjour pluriannuelle), réparties sur les cinq thèmes selon leur poids dans la liste.")}</li>
+<li>${typo("12 mises en situation de la vie quotidienne. Le ministère ne les publie pas : celles-ci sont rédigées par Coq Civique sur les mêmes principes (laïcité, égalité, droits et devoirs).")}</li>
+<li>${typo("Le corrigé est sur les dernières pages : une grille des bonnes réponses pour compter vos points, puis chaque réponse avec un lien vers son explication.")}</li>
+<li>${typo("Chaque sujet a un numéro (par exemple NAT-4821). Le même numéro donne toujours le même sujet : pratique pour qu’un formateur donne le même sujet à tout un groupe.")}</li>
+</ul>
+<h2>${typo("Comment s’entraîner avec un sujet PDF")}</h2>
+<ol>
+<li>${typo("Imprimez le sujet sans les pages du corrigé, ou cachez-les.")}</li>
+<li>${typo("Lancez un chronomètre de 45 minutes et répondez à toutes les questions : une question sans réponse compte comme une erreur.")}</li>
+<li>${typo("Corrigez-vous avec la grille : il faut au moins 32 bonnes réponses sur 40. Visez 35 pour avoir de la marge le jour de l’examen.")}</li>
+<li>${typo("Revoyez chaque erreur avec son explication, puis travaillez le thème concerné dans")} <a href="${href("/reviser/")}">${typo("l’application (leçons de 5 minutes)")}</a>.</li>
+<li>${typo("Recommencez avec un nouveau sujet : les questions changent à chaque fois.")}</li>
+</ol>
+<h2>${typo("Sur papier ou en ligne ?")}</h2>
+<p>${typo("Le papier aide à se concentrer, loin des notifications. En ligne, l’")}<a href="${href("/examen-blanc/")}">${typo("examen blanc")}</a> ${typo("se corrige tout seul, avec un vrai chronomètre et une explication pour chaque erreur, et vos questions manquées reviennent dans vos révisions. Les deux sont gratuits : alternez-les.")}</p>
+<h2>${typo("Vous cherchez toutes les questions en PDF ?")}</h2>
+<p>${typo("Les livrets PDF contiennent la liste complète avec les réponses :")} ${LISTS.map((l) => `${esc(l.nom.toLowerCase())} (${l.count} questions)`).join(", ")}. <a href="${href("/examen-civique-pdf/")}">${typo("Voir les livrets PDF")}</a>.</p>
+<h2>${typo("Formateurs et associations")}</h2>
+<p>${typo("Vous préparez un groupe à l’examen civique ? Générez un sujet, notez son numéro et partagez le lien du sujet : tout le monde travaille sur les mêmes 40 questions. C’est gratuit, sans compte. Une question, une idée :")} <a href="mailto:${esc(config.editeur.contact)}">${esc(config.editeur.contact)}</a>.</p>
+<p class="src">${typo("Site indépendant et non officiel. Questions de connaissance : listes officielles du ministère de l’Intérieur. Réponses et mises en situation rédigées par Coq Civique. Le ministère rappelle que la préparation à l’examen peut se faire gratuitement.")}</p>
+</article>
+<script src="${href("/assets/examen40.js")}?v=${V}" defer></script>`,
   }));
 }
 
@@ -684,7 +767,7 @@ function appPage() {
   const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), help: { en: `${href("/data/en.json")}?v=${V}`, ar: `${href("/data/ar.json")}?v=${V}` }, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `Test civique gratuit : apprendre l’examen civique avec leçons, QCM et examen blanc | ${NAME}`;
-  const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs.`;
+  const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs. Gratuit, sans inscription.`;
   sitemap.push("/reviser/");
   write("/reviser/", tpl
     .replaceAll("__TITLE__", esc(title))
@@ -748,6 +831,7 @@ function contentPages() {
       { url: "/livret-du-citoyen/", meta: { h1: "Livret du citoyen 2026 : sommaire et questions de l’examen", description: "Le livret officiel partie par partie, avec les questions de l’examen civique qui s’y rapportent." } },
       { url: "/examen-blanc/", meta: { h1: "Examen blanc : la simulation en conditions réelles", description: "40 questions en 45 minutes, score sur 40 et correction de chaque erreur." } },
       { url: "/examen-civique-pdf/", meta: { h1: "Les questions et réponses en PDF", description: "Un livret gratuit à imprimer pour chaque liste officielle." } },
+      { url: EX40_PATH, meta: { h1: "Sujets de 40 questions en PDF", description: "Un nouveau sujet au format de l’examen à chaque clic, avec corrigé." } },
     ].map((g) => `<li><a href="${href(g.url)}"><b>${typo(g.meta.h1)}</b><span>${typo(g.meta.description)}</span></a></li>`).join("")}</ul>`,
   }));
   for (const p of readContent("content/en")) {
@@ -831,6 +915,8 @@ cpSync(join(ROOT, "assets"), join(DIST, "assets"), { recursive: true });
 cpSync(join(ROOT, "src/site/site.css"), join(DIST, "assets/site.css"));
 cpSync(join(ROOT, "src/site/coq.js"), join(DIST, "assets/coq.js"));
 cpSync(join(ROOT, "src/site/pwa.js"), join(DIST, "assets/pwa.js"));
+cpSync(join(ROOT, "src/site/examen40.js"), join(DIST, "assets/examen40.js"));
+cpSync(join(ROOT, "assets/favicon.ico"), join(DIST, "favicon.ico"));
 writeFileSync(join(DIST, "manifest.webmanifest"), JSON.stringify({
   name: `${NAME} – Examen civique`, short_name: NAME, lang: "fr", dir: "ltr",
   description: "QCM gratuit de l’examen civique : questions officielles, réponses, cartes et examens blancs.",
@@ -854,6 +940,7 @@ cpSync(join(ROOT, "data/questions.json"), join(DIST, "data/questions.json"));
 cpSync(join(ROOT, "data/listes.json"), join(DIST, "data/listes.json"));
 cpSync(join(ROOT, "data/en.json"), join(DIST, "data/en.json"));
 cpSync(join(ROOT, "data/ar.json"), join(DIST, "data/ar.json"));
+writeFileSync(join(DIST, "data/examen40.json"), JSON.stringify(examen40Data()));
 home();
 questionsIndex();
 listPage("cr");
@@ -865,6 +952,7 @@ appPage();
 livretPage();
 pdfPage();
 examBlancPage();
+examen40Page();
 contentPages();
 legal();
 // Date de dernière modification réelle : celle de la version publiée si le contenu n'a pas changé.

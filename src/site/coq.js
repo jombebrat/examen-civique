@@ -126,7 +126,8 @@
     ".coq-link{background:none;border:0;padding:0;color:#56607A;text-decoration:underline;text-underline-offset:3px;font:inherit;cursor:pointer}" +
     ".coq-x{position:absolute;top:8px;right:8px;width:36px;height:36px;border:0;border-radius:10px;background:transparent;color:#56607A;font-size:24px;line-height:1;cursor:pointer}" +
     ".coq-x:hover{background:#EDF0F6}" +
-    ".coq-who{font-weight:700;color:#15203B;word-break:break-all}";
+    ".coq-who{font-weight:700;color:#15203B;word-break:break-all}" +
+    ".coq-or{margin-top:12px;padding-top:12px;border-top:1px solid #E2E6EE}";
 
   var gate = null, why = "";
   var pending = null; // livret demandé avant l'email
@@ -152,7 +153,7 @@
     gate.addEventListener("click", function (ev) {
       var t = ev.target.closest("[data-coq]"); if (!t) return;
       var a = t.getAttribute("data-coq");
-      if (a === "later") { ssSet(K_LATER, "1"); hide(); }
+      if (a === "later" || a === "nomail") { ssSet(K_LATER, "1"); hide(); }
       if (a === "go") ssSet(K_LATER, "1");
       if (a === "close") hide();
     });
@@ -190,13 +191,15 @@
       '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later">×</button>' +
       '<div class="coq-head"><img src="' + esc(cfg.logo) + '" alt="" width="46" height="46"><div>' +
       '<h2 id="coq-t">' + (pdf ? "Télécharger le livret PDF" : save ? "Gardez votre progression" : "Bienvenue sur Coq Civique") + '</h2>' +
-      '<p id="coq-d">' + (pdf ? "Indiquez votre email : le téléchargement s’affiche aussitôt." : save ? "Indiquez votre email, sans mot de passe : ce que vous avez déjà appris est conservé et vous le retrouvez sur tous vos appareils." : "Indiquez votre email pour garder votre progression et télécharger le livret PDF.") + '</p></div></div>' +
+      '<p id="coq-d">' + (pdf ? "Gratuit et sans inscription. Si vous le souhaitez, indiquez votre email : votre progression dans l’application sera gardée sur tous vos appareils." : save ? "Indiquez votre email, sans mot de passe : ce que vous avez déjà appris est conservé et vous le retrouvez sur tous vos appareils." : "Indiquez votre email pour garder votre progression sur tous vos appareils.") + '</p></div></div>' +
       '<form novalidate><div class="coq-row"><input type="email" autocomplete="email" inputmode="email" placeholder="prenom@exemple.fr" aria-label="Votre adresse email" required>' +
       '<button class="coq-btn" type="submit">Continuer</button></div>' +
       '<label class="coq-check"><input type="checkbox"> Recevoir de temps en temps des nouvelles de Coq Civique (facultatif)</label>' +
       '<p class="coq-err" role="alert" hidden></p>' +
-      '<p class="coq-note">Pas de mot de passe : votre progression est liée à cette adresse. <a href="' + esc(cfg.privacyUrl) + '">Confidentialité</a> · <button class="coq-link" type="button" data-coq="later">Plus tard</button></p>' +
-      '</form></div>';
+      '<p class="coq-note">Pas de mot de passe : votre progression est liée à cette adresse. <a href="' + esc(cfg.privacyUrl) + '">Confidentialité</a>' + (pdf ? '' : ' · <button class="coq-link" type="button" data-coq="later">Plus tard</button>') + '</p>' +
+      '</form>' +
+      (pdf && pending ? '<div class="coq-row coq-or"><a class="coq-btn alt" href="' + esc(pending) + '" download data-coq="nomail">Télécharger sans email</a></div>' : '') +
+      '</div>';
   }
   function renderDone() {
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t">' +

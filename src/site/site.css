@@ -399,3 +399,19 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .prose[dir="rtl"] h1{ line-height:1.35; }
 .prose[dir="rtl"] th, .prose[dir="rtl"] td{ text-align:right; }
 .prose[dir="rtl"] .eyebrow{ letter-spacing:0; }
+
+/* Générateur de sujets PDF (40 questions) */
+.muted{ color:var(--muted); }
+.gen40{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px; margin:20px 0 8px; box-shadow:var(--shadow); }
+.gen40 fieldset{ border:0; padding:0; margin:0 0 12px; display:grid; gap:8px; }
+.gen40 legend{ font-weight:700; padding:0; margin-bottom:8px; }
+.gen40 .opt{ display:flex; align-items:center; gap:10px; min-height:48px; padding:8px 14px; border:1.5px solid var(--line); border-radius:12px; cursor:pointer; font-weight:600; }
+.gen40 .opt input{ width:20px; height:20px; accent-color:var(--accent); margin:0; }
+.gen40 .opt small{ margin-left:auto; color:var(--muted); font-weight:400; }
+.gen40 .opt:has(input:checked){ border-color:var(--accent); background:var(--accent-weak); }
+.gen40 .chk{ display:flex; align-items:center; gap:10px; margin:2px 0 14px; }
+.gen40 .chk input{ width:20px; height:20px; accent-color:var(--accent); margin:0; }
+.gen40 .btn{ width:100%; }
+.gen40 .btn[disabled]{ opacity:.6; cursor:progress; }
+.gen-status{ min-height:1.4em; margin:12px 0 0; }
+.gen-status:empty{ margin:0; min-height:0; }

@@ -1,0 +1,17 @@
+{
+  "nat": {
+    "fichier": "coq-civique-examen-civique-40-questions-nat-2026.pdf",
+    "sujet": "NAT-2026",
+    "pages": 9
+  },
+  "cr": {
+    "fichier": "coq-civique-examen-civique-40-questions-cr-2026.pdf",
+    "sujet": "CR-2026",
+    "pages": 9
+  },
+  "csp": {
+    "fichier": "coq-civique-examen-civique-40-questions-csp-2026.pdf",
+    "sujet": "CSP-2026",
+    "pages": 9
+  }
+}

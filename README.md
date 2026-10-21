@@ -105,6 +105,15 @@ python3 tools/pdf/check_pdf.py assets/coq-civique-examen-civique.pdf   # vérifi
 ```
 Après une modification importante des réponses, régénérer le PDF puis la vignette : `pdftoppm -r 40 -png -f 1 -l 1 -singlefile assets/coq-civique-examen-civique.pdf assets/livret-couverture`.
 
+## Sujets de 40 questions en PDF
+
+La page `/examen-civique-40-questions-pdf/` fabrique le PDF dans le navigateur : `src/site/examen40.js` (tirage 28 + 12 comme l'examen blanc, mise en page, corrigé) avec jsPDF 2.5.2 hébergé sur le site (`assets/vendor/`, licence MIT), et les données `data/examen40.json` écrites par le build. Un sujet = une liste + un numéro (`?sujet=nat-4821` redonne le même sujet).
+Les trois sujets d'exemple (`assets/examens/`, sujet n° 2026) se régénèrent après une modification des questions :
+
+```bash
+node scripts/build.mjs && node tools/examen40/exemples.mjs && node scripts/build.mjs
+```
+
 ## Sources
 
 - Liste officielle des questions de connaissance (naturalisation), ministère de l’Intérieur, 12 décembre 2025.
