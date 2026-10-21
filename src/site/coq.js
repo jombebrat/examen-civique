@@ -85,7 +85,16 @@
     ".coq-who{font-weight:700;color:#15203B;word-break:break-all}";
 
   var gate = null, why = "";
-  var pdfBtn = function () { return '<a class="coq-btn" href="' + esc(cfg.pdfUrl) + '" download data-coq="pdf">Télécharger le PDF (27 pages)</a>'; };
+  var pending = null; // livret demandé avant l'email
+  var PDFS = cfg.pdfs && cfg.pdfs.length ? cfg.pdfs : [{ nom: "Livret", url: cfg.pdfUrl, pages: 27 }];
+  var pdfBtn = function () {
+    var path = function (u) { try { return new URL(u, location.href).pathname; } catch (e) { return u; } };
+    var want = pending ? PDFS.filter(function (x) { return path(x.url) === path(pending); }) : [];
+    var list = want.length ? want : PDFS;
+    return list.map(function (x, i) {
+      return '<a class="coq-btn' + (list.length > 1 && i ? " alt" : "") + '" href="' + esc(x.url) + '" download data-coq="pdf">' + (list.length > 1 ? "PDF " + esc(x.nom) : "Télécharger le PDF « " + esc(x.nom) + " » (" + x.pages + " pages)") + '</a>';
+    }).join("");
+  };
   var onApp = cfg.reviser && location.pathname.indexOf(cfg.reviser) === 0;
 
   function pad() {
@@ -160,7 +169,7 @@
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest && ev.target.closest("[data-pdf-link]");
     if (!a || ID.email()) return;
-    ev.preventDefault(); show("pdf", true);
+    ev.preventDefault(); pending = a.getAttribute("href"); show("pdf", true);
   });
 
   // À l'arrivée : on demande l'adresse, sauf si elle est connue ou si « Plus tard » a été choisi pendant cette visite.

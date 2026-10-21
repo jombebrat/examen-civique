@@ -452,7 +452,11 @@ function renderAccount() {
 }
 function initAccount() {
   ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
-  if (window.COQ && window.COQ.pdfUrl) $("#pdfLink").innerHTML = `<a href="${esc(window.COQ.pdfUrl)}" data-pdf-link download>Télécharger le livret de révision en PDF (27 pages)</a>`;
+  const lp = (DATA.pdfs || {})[LIST];
+  if (lp) {
+    $("#pdfLink").innerHTML = `<a href="${esc(lp.url)}" data-pdf-link download>Télécharger le livret PDF « ${esc(LIST_INFO.nom)} » (${lp.pages} pages)</a>`;
+    const sb = document.querySelector(".sb-pdf"); if (sb) sb.href = lp.url;
+  }
   if (!ID) return;
   renderAccount();
   pull();

@@ -12,7 +12,10 @@ from reportlab.lib.units import mm
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "out")
-TARGET = os.path.join(HERE, "..", "..", "assets", "coq-civique-examen-civique.pdf")
+LISTE = os.environ.get("COQ_LISTE", "nat")
+FICHIERS = {"nat": "coq-civique-examen-civique.pdf", "cr": "coq-civique-examen-civique-carte-de-resident.pdf",
+            "csp": "coq-civique-examen-civique-carte-de-sejour-pluriannuelle.pdf"}
+TARGET = os.path.join(HERE, "..", "..", "assets", FICHIERS[LISTE])
 os.makedirs(OUT, exist_ok=True)
 sys.path.insert(0, HERE)
 import layout as build
@@ -129,12 +132,18 @@ def main():
     ov = PdfReader(os.path.join(OUT, "footer.pdf"))
     for i, page in enumerate(w.pages):
         page.merge_page(ov.pages[i])
-    w.add_metadata({"/Title": f"{build.BRAND} – Examen civique : les 259 questions et réponses",
-                    "/Author": build.BRAND, "/Subject": "Préparation à l'examen civique (naturalisation)"})
+    total = sum(len(q) for _, q in THEMES)
+    w.add_metadata({"/Title": f"{build.BRAND} – Examen civique ({build.LIST_NAME}) : les {total} questions et réponses",
+                    "/Author": build.BRAND, "/Subject": f"Préparation à l'examen civique ({build.LIST_NAME.lower()})"})
     final = os.path.abspath(TARGET)
     with open(final, "wb") as f:
         w.write(f)
     print("pages", n, final)
+    # Inventaire des livrets (lu par scripts/build.mjs pour afficher le nombre de pages)
+    inv_path = os.path.join(HERE, "..", "..", "assets", "livrets.json")
+    inv = json.load(open(inv_path, encoding="utf-8")) if os.path.exists(inv_path) else {}
+    inv[LISTE] = {"fichier": FICHIERS[LISTE], "pages": n, "questions": total}
+    json.dump(inv, open(inv_path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

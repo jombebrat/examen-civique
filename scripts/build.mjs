@@ -62,7 +62,12 @@ const SB = config.supabase || {};
 // Adresse email + progression en ligne + livret PDF : actifs si l'adresse et la clé publique Supabase sont renseignées.
 const SB_ON = Boolean(SB.url && SB.cle_publique && SB.actif !== false);
 const PDF_PATH = "/assets/coq-civique-examen-civique.pdf";
-const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), logo: href("/assets/icon-192.png"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
+// Livrets PDF par liste (produits par tools/pdf/render_pdf.py, inventaire dans assets/livrets.json)
+const LIVRETS_INV = existsSync(join(ROOT, "assets/livrets.json")) ? JSON.parse(readFileSync(join(ROOT, "assets/livrets.json"), "utf8")) : {};
+const COVERS = { nat: "/assets/livret-couverture.png", cr: "/assets/livret-couverture-cr.png", csp: "/assets/livret-couverture-csp.png" };
+const LIVRETS = ["nat", "cr", "csp"].filter((c) => LIVRETS_INV[c]).map((c) => ({ code: c, url: `/assets/${LIVRETS_INV[c].fichier}`, pages: LIVRETS_INV[c].pages, questions: LIVRETS_INV[c].questions, cover: COVERS[c] }));
+const LIVRET = Object.fromEntries(LIVRETS.map((l) => [l.code, l]));
+const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfs: LIVRETS.map((l) => ({ code: l.code, nom: { nat: "Naturalisation", cr: "Carte de résident", csp: "Carte de séjour pluriannuelle" }[l.code], url: href(l.url), pages: l.pages })), logo: href("/assets/icon-192.png"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
 <script src="${href("/assets/coq.js")}?v=${V}" defer></script>` : "";
 
 function write(path, html) {
@@ -123,7 +128,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
   <nav class="nav" aria-label="Navigation principale">
     <a class="hide-sm" href="${href("/questions/")}">Questions</a>
     <a class="hide-sm" href="${href("/guide/")}">Guides</a>
-    <a class="btn small" href="${href(PDF_PATH)}" data-pdf-link download>PDF</a>
+    <a class="btn small" href="${href("/#pdf")}">PDF</a>
     <a class="btn primary small" href="${href("/reviser/")}">Réviser</a>
   </nav>
 </div></header>
@@ -143,7 +148,7 @@ ${body}
       <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
       <a href="${href("/mises-en-situation/")}">Mises en situation</a>
       <a href="${href("/guide/")}">Guides</a>
-      <a href="${href(PDF_PATH)}" data-pdf-link download>Livret PDF</a>
+      <a href="${href("/#pdf")}">Livrets PDF</a>
       <a href="${href("/installer-application/")}">Installer l’application</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
@@ -248,13 +253,9 @@ function home() {
 </section>
 
 <section class="band" id="pdf">
-  <div class="pdf">
-    <img src="${href("/assets/livret-couverture.png")}" alt="Couverture du livret PDF Coq Civique" width="331" height="468" loading="lazy">
-    <div><div class="eyebrow">À imprimer</div><h2>Le livret de révision en PDF</h2>
-    <p class="pdf-lead">Les ${TOTAL} questions de la liste « naturalisation » et leurs réponses sur 27 pages A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen.</p>
-    <p><a class="btn primary" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF (27 pages)</a></p>
-    <p class="pdf-note">${typo("Gratuit : il suffit d’indiquer votre adresse email.")}</p></div>
-  </div>
+  <div class="shead"><div class="eyebrow">À imprimer</div><h2>Les livrets de révision en PDF</h2>
+  <p>${typo("Toutes les questions de votre liste et leurs réponses, au format A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen. Gratuit : il suffit d’indiquer votre adresse email.")}</p></div>
+  <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
 </section>
 
 <section class="band alt faq">
@@ -291,6 +292,7 @@ function questionsIndex() {
 <p class="lead">La liste officielle des questions de connaissance pour la naturalisation (publiée le 12 décembre 2025), dans l’ordre de la liste, avec un lien vers chaque réponse.</p>
 <div class="cta"><p>Révisez cette liste avec des cartes, un QCM et des examens blancs de 40 questions.</p><a class="btn primary" href="${href("/reviser/?liste=nat")}">QCM naturalisation</a></div>
 <h2 class="sr-title">Autres listes</h2>${listCards("nat")}
+${LIVRET.nat ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>${typo(`Toute la liste « naturalisation » dans un livret PDF de ${LIVRET.nat.pages} pages, à imprimer.`)}</p><a class="btn" href="${href(LIVRET.nat.url)}" data-pdf-link download>Télécharger le PDF</a></div>` : ""}
 <nav class="toc" aria-label="Thèmes">${toc}</nav>${sections}`,
   }));
 }
@@ -319,6 +321,7 @@ function listPage(code) {
 <p class="lead">La liste officielle des questions de connaissance pour une ${esc(code === "csp" ? "première carte de séjour pluriannuelle" : "première carte de résident")}, dans l’ordre publié par le ministère de l’Intérieur, avec une réponse courte pour chacune. ${common} de ces questions figurent aussi dans la liste « naturalisation ».</p>
 <div class="cta"><p>À l’examen : 40 questions en 45 minutes, dont 28 questions de connaissance tirées de cette liste et 12 mises en situation. Il faut 32 bonnes réponses.</p><a class="btn primary" href="${href(`/reviser/?liste=${code}`)}">QCM ${esc(info.court)}</a></div>
 ${listCards(code)}
+${LIVRET[code] ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>${typo(`Toute la liste « ${info.nom.toLowerCase()} » dans un livret PDF de ${LIVRET[code].pages} pages, à imprimer.`)}</p><a class="btn" href="${href(LIVRET[code].url)}" data-pdf-link download>Télécharger le PDF</a></div>` : ""}
 <nav class="toc" aria-label="Thèmes">${toc}</nav>${sections}
 <p class="src" style="margin-top:22px">Source des questions : ${esc(L.source)}. Réponses rédigées par ${esc(NAME)}. <a href="${reportLink(info.nom, info.path)}">Signaler une erreur</a></p>`,
   }));
@@ -339,7 +342,7 @@ function themePage(t) {
 <div class="essentiel"><h2>L’essentiel à retenir</h2><ul>${t.essentiel.map((e) => `<li>${typo(e)}</li>`).join("")}</ul></div>
 <section class="block"><h2>Les ${qs.length} questions et leurs réponses</h2><ol class="qlist">${list}</ol></section>
 <div class="cta"><p>Entraînez-vous sur ce thème avec des cartes et un QCM.</p><a class="btn primary" href="${href(`/reviser/?liste=nat&theme=${t.id}`)}">QCM du thème ${t.id}</a></div>
-<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de 27 pages, à imprimer.</p><a class="btn" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF</a></div>`,
+<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>Toutes les questions dans un livret PDF de ${LIVRET.nat ? LIVRET.nat.pages : 27} pages, à imprimer.</p><a class="btn" href="${href(PDF_PATH)}" data-pdf-link download>Télécharger le PDF</a></div>`,
   }));
 }
 
@@ -435,7 +438,7 @@ function appPage() {
     };
   });
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
-  const appData = { sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
+  const appData = { pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `QCM examen civique gratuit : cartes, quiz et examen blanc | ${NAME}`;
   const desc = `QCM gratuit de l’examen civique : révisez les questions officielles de votre liste (naturalisation, carte de résident ou CSP) avec des cartes, des quiz et des examens blancs de 40 questions en 45 minutes.`;

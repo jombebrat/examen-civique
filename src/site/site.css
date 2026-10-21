@@ -339,3 +339,16 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .modes{ grid-template-columns:repeat(4, minmax(0,1fr)); }
 @media (max-width:980px){ .modes{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
 @media (max-width:640px){ .modes{ grid-template-columns:1fr; } }
+
+/* Livrets PDF */
+.livrets{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+.livret{ display:grid; grid-template-columns:96px minmax(0,1fr); gap:16px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:var(--shadow); }
+.livret img{ width:100%; height:auto; border-radius:4px; box-shadow:0 1px 0 var(--line), 0 6px 16px rgba(21,32,59,.14); background:#fff; }
+.livret > div{ display:grid; gap:6px; justify-items:start; }
+.livret b{ font-family:var(--display); font-size:19px; line-height:1.2; }
+.livret span{ font-size:14px; color:var(--muted); }
+.livret .btn{ margin-top:6px; min-height:42px; padding:8px 14px; font-size:15px; }
+@media (max-width:980px){ .livrets{ grid-template-columns:1fr; max-width:520px; } }
+
+/* Ancres : ne pas passer sous l’en-tête fixe */
+[id]{ scroll-margin-top:84px; }

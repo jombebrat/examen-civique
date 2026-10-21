@@ -16,8 +16,26 @@ def _detail(q):
         d = (d + " {c} " + q["complement_hors_livret"]).strip()
     return d
 
-THEMES = [(t["titre"], [(q["question"], q["reponse"], _detail(q), q["livret_pages"], q["reponse_hors_livret"])
-           for q in _DATA["questions"] if q["theme"] == t["id"]]) for t in _DATA["themes"]]
+# Liste à mettre en page : COQ_LISTE=nat (naturalisation, par défaut), cr (carte de résident) ou csp
+LISTE = os.environ.get("COQ_LISTE", "nat")
+_LISTES = json.load(open(os.path.join(ROOT, "data", "listes.json"), encoding="utf-8"))
+_BY_ID = {q["id"]: q for q in _DATA["questions"]}
+_row = lambda q, texte=None: (texte or q["question"], q["reponse"], _detail(q), q["livret_pages"], q["reponse_hors_livret"])
+if LISTE == "nat":
+    THEMES = [(t["titre"], [_row(q) for q in _DATA["questions"] if re.fullmatch(r"[1-5]-\d+", q["id"]) and q["theme"] == t["id"]])
+              for t in _DATA["themes"]]
+    LIST_NAME = "Naturalisation"
+    LIST_SOURCE = "Liste des questions publiée par le ministère de l'Intérieur le 12 décembre 2025."
+    LIST_ENDNOTE = "liste officielle des questions de connaissance (naturalisation), 12 décembre 2025"
+    BASIS = "Réponses rédigées d'après le Livret du citoyen (édition mai 2026) et la Charte des droits et devoirs du citoyen français. "
+else:
+    _L = _LISTES[LISTE]
+    THEMES = [(t["titre"], [_row(_BY_ID[e["id"]], e.get("texte")) for e in _L["questions"] if e["theme"] == t["id"]])
+              for t in _DATA["themes"]]
+    LIST_NAME = _L["nom"]
+    LIST_SOURCE = f"Liste officielle des questions de connaissance « {_L['nom'].lower()} », ministère de l'Intérieur (formation-civique.interieur.gouv.fr)."
+    LIST_ENDNOTE = f"liste officielle des questions de connaissance « {_L['nom'].lower()} », formation-civique.interieur.gouv.fr"
+    BASIS = "Réponses rédigées par Coq Civique, notamment d'après le Livret du citoyen (édition mai 2026) et les textes officiels. "
 
 THEME_COLORS = ["#1F4E9C", "#2B6B5E", "#A8432F", "#8A6516", "#5B3F8E"]
 THEME_TINTS  = ["#EEF2FA", "#EBF3F1", "#F8EEEB", "#F6F1E6", "#F1EEF7"]
@@ -224,11 +242,11 @@ def build_cover():
   <div class="flag"><span style="background:#1F4E9C"></span><span style="background:#E9ECF2"></span><span style="background:#C8102E"></span></div>
   <img class="logo" src="{logo_data_uri()}" alt="">
   <div class="inner">
-    <div class="eyebrow">{BRAND} · Fiches de révision · Naturalisation</div>
+    <div class="eyebrow">{BRAND} · Fiches de révision · {LIST_NAME}</div>
     <h1>Examen<br>civique <em>2026</em></h1>
     <div class="subtitle">Les {total} questions officielles de connaissance, avec leurs réponses expliquées.</div>
     <div class="rule"></div>
-    <div class="basis">{T("Réponses rédigées d'après le Livret du citoyen (édition mai 2026) et la Charte des droits et devoirs du citoyen français. Liste des questions publiée par le ministère de l'Intérieur le 12 décembre 2025.")}</div>
+    <div class="basis">{T(BASIS + LIST_SOURCE)}</div>
     <div class="examfmt cover-exam">
       <div><div class="k">40</div><div class="l">questions à choix multiples</div></div>
       <div><div class="k">45&nbsp;min</div><div class="l">durée maximale</div></div>
@@ -421,7 +439,7 @@ def build_memo():
   </div>
   <div class="method"><h3>Le jour de l’examen : la bonne méthode</h3><ol>{ml}</ol></div>
   </div>
-  <p class="endnote">{T("¹ Information hors livret. Sources : Livret du citoyen, édition mai 2026 ; Charte des droits et devoirs du citoyen français ; liste officielle des questions de connaissance (naturalisation), 12 décembre 2025.")}</p>
+  <p class="endnote">{T("¹ Information hors livret. Sources : Livret du citoyen, édition mai 2026 ; Charte des droits et devoirs du citoyen français ; " + LIST_ENDNOTE + ".")}</p>
 </section>"""
 
 
