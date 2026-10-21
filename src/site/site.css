@@ -352,3 +352,13 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 
 /* Ancres : ne pas passer sous l’en-tête fixe */
 [id]{ scroll-margin-top:84px; }
+
+/* Preuve sociale (chiffres réels) et témoignages */
+.proof{ margin:14px 0 0; font-size:15px; font-weight:700; color:var(--accent); }
+.temoignages{ margin-top:clamp(28px, 5vw, 48px); }
+.temoignages h3{ font-size:22px; margin-bottom:14px; }
+.tlist{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; }
+.tcard{ margin:0; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow); }
+.tcard blockquote{ margin:0 0 10px; font-size:16.5px; line-height:1.55; }
+.tcard figcaption{ font-size:14px; color:var(--muted); }
+.tnote{ font-size:13px; color:var(--muted); margin:10px 0 0; }

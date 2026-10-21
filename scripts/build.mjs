@@ -152,6 +152,7 @@ ${body}
       <a href="${href("/installer-application/")}">Installer l’application</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
+      <a href="${href("/mises-a-jour/")}">Mises à jour</a>
       <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
       <a href="${href("/mentions-legales/")}">Mentions légales et confidentialité</a>
       <a href="mailto:${esc(config.editeur.contact)}">Contact</a></div>
@@ -195,6 +196,7 @@ function home() {
       <p class="lead">Les questions officielles de l’examen civique pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle, avec une réponse claire pour chacune.</p>
       <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}">Commencer le QCM</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}">Mon plan en 7 jours</a></div>
       <ul class="trust"><li>${CHECK}Gratuit</li><li>${CHECK}Sans mot de passe</li><li>${CHECK}Listes officielles 2026</li></ul>
+      <p class="proof" data-chiffres hidden></p>
     </div>
     <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
   </div>
@@ -225,6 +227,8 @@ function home() {
       <a class="btn" href="${href("/a-propos/")}">Lire l’histoire</a>
     </div>
   </div>
+  <div class="temoignages" data-temoignages hidden><h3>Ils ont réussi leur examen</h3><div class="tlist"></div>
+  <p class="tnote">Témoignages publiés avec l’accord de leurs auteurs, après vérification.</p></div>
 </section>
 
 <section class="band alt">
@@ -438,7 +442,7 @@ function appPage() {
     };
   });
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
-  const appData = { pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
+  const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `QCM examen civique gratuit : cartes, quiz et examen blanc | ${NAME}`;
   const desc = `QCM gratuit de l’examen civique : révisez les questions officielles de votre liste (naturalisation, carte de résident ou CSP) avec des cartes, des quiz et des examens blancs de 40 questions en 45 minutes.`;
@@ -518,12 +522,16 @@ function legal() {
 <p>Si vous indiquez votre adresse email, nous l’enregistrons avec votre progression de révision (questions vues, réponses sues, résultats des examens blancs), la date et la page où vous l’avez indiquée. Finalité : retrouver votre progression sur vos appareils et vous donner accès au livret PDF. Base légale : l’exécution du service que vous demandez. Il n’y a pas de mot de passe : une personne qui saisit votre adresse sur le site peut voir et modifier cette progression. Durée de conservation : 3 ans après votre dernière activité, ou jusqu’à votre demande de suppression.</p>
 <h3>Nouvelles de ${esc(NAME)}</h3>
 <p>Uniquement si vous cochez la case prévue : envoi occasionnel de nouvelles du site. Base légale : votre consentement, dont nous conservons la date comme preuve, et que vous pouvez retirer à tout moment en nous écrivant ou par le lien présent dans chaque message.</p>
+<h3>Résultat d’examen et témoignage (facultatifs)</h3>
+<p>Si vous indiquez votre résultat à l’examen, nous enregistrons ce résultat, la liste concernée et, si vous les donnez, votre score, votre prénom avec l’initiale du nom et votre témoignage, sans adresse email. Finalité : établir des statistiques de réussite et, uniquement avec votre accord explicite, publier votre témoignage après vérification. Base légale : votre consentement. Durée : 3 ans. Pour retirer un témoignage publié, écrivez-nous.</p>
+<h3>Mesure d’audience</h3>
+<p>Nous comptons le nombre de pages vues chaque jour, ainsi que le site d’origine de la visite (par exemple un moteur de recherche). Aucune donnée personnelle n’est enregistrée : ni adresse IP, ni cookie, ni identifiant. Ces chiffres servent uniquement à améliorer le site.</p>
 <h3>Destinataires et prestataires</h3>
 <p>Vos données sont destinées uniquement à l’éditeur du site. Base de données : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Hébergement du site : GitHub Pages, qui enregistre, comme tout hébergeur, des données techniques de connexion (adresse IP) pour assurer la sécurité du service. Ces prestataires agissent dans le cadre d’accords de traitement des données ; lorsqu’ils peuvent accéder aux données depuis un pays hors de l’Union européenne, ce transfert est encadré par les clauses contractuelles types de la Commission européenne. Vos données ne sont ni vendues ni cédées à des tiers.</p>
 <h3>Vos droits</h3>
 <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l’utilisation, vous y opposer, en demander la portabilité et retirer votre consentement : écrivez à ${contact}. Nous répondons dans un délai d’un mois. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
 <h3>Stockage dans votre navigateur</h3>
-<p>Le site n’utilise ni cookie ni outil de mesure d’audience. Il enregistre dans votre navigateur votre progression et, si vous l’avez indiquée, votre adresse email, pour ne pas vous la redemander à chaque visite. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
+<p>Le site n’utilise aucun cookie ni traceur publicitaire. Il enregistre dans votre navigateur votre progression et, si vous l’avez indiquée, votre adresse email, pour ne pas vous la redemander à chaque visite. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
 <p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
   write("/mentions-legales/", layout({
     title: `Mentions légales et confidentialité | ${NAME}`,

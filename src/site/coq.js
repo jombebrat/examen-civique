@@ -51,11 +51,55 @@
       return rpc("coq_save", { p_email: e, p_data: data });
     },
     forget: function () { lsSet(K_EMAIL, null); notify(); },
+    report: function (r) { return rpc("coq_resultat", { p_liste: r.liste, p_reussi: !!r.reussi, p_score: r.score == null ? null : r.score, p_prenom: r.prenom || null, p_temoignage: r.temoignage || null, p_publication: !!r.publication }); },
+    stats: function () { return rpc("coq_chiffres", {}); },
     onChange: function (f) { listeners.push(f); },
     ask: function (why) { show(why || "", true); },
   };
   window.COQ_ID = ID;
   if (!ON) return;
+
+  /* Mesure d'audience anonyme : page vue + site d'origine (aucune donnée personnelle, aucun cookie) */
+  try {
+    var ref = "";
+    if (document.referrer) { var rh = new URL(document.referrer).hostname; if (rh && rh !== location.hostname) ref = rh.replace(/^www\./, ""); }
+    rpc("coq_vue", { p_path: location.pathname.slice(0, 200), p_ref: ref.slice(0, 100) }).catch(function () {});
+  } catch (e) {}
+
+  /* Chiffres réels et témoignages validés (affichés seulement à partir d'un seuil) */
+  var proof = document.querySelector("[data-chiffres]"), tem = document.querySelector("[data-temoignages]");
+  if (proof || tem) ID.stats().then(function (c) {
+    if (!c) return;
+    var fr = function (n) { return Number(n).toLocaleString("fr-FR"); };
+    if (proof && c.inscrits >= 50) {
+      var t = "Déjà " + fr(c.inscrits) + " personnes révisent avec Coq Civique";
+      if (c.resultats >= 20) t += " · " + Math.round(100 * c.reussites / c.resultats) + " % de réussite parmi les " + fr(c.resultats) + " résultats qui nous ont été communiqués";
+      proof.textContent = t + "."; proof.hidden = false;
+    }
+    if (tem && c.temoignages && c.temoignages.length) {
+      var L = { nat: "Naturalisation", cr: "Carte de résident", csp: "Carte de séjour pluriannuelle" };
+      tem.querySelector(".tlist").innerHTML = c.temoignages.map(function (x) {
+        return '<figure class="tcard"><blockquote>« ' + esc(x.texte) + ' »</blockquote><figcaption><b>' + esc(x.prenom || "Anonyme") + '</b>' + (x.score != null ? " · " + esc(x.score) + "/40" : "") + (L[x.liste] ? " · " + L[x.liste] : "") + '</figcaption></figure>';
+      }).join("");
+      tem.hidden = false;
+    }
+  }).catch(function () {});
+
+  /* Adresse email : détection des fautes de frappe fréquentes (gmial.com → gmail.com) */
+  var DOMS = ["gmail.com", "hotmail.com", "hotmail.fr", "yahoo.com", "yahoo.fr", "outlook.com", "outlook.fr", "live.fr", "icloud.com", "orange.fr", "free.fr", "sfr.fr", "laposte.net", "wanadoo.fr", "gmx.fr", "proton.me"];
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) { d[i] = [i]; } for (j = 0; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function suggest(email) {
+    var at = email.lastIndexOf("@"); if (at < 1) return null;
+    var dom = email.slice(at + 1); if (DOMS.indexOf(dom) >= 0) return null;
+    var best = null, bd = 3;
+    DOMS.forEach(function (x) { var v = lev(dom, x); if (v < bd) { bd = v; best = x; } });
+    return best && bd <= 2 ? email.slice(0, at + 1) + best : null;
+  }
 
   /* ---------- Fenêtre « votre email » ---------- */
   var CSS = "" +
@@ -118,6 +162,14 @@
       if (!ID.valid(value)) {
         err.textContent = "Cette adresse email ne semble pas valide. Vérifiez-la et réessayez.";
         err.hidden = false; input.focus(); pad(); return;
+      }
+      var sug = suggest(value);
+      if (sug && f.getAttribute("data-checked") !== value) {
+        f.setAttribute("data-checked", value);
+        err.innerHTML = "Vouliez-vous dire <b>" + esc(sug) + "</b> ? <button type=\"button\" class=\"coq-link\" data-fix=\"" + esc(sug) + "\">Oui, corriger</button> · <button type=\"submit\" class=\"coq-link\">Non, continuer</button>";
+        err.hidden = false; pad();
+        var fx = err.querySelector("[data-fix]"); if (fx) fx.addEventListener("click", function () { input.value = sug; f.setAttribute("data-checked", sug); err.hidden = true; pad(); input.focus(); });
+        return;
       }
       err.hidden = true; btn.disabled = true; btn.textContent = "Un instant…";
       ID.open(value, f.querySelector("input[type=checkbox]").checked)

@@ -87,6 +87,11 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .streak svg{ color:var(--line); } .streak.on svg{ color:#F08A24; }
 .streak b{ font-family:var(--display); font-size:22px; line-height:1; color:var(--ink); }
 .qdj{ margin-top:12px; display:grid; gap:10px; }
+.qdj.folded{ display:flex; align-items:center; gap:10px; padding:12px 16px; animation:coq-fold .35s ease-out; }
+@keyframes coq-fold{ from{ opacity:.4; transform:scaleY(.96) } to{ opacity:1; transform:none } }
+.qdj .qmark{ display:grid; place-items:center; width:26px; height:26px; border-radius:50%; font-weight:800; flex:none; }
+.qdj .qmark.good{ background:var(--good-weak); color:var(--good); } .qdj .qmark.bad{ background:var(--bad-weak); color:var(--bad); }
+.qdj .qline{ flex:1; min-width:0; font-size:14.5px; color:var(--muted); } .qdj .qline b{ color:var(--ink); }
 .qdj .q{ margin:0; font-weight:700; font-size:17px; }
 .qopts{ display:grid; gap:8px; }
 .qo{ text-align:left; font:inherit; font-size:15px; padding:11px 14px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer; }
@@ -100,6 +105,15 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .celebrate{ display:block; margin:0 auto 6px; border-radius:24px; background:#fff; animation:coq-pop .6s cubic-bezier(.2,1.4,.4,1) both; }
 @keyframes coq-pop{ from{ transform:scale(.4) rotate(-8deg); opacity:0 } to{ transform:none; opacity:1 } }
 @media (max-width:420px){ .ready{ grid-template-columns:auto minmax(0,1fr); } .streak{ grid-column:1/-1; grid-auto-flow:column; justify-content:start; gap:6px; align-items:center; } }
+.report p{ margin:0 0 10px; }
+.report .row-btns{ justify-content:flex-start; margin-top:4px; }
+.rep{ display:grid; gap:12px; }
+.rep fieldset{ border:0; padding:0; margin:0; } .rep legend{ font-weight:700; margin-bottom:6px; }
+.rep label{ display:grid; gap:4px; font-weight:700; font-size:15px; } .rep label small{ font-weight:400; color:var(--muted); }
+.rep input[type=number], .rep input[type=text], .rep textarea{ font:inherit; font-weight:400; padding:10px 12px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); }
+.rep .chk{ display:flex; gap:8px; align-items:flex-start; font-weight:400; font-size:14.5px; } .rep .chk input{ margin-top:4px; width:18px; height:18px; flex:none; accent-color:var(--accent); }
+.rep .note{ font-size:13px; color:var(--muted); margin:0; } .rep .err{ color:var(--bad); font-weight:700; margin:0; }
+.rep-done{ display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center; } .rep-done p{ margin:0; }
 .summary .top{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .big{ font-family:var(--display); font-weight:800; font-size:44px; line-height:1; font-variant-numeric:tabular-nums; }
 .big small{ font-size:20px; color:var(--muted); font-weight:700; }
@@ -165,8 +179,9 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .acct input:focus{ outline:2.5px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
 .acct .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
 .acct .err{ color:var(--bad); font-weight:700; font-size:14.5px; }
-.acct .who{ font-weight:700; color:var(--ink); word-break:break-all; }
+.acct .who{ font-weight:700; color:var(--ink); overflow-wrap:anywhere; }
 .acct.compact{ grid-template-columns:1fr auto; align-items:center; }
+@media (max-width:480px){ .acct.compact{ grid-template-columns:1fr; } .acct.compact .row{ justify-content:flex-start; } }
 
 /* ---------- Barre d'étude ---------- */
 .studybar{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:var(--paper); display:flex; align-items:center; gap:10px; padding:12px 0; }
@@ -301,6 +316,11 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 
     <h2 class="sec">Mes examens blancs</h2>
     <div class="panel history" id="history"></div>
+
+    <div id="reportZone" hidden>
+      <h2 class="sec">J’ai passé l’examen</h2>
+      <div class="panel report" id="report"></div>
+    </div>
 
     <div class="foot">
       <div>À l’examen officiel, les 40 questions comprennent 28 questions de connaissance tirées de votre liste et 12 mises en situation. Site indépendant et non officiel. Questions : listes officielles du ministère de l’Intérieur. Réponses rédigées par Coq Civique, notamment d’après le Livret du citoyen (mai 2026). Sans mot de passe ni cookie : votre progression est enregistrée dans ce navigateur et, si vous avez indiqué votre email, liée à cette adresse.</div>
@@ -452,6 +472,7 @@ function renderAccount() {
 }
 function initAccount() {
   ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
+  renderReport();
   const lp = (DATA.pdfs || {})[LIST];
   if (lp) {
     $("#pdfLink").innerHTML = `<a href="${esc(lp.url)}" data-pdf-link download>Télécharger le livret PDF « ${esc(LIST_INFO.nom)} » (${lp.pages} pages)</a>`;
@@ -571,14 +592,97 @@ function renderQdj() {
     // ordre des propositions fixe pour la journée (la réponse enregistrée reste juste après rechargement)
     const seed = dayKey() + LIST, hsh = s => { let h = 0; for (const ch of seed + s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
     const opts = [{ h: c.c, ok: true }, ...c.w.map(h => ({ h, ok: false }))].sort((x, y) => hsh(x.h) - hsh(y.h));
-    QDJ = { k: c.k, opts, pick: done ? done.pick : null };
+    QDJ = { k: c.k, opts, pick: done ? done.pick : null, folded: !!done };
   }
   const answered = QDJ.pick !== null && QDJ.pick !== undefined;
+  const good = answered && QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok;
+  box.classList.toggle("folded", !!(answered && QDJ.folded));
+  if (answered && QDJ.folded) {
+    box.innerHTML = `<span class="qmark ${good ? "good" : "bad"}" aria-hidden="true">${good ? "✓" : "✗"}</span>
+      <span class="qline"><b>Question du jour</b> · ${good ? "bonne réponse" : "à revoir"} · nouvelle question demain</span>
+      <button type="button" class="linkbtn" data-act="qdj-open">Revoir</button>`;
+    return;
+  }
   box.innerHTML = `<div class="lbl">Question du jour</div><p class="q">${c.q}</p>
     <div class="qopts">${QDJ.opts.map((o, i) => `<button type="button" class="qo${answered ? (o.ok ? " ok" : i === QDJ.pick ? " ko" : "") : ""}" data-act="qdj" data-i="${i}" ${answered ? "disabled" : ""}>${o.h}</button>`).join("")}</div>
     ${answered ? `<p class="qres ${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "good" : "bad"}">${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "Bonne réponse !" : "Pas tout à fait."} ${c.d ? `<span>${c.d}</span>` : ""} <a href="${c.u}">Fiche de la question ›</a></p><p class="qnext">Nouvelle question demain. Votre série : <b>${streak()} jour${streak() > 1 ? "s" : ""}</b>.</p>` : ""}`;
 }
-function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); } }
+/* « J'ai passé l'examen » : résultat réel, témoignage publié seulement avec accord et après validation */
+const RK = "coq:resultat-envoye";
+let REP = { open: false, reussi: null, busy: false, err: "" };
+function renderReport() {
+  const zone = $("#reportZone"), box = $("#report"); if (!zone || !box) return;
+  const id = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
+  zone.hidden = !id; if (!id) return;
+  let sent = null; try { sent = JSON.parse(localStorage.getItem(RK) || "null"); } catch (e) {}
+  if (sent) {
+    box.innerHTML = sent.reussi
+      ? `<div class="rep-done">${DATA.mascot ? `<img class="celebrate" src="${DATA.mascot}" width="96" height="96" alt="">` : ""}<p><b>Félicitations pour votre réussite !</b> Merci d’avoir partagé votre résultat : il aide les prochains candidats.</p></div>`
+      : `<p><b>Merci pour votre retour.</b> Courage : vous pouvez repasser l’examen autant de fois que nécessaire. Retravaillez vos « Mes erreurs » et faites un examen blanc par jour.</p>`;
+    return;
+  }
+  if (!REP.open) { box.innerHTML = `<p>Vous avez passé l’examen civique ? Dites-nous comment cela s’est passé : votre retour aide les prochains candidats.</p><div class="row-btns"><button class="btn primary" data-act="rep-open">Donner mon résultat</button></div>`; return; }
+  box.innerHTML = `<form id="repForm" class="rep" novalidate>
+    <fieldset><legend>Résultat</legend><div class="row-btns">
+      <button type="button" class="btn small${REP.reussi === true ? " primary" : ""}" data-act="rep-ok" aria-pressed="${REP.reussi === true}">Réussi</button>
+      <button type="button" class="btn small${REP.reussi === false ? " primary" : ""}" data-act="rep-ko" aria-pressed="${REP.reussi === false}">Pas encore</button></div></fieldset>
+    <label>Score sur 40 <small>(facultatif)</small><input id="repScore" type="number" inputmode="numeric" min="0" max="40" placeholder="Ex. 35"></label>
+    <label>Prénom et initiale du nom <small>(facultatif)</small><input id="repName" type="text" maxlength="40" autocomplete="off" placeholder="Ex. Amina K."></label>
+    <label>Votre témoignage <small>(facultatif)</small><textarea id="repText" maxlength="600" rows="3" placeholder="Comment avez-vous révisé ? Un conseil pour les autres ?"></textarea></label>
+    <label class="chk"><input id="repPub" type="checkbox"> J’accepte que mon prénom et initiale, mon score et mon témoignage soient publiés sur Coq Civique.</label>
+    <p class="note">Liste : ${esc(LIST_INFO.nom)}. Aucune adresse email n’est enregistrée avec ce formulaire.</p>
+    ${REP.err ? `<p class="err" role="alert">${esc(REP.err)}</p>` : ""}
+    <div class="row-btns"><button class="btn primary" type="submit" ${REP.busy ? "disabled" : ""}>Envoyer</button><button class="btn" type="button" data-act="rep-cancel">Annuler</button></div>
+  </form>`;
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "repForm") return;
+  e.preventDefault();
+  if (REP.reussi === null) { REP.err = "Indiquez d’abord si vous avez réussi."; return renderReport(); }
+  const sc = $("#repScore").value.trim(), score = sc === "" ? null : Math.max(0, Math.min(40, parseInt(sc, 10) || 0));
+  const payload = { liste: LIST, reussi: REP.reussi, score, prenom: $("#repName").value.trim(), temoignage: $("#repText").value.trim(), publication: $("#repPub").checked };
+  REP.busy = true; REP.err = ""; renderReport();
+  try { await window.COQ_ID.report(payload); try { localStorage.setItem(RK, JSON.stringify({ reussi: REP.reussi, at: Date.now() })); } catch (er) {} }
+  catch (er) { REP.err = "L’envoi n’a pas fonctionné. Vérifiez votre connexion et réessayez."; }
+  REP.busy = false; renderReport();
+});
+
+/* Partage du résultat d'un examen blanc : image générée (score + coq) et texte */
+function scoreImage(score, pass) {
+  return new Promise(resolve => {
+    try {
+      const c = document.createElement("canvas"); c.width = 1080; c.height = 1080; const g = c.getContext("2d");
+      const draw = img => {
+        g.fillStyle = "#1F4E9C"; g.fillRect(0, 0, 1080, 1080);
+        g.fillStyle = "#C8102E"; g.fillRect(720, 0, 360, 18); g.fillStyle = "#FFFFFF"; g.fillRect(360, 0, 360, 18); g.fillStyle = "#1F4E9C"; g.fillRect(0, 0, 360, 18);
+        g.fillStyle = "#FFFFFF"; if (g.roundRect) { g.beginPath(); g.roundRect(70, 90, 940, 900, 48); g.fill(); } else g.fillRect(70, 90, 940, 900);
+        if (img) g.drawImage(img, 330, 120, 420, 420);
+        g.textAlign = "center"; g.fillStyle = "#15203B";
+        g.font = "800 190px Fraunces, Georgia, serif"; g.fillText(score + "/40", 540, 735);
+        g.font = "700 54px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = pass ? "#17744A" : "#1F4E9C";
+        g.fillText(pass ? "Examen blanc réussi !" : "Je m’entraîne chaque jour", 540, 820);
+        g.font = "400 40px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = "#56607A";
+        g.fillText("Examen civique · " + LIST_INFO.nom, 540, 890);
+        g.font = "700 44px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = "#1F4E9C"; g.fillText("coqcivique.com", 540, 950);
+        c.toBlob(b => resolve(b), "image/png");
+      };
+      const img = new Image(); img.onload = () => draw(img); img.onerror = () => draw(null); img.src = DATA.mascot;
+    } catch (e) { resolve(null); }
+  });
+}
+async function shareResult(score, pass) {
+  const url = DATA.site || location.origin + "/";
+  const text = pass ? `J’ai eu ${score}/40 à l’examen blanc de l’examen civique sur Coq Civique ! Entraînez-vous gratuitement :` : `Je m’entraîne pour l’examen civique sur Coq Civique (${score}/40 à mon examen blanc). C’est gratuit :`;
+  try { if (document.fonts && document.fonts.load) await document.fonts.load("800 120px Fraunces"); } catch (e) {}
+  const blob = await scoreImage(score, pass);
+  const file = blob && window.File ? new File([blob], "coq-civique-resultat.png", { type: "image/png" }) : null;
+  try {
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text: text + " " + url }); return; }
+    if (navigator.share) { await navigator.share({ text, url }); return; }
+  } catch (e) { if (e && e.name === "AbortError") return; }
+  window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
+}
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); renderReport(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
@@ -763,7 +867,7 @@ function renderExamResult() {
       <div class="scale" role="img" aria-label="${S.score} sur ${EXAM_N}, seuil 32"><span class="fill" style="width:${100 * S.score / EXAM_N}%;background:${pass ? "var(--good)" : "var(--bad)"}"></span><span class="mark" style="left:${100 * EXAM_PASS / EXAM_N}%"></span></div>
       <div class="scale-l"><span>0</span><span>seuil : 32</span><span>40</span></div>
       <p style="margin:14px 0 0"><span class="pill ${pass ? "ok" : "ko"}">${pass ? "Réussi" : "Pas encore"}</span> · temps utilisé ${fmt(S.used)}</p>
-      <div class="row-btns"><button class="btn primary" data-act="start-exam">Nouvel examen blanc</button><button class="btn" data-act="home">Accueil</button></div>
+      <div class="row-btns"><button class="btn primary" data-act="share-result">Partager mon résultat</button><button class="btn" data-act="start-exam">Nouvel examen blanc</button><button class="btn" data-act="home">Accueil</button></div>
     </div>
     ${wrong.length ? `<h2 class="sec">À retravailler (${wrong.length})</h2><div class="review">${wrong.map(({ c, i }) => {
       const p = S.pick[i];
@@ -786,11 +890,18 @@ document.addEventListener("click", e => {
   switch (a) {
     case "home": if (S && S.mode === "exam" && !S.over) { S.leave = true; renderExam(); } else goHome(); break;
     case "leave-yes": goHome(); break;
+    case "rep-open": REP.open = true; renderReport(); break;
+    case "rep-cancel": REP = { open: false, reussi: null, busy: false, err: "" }; renderReport(); break;
+    case "rep-ok": REP.reussi = true; REP.err = ""; renderReport(); break;
+    case "rep-ko": REP.reussi = false; REP.err = ""; renderReport(); break;
+    case "share-result": if (S && S.over) shareResult(S.score, S.score >= EXAM_PASS); break;
     case "qdj": if (QDJ && (QDJ.pick === null || QDJ.pick === undefined)) {
       QDJ.pick = i; const ok = QDJ.opts[i].ok; grade(QDJ.k, ok);
       try { localStorage.setItem("coq:qdj:" + dayKey() + ":" + LIST, JSON.stringify({ pick: i })); } catch (er) {}
       renderQdj(); renderSummary();
+      clearTimeout(QDJ.timer); QDJ.timer = setTimeout(() => { if (QDJ) { QDJ.folded = true; renderQdj(); } }, 10000);
     } break;
+    case "qdj-open": if (QDJ) { QDJ.folded = false; clearTimeout(QDJ.timer); renderQdj(); } break;
     case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
     case "start-cards": startCards(); break;
