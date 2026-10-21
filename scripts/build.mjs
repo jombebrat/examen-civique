@@ -176,7 +176,9 @@ ${body}
     <div><h3>Comprendre</h3>
       <a href="${href("/guide/deroulement-examen-civique/")}">Déroulement de l’examen</a>
       <a href="${href("/guide/qui-doit-passer-examen-civique/")}">Qui doit le passer</a>
-      <a href="${href("/guide/inscription-examen-civique/")}">Inscription</a>
+      <a href="${href("/guide/inscription-examen-civique/")}">Inscription et centres</a>
+      <a href="${href("/guide/prix-examen-civique/")}">Prix de l’examen</a>
+      <a href="${href("/guide/resultat-examen-civique/")}">Résultat et attestation</a>
       <a href="${href("/livret-du-citoyen/")}">Livret du citoyen</a>
       <a href="${href("/guide/entretien-naturalisation/")}">Entretien de naturalisation</a>
       <a href="${href("/guide/")}">Tous les guides</a></div>
@@ -302,7 +304,9 @@ function home() {
   <ul class="guides">${[
     ["/guide/deroulement-examen-civique/", "Comment se passe l’examen", "Format, durée, score à obtenir et attestation."],
     ["/guide/qui-doit-passer-examen-civique/", "Qui doit le passer ?", "Carte de séjour pluriannuelle, carte de résident, naturalisation et dispenses."],
-    ["/guide/inscription-examen-civique/", "S’inscrire à l’examen", "Les centres agréés et les étapes de l’inscription."],
+    ["/guide/inscription-examen-civique/", "Où passer l’examen ?", "Les centres agréés et les étapes de l’inscription."],
+    ["/guide/prix-examen-civique/", "Combien coûte l’examen ?", "Pas de tarif national : des exemples réels de prix."],
+    ["/guide/resultat-examen-civique/", "Le résultat en combien de jours ?", "Délai, attestation de réussite et que faire en cas d’échec."],
     ["/guide/niveau-de-francais-titre-de-sejour-naturalisation/", "Niveau de français exigé", "A2, B1 ou B2 selon votre démarche, et comment le prouver."],
     ["/livret-du-citoyen/", "Le Livret du citoyen", "Le sommaire du livret officiel et les questions de l’examen par chapitre."],
     ["/guide/entretien-naturalisation/", "L’entretien de naturalisation", "Comment se passe l’entretien en préfecture et comment s’y préparer."],
@@ -321,8 +325,8 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
     { "@context": "https://schema.org", "@type": "Organization", name: NAME, url: abs("/"), logo: abs("/assets/icon-512.png"), founder: { "@type": "Person", name: "Jovan Pavlovic" } },
   ];
   write("/", layout({
-    title: `Examen civique 2026 : apprendre les questions officielles, leçons et QCM gratuits | ${NAME}`,
-    description: `Apprenez l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles et leurs réponses, quiz QCM, examens blancs et livret PDF. Gratuit.`,
+    title: `Examen civique 2026 : test gratuit et QCM pour apprendre les questions officielles | ${NAME}`,
+    description: `Test civique gratuit pour apprendre l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles et leurs réponses, QCM, examens blancs et PDF.`,
     path: "/", body, jsonld: ld, wide: true, alternates: ALTS,
   }));
 }
@@ -563,7 +567,7 @@ function pdfPage() {
   const items = [["Accueil", "/"], ["Livrets PDF", path]];
   const desc = "Les questions officielles de l’examen civique et leurs réponses en PDF gratuit, à imprimer : naturalisation, carte de résident et carte de séjour pluriannuelle.";
   write(path, layout({
-    title: `Examen civique PDF 2026 : questions et réponses à imprimer, gratuit | ${NAME}`,
+    title: `Examen civique 2026 PDF gratuit : questions et réponses à imprimer | ${NAME}`,
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">À imprimer · gratuit</div><h1>${typo("Examen civique en PDF : les questions et réponses à imprimer")}</h1>
 <p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille.")}</p>
@@ -607,7 +611,7 @@ function examBlancPage() {
   const items = [["Accueil", "/"], ["Examen blanc", path]];
   const desc = "Examen blanc gratuit de l’examen civique : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
   write(path, layout({
-    title: `Examen blanc examen civique 2026 : simulation gratuite de 40 questions | ${NAME}`,
+    title: `Examen civique test gratuit : examen blanc de 40 questions (simulation 2026) | ${NAME}`,
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulation · gratuit</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
 <p class="lead">${typo("40 questions en 45 minutes, comme le jour de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Votre score sur 40 et la correction de chaque erreur.")}</p>
@@ -679,7 +683,7 @@ function appPage() {
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
   const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), help: { en: `${href("/data/en.json")}?v=${V}`, ar: `${href("/data/ar.json")}?v=${V}` }, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
-  const title = `Apprendre l’examen civique gratuitement : leçons, QCM et examen blanc | ${NAME}`;
+  const title = `Test civique gratuit : apprendre l’examen civique avec leçons, QCM et examen blanc | ${NAME}`;
   const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs.`;
   sitemap.push("/reviser/");
   write("/reviser/", tpl
