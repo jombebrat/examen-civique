@@ -49,7 +49,7 @@ for (const code of ["cr", "csp"]) for (const e of listes[code].questions) member
 
 const sitemap = [];
 // Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
-const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
+const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json", "data/en.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
 // Application installable (PWA) : manifeste, service worker, invitation à installer
 const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest")}">
 <meta name="mobile-web-app-capable" content="yes">
@@ -89,11 +89,11 @@ const crumbs = (items) => `<nav class="crumbs" aria-label="Fil d’Ariane"><ol>$
 const reportLink = (what, path) => `mailto:${esc(config.editeur.contact)}?subject=${encodeURIComponent(`Erreur signalée : ${what}`)}&body=${encodeURIComponent(`Page : ${abs(path)}\n\nCe qui me semble faux :\n`)}`;
 const mascotImg = (cls = "") => `<img class="${cls}" src="${href("/assets/mascotte-fin.jpg")}" width="480" height="480" alt="" loading="lazy">`;
 
-function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true, ogType = "website", wide = false }) {
+function layout({ title, description, path, body, jsonld = [], canonical = path, theme = null, index = true, ogType = "website", wide = false, lang = "fr", alternates = [] }) {
   if (index && canonical === path && !path.endsWith(".html")) sitemap.push(path);
   const color = theme ? ` style="--c:var(--t${theme})"` : "";
   return `<!doctype html>
-<html lang="fr">
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -101,7 +101,8 @@ function layout({ title, description, path, body, jsonld = [], canonical = path,
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${abs(canonical)}">
 ${index ? "" : '<meta name="robots" content="noindex">\n'}<meta property="og:type" content="${ogType}">
-<meta property="og:locale" content="fr_FR">
+<meta property="og:locale" content="${lang === "en" ? "en_GB" : "fr_FR"}">
+${alternates.map(([l, p]) => `<link rel="alternate" hreflang="${l}" href="${abs(p)}">`).join("\n")}
 <meta property="og:site_name" content="${esc(NAME)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
@@ -155,7 +156,8 @@ ${body}
       <a href="${href("/mises-a-jour/")}">Mises à jour</a>
       <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
       <a href="${href("/mentions-legales/")}">Mentions légales et confidentialité</a>
-      <a href="mailto:${esc(config.editeur.contact)}">Contact</a></div>
+      <a href="mailto:${esc(config.editeur.contact)}">Contact</a>
+      <a href="${href("/en/")}" hreflang="en" lang="en">English</a></div>
   </div>
   <p class="fnote">${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : listes officielles des questions de connaissance (naturalisation, carte de résident, carte de séjour pluriannuelle). Réponses rédigées par ${esc(NAME)}, notamment d’après le Livret du citoyen (édition mai 2026).</p>
 </div></footer>
@@ -275,7 +277,7 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   write("/", layout({
     title: `Examen civique 2026 : QCM gratuit, questions officielles et réponses | ${NAME}`,
     description: `QCM gratuit de l’examen civique : les questions officielles (naturalisation, carte de résident, carte de séjour pluriannuelle) avec leurs réponses, examens blancs et livret PDF.`,
-    path: "/", body, jsonld: ld, wide: true,
+    path: "/", body, jsonld: ld, wide: true, alternates: [["fr", "/"], ["en", "/en/"], ["x-default", "/"]],
   }));
 }
 
@@ -442,7 +444,7 @@ function appPage() {
     };
   });
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
-  const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
+  const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), en: `${href("/data/en.json")}?v=${V}`, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `QCM examen civique gratuit : cartes, quiz et examen blanc | ${NAME}`;
   const desc = `QCM gratuit de l’examen civique : révisez les questions officielles de votre liste (naturalisation, carte de résident ou CSP) avec des cartes, des quiz et des examens blancs de 40 questions en 45 minutes.`;
@@ -475,6 +477,10 @@ function readContent(dir) {
 }
 // Typographie française dans le texte des pages (hors balises) : espaces insécables avant : ; ? ! » et après «
 const frSpaces = (html) => html.replace(/>([^<]+)</g, (m, txt) => ">" + txt.replace(/« /g, "«\u00a0").replace(/ ([»?!:;])/g, "\u00a0$1") + "<");
+const fillVarsEn = (html) => html
+  .replace(/\{\{href:([^}]+)\}\}/g, (_, p) => href(p.trim()))
+  .replaceAll("{{nat}}", String(LIST.nat.count)).replaceAll("{{cr}}", String(LIST.cr.count)).replaceAll("{{csp}}", String(LIST.csp.count))
+  .replaceAll("{{nom}}", esc(NAME)).replaceAll("{{contact}}", esc(config.editeur.contact));
 const fillVars = (html) => frSpaces(html)
   .replace(/\{\{href:([^}]+)\}\}/g, (_, p) => href(p.trim()))
   .replaceAll("{{nat}}", String(LIST.nat.count)).replaceAll("{{cr}}", String(LIST.cr.count)).replaceAll("{{csp}}", String(LIST.csp.count))
@@ -501,6 +507,15 @@ function contentPages() {
 <p class="lead">Les réponses aux questions pratiques, vérifiées sur les sites officiels.</p>
 <ul class="guides">${[{ slug: null, meta: { h1: "Préparer l’examen civique en 7 jours", description: "Le plan de révision jour par jour, avec les questions à travailler." } }, ...guides].map((g) => `<li><a href="${href(g.slug ? `/guide/${g.slug}/` : "/preparer-examen-civique-en-7-jours/")}"><b>${typo(g.meta.h1)}</b><span>${typo(g.meta.description)}</span></a></li>`).join("")}</ul>`,
   }));
+  for (const p of readContent("content/en")) {
+    const path = p.slug === "index" ? "/en/" : `/en/${p.slug}/`;
+    const items = [["Coq Civique", "/"], ["English", path]];
+    write(path, layout({
+      title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, lang: "en", jsonld: [breadcrumbLd(items)],
+      alternates: p.slug === "index" ? [["fr", "/"], ["en", "/en/"], ["x-default", "/"]] : [],
+      body: `${crumbs(items)}<article class="prose" lang="en"><div class="eyebrow">In English · updated ${new Date(p.meta.maj + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</div><h1>${esc(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${esc(p.meta.chapo)}</p>` : ""}${fillVarsEn(p.html)}</article>`,
+    }));
+  }
   for (const p of readContent("content/pages")) {
     const path = `/${p.slug}/`;
     const items = [["Accueil", "/"], [p.meta.h1, path]];
@@ -581,6 +596,7 @@ writeFileSync(join(DIST, "manifest.webmanifest"), JSON.stringify({
 mkdirSync(join(DIST, "data"), { recursive: true });
 cpSync(join(ROOT, "data/questions.json"), join(DIST, "data/questions.json"));
 cpSync(join(ROOT, "data/listes.json"), join(DIST, "data/listes.json"));
+cpSync(join(ROOT, "data/en.json"), join(DIST, "data/en.json"));
 home();
 questionsIndex();
 listPage("cr");
