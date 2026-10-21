@@ -87,3 +87,19 @@ lois Jules Ferry (38–39), devise de la france 5 400 (46), liberté égalité f
 
 Recherches en arabe quasi nulles : « الامتحان المدني » 0 en France, Algérie, Maroc et Tunisie ; « examen civique en arabe » 20 (FR) ;
 « الجنسية الفرنسية » 210 (DZ), 50 (FR), 30 (MA), 30 (TN). « examen civique » en Algérie : 210. Le public arabophone cherche en français.
+
+## 8. Écarts avec les concurrents (relevé du 21 octobre 2026, 15 h 30)
+
+Mots-clés où prepacivique.fr, qcmcivique.fr, letestcivique.fr ou franceaccueil.com sont dans le top 20, et que Coq Civique ne couvre pas encore.
+
+| Sujet | Mots-clés (volume, KD) | Qui est classé |
+|---|---|---|
+| Prosélytisme | prosélytisme 22 200 (36), prosélytisme def 8 100 (28), prosélyte 4 400 (30), définition 2 900 (27), variantes ~6 000 | prepacivique 4e-5e (article) |
+| Nationalité par mariage | naturalisation par mariage 2 900 (26), nationalité française par mariage 2 400 (24), demande … 880 (24), … 2026 480 (12) | letestcivique 9e-10e, prepacivique 6e |
+| SDANF (suivi de la naturalisation) | sdanf 4 400 (18), contrôle sdanf 1 900 (11), sdnaf 880 (18), suivi dossier 390 (5), c'est quoi 320 (6) | franceaccueil 1er-2e |
+| Personnages et symboles (pages question) | baudelaire 18 100 (37), bonnet phrygien 9 900 (32), rouget de lisle 9 900 (39) | prepacivique 3e-6e avec une simple page question |
+| Républiques | republique francaises 4 400 (31), républiques france 4 400 (37), les republiques 1 900 (26) | prepacivique 1er (fiche « les 5 républiques ») — Coq Civique a maintenant /fiches/cinq-republiques/ |
+| Livret du citoyen | livret citoyenneté 1 900 (18), livret citoyen 1 300 (15), livret du citoyen 2025 1 300 (12), 2026 pdf 260 (2) | prepacivique 2e-3e |
+| Test de naturalisation | test nationalité française 720 (38), test naturalisation française 590 (33), questionnaire nationalité 390 (16), qcm naturalisation 390 (22) | qcmcivique 2e |
+| Questions de l'entretien en PDF | 200 questions naturalisation pdf (gratuit) 260 + 260 + 140 (4-6) | franceaccueil 1er-2e |
+| Timbre fiscal titre de séjour | 9 900 (32), timbre titre de séjour 3 600 (23) | prepacivique 5e-7e (hors sujet principal) |
