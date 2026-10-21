@@ -227,6 +227,15 @@ function home() {
     ["Faut-il créer un compte ?", "Non. Vous pouvez commencer à apprendre tout de suite. Pour ne rien perdre et retrouver votre progression sur votre téléphone comme sur votre ordinateur, indiquez simplement votre adresse email, sans mot de passe : ce que vous avez déjà appris est conservé. La même adresse donne accès au livret PDF."],
   ];
   const days = [["Principes et valeurs de la République", "/reviser/?theme=1"], ["Système institutionnel et politique", "/reviser/?theme=2"], ["Droits et devoirs", "/reviser/?theme=3"], ["Histoire, géographie et culture", "/reviser/?theme=4"], ["Vivre dans la société française", "/reviser/?theme=5"], ["Examens blancs et questions manquées", "/reviser/"], ["Dernier examen blanc et mises en situation", "/guide/mises-en-situation-examen-civique/"]];
+  // Quiz de l'accueil : 5 questions tirées d'une petite sélection (connaissance + mises en situation), sans charger l'application
+  const HQ_IDS = ["1-17", "1-13", "2-21", "2-12", "4-11", "4-83", "5-9", "1-35", "3-21", "2-16", "4-30", "5-33", "2-49", "1-14", "4-65"];
+  const HQ_SITS = ["s1-1", "s3-6", "s5-12"];
+  const sitById = new Map(situations.map((x) => [x.id, x]));
+  const HQ = [
+    ...HQ_IDS.map((id) => { const q = qById.get(id); return { q: plain(q.question), c: plain(q.qcm.bonne), w: q.qcm.mauvaises.map(plain), d: plain([q.reponse, q.explication].filter(Boolean).join(" ")), u: href(qPath(q)) }; }),
+    ...HQ_SITS.map((id) => { const x = sitById.get(id); return { s: plain(x.situation), q: plain(x.question), c: plain(x.qcm.bonne), w: x.qcm.mauvaises.map(plain), d: plain(x.explication), u: href(`/mises-en-situation/#${x.id}`) }; }),
+  ];
+  const hqFirst = (() => { const x = HQ[0]; return `<p class="hq-q">${esc(x.q)}</p><div class="hq-opts">${[x.c, ...x.w].map((o) => `<button type="button" class="hq-o">${esc(o)}</button>`).join("")}</div>`; })();
   const CHECK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
   const body = `
 <section class="band band-hero">
@@ -239,9 +248,16 @@ function home() {
       <ul class="trust"><li>${CHECK}100 % gratuit</li><li>${CHECK}Sans inscription</li><li>${CHECK}Leçons de 5 minutes</li><li>${CHECK}Listes officielles 2026</li></ul>
       <p class="proof" data-chiffres hidden></p>
     </div>
-    <div class="mascot"><video muted playsinline preload="auto" width="480" height="480" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video></div>
+    <section class="hq" id="hq" aria-labelledby="hq-t">
+      <div class="hq-head"><video muted playsinline preload="auto" width="64" height="64" poster="${href("/assets/mascotte-debut.jpg")}" aria-hidden="true"><source src="${href("/assets/mascotte.mp4")}" type="video/mp4"><source src="${href("/assets/mascotte.webm")}" type="video/webm"></video>
+        <div><h2 id="hq-t">Testez-vous : 5 questions</h2><p class="hq-n" aria-live="polite">Question 1 sur 5</p></div></div>
+      <div class="hq-body">${hqFirst}</div>
+      <noscript><p><a class="btn primary" href="${href("/reviser/")}">Faire le QCM gratuit</a></p></noscript>
+      <script type="application/json" id="hq-data">${JSON.stringify(HQ).replace(/</g, "\\u003c")}</script>
+    </section>
   </div>
-  <script>(function(){var v=document.querySelector(".mascot video");if(!v)return;var end=${JSON.stringify(href("/assets/mascotte-fin.jpg"))};function still(){v.removeAttribute("src");v.poster=end;v.querySelectorAll("source").forEach(function(s){s.remove()});v.load();}if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){still();return;}var p=v.play();if(p&&p.catch)p.catch(still);})();</script>
+  <script>(function(){var r=document.getElementById("hq");if(!r)return;var data;try{data=JSON.parse(document.getElementById("hq-data").textContent);}catch(e){return;}var APP=${JSON.stringify(href("/reviser/"))},N=5,body=r.querySelector(".hq-body"),num=r.querySelector(".hq-n");function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}function ev(n){try{if(window.COQ_ID&&window.COQ_ID.event)window.COQ_ID.event(n);}catch(e){}}var know=data.filter(function(x){return!x.s;}),sits=data.filter(function(x){return x.s;});function draw(){return shuf(shuf(know).slice(0,4).concat(shuf(sits).slice(0,1)));}var set=draw(),i=0,score=0,first=true;function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}function render(){var x=set[i];num.textContent="Question "+(i+1)+" sur "+N;body.innerHTML="";if(x.s)body.appendChild(el("p","hq-s",x.s));body.appendChild(el("p","hq-q",x.q));var box=el("div","hq-opts"),opts=shuf([{t:x.c,ok:true}].concat(x.w.map(function(w){return{t:w,ok:false};})));opts.forEach(function(o){var b=el("button","hq-o",o.t);b.type="button";b.addEventListener("click",function(){pick(b,o,opts,box,x);});box.appendChild(b);});body.appendChild(box);}function pick(b,o,opts,box,x){if(box.getAttribute("data-done"))return;box.setAttribute("data-done","1");if(first){first=false;ev("accueil-quiz-reponse");}if(o.ok)score++;Array.prototype.forEach.call(box.children,function(c,k){c.disabled=true;if(opts[k].ok)c.classList.add("ok");});if(!o.ok)b.classList.add("ko");var fb=el("div","hq-fb"+(o.ok?" ok":""));fb.appendChild(el("b",null,o.ok?"Bonne réponse ! ":"Pas tout à fait. "));fb.appendChild(document.createTextNode(x.d+" "));var more=el("a",null,"En savoir plus");more.href=x.u;fb.appendChild(more);body.appendChild(fb);var nx=el("button","btn primary hq-next",i<N-1?"Question suivante":"Voir mon score");nx.type="button";nx.addEventListener("click",function(){i++;if(i<N)render();else end();});body.appendChild(nx);}function end(){ev("accueil-quiz-fini");num.textContent="Votre résultat";body.innerHTML="";body.appendChild(el("p","hq-score",score+" / "+N));body.appendChild(el("p","hq-msg",score>=4?"Très bien ! Continuez avec les leçons pour tout retenir.":"Chaque erreur est une question apprise : continuez avec les leçons de 5 minutes."));var go=el("a","btn primary big hq-go","Continuer avec les leçons");go.href=APP;go.addEventListener("click",function(){ev("accueil-quiz-app");});body.appendChild(go);var ag=el("button","hq-again","Recommencer avec 5 autres questions");ag.type="button";ag.addEventListener("click",function(){set=draw();i=0;score=0;render();});body.appendChild(ag);}render();})();</script>
+  <script>(function(){var v=document.querySelector(".hq video");if(!v)return;var end=${JSON.stringify(href("/assets/mascotte-fin.jpg"))};function still(){v.removeAttribute("src");v.poster=end;v.querySelectorAll("source").forEach(function(s){s.remove()});v.load();}if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){still();return;}var p=v.play();if(p&&p.catch)p.catch(still);})();</script>
   <div class="facts">
     <div class="fact"><b>40</b><span>questions à l’examen</span></div>
     <div class="fact"><b>45 min</b><span>durée maximale</span></div>
@@ -348,11 +364,13 @@ function questionsIndex() {
   const items = [["Accueil", "/"], ["Naturalisation", "/questions/"]];
   write("/questions/", layout({
     title: `Examen civique naturalisation : les ${TOTAL} questions et réponses (QCM gratuit) | ${NAME}`,
-    description: `La liste officielle des ${TOTAL} questions de connaissance de l’examen civique pour la naturalisation, classées par thème, avec leurs réponses et un QCM gratuit.`,
+    description: `La liste officielle des ${TOTAL} questions de connaissance de l’examen civique pour la naturalisation, avec leurs réponses, un QCM et un test de naturalisation gratuits.`,
     path: "/questions/", jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Examen civique naturalisation : les ${TOTAL} questions`)}</h1>
 <p class="lead">La liste officielle des questions de connaissance pour la naturalisation (publiée le 12 décembre 2025), dans l’ordre de la liste, avec un lien vers chaque réponse.</p>
 <div class="cta"><p>Révisez cette liste avec des cartes, un QCM et des examens blancs de 40 questions.</p><a class="btn primary" href="${href("/reviser/?liste=nat")}">QCM naturalisation</a></div>
+<h2>${typo("Test de naturalisation gratuit")}</h2>
+<p>${typo("Pour vous tester sur cette liste : un QCM leçon par leçon dans")} <a href="${href("/reviser/?liste=nat")}">${typo("l’application")}</a>, ${typo("un")} <a href="${href("/reviser/?liste=nat&start=examen")}">${typo("examen blanc de 40 questions")}</a> ${typo("en conditions réelles, ou un")} <a href="${href(EX40_PATH)}">${typo("sujet de 40 questions en PDF")}</a> ${typo("à imprimer. Exemples de questions : voir la liste ci-dessous, thème par thème.")}</p>
 <h2 class="sr-title">Autres listes</h2>${listCards("nat")}
 ${LIVRET.nat ? `<div class="cta" style="background:var(--surface);border:1px solid var(--line)"><p>${typo(`Toute la liste « naturalisation » dans un livret PDF de ${LIVRET.nat.pages} pages, à imprimer.`)}</p><a class="btn" href="${href(LIVRET.nat.url)}" data-pdf-link download>Télécharger le PDF</a></div>` : ""}
 <nav class="toc" aria-label="Thèmes">${toc}</nav>${sections}`,
@@ -539,7 +557,7 @@ ${qs.length ? `<p><b>${qs.length} question${qs.length > 1 ? "s" : ""} de l’exa
   }).join("\n")}`;
   }).join("\n");
   write(path, layout({
-    title: `Livret du citoyen 2026 : sommaire, résumé et questions de l’examen civique | ${NAME}`,
+    title: `Livret du citoyen 2026 (PDF) : sommaire, résumé et questions de l’examen civique | ${NAME}`,
     description: desc, path, ogType: "article",
     jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: h1, description: desc, inLanguage: "fr", dateModified: MAJ, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path), about: { "@type": "CreativeWork", name: "Livret du citoyen", url: LIVRET_URL } }],
     body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(MAJ)}</div><h1>${typo(h1)}</h1>
@@ -620,7 +638,7 @@ function examBlancPage() {
   const items = [["Accueil", "/"], ["Examen blanc", path]];
   const desc = "Simulateur gratuit de l’examen civique, sans inscription : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
   write(path, layout({
-    title: `Examen civique test gratuit : simulateur d’examen blanc de 40 questions (2026) | ${NAME}`,
+    title: `Examen blanc de l’examen civique : simulateur gratuit de 40 questions (2026) | ${NAME}`,
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulateur · gratuit · sans inscription</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
 <p class="lead">${typo("40 questions en 45 minutes, comme le jour de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Votre score sur 40 et la correction de chaque erreur.")}</p>
@@ -713,7 +731,7 @@ function entretienPage() {
 <h1>${typo(`Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner`)}</h1>
 <p class="lead">${typo("Après l’examen civique, l’entretien d’assimilation en préfecture. Voici des questions pour vous y préparer à voix haute, avec les réponses à connaître et des conseils pour les questions personnelles.")}</p>
 <div class="note"><p>${typo("Il n’existe pas de liste officielle des questions de l’entretien. Ces questions d’entraînement sont rédigées par Coq Civique à partir du Livret du citoyen et de ce que le Code civil demande de vérifier (article 21-24) : connaissance de l’histoire, de la culture et de la société françaises, des droits et devoirs du citoyen, et adhésion aux principes et valeurs de la République. Les réponses de connaissance reprennent nos fiches, vérifiées sur le Livret du citoyen.")}</p></div>
-${pdf ? `<div class="cta"><p>${typo(`Les ${n} questions, avec réponses et conseils, en PDF à imprimer. Gratuit, sans inscription.`)}</p><a class="btn primary" href="${href(ENT_PDF)}" download>Télécharger le PDF</a></div>` : ""}
+${pdf ? `<div class="cta"><p>${typo(`Les ${n} questions, avec réponses et conseils, en PDF à imprimer. Gratuit, sans inscription.`)}</p><a class="btn primary" href="${href(ENT_PDF)}" download data-ev="pdf-entretien">Télécharger le PDF</a></div>` : ""}
 <p>${typo("Comment l’entretien se déroule, ce qui est évalué et la Charte à signer :")} <a href="${href("/guide/entretien-naturalisation/")}">${typo("notre guide de l’entretien de naturalisation")}</a>. ${typo("Ce qui se passe ensuite :")} <a href="${href("/guide/apres-entretien-naturalisation/")}">${typo("délai, décision et décret au Journal officiel")}</a>.</p>
 <h2>${typo("Comment s’entraîner")}</h2>
 <ul>
@@ -774,7 +792,7 @@ function examen40Page() {
   const cfg = { data: `${href("/data/examen40.json")}?v=${V}`, lib: href("/assets/vendor/jspdf.umd.min.js"), site: abs("/"), logo: href("/assets/pdf/logo.jpg"), mascot: href("/assets/pdf/mascotte.jpg") };
   const examples = LISTS.filter((l) => EX40_INV[l.code]).map((l) => {
     const e = EX40_INV[l.code];
-    return `<li><a href="${href(`/assets/examens/${e.fichier}`)}" download>${esc(l.nom)} : sujet ${esc(e.sujet)}</a> <span class="muted">(PDF, ${e.pages} pages, avec corrigé)</span></li>`;
+    return `<li><a href="${href(`/assets/examens/${e.fichier}`)}" download data-ev="pdf40-exemple-${l.code}">${esc(l.nom)} : sujet ${esc(e.sujet)}</a> <span class="muted">(PDF, ${e.pages} pages, avec corrigé)</span></li>`;
   }).join("");
   write(path, layout({
     title: `Examen civique 40 questions PDF gratuit : sujets avec corrigé | ${NAME}`,
@@ -866,7 +884,7 @@ function appPage() {
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
   const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), help: { en: `${href("/data/en.json")}?v=${V}`, ar: `${href("/data/ar.json")}?v=${V}` }, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
-  const title = `Test civique gratuit : apprendre l’examen civique avec leçons, QCM et examen blanc | ${NAME}`;
+  const title = `Test civique et QCM civique gratuits : apprendre l’examen civique en leçons de 5 minutes | ${NAME}`;
   const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs. Gratuit, sans inscription.`;
   sitemap.push("/reviser/");
   write("/reviser/", tpl
@@ -1009,7 +1027,7 @@ function legal() {
 <h3>Résultat d’examen et témoignage (facultatifs)</h3>
 <p>Si vous indiquez votre résultat à l’examen, nous enregistrons ce résultat, la liste concernée et, si vous les donnez, votre score, votre prénom avec l’initiale du nom et votre témoignage, sans adresse email. Finalité : établir des statistiques de réussite et, uniquement avec votre accord explicite, publier votre témoignage après vérification. Base légale : votre consentement. Durée : 3 ans. Pour retirer un témoignage publié, écrivez-nous.</p>
 <h3>Mesure d’audience</h3>
-<p>Nous comptons le nombre de pages vues chaque jour, ainsi que le site d’origine de la visite (par exemple un moteur de recherche). Aucune donnée personnelle n’est enregistrée : ni adresse IP, ni cookie, ni identifiant. Ces chiffres servent uniquement à améliorer le site.</p>
+<p>Nous comptons le nombre de pages vues chaque jour, le site d’origine de la visite (par exemple un moteur de recherche) et quelques compteurs d’usage (par exemple le nombre de sujets PDF créés ou de leçons terminées dans la journée). Aucune donnée personnelle n’est enregistrée : ni adresse IP, ni cookie, ni identifiant. Ces chiffres servent uniquement à améliorer le site.</p>
 <h3>Destinataires et prestataires</h3>
 <p>Vos données sont destinées uniquement à l’éditeur du site. Base de données : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Hébergement du site : GitHub Pages, qui enregistre, comme tout hébergeur, des données techniques de connexion (adresse IP) pour assurer la sécurité du service. Ces prestataires agissent dans le cadre d’accords de traitement des données ; lorsqu’ils peuvent accéder aux données depuis un pays hors de l’Union européenne, ce transfert est encadré par les clauses contractuelles types de la Commission européenne. Vos données ne sont ni vendues ni cédées à des tiers.</p>
 <h3>Vos droits</h3>

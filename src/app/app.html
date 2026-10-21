@@ -918,7 +918,7 @@ function lessonContinue() {
   const k = S.cur, wrong = !S.opts[S.pick].ok;
   if (wrong && S.tries[k] <= 2) S.queue.push(k);
   S.qi++;
-  if (S.qi >= S.queue.length) { S.phase = "done"; renderLesson(); window.scrollTo(0, 0); return; }
+  if (S.qi >= S.queue.length) { S.phase = "done"; renderLesson(); window.scrollTo(0, 0); try { if (window.COQ_ID && window.COQ_ID.event) window.COQ_ID.event("lecon-finie-" + LIST); } catch (e) {} return; }
   prepQuestion(); renderLesson();
 }
 
@@ -1173,6 +1173,7 @@ function finishExam() {
   let score = 0;
   S.q.forEach((k, i) => { const ok = S.pick[i] !== null && S.opts[i][S.pick[i]].ok; if (ok) score++; grade(k, ok, now); });
   S.score = score; S.used = Math.min(EXAM_MS, now - S.start);
+  try { if (window.COQ_ID && window.COQ_ID.event) window.COQ_ID.event((score >= EXAM_PASS ? "examen-reussi-" : "examen-echoue-") + LIST); } catch (e) {}
   P.exams.unshift({ at: S.start, s: score, n: EXAM_N, d: S.used }); P.exams = P.exams.slice(0, 30);
   touch(); renderExam();
 }

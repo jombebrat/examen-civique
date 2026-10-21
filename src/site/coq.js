@@ -53,11 +53,22 @@
     forget: function () { lsSet(K_EMAIL, null); notify(); },
     report: function (r) { return rpc("coq_resultat", { p_liste: r.liste, p_reussi: !!r.reussi, p_score: r.score == null ? null : r.score, p_prenom: r.prenom || null, p_temoignage: r.temoignage || null, p_publication: !!r.publication }); },
     stats: function () { return rpc("coq_chiffres", {}); },
+    // Compteur anonyme d'usage (PDF fait, leçon finie, réponse au quiz de l'accueil) : un nom, un compteur par jour, rien d'autre
+    event: function (name) {
+      if (!ON || !name) return Promise.resolve();
+      return rpc("coq_vue", { p_path: "/~/" + String(name).replace(/[^a-z0-9-]/gi, "").slice(0, 60), p_ref: "" }).catch(function () {});
+    },
     onChange: function (f) { listeners.push(f); },
     ask: function (why) { show(why || "", true); },
   };
   window.COQ_ID = ID;
   if (!ON) return;
+
+  // Liens marqués data-ev (téléchargements de PDF) : un compteur anonyme par clic
+  document.addEventListener("click", function (ev) {
+    var t = ev.target.closest && ev.target.closest("[data-ev]");
+    if (t) ID.event(t.getAttribute("data-ev"));
+  });
 
   /* Mesure d'audience anonyme : page vue + site d'origine (aucune donnée personnelle, aucun cookie) */
   try {
@@ -137,7 +148,7 @@
     var want = pending ? PDFS.filter(function (x) { return path(x.url) === path(pending); }) : [];
     var list = want.length ? want : PDFS;
     return list.map(function (x, i) {
-      return '<a class="coq-btn' + (list.length > 1 && i ? " alt" : "") + '" href="' + esc(x.url) + '" download data-coq="pdf">' + (list.length > 1 ? "PDF " + esc(x.nom) : "Télécharger le PDF « " + esc(x.nom) + " » (" + x.pages + " pages)") + '</a>';
+      return '<a class="coq-btn' + (list.length > 1 && i ? " alt" : "") + '" href="' + esc(x.url) + '" download data-coq="pdf" data-ev="livret-' + esc(x.code || "nat") + '">' + (list.length > 1 ? "PDF " + esc(x.nom) : "Télécharger le PDF « " + esc(x.nom) + " » (" + x.pages + " pages)") + '</a>';
     }).join("");
   };
   var onApp = cfg.reviser && location.pathname.indexOf(cfg.reviser) === 0;
@@ -198,7 +209,7 @@
       '<p class="coq-err" role="alert" hidden></p>' +
       '<p class="coq-note">Pas de mot de passe : votre progression est liée à cette adresse. <a href="' + esc(cfg.privacyUrl) + '">Confidentialité</a>' + (pdf ? '' : ' · <button class="coq-link" type="button" data-coq="later">Plus tard</button>') + '</p>' +
       '</form>' +
-      (pdf && pending ? '<div class="coq-row coq-or"><a class="coq-btn alt" href="' + esc(pending) + '" download data-coq="nomail">Télécharger sans email</a></div>' : '') +
+      (pdf && pending ? '<div class="coq-row coq-or"><a class="coq-btn alt" href="' + esc(pending) + '" download data-coq="nomail" data-ev="livret-sans-email">Télécharger sans email</a></div>' : '') +
       '</div>';
   }
   function renderDone() {
@@ -224,6 +235,7 @@
   // Liens vers le PDF : sans adresse enregistrée, on la demande d'abord.
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest && ev.target.closest("[data-pdf-link]");
+    if (a && ID.email()) ID.event("livret-direct");
     if (!a || ID.email()) return;
     ev.preventDefault(); pending = a.getAttribute("href"); show("pdf", true);
   });

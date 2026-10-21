@@ -276,6 +276,7 @@
       say("<b>Sujet " + ex.id + " téléchargé.</b> Chaque clic donne un nouveau sujet. " +
         '<a href="' + link + '">Lien de ce sujet</a> (pour le donner à quelqu’un).');
       btn.textContent = "Un autre sujet PDF";
+      try { if (root.COQ_ID && root.COQ_ID.event) root.COQ_ID.event("pdf40-" + code); } catch (e) {}
     }).catch(function () {
       say("Le sujet n’a pas pu être préparé. Vérifiez votre connexion et réessayez, ou utilisez un des sujets ci-dessous.");
     }).then(function () { btn.disabled = false; });
