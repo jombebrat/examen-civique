@@ -174,6 +174,7 @@ ${body}
       <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
       <a href="${href("/examen-civique-pdf/")}">Livrets PDF</a>
       <a href="${href(EX40_PATH)}">Sujets PDF de 40 questions</a>
+      <a href="${href("/fiches/")}">Fiches de révision</a>
       <a href="${href("/installer-application/")}">Application</a></div>
     <div><h3>Comprendre</h3>
       <a href="${href("/guide/deroulement-examen-civique/")}">Déroulement de l’examen</a>
@@ -184,6 +185,7 @@ ${body}
       <a href="${href("/livret-du-citoyen/")}">Livret du citoyen</a>
       <a href="${href("/guide/entretien-naturalisation/")}">Entretien de naturalisation</a>
       <a href="${href(ENT_PATH)}">Questions de l’entretien</a>
+      <a href="${href("/guide/contrat-integration-republicaine/")}">Contrat d’intégration (CIR)</a>
       <a href="${href("/guide/")}">Tous les guides</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
@@ -914,6 +916,34 @@ function contentPages() {
       body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(g.meta.maj)}</div><h1>${typo(g.meta.h1)}</h1>${g.meta.chapo ? `<p class="lead">${typo(g.meta.chapo)}</p>` : ""}${fillVars(g.html)}
 <p class="src">Par Jovan, créateur de ${esc(NAME)}. Site indépendant et non officiel : en cas de doute, référez-vous aux sites officiels cités. <a href="${reportLink(g.meta.h1, path)}">Signaler une erreur</a></p></article>
 <div class="cta"><p>Prêt à vous entraîner ? QCM, cartes et examens blancs gratuits.</p><a class="btn primary" href="${href("/reviser/")}">Faire le QCM</a></div>`,
+    }));
+  }
+  // Fiches de révision (content/fiches) : un sujet de culture générale de l'examen, avec les questions officielles liées
+  const fiches = readContent("content/fiches");
+  for (const f of fiches) {
+    const path = `/fiches/${f.slug}/`;
+    const items = [["Accueil", "/"], ["Fiches", "/fiches/"], [f.meta.h1, path]];
+    const qs = (f.meta.questions || []).map((id) => { const q = qById.get(id); if (!q) throw new Error(`fiche ${f.slug} : question inconnue ${id}`); return q; });
+    const theme = f.meta.theme ? themeById[f.meta.theme] : null;
+    write(path, layout({
+      title: `${f.meta.titre} | ${NAME}`, description: f.meta.description, path, ogType: "article",
+      jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: f.meta.h1, description: f.meta.description, inLanguage: "fr", dateModified: f.meta.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
+      body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Fiche de révision · mise à jour le ${dateFr(f.meta.maj)}</div><h1>${typo(f.meta.h1)}</h1>${f.meta.chapo ? `<p class="lead">${typo(f.meta.chapo)}</p>` : ""}${fillVars(f.html)}
+${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</h2>
+<ul class="fq">${qs.map((q) => `<li><a href="${href(qPath(q))}">${typo(q.question)}</a><span>${typo(q.reponse)}</span></li>`).join("")}</ul>` : ""}
+<p class="src">Par Jovan, créateur de ${esc(NAME)}. Site indépendant et non officiel. <a href="${reportLink(f.meta.h1, path)}">Signaler une erreur</a></p></article>
+<div class="cta"><p>${typo(theme ? `Apprenez tout le thème « ${theme.titre_court} » en leçons de 5 minutes, gratuitement.` : "Apprenez les questions de l’examen en leçons de 5 minutes, gratuitement.")}</p><a class="btn primary" href="${href(theme ? `/reviser/?theme=${theme.id}` : "/reviser/")}">Commencer à apprendre</a></div>`,
+    }));
+  }
+  if (fiches.length) {
+    const fi = [["Accueil", "/"], ["Fiches", "/fiches/"]];
+    write("/fiches/", layout({
+      title: `Fiches de révision de l’examen civique : laïcité, Républiques, institutions, vie quotidienne | ${NAME}`,
+      description: "Des fiches courtes pour comprendre les sujets de l’examen civique : laïcité, les cinq Républiques, la séparation des pouvoirs, les numéros d’urgence, et plus. Gratuites, avec les questions officielles liées.",
+      path: "/fiches/", jsonld: [breadcrumbLd(fi)],
+      body: `${crumbs(fi)}<h1 style="font-size:clamp(28px,6vw,40px)">Fiches de révision</h1>
+<p class="lead">${typo("Les sujets de l’examen civique expliqués simplement, avec les questions officielles qui s’y rapportent.")}</p>
+<ul class="guides">${fiches.map((f) => `<li><a href="${href(`/fiches/${f.slug}/`)}"><b>${typo(f.meta.h1)}</b><span>${typo(f.meta.description)}</span></a></li>`).join("")}</ul>`,
     }));
   }
   const hubItems = [["Accueil", "/"], ["Guides", "/guide/"]];

@@ -428,3 +428,9 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .qa .qn{ flex:none; min-width:26px; color:var(--accent); font-variant-numeric:tabular-nums; }
 .qa details > div{ padding:0 14px 12px 50px; }
 .qa details > div p{ margin:6px 0; }
+
+/* Fiches : questions officielles liées */
+.fq{ list-style:none; padding:0; display:grid; gap:8px; }
+.fq li{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
+.fq a{ font-weight:700; display:block; }
+.fq span{ display:block; color:var(--muted); margin-top:2px; }
