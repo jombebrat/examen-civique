@@ -48,7 +48,15 @@ for (const code of ["cr", "csp"]) for (const e of listes[code].questions) member
 
 const sitemap = [];
 // Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
-const V = createHash("sha256").update(readFileSync(join(ROOT, "src/site/site.css"))).update(readFileSync(join(ROOT, "src/site/coq.js"))).digest("hex").slice(0, 10);
+const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
+// Application installable (PWA) : manifeste, service worker, invitation à installer
+const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest")}">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="${esc(NAME)}">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">`;
+const pwaScripts = () => `<script>window.COQ_PWA=${JSON.stringify({ sw: href("/sw.js"), scope: href("/"), icon: href("/assets/icon-192.png"), guide: href("/installer-application/"), app: href("/reviser/") })};</script>
+<script src="${href("/assets/pwa.js")}?v=${V}" defer></script>`;
 const SB = config.supabase || {};
 // Adresse email + progression en ligne + livret PDF : actifs si l'adresse et la clé publique Supabase sont renseignées.
 const SB_ON = Boolean(SB.url && SB.cle_publique && SB.actif !== false);
@@ -96,6 +104,7 @@ ${index ? "" : '<meta name="robots" content="noindex">\n'}<meta property="og:typ
 <link rel="icon" type="image/png" sizes="32x32" href="${href("/assets/icon-32.png")}">
 <link rel="icon" type="image/png" sizes="192x192" href="${href("/assets/icon-192.png")}">
 <link rel="apple-touch-icon" href="${href("/assets/icon-180.png")}">
+${pwaHead()}
 <meta property="og:image" content="${abs("/assets/og-image.png")}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -132,7 +141,8 @@ ${body}
       <a href="${href("/reviser/")}">QCM et examen blanc</a>
       <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
       <a href="${href("/guide/")}">Guides</a>
-      <a href="${href(PDF_PATH)}" data-pdf-link download>Livret PDF</a></div>
+      <a href="${href(PDF_PATH)}" data-pdf-link download>Livret PDF</a>
+      <a href="${href("/installer-application/")}">Installer l’application</a></div>
     <div><h3>Le site</h3>
       <a href="${href("/a-propos/")}">À propos</a>
       <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
@@ -142,6 +152,7 @@ ${body}
   <p class="fnote">${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : listes officielles des questions de connaissance (naturalisation, carte de résident, carte de séjour pluriannuelle). Réponses rédigées par ${esc(NAME)}, notamment d’après le Livret du citoyen (édition mai 2026).</p>
 </div></footer>
 ${sbScripts()}
+${pwaScripts()}
 </body>
 </html>
 `;
@@ -404,7 +415,8 @@ function appPage() {
     .replaceAll("__QUESTIONS__", href("/questions/"))
     .replaceAll("__ASSETS__", href("/assets"))
     .replaceAll("__OGIMAGE__", abs("/assets/og-image.png"))
-    .replace("__SUPABASE__", () => sbScripts())
+    .replace("__PWAHEAD__", () => pwaHead())
+    .replace("__SUPABASE__", () => sbScripts() + "\n" + pwaScripts())
     .replace("__DATA__", () => JSON.stringify(appData).replace(/<\//g, "<\\/")));
 }
 
@@ -420,7 +432,9 @@ function readContent(dir) {
     return { slug: f.replace(/\.html$/, ""), meta: JSON.parse(m[1]), html: raw.slice(m[0].length) };
   }).sort((a, b) => (a.meta.ordre || 99) - (b.meta.ordre || 99));
 }
-const fillVars = (html) => html
+// Typographie française dans le texte des pages (hors balises) : espaces insécables avant : ; ? ! » et après «
+const frSpaces = (html) => html.replace(/>([^<]+)</g, (m, txt) => ">" + txt.replace(/« /g, "«\u00a0").replace(/ ([»?!:;])/g, "\u00a0$1") + "<");
+const fillVars = (html) => frSpaces(html)
   .replace(/\{\{href:([^}]+)\}\}/g, (_, p) => href(p.trim()))
   .replaceAll("{{nat}}", String(LIST.nat.count)).replaceAll("{{cr}}", String(LIST.cr.count)).replaceAll("{{csp}}", String(LIST.csp.count))
   .replaceAll("{{nom}}", esc(NAME)).replaceAll("{{contact}}", esc(config.editeur.contact)).replaceAll("{{editeur}}", esc(config.editeur.nom));
@@ -500,6 +514,25 @@ mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "assets"), join(DIST, "assets"), { recursive: true });
 cpSync(join(ROOT, "src/site/site.css"), join(DIST, "assets/site.css"));
 cpSync(join(ROOT, "src/site/coq.js"), join(DIST, "assets/coq.js"));
+cpSync(join(ROOT, "src/site/pwa.js"), join(DIST, "assets/pwa.js"));
+writeFileSync(join(DIST, "manifest.webmanifest"), JSON.stringify({
+  name: `${NAME} – Examen civique`, short_name: NAME, lang: "fr", dir: "ltr",
+  description: "QCM gratuit de l’examen civique : questions officielles, réponses, cartes et examens blancs.",
+  id: href("/reviser/"), start_url: href("/reviser/?source=app"), scope: href("/"), display: "standalone",
+  background_color: "#F4F6FA", theme_color: "#1F4E9C",
+  icons: [
+    { src: href("/assets/icon-192.png"), sizes: "192x192", type: "image/png" },
+    { src: href("/assets/icon-512.png"), sizes: "512x512", type: "image/png" },
+    { src: href("/assets/icon-maskable-512.png"), sizes: "512x512", type: "image/png", purpose: "maskable" },
+  ],
+}, null, 2));
+{
+  const fonts = readdirSync(join(ROOT, "assets/fonts")).filter((f) => f.endsWith(".woff2")).map((f) => href(`/assets/fonts/${f}`));
+  const pre = [href("/reviser/"), href("/"), href("/installer-application/"), `${href("/assets/site.css")}?v=${V}`, `${href("/assets/coq.js")}?v=${V}`, `${href("/assets/pwa.js")}?v=${V}`,
+    href("/assets/icon-64.png"), href("/assets/icon-192.png"), href("/assets/mascotte-fin.jpg"), href("/manifest.webmanifest"), ...fonts];
+  writeFileSync(join(DIST, "sw.js"), readFileSync(join(ROOT, "src/site/sw.js"), "utf8")
+    .replace("__VERSION__", V).replace("__APP__", href("/reviser/")).replace("__PRECACHE__", JSON.stringify(pre)));
+}
 mkdirSync(join(DIST, "data"), { recursive: true });
 cpSync(join(ROOT, "data/questions.json"), join(DIST, "data/questions.json"));
 cpSync(join(ROOT, "data/listes.json"), join(DIST, "data/listes.json"));

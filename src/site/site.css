@@ -316,3 +316,11 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
   .site-foot{ padding-block:40px 32px; }
   .shead p{ font-size:17px; }
 }
+
+/* Page « Installer l'application » */
+.steps{ list-style:none; padding:0; margin:14px 0; display:grid; gap:10px; }
+.steps li{ display:grid; grid-template-columns:36px minmax(0,1fr); gap:12px; align-items:start; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow); }
+.steps .n{ display:grid; place-items:center; width:32px; height:32px; border-radius:50%; background:var(--accent); color:var(--on-accent); font-weight:800; font-family:var(--display); }
+.steps .ico{ vertical-align:-5px; color:var(--accent); margin:0 2px; }
+.prose .tip{ font-size:15px; color:var(--muted); background:var(--accent-weak); border-radius:12px; padding:12px 14px; }
+.is-app .site-head{ padding-top:env(safe-area-inset-top); }
