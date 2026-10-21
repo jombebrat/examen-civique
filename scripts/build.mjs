@@ -7,6 +7,7 @@ import { ROOT, loadJSON, esc, typo, plain, detailHtml, questionSlugs } from "./l
 
 const data = loadJSON("data/questions.json");
 const listes = loadJSON("data/listes.json");
+const situations = loadJSON("data/situations.json").situations;
 const config = loadJSON("site.config.json");
 const argUrl = (() => { const i = process.argv.indexOf("--base-url"); return i > 0 ? process.argv[i + 1] : ""; })();
 // Toujours https en ligne (GitHub Pages peut annoncer http:// tant que le certificat n'est pas prêt).
@@ -48,7 +49,7 @@ for (const code of ["cr", "csp"]) for (const e of listes[code].questions) member
 
 const sitemap = [];
 // Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
-const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
+const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
 // Application installable (PWA) : manifeste, service worker, invitation à installer
 const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest")}">
 <meta name="mobile-web-app-capable" content="yes">
@@ -140,6 +141,7 @@ ${body}
     <div><h3>Réviser</h3>
       <a href="${href("/reviser/")}">QCM et examen blanc</a>
       <a href="${href("/preparer-examen-civique-en-7-jours/")}">Plan en 7 jours</a>
+      <a href="${href("/mises-en-situation/")}">Mises en situation</a>
       <a href="${href("/guide/")}">Guides</a>
       <a href="${href(PDF_PATH)}" data-pdf-link download>Livret PDF</a>
       <a href="${href("/installer-application/")}">Installer l’application</a></div>
@@ -234,12 +236,13 @@ function home() {
 </section>
 
 <section class="band alt">
-  <div class="shead"><div class="eyebrow">L’entraînement</div><h2>Trois façons de réviser</h2>
+  <div class="shead"><div class="eyebrow">L’entraînement</div><h2>Quatre façons de réviser</h2>
   <p>Votre progression est enregistrée : les questions que vous ne savez pas encore reviennent plus souvent.</p></div>
   <div class="modes">
     <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span><h3>Cartes</h3><p>Lisez la question, retrouvez la réponse, dites si vous la saviez. Les questions manquées reviennent plus souvent.</p></div>
     <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><h3>Quiz QCM</h3><p>Quatre propositions et une seule bonne réponse, comme le jour de l’examen, avec l’explication après chaque question.</p></div>
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>Examen blanc</h3><p>40 questions des 5 thèmes en 45 minutes. Votre score, et la liste des questions à retravailler.</p></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>Examen blanc</h3><p>Au format officiel : 28 questions de votre liste et 12 mises en situation, en 45 minutes. Votre score et les questions à retravailler.</p></div>
+    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M9 9h6M9 12h4"/></svg></span><h3>Mises en situation</h3><p>${situations.length} cas de la vie quotidienne pour s’entraîner aux 12 questions non publiées de l’examen. <a href="${href("/mises-en-situation/")}">Voir les exemples</a></p></div>
   </div>
   <p class="more"><a class="btn primary" href="${href("/reviser/")}">Réviser maintenant</a></p>
 </section>
@@ -390,6 +393,36 @@ function questionPage(q, i) {
   }));
 }
 
+/* ---------- Mises en situation (exercices rédigés par le site) ---------- */
+function sitPage() {
+  const path = "/mises-en-situation/";
+  const items = [["Accueil", "/"], ["Mises en situation", path]];
+  const order = (x) => { // position de la bonne réponse : fixe pour chaque exercice
+    let h = 0; for (const ch of x.id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const opts = [...x.qcm.mauvaises]; opts.splice(h % 4, 0, x.qcm.bonne); return opts;
+  };
+  const toc = themes.map((t) => `<a href="#theme-${t.id}" style="--c:var(--t${t.id})"><span>0${t.id}</span> ${typo(t.titre_court)}</a>`).join("");
+  const sections = themes.map((t) => {
+    const xs = situations.filter((x) => x.theme === t.id);
+    return `<section class="block" id="theme-${t.id}" style="--c:var(--t${t.id})"><h2>${typo(t.titre)} <small class="count">${xs.length}\u00a0exercices</small></h2>
+${xs.map((x) => `<article class="sit-item" id="${x.id}"><div class="sit-meta">${esc(x.principe)}</div><p class="sit-s">${typo(x.situation)}</p><p class="sit-q">${typo(x.question)}</p>
+<ol class="sit-opts" type="A">${order(x).map((o) => `<li>${typo(o)}</li>`).join("")}</ol>
+<details><summary>Voir la réponse</summary><p class="sit-a">${typo(x.qcm.bonne)}</p><p class="sit-d">${typo(x.explication)}</p></details></article>`).join("\n")}</section>`;
+  }).join("");
+  write(path, layout({
+    title: `Mises en situation de l’examen civique : ${situations.length} exemples corrigés | ${NAME}`,
+    description: `Entraînez-vous aux mises en situation de l’examen civique : ${situations.length} cas de la vie quotidienne corrigés et expliqués (travail, école, laïcité, santé, logement…).`,
+    path, jsonld: [breadcrumbLd(items)],
+    body: `${crumbs(items)}<div class="eyebrow">Exercices d’entraînement · non officiels</div>
+<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Mises en situation de l’examen civique : ${situations.length} exemples corrigés`)}</h1>
+<p class="lead">${typo("À l’examen, 12 des 40 questions décrivent une situation de la vie quotidienne. Elles ne sont pas publiées : ces exercices, rédigés par Coq Civique, reposent sur les mêmes principes pour vous y préparer.")}</p>
+<div class="cta"><p>${typo("Entraînez-vous en QCM : les mises en situation sont aussi incluses dans l’examen blanc au format officiel (28 + 12).")}</p><a class="btn primary" href="${href("/reviser/?theme=sit")}">QCM mises en situation</a></div>
+<p>${typo("La méthode pour les réussir est expliquée dans")} <a href="${href("/guide/mises-en-situation-examen-civique/")}">notre guide</a>.</p>
+<nav class="toc" aria-label="Thèmes">${toc}</nav>${sections}
+<p class="src" style="margin-top:22px">${typo("Exercices rédigés par Coq Civique, mis à jour le")} ${dateFr(UPDATED)}. <a href="${reportLink("Mises en situation", path)}">Signaler une erreur</a></p>`,
+  }));
+}
+
 /* ---------- Application de révision ---------- */
 function appPage() {
   const cards = questions.map((q) => {
@@ -401,7 +434,8 @@ function appPage() {
       u: href(qPath(q)), l,
     };
   });
-  const appData = { themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
+  const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
+  const appData = { sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `QCM examen civique gratuit : cartes, quiz et examen blanc | ${NAME}`;
   const desc = `QCM gratuit de l’examen civique : révisez les questions officielles de votre liste (naturalisation, carte de résident ou CSP) avec des cartes, des quiz et des examens blancs de 40 questions en 45 minutes.`;
@@ -542,6 +576,7 @@ listPage("cr");
 listPage("csp");
 themes.forEach(themePage);
 questions.forEach(questionPage);
+sitPage();
 appPage();
 contentPages();
 legal();

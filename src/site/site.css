@@ -324,3 +324,18 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .steps .ico{ vertical-align:-5px; color:var(--accent); margin:0 2px; }
 .prose .tip{ font-size:15px; color:var(--muted); background:var(--accent-weak); border-radius:12px; padding:12px 14px; }
 .is-app .site-head{ padding-top:env(safe-area-inset-top); }
+
+/* Mises en situation */
+.sit-item{ background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--c); border-radius:14px; padding:16px 18px; margin:12px 0; }
+.sit-meta{ font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--c); }
+.sit-s{ margin:6px 0 4px; }
+.sit-q{ margin:0 0 6px; font-weight:700; }
+.sit-opts{ margin:6px 0 8px; padding-left:24px; color:var(--muted); }
+.sit-opts li{ margin:3px 0; }
+.sit-item summary{ cursor:pointer; font-weight:700; color:var(--accent); }
+.sit-a{ margin:8px 0 2px; font-weight:700; }
+.sit-a::before{ content:"✓ "; color:var(--t2); }
+.sit-d{ margin:0; color:var(--muted); }
+.modes{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+@media (max-width:980px){ .modes{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+@media (max-width:640px){ .modes{ grid-template-columns:1fr; } }

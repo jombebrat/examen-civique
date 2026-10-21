@@ -57,12 +57,12 @@
     e.preventDefault(); deferred = e;
     document.querySelectorAll("[data-install]").forEach(function (b) { b.hidden = false; });
     if (ok) setTimeout(function () {
-      show('<span><b>Installer l’application</b>Gratuite, elle fonctionne même sans internet.</span><button class="go" type="button">Installer</button>');
+      show('<span><b>Révisez même sans internet</b>Installez l’application gratuite : un geste, et Coq Civique est sur votre téléphone.</span><button class="go" type="button">Installer</button>');
     }, 2500);
   });
   window.addEventListener("appinstalled", function () { hide(false); });
   if (ok && ios) setTimeout(function () {
-    show('<span><b>Ajoutez Coq Civique à votre écran d’accueil</b>Touchez ' + SHARE + ' puis «\u00a0Sur l’écran d’accueil\u00a0». <a href="' + (cfg.guide || "#") + '">Comment faire ?</a></span>');
+    show('<span><b>Révisez même sans internet</b>Installez l’application : touchez ' + SHARE + ' en bas de l’écran, puis «\u00a0Sur l’écran d’accueil\u00a0». <a href="' + (cfg.guide || "#") + '">Voir comment\u00a0›</a></span>');
   }, 3500);
 
   // Boutons « Installer » de la page d'aide

@@ -76,6 +76,30 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 /* ---------- Accueil ---------- */
 .panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px; }
 .summary{ display:grid; gap:14px; }
+.ready{ display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:14px; align-items:center; border-top:1px solid var(--line); padding-top:14px; }
+.ring{ --v:0; width:64px; height:64px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--good) calc(var(--v) * 1%), var(--sunk) 0); position:relative; }
+.ring::before{ content:""; position:absolute; inset:7px; border-radius:50%; background:var(--surface); }
+.ring b{ position:relative; font-family:var(--display); font-size:19px; }
+.ring small{ font-size:11px; margin-left:1px; }
+.ready p{ margin:2px 0 0; font-size:14.5px; color:var(--muted); }
+.ready .est{ font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:12px; margin-left:4px; }
+.streak{ display:grid; justify-items:center; gap:0; color:var(--muted); font-size:12px; text-align:center; }
+.streak svg{ color:var(--line); } .streak.on svg{ color:#F08A24; }
+.streak b{ font-family:var(--display); font-size:22px; line-height:1; color:var(--ink); }
+.qdj{ margin-top:12px; display:grid; gap:10px; }
+.qdj .q{ margin:0; font-weight:700; font-size:17px; }
+.qopts{ display:grid; gap:8px; }
+.qo{ text-align:left; font:inherit; font-size:15px; padding:11px 14px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); cursor:pointer; }
+.qo:hover:not([disabled]){ border-color:var(--accent); }
+.qo.ok{ border-color:var(--good); background:var(--good-weak); font-weight:700; }
+.qo.ko{ border-color:var(--bad); background:var(--bad-weak); }
+.qo[disabled]{ cursor:default; }
+.qres{ margin:0; font-size:15px; } .qres.good{ color:var(--good); } .qres.bad{ color:var(--bad); }
+.qres span{ display:block; color:var(--muted); margin-top:4px; } .qres a{ font-size:14px; }
+.qnext{ margin:0; font-size:13.5px; color:var(--muted); }
+.celebrate{ display:block; margin:0 auto 6px; border-radius:24px; background:#fff; animation:coq-pop .6s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes coq-pop{ from{ transform:scale(.4) rotate(-8deg); opacity:0 } to{ transform:none; opacity:1 } }
+@media (max-width:420px){ .ready{ grid-template-columns:auto minmax(0,1fr); } .streak{ grid-column:1/-1; grid-auto-flow:column; justify-content:start; gap:6px; align-items:center; } }
 .summary .top{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .big{ font-family:var(--display); font-weight:800; font-size:44px; line-height:1; font-variant-numeric:tabular-nums; }
 .big small{ font-size:20px; color:var(--muted); font-weight:700; }
@@ -155,6 +179,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 /* ---------- Carte ---------- */
 .card{ background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--c); border-radius:var(--r); padding:20px 18px 18px; }
 .card .meta{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+.sit{ display:block; font-weight:400; font-size:.88em; line-height:1.5; color:var(--muted); background:var(--sunk); border-left:3px solid var(--bad); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
 .chip{ display:inline-flex; gap:6px; align-items:baseline; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700; color:var(--c); min-width:0; }
 .chip b{ font-family:var(--display); font-size:15px; letter-spacing:0; text-transform:none; }
 .speak{ display:inline-grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; flex:none; }
@@ -249,6 +274,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 
     <div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
     <div class="panel summary" id="summary"></div>
+    <div class="panel qdj" id="qdj"></div>
     <div id="account"></div>
 
     <h2 class="sec">Que voulez-vous réviser ?</h2>
@@ -268,7 +294,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
       </button>
       <button class="mode" data-act="start-exam">
         <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
-        <span><span class="t">Examen blanc</span><br><span class="s">40 questions · 45 min · 32 pour réussir</span></span>
+        <span><span class="t">Examen blanc</span><br><span class="s">28 questions + 12 mises en situation · 45 min · 32 pour réussir</span></span>
         <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
     </div>
@@ -315,6 +341,9 @@ const asCard = (c, code) => { const m = at(c, code); return Object.assign({}, c,
 const CARDS = DATA.cards.filter(c => c.l[LIST]).map(c => asCard(c, LIST));
 const BY_K = Object.fromEntries(DATA.cards.map(c => [c.i, asCard(c, LIST)]));
 const THEMES = DATA.themes.map(t => Object.assign({}, t, { count: CARDS.filter(c => c.t === t.t).length }));
+/* Mises en situation (exercices du site, communs aux trois listes) */
+const SITS = (DATA.sits || []).map(x => ({ k: x.i, i: x.i, t: x.t, n: x.n, q: `<span class="sit">${x.s}</span>${x.q}`, a: x.c, c: x.c, w: x.w, d: x.d, p: "", h: false, u: DATA.sitUrl + "#" + x.i, l: {}, x: 1, pr: x.p }));
+SITS.forEach(c => { BY_K[c.k] = c; });
 const TOTAL = CARDS.length;
 const MIN = 60e3, DAY = 864e5;
 const INTERVALS = [0, 10 * MIN, DAY, 3 * DAY, 7 * DAY, 21 * DAY];
@@ -327,7 +356,8 @@ const plain = html => { const d = document.createElement("div"); d.innerHTML = h
 const tcol = t => `var(--t${t})`;
 
 /* ---------- Progression : modèle et fusion ---------- */
-const empty = () => ({ v: 1, cards: {}, exams: [], u: 0, reset: 0 });
+const empty = () => ({ v: 1, cards: {}, exams: [], u: 0, reset: 0, days: {} });
+const dayKey = (t = Date.now()) => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 function sanitize(o) {
   const p = empty();
   if (!o || typeof o !== "object") return p;
@@ -337,6 +367,7 @@ function sanitize(o) {
     if (BY_K[k] && r && typeof r === "object") p.cards[k] = { b: Math.max(0, Math.min(5, r.b | 0)), due: +r.due || 0, r: r.r | 0, w: r.w | 0, t: +r.t || 0 };
   }
   if (Array.isArray(o.exams)) p.exams = o.exams.filter(e => e && +e.at).map(e => ({ at: +e.at, s: e.s | 0, n: e.n | 0 || EXAM_N, d: +e.d || 0 })).slice(0, 30);
+  if (o.days && typeof o.days === "object") Object.keys(o.days).filter(k => /^\d{4}-\d{2}-\d{2}$/.test(k)).sort().slice(-400).forEach(k => { p.days[k] = Math.max(0, o.days[k] | 0); });
   return p;
 }
 function merge(a, b) {
@@ -350,6 +381,8 @@ function merge(a, b) {
   const ex = new Map();
   for (const e of [...a.exams, ...b.exams]) if (e.at >= R) ex.set(e.at, e);
   out.exams = [...ex.values()].sort((x, y) => y.at - x.at).slice(0, 30);
+  out.days = {};
+  for (const src of [a, b]) for (const k in (src.days || {})) out.days[k] = Math.max(out.days[k] || 0, src.days[k] || 0);
   return out;
 }
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -358,6 +391,7 @@ function grade(k, ok, now = Date.now()) {
   const r = P.cards[k];
   const b = ok ? Math.min(5, (r ? r.b : 0) + 1) : 0;
   P.cards[k] = { b, due: now + INTERVALS[b], r: (r ? r.r : 0) + (ok ? 1 : 0), w: (r ? r.w : 0) + (ok ? 0 : 1), t: now };
+  const dk = dayKey(now); P.days = P.days || {}; P.days[dk] = (P.days[dk] || 0) + 1;
   touch();
 }
 function stats(list) {
@@ -366,7 +400,7 @@ function stats(list) {
   return { m, l, n: list.length - m - l, total: list.length };
 }
 const isDue = (r, now) => r && r.due <= now;
-const weakList = () => CARDS.filter(c => { const r = P.cards[c.k]; return r && r.w > 0 && r.b < MASTERED; });
+const weakList = () => [...CARDS, ...SITS].filter(c => { const r = P.cards[c.k]; return r && r.w > 0 && r.b < MASTERED; });
 
 /* ---------- Stockage local + synchronisation ---------- */
 let P = empty();
@@ -428,19 +462,42 @@ function initAccount() {
 /* ---------- Accueil ---------- */
 let scope = "all";
 try { scope = localStorage.getItem(LS_KEY + ":scope") || "all"; } catch (e) {}
-if (/^[1-5]$/.test(PARAMS.get("theme") || "")) scope = PARAMS.get("theme");
+if (/^([1-5]|sit)$/.test(PARAMS.get("theme") || "")) scope = PARAMS.get("theme");
 function scopeCards(s) {
   if (s === "weak") return weakList();
+  if (s === "sit") return SITS;
   if (/^[1-5]$/.test(String(s))) return CARDS.filter(c => c.t === +s);
   return CARDS;
 }
 function scopeLabel(s) {
   if (s === "weak") return "Mes erreurs";
+  if (s === "sit") return "Mises en situation";
   if (/^[1-5]$/.test(String(s))) return "Thème " + s + " · " + plain(THEMES[s - 1].name);
   return "Tous les thèmes";
 }
+/* Série de jours et estimation « prêt pour l'examen » */
+function streak() {
+  const days = P.days || {}; let n = 0; const d = new Date();
+  if (!days[dayKey(d)]) d.setDate(d.getDate() - 1); // la série continue tant qu'aujourd'hui n'est pas terminé
+  while (days[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function readiness() {
+  const st = stats(CARDS), mastery = TOTAL ? st.m / TOTAL : 0;
+  const ex = P.exams.slice(0, 3);
+  if (!ex.length) return { v: Math.min(79, Math.round(100 * mastery * 0.8)), exams: 0 };
+  const avg = ex.reduce((a, e) => a + e.s / (e.n || EXAM_N), 0) / ex.length;
+  return { v: Math.round(100 * (0.5 * mastery + 0.5 * avg)), exams: ex.length, avg };
+}
+function readyMsg(r) {
+  if (!r.exams) return r.v < 40 ? "Commencez par un thème par jour, puis faites un examen blanc." : "Bien avancé ! Faites un examen blanc pour mesurer votre niveau.";
+  if (r.avg >= 0.85 && r.v >= 80) return "Vous êtes prêt : continuez quelques examens blancs pour garder le rythme.";
+  if (r.v >= 65) return "Presque prêt : retravaillez vos erreurs et visez 36 sur 40.";
+  return "Continuez : un thème par jour et vos questions « À revoir ».";
+}
 function renderSummary() {
   const st = stats(CARDS), now = Date.now();
+  const rd = readiness(), sk = streak();
   const due = CARDS.filter(c => isDue(P.cards[c.k], now)).length;
   const pc = x => (100 * x / TOTAL).toFixed(2) + "%";
   $("#summary").innerHTML = `
@@ -453,6 +510,11 @@ function renderSummary() {
       <span><i style="background:var(--good)"></i><b>${st.m}</b> maîtrisées</span>
       <span><i style="background:var(--accent);opacity:.55"></i><b>${st.l}</b> en cours</span>
       <span><i style="background:var(--sunk);outline:1px solid var(--line)"></i><b>${st.n}</b> jamais vues</span>
+    </div>
+    <div class="ready">
+      <div class="ring" style="--v:${rd.v}" role="img" aria-label="Prêt pour l’examen : ${rd.v} %"><b>${rd.v}<small>%</small></b></div>
+      <div><div class="lbl">Prêt pour l’examen <span class="est">estimation</span></div><p>${readyMsg(rd)}</p></div>
+      <div class="streak${sk ? " on" : ""}" title="Jours de révision consécutifs"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 3.5-1.5 5-1.5 7.5 0 1.4 1 2.5 2.3 2.5 1.6 0 2.4-1.3 2.2-3.2C17.6 10.6 19 13 19 15.5 19 19.1 15.9 22 12 22s-7-2.9-7-6.5C5 10 10.5 7.5 12 2z"/></svg><b>${sk}</b><span>jour${sk > 1 ? "s" : ""} de suite</span></div>
     </div>`;
 }
 function renderScopes() {
@@ -469,6 +531,7 @@ function renderScopes() {
   };
   rows.push(row("all", "∗", "Tous les thèmes", all, "var(--accent)"));
   THEMES.forEach(t => rows.push(row(t.t, "0" + t.t, t.name, stats(CARDS.filter(c => c.t === t.t)), tcol(t.t))));
+  if (SITS.length) rows.push(row("sit", "?", "Mises en situation <small>(exercices du site)</small>", stats(SITS), "var(--bad)"));
   const weak = weakList();
   if (weak.length) rows.push(row("weak", "!", "Mes erreurs", { m: 0, l: 0, n: weak.length, total: weak.length }, "var(--bad)", weak.length + " question" + (weak.length > 1 ? "s" : "")));
   else if (scope === "weak") scope = "all";
@@ -490,7 +553,28 @@ function renderLists() {
   const box = $("#listsw"); if (!box) return;
   box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("");
 }
-function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderScopes(); renderHistory(); } }
+/* Question du jour : la même pour tous, chaque jour, dans la liste choisie */
+let QDJ = null;
+function qdjCard() {
+  const key = dayKey() + LIST; let h = 0; for (const ch of key) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return CARDS[h % CARDS.length];
+}
+function renderQdj() {
+  const box = $("#qdj"); if (!box || !CARDS.length) return;
+  const c = qdjCard();
+  let done = null; try { done = JSON.parse(localStorage.getItem("coq:qdj:" + dayKey() + ":" + LIST) || "null"); } catch (e) {}
+  if (!QDJ || QDJ.k !== c.k) {
+    // ordre des propositions fixe pour la journée (la réponse enregistrée reste juste après rechargement)
+    const seed = dayKey() + LIST, hsh = s => { let h = 0; for (const ch of seed + s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+    const opts = [{ h: c.c, ok: true }, ...c.w.map(h => ({ h, ok: false }))].sort((x, y) => hsh(x.h) - hsh(y.h));
+    QDJ = { k: c.k, opts, pick: done ? done.pick : null };
+  }
+  const answered = QDJ.pick !== null && QDJ.pick !== undefined;
+  box.innerHTML = `<div class="lbl">Question du jour</div><p class="q">${c.q}</p>
+    <div class="qopts">${QDJ.opts.map((o, i) => `<button type="button" class="qo${answered ? (o.ok ? " ok" : i === QDJ.pick ? " ko" : "") : ""}" data-act="qdj" data-i="${i}" ${answered ? "disabled" : ""}>${o.h}</button>`).join("")}</div>
+    ${answered ? `<p class="qres ${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "good" : "bad"}">${QDJ.opts[QDJ.pick] && QDJ.opts[QDJ.pick].ok ? "Bonne réponse !" : "Pas tout à fait."} ${c.d ? `<span>${c.d}</span>` : ""} <a href="${c.u}">Fiche de la question ›</a></p><p class="qnext">Nouvelle question demain. Votre série : <b>${streak()} jour${streak() > 1 ? "s" : ""}</b>.</p>` : ""}`;
+}
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
@@ -510,12 +594,16 @@ function pickQuiz(list, n) {
   return list.map(c => ({ k: c.k, s: (P.cards[c.k] ? P.cards[c.k].b : -1) + Math.random() * 1.6 }))
     .sort((a, b) => a.s - b.s).slice(0, n).map(x => x.k);
 }
+// Format officiel : 28 questions de connaissance (liste choisie) + 12 mises en situation
+const SIT_PER_THEME = [3, 2, 3, 1, 3];
 function pickExam() {
-  const quotas = THEMES.map(t => { const q = EXAM_N * t.count / TOTAL; return { t: t.t, n: Math.floor(q), r: q - Math.floor(q) }; });
-  let left = EXAM_N - quotas.reduce((s, q) => s + q.n, 0);
+  const sitN = SITS.length ? SIT_PER_THEME.reduce((a, b) => a + b, 0) : 0, know = EXAM_N - sitN;
+  const quotas = THEMES.map(t => { const q = know * t.count / TOTAL; return { t: t.t, n: Math.floor(q), r: q - Math.floor(q) }; });
+  let left = know - quotas.reduce((s, q) => s + q.n, 0);
   [...quotas].sort((a, b) => b.r - a.r).forEach(q => { if (left > 0) { q.n++; left--; } });
   const picked = [];
   quotas.forEach(q => picked.push(...shuffle(CARDS.filter(c => c.t === q.t)).slice(0, q.n).map(c => c.k)));
+  if (sitN) THEMES.forEach((t, i) => picked.push(...shuffle(SITS.filter(c => c.t === t.t)).slice(0, SIT_PER_THEME[i] || 0).map(c => c.k)));
   return shuffle(picked);
 }
 
@@ -544,8 +632,8 @@ function speak(text) {
   speechSynthesis.speak(u);
 }
 const speakBtn = () => ttsOK ? `<button class="speak" data-act="speak" aria-label="Écouter la question" title="Écouter la question"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>` : "";
-const metaChip = c => `<span class="chip" style="--c:${tcol(c.t)}">Thème ${c.t} <b>n° ${c.n}</b></span>`;
-const refLine = c => (c.h ? `<span class="tag">hors livret</span> ` : "") + (c.p ? `<span class="ref">Livret p. ${esc(c.p)}</span>` : "") + (c.l[LIST] && c.l[LIST][2] ? ` <span class="ref">Formulation de la liste ${esc(LIST_INFO.court)}</span>` : "");
+const metaChip = c => c.x ? `<span class="chip" style="--c:var(--bad)">Mise en situation <b>${esc(c.pr)}</b></span>` : `<span class="chip" style="--c:${tcol(c.t)}">Thème ${c.t} <b>n° ${c.n}</b></span>`;
+const refLine = c => c.x ? `<span class="ref">Exercice rédigé par Coq Civique (non officiel)</span>` : (c.h ? `<span class="tag">hors livret</span> ` : "") + (c.p ? `<span class="ref">Livret p. ${esc(c.p)}</span>` : "") + (c.l[LIST] && c.l[LIST][2] ? ` <span class="ref">Formulation de la liste ${esc(LIST_INFO.court)}</span>` : "");
 const detail = c => (c.d ? `<div class="d">${c.d}</div>` : "") + `<div>${refLine(c)}<a class="more" href="${c.u}" target="_blank" rel="noopener">Fiche de la question ›</a></div>`;
 
 /* Cartes */
@@ -666,6 +754,7 @@ function renderExamResult() {
   $("#stage").innerHTML = `
     <div class="panel result">
       <div class="lbl">Votre score</div>
+      ${pass && DATA.mascot ? `<img class="celebrate" src="${DATA.mascot}" width="120" height="120" alt="Le coq vous félicite">` : ""}
       <div class="big">${S.score}<small> / ${EXAM_N}</small></div>
       <div class="scale" role="img" aria-label="${S.score} sur ${EXAM_N}, seuil 32"><span class="fill" style="width:${100 * S.score / EXAM_N}%;background:${pass ? "var(--good)" : "var(--bad)"}"></span><span class="mark" style="left:${100 * EXAM_PASS / EXAM_N}%"></span></div>
       <div class="scale-l"><span>0</span><span>seuil : 32</span><span>40</span></div>
@@ -693,6 +782,11 @@ document.addEventListener("click", e => {
   switch (a) {
     case "home": if (S && S.mode === "exam" && !S.over) { S.leave = true; renderExam(); } else goHome(); break;
     case "leave-yes": goHome(); break;
+    case "qdj": if (QDJ && (QDJ.pick === null || QDJ.pick === undefined)) {
+      QDJ.pick = i; const ok = QDJ.opts[i].ok; grade(QDJ.k, ok);
+      try { localStorage.setItem("coq:qdj:" + dayKey() + ":" + LIST, JSON.stringify({ pick: i })); } catch (er) {}
+      renderQdj(); renderSummary();
+    } break;
     case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
     case "start-cards": startCards(); break;
@@ -738,7 +832,7 @@ document.addEventListener("keydown", e => {
 /* ---------- Démarrage ---------- */
 refreshHome();
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAccount); else initAccount();
-window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS };
+window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS, streak, readiness };
 })();
 </script>
 </body>

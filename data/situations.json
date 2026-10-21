@@ -1,0 +1,2029 @@
+{
+  "source": "Exercices rédigés par Coq Civique pour s'entraîner aux mises en situation (non officiels).",
+  "mise_a_jour": "2026-10-21",
+  "situations": [
+    {
+      "id": "s1-1",
+      "theme": 1,
+      "numero": 1,
+      "principe": "Égalité femmes-hommes",
+      "situation": "Dans votre entreprise, une femme devient responsable d'équipe. Un collègue refuse de suivre ses consignes parce qu'elle est une femme.",
+      "question": "Que faut-il retenir ?",
+      "qcm": {
+        "bonne": "Il doit respecter son autorité : les femmes et les hommes sont égaux",
+        "mauvaises": [
+          "Il peut exiger un responsable homme",
+          "L'employeur doit lui donner raison",
+          "C'est sa liberté personnelle de refuser"
+        ]
+      },
+      "explication": "L'égalité entre les femmes et les hommes est un principe de la République. Une femme peut diriger une équipe exactement comme un homme."
+    },
+    {
+      "id": "s1-2",
+      "theme": 1,
+      "numero": 2,
+      "principe": "Non-discrimination",
+      "situation": "Un propriétaire refuse de louer son appartement à une famille parce qu'elle est musulmane.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est une discrimination interdite et punie",
+        "mauvaises": [
+          "C'est son droit de propriétaire",
+          "C'est autorisé s'il le dit poliment",
+          "C'est autorisé pour les logements meublés"
+        ]
+      },
+      "explication": "Refuser un logement en raison de la religion, de l'origine ou du sexe est une discrimination punie par la loi. La victime peut saisir le Défenseur des droits ou porter plainte."
+    },
+    {
+      "id": "s1-3",
+      "theme": 1,
+      "numero": 3,
+      "principe": "Non-discrimination",
+      "situation": "Un restaurant refuse de servir une personne en fauteuil roulant, sans raison de sécurité.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Non, refuser un service à cause d'un handicap est une discrimination",
+        "mauvaises": [
+          "Oui, le restaurant choisit ses clients",
+          "Oui, si la salle est pleine de monde",
+          "Oui, si la personne n'a pas réservé"
+        ]
+      },
+      "explication": "Le handicap fait partie des critères de discrimination interdits. Refuser un bien ou un service pour ce motif est puni par la loi."
+    },
+    {
+      "id": "s1-4",
+      "theme": 1,
+      "numero": 4,
+      "principe": "Liberté du mariage",
+      "situation": "La famille de votre amie, âgée de 19 ans, organise son mariage avec un homme qu'elle ne veut pas épouser.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Le mariage forcé est interdit : il faut le libre consentement des deux époux",
+        "mauvaises": [
+          "Les parents peuvent choisir le mari",
+          "C'est autorisé si les familles sont d'accord",
+          "C'est autorisé si le mariage a lieu à l'étranger"
+        ]
+      },
+      "explication": "Le mariage exige le consentement libre de chacun des époux. Une personne menacée de mariage forcé peut demander de l'aide, par exemple au 3919, et être protégée."
+    },
+    {
+      "id": "s1-5",
+      "theme": 1,
+      "numero": 5,
+      "principe": "Lutte contre le racisme",
+      "situation": "En réunion, un collègue tient des propos racistes envers une autre personne.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Le signaler : l'injure raciste est punie par la loi",
+        "mauvaises": [
+          "Rien, c'est la liberté d'expression",
+          "Répondre par des insultes",
+          "Quitter l'entreprise sans rien dire"
+        ]
+      },
+      "explication": "La liberté d'expression ne permet pas d'injurier ni d'appeler à la haine. On peut alerter l'employeur, le Défenseur des droits ou porter plainte."
+    },
+    {
+      "id": "s1-6",
+      "theme": 1,
+      "numero": 6,
+      "principe": "Laïcité",
+      "situation": "À la mairie, l'agent qui vous reçoit porte un signe religieux très visible.",
+      "question": "Que dit le principe de laïcité ?",
+      "qcm": {
+        "bonne": "Un agent public doit rester neutre et ne pas montrer ses convictions religieuses",
+        "mauvaises": [
+          "L'agent est libre de porter ce qu'il veut",
+          "Seuls les usagers doivent être neutres",
+          "C'est autorisé le vendredi"
+        ]
+      },
+      "explication": "Les agents des services publics sont soumis à la neutralité religieuse. Cette obligation s'applique à eux, pas aux usagers."
+    },
+    {
+      "id": "s1-7",
+      "theme": 1,
+      "numero": 7,
+      "principe": "Laïcité",
+      "situation": "Vous allez à la mairie pour une démarche. Vous portez un signe religieux visible.",
+      "question": "Avez-vous le droit d'entrer ainsi ?",
+      "qcm": {
+        "bonne": "Oui, les usagers des services publics sont libres de porter un signe religieux",
+        "mauvaises": [
+          "Non, c'est interdit dans tous les bâtiments publics",
+          "Seulement avec une autorisation du maire",
+          "Seulement si on enlève le signe au guichet"
+        ]
+      },
+      "explication": "La neutralité s'impose aux agents publics, pas aux usagers. Il faut seulement que le visage reste découvert dans l'espace public."
+    },
+    {
+      "id": "s1-8",
+      "theme": 1,
+      "numero": 8,
+      "principe": "Laïcité et ordre public",
+      "situation": "Dans la rue, une personne porte une tenue qui cache entièrement son visage.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : on ne peut pas cacher son visage dans l'espace public",
+        "mauvaises": [
+          "C'est autorisé partout",
+          "C'est autorisé seulement la nuit",
+          "C'est autorisé si la personne est majeure"
+        ]
+      },
+      "explication": "Depuis la loi de 2010, il est interdit de dissimuler son visage dans l'espace public (rue, transports, commerces, services publics), sauf exceptions comme la santé."
+    },
+    {
+      "id": "s1-9",
+      "theme": 1,
+      "numero": 9,
+      "principe": "Liberté de conscience",
+      "situation": "Votre ami veut quitter sa religion. Sa famille le menace s'il le fait.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Il est libre de changer de religion ou de ne plus en avoir ; les menaces sont punies",
+        "mauvaises": [
+          "Il doit obéir à sa famille",
+          "Il doit demander l'accord d'un religieux",
+          "Il doit attendre d'avoir 30 ans"
+        ]
+      },
+      "explication": "La liberté de conscience permet de croire, de ne pas croire ou de changer de religion. Menacer quelqu'un pour ce motif est une infraction."
+    },
+    {
+      "id": "s1-10",
+      "theme": 1,
+      "numero": 10,
+      "principe": "Égalité professionnelle",
+      "situation": "Pendant un entretien d'embauche, on demande à une candidate si elle compte avoir des enfants.",
+      "question": "Que faut-il savoir ?",
+      "qcm": {
+        "bonne": "Cette question n'a pas à être posée : on ne peut pas refuser un emploi pour ce motif",
+        "mauvaises": [
+          "La candidate doit répondre",
+          "L'employeur peut écarter les femmes enceintes",
+          "C'est une question obligatoire"
+        ]
+      },
+      "explication": "Refuser d'embaucher une femme parce qu'elle est enceinte ou veut avoir des enfants est une discrimination interdite."
+    },
+    {
+      "id": "s1-11",
+      "theme": 1,
+      "numero": 11,
+      "principe": "Non-discrimination",
+      "situation": "Lors d'un entretien d'embauche, le recruteur vous demande quelle est votre religion.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "La religion ne doit pas intervenir dans le choix d'un candidat",
+        "mauvaises": [
+          "Vous devez répondre",
+          "Le recruteur choisit selon la religion",
+          "C'est autorisé dans les grandes entreprises"
+        ]
+      },
+      "explication": "Les convictions religieuses font partie des critères de discrimination interdits à l'embauche."
+    },
+    {
+      "id": "s1-12",
+      "theme": 1,
+      "numero": 12,
+      "principe": "Démocratie",
+      "situation": "Avant une élection, votre voisin vous dit pour qui vous devez voter et veut vérifier votre bulletin.",
+      "question": "Que faut-il retenir ?",
+      "qcm": {
+        "bonne": "Le vote est libre et secret : personne ne peut vous imposer votre choix",
+        "mauvaises": [
+          "Il faut lui montrer votre bulletin",
+          "Le chef de famille décide pour tous",
+          "On vote à voix haute en France"
+        ]
+      },
+      "explication": "On vote seul dans l'isoloir. Faire pression sur un électeur est puni par la loi."
+    },
+    {
+      "id": "s1-13",
+      "theme": 1,
+      "numero": 13,
+      "principe": "Primauté de la loi",
+      "situation": "Un ami affirme que les règles de sa religion sont au-dessus des lois de la République.",
+      "question": "Que faut-il lui répondre ?",
+      "qcm": {
+        "bonne": "Les lois de la République s'appliquent à tous, quelles que soient les croyances",
+        "mauvaises": [
+          "Il a raison, la religion passe avant la loi",
+          "Chacun choisit les lois qu'il respecte",
+          "Les lois ne s'appliquent qu'aux Français"
+        ]
+      },
+      "explication": "La laïcité garantit la liberté de croire, mais personne ne peut invoquer sa religion pour ne pas respecter la loi commune."
+    },
+    {
+      "id": "s1-14",
+      "theme": 1,
+      "numero": 14,
+      "principe": "Non-discrimination",
+      "situation": "Un commerçant affiche sur sa porte : « Interdit aux étrangers ».",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est une discrimination interdite et punie",
+        "mauvaises": [
+          "C'est son droit",
+          "C'est autorisé pour les petits commerces",
+          "C'est autorisé s'il donne une raison"
+        ]
+      },
+      "explication": "Refuser l'accès à un commerce en raison de l'origine ou de la nationalité est une discrimination punie par le Code pénal."
+    },
+    {
+      "id": "s1-15",
+      "theme": 1,
+      "numero": 15,
+      "principe": "Égalité femmes-hommes",
+      "situation": "Une femme mariée veut ouvrir un compte bancaire à son nom, sans l'accord de son mari.",
+      "question": "En a-t-elle le droit ?",
+      "qcm": {
+        "bonne": "Oui, elle n'a pas besoin de l'accord de son mari",
+        "mauvaises": [
+          "Non, il faut la signature du mari",
+          "Seulement si elle travaille",
+          "Seulement après 10 ans de mariage"
+        ]
+      },
+      "explication": "Depuis 1965, une femme mariée peut ouvrir un compte bancaire et travailler sans l'autorisation de son mari."
+    },
+    {
+      "id": "s1-16",
+      "theme": 1,
+      "numero": 16,
+      "principe": "Liberté d'expression",
+      "situation": "Vous voulez publier sur internet un texte qui critique une décision du Gouvernement.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Oui, si vous n'injuriez personne et n'appelez pas à la haine ou à la violence",
+        "mauvaises": [
+          "Non, critiquer le Gouvernement est interdit",
+          "Seulement avec l'accord de la préfecture",
+          "Seulement pendant les élections"
+        ]
+      },
+      "explication": "La liberté d'expression permet de critiquer les responsables politiques. Ses limites sont fixées par la loi : injure, diffamation, appel à la haine ou à la violence."
+    },
+    {
+      "id": "s1-17",
+      "theme": 1,
+      "numero": 17,
+      "principe": "Égalité",
+      "situation": "Deux hommes souhaitent se marier à la mairie.",
+      "question": "Est-ce possible en France ?",
+      "qcm": {
+        "bonne": "Oui, le mariage est ouvert aux couples de même sexe depuis 2013",
+        "mauvaises": [
+          "Non, c'est interdit",
+          "Seulement avec l'accord des familles",
+          "Seulement à l'étranger"
+        ]
+      },
+      "explication": "La loi du 17 mai 2013 a ouvert le mariage aux couples de personnes de même sexe."
+    },
+    {
+      "id": "s1-18",
+      "theme": 1,
+      "numero": 18,
+      "principe": "Laïcité à l'école",
+      "situation": "Un parent veut retirer sa fille des cours de natation de l'école parce qu'ils sont mixtes.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Les cours de natation font partie de l'enseignement obligatoire",
+        "mauvaises": [
+          "Les parents peuvent refuser pour motif religieux",
+          "Seuls les garçons doivent y aller",
+          "L'école doit créer un cours séparé"
+        ]
+      },
+      "explication": "Les enseignements obligatoires, y compris le sport et la natation, s'imposent à tous les élèves. Les convictions religieuses ne permettent pas de les refuser."
+    },
+    {
+      "id": "s1-19",
+      "theme": 1,
+      "numero": 19,
+      "principe": "Protection de l'enfant",
+      "situation": "Un ami veut marier sa fille de 15 ans.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : il faut avoir au moins 18 ans pour se marier",
+        "mauvaises": [
+          "C'est autorisé avec l'accord des parents",
+          "C'est autorisé si la cérémonie est religieuse",
+          "C'est autorisé à partir de 15 ans"
+        ]
+      },
+      "explication": "En France, l'âge minimum pour se marier est de 18 ans, pour les femmes comme pour les hommes."
+    },
+    {
+      "id": "s1-20",
+      "theme": 1,
+      "numero": 20,
+      "principe": "Laïcité à l'école",
+      "situation": "À l'école publique, un enseignant fait la promotion de sa religion pendant le cours.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Non, l'enseignant doit respecter la neutralité",
+        "mauvaises": [
+          "Oui, c'est sa liberté d'expression",
+          "Oui, si les parents sont d'accord",
+          "Oui, une fois par semaine"
+        ]
+      },
+      "explication": "L'école publique est laïque. Les enseignants ne doivent ni montrer ni promouvoir leurs convictions religieuses devant les élèves."
+    },
+    {
+      "id": "s1-21",
+      "theme": 1,
+      "numero": 21,
+      "principe": "Laïcité à l'école",
+      "situation": "Une élève d'un collège public veut venir en cours avec un signe religieux ostensible.",
+      "question": "Que prévoit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit dans les écoles, collèges et lycées publics",
+        "mauvaises": [
+          "C'est autorisé pour tous les élèves",
+          "C'est autorisé avec un mot des parents",
+          "C'est autorisé seulement à la cantine"
+        ]
+      },
+      "explication": "La loi du 15 mars 2004 interdit aux élèves des écoles, collèges et lycées publics les signes religieux ostensibles. Le dialogue précède toute sanction."
+    },
+    {
+      "id": "s1-22",
+      "theme": 1,
+      "numero": 22,
+      "principe": "Laïcité",
+      "situation": "Votre commune envisage de payer la construction d'un nouveau lieu de culte.",
+      "question": "Que prévoit la loi de 1905 ?",
+      "qcm": {
+        "bonne": "En principe, l'État et les communes ne financent aucun culte",
+        "mauvaises": [
+          "Les communes doivent financer tous les cultes",
+          "Elles financent seulement la religion majoritaire",
+          "Chaque habitant doit payer un impôt religieux"
+        ]
+      },
+      "explication": "Selon la loi de 1905, la République ne reconnaît, ne salarie ni ne subventionne aucun culte. Des règles particulières existent en Alsace-Moselle."
+    },
+    {
+      "id": "s1-23",
+      "theme": 1,
+      "numero": 23,
+      "principe": "Symboles de la République",
+      "situation": "Lors d'une cérémonie officielle, La Marseillaise est jouée.",
+      "question": "Quelle attitude est d'usage ?",
+      "qcm": {
+        "bonne": "Se lever et rester silencieux, par respect",
+        "mauvaises": [
+          "Continuer à parler fort",
+          "Rester assis en tournant le dos",
+          "Siffler l'hymne"
+        ]
+      },
+      "explication": "La Marseillaise est l'hymne national. Il est d'usage de se lever et de l'écouter avec respect lors des cérémonies."
+    },
+    {
+      "id": "s1-24",
+      "theme": 1,
+      "numero": 24,
+      "principe": "Fraternité",
+      "situation": "Pendant une canicule, votre voisine âgée vit seule et sort très peu.",
+      "question": "Quel geste illustre la fraternité ?",
+      "qcm": {
+        "bonne": "Prendre de ses nouvelles et prévenir la mairie si elle a besoin d'aide",
+        "mauvaises": [
+          "Ne rien faire, ce n'est pas votre affaire",
+          "Attendre qu'elle appelle elle-même",
+          "Couper son eau pour économiser"
+        ]
+      },
+      "explication": "La fraternité, c'est la solidarité entre les personnes. Les mairies tiennent un registre des personnes fragiles pour les aider en cas de canicule."
+    },
+    {
+      "id": "s1-25",
+      "theme": 1,
+      "numero": 25,
+      "principe": "Égalité salariale",
+      "situation": "Vous découvrez qu'une collègue est payée moins qu'un homme pour le même poste et le même travail.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "À travail égal, le salaire doit être égal entre les femmes et les hommes",
+        "mauvaises": [
+          "C'est normal dans le secteur privé",
+          "L'employeur fixe librement les salaires",
+          "C'est autorisé si elle est plus jeune"
+        ]
+      },
+      "explication": "L'égalité de rémunération entre les femmes et les hommes est une obligation légale pour tous les employeurs."
+    },
+    {
+      "id": "s1-26",
+      "theme": 1,
+      "numero": 26,
+      "principe": "Liberté de la presse",
+      "situation": "Un journal local publie un article qui critique le maire de votre ville.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Oui, la liberté de la presse le permet, dans le respect de la loi",
+        "mauvaises": [
+          "Non, il est interdit de critiquer un élu",
+          "Seulement avec l'accord du maire",
+          "Seulement après les élections"
+        ]
+      },
+      "explication": "La presse est libre. Elle peut critiquer les responsables publics, mais pas diffamer ni injurier."
+    },
+    {
+      "id": "s1-27",
+      "theme": 1,
+      "numero": 27,
+      "principe": "Non-discrimination",
+      "situation": "Une entreprise écarte systématiquement les candidats dont le nom semble d'origine étrangère.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est une discrimination à l'embauche, punie par la loi",
+        "mauvaises": [
+          "C'est le choix libre de l'entreprise",
+          "C'est autorisé s'il y a beaucoup de candidats",
+          "C'est autorisé pour les postes d'accueil"
+        ]
+      },
+      "explication": "L'origine, réelle ou supposée, et le nom font partie des critères de discrimination interdits. Les victimes peuvent saisir le Défenseur des droits."
+    },
+    {
+      "id": "s1-28",
+      "theme": 1,
+      "numero": 28,
+      "principe": "Non-discrimination",
+      "situation": "Au travail, un collègue est régulièrement insulté et mis à l'écart parce qu'il est homosexuel.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : l'orientation sexuelle est protégée contre les discriminations et le harcèlement",
+        "mauvaises": [
+          "Ce n'est qu'une plaisanterie sans importance",
+          "C'est autorisé en dehors des heures de travail",
+          "Il doit cacher sa vie privée"
+        ]
+      },
+      "explication": "L'orientation sexuelle fait partie des critères de discrimination interdits. L'employeur doit protéger ses salariés contre le harcèlement ; la victime peut saisir le Défenseur des droits ou porter plainte."
+    },
+    {
+      "id": "s2-1",
+      "theme": 2,
+      "numero": 1,
+      "principe": "État de droit",
+      "situation": "Vous recevez un avis de contravention pour une infraction que vous n'avez pas commise.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "La contester, en suivant la procédure indiquée sur l'avis",
+        "mauvaises": [
+          "Ne rien payer et ne rien dire",
+          "Insulter l'agent qui l'a dressée",
+          "Payer et ne jamais pouvoir contester"
+        ]
+      },
+      "explication": "Une contravention peut être contestée dans le délai et selon la procédure indiqués sur l'avis, par exemple en ligne. C'est le droit de chacun de faire valoir sa défense."
+    },
+    {
+      "id": "s2-2",
+      "theme": 2,
+      "numero": 2,
+      "principe": "État de droit",
+      "situation": "Vous n'êtes pas d'accord avec une décision de votre mairie qui vous concerne.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Demander à la mairie de revoir sa décision, puis saisir le tribunal administratif si besoin",
+        "mauvaises": [
+          "Rien, une décision de la mairie est définitive",
+          "Bloquer l'entrée de la mairie",
+          "Écrire au président de la République pour l'annuler"
+        ]
+      },
+      "explication": "Les décisions de l'administration peuvent être contestées : d'abord par un recours auprès de l'administration elle-même, puis devant le juge administratif."
+    },
+    {
+      "id": "s2-3",
+      "theme": 2,
+      "numero": 3,
+      "principe": "Démocratie",
+      "situation": "Le jour d'une élection, vous serez en déplacement et ne pourrez pas aller voter.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Donner procuration à un autre électeur",
+        "mauvaises": [
+          "Demander à un ami de voter avec votre carte",
+          "Voter par téléphone",
+          "Rien, votre voix est perdue"
+        ]
+      },
+      "explication": "La procuration permet à un électeur de votre choix de voter à votre place. Elle se fait en ligne (maprocuration.gouv.fr), au commissariat ou à la gendarmerie."
+    },
+    {
+      "id": "s2-4",
+      "theme": 2,
+      "numero": 4,
+      "principe": "Démocratie",
+      "situation": "Un candidat vous propose de l'argent en échange de votre vote.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : acheter ou vendre un vote est puni par la loi",
+        "mauvaises": [
+          "C'est autorisé s'il s'agit d'un petit montant",
+          "C'est autorisé pendant la campagne",
+          "C'est une pratique normale"
+        ]
+      },
+      "explication": "Le vote doit être libre. Les dons ou promesses pour obtenir un vote sont des délits électoraux."
+    },
+    {
+      "id": "s2-5",
+      "theme": 2,
+      "numero": 5,
+      "principe": "Démocratie locale",
+      "situation": "Vous avez une idée pour améliorer la vie de votre quartier.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "La proposer à la mairie, au conseil de quartier ou lors d'une réunion publique",
+        "mauvaises": [
+          "Rien, seuls les élus ont le droit d'avoir des idées",
+          "Organiser des travaux sans autorisation",
+          "Attendre l'élection présidentielle"
+        ]
+      },
+      "explication": "Les citoyens peuvent participer à la vie locale : réunions publiques, conseils de quartier, pétitions, associations."
+    },
+    {
+      "id": "s2-6",
+      "theme": 2,
+      "numero": 6,
+      "principe": "Droit de vote",
+      "situation": "Votre ami, de nationalité marocaine, vit en France depuis 15 ans. Il veut voter aux élections municipales.",
+      "question": "Peut-il voter ?",
+      "qcm": {
+        "bonne": "Non : seuls les Français et les citoyens de l'Union européenne peuvent voter aux municipales",
+        "mauvaises": [
+          "Oui, après 10 ans en France",
+          "Oui, s'il paie des impôts",
+          "Oui, s'il a une carte de résident"
+        ]
+      },
+      "explication": "Le droit de vote aux élections municipales est réservé aux citoyens français et aux citoyens d'un autre pays de l'Union européenne inscrits sur les listes."
+    },
+    {
+      "id": "s2-7",
+      "theme": 2,
+      "numero": 7,
+      "principe": "Citoyenneté européenne",
+      "situation": "Votre voisine est espagnole et vit en France. Elle veut voter aux élections municipales.",
+      "question": "Est-ce possible ?",
+      "qcm": {
+        "bonne": "Oui, si elle est inscrite sur les listes électorales complémentaires",
+        "mauvaises": [
+          "Non, seuls les Français votent",
+          "Seulement aux élections présidentielles",
+          "Seulement si elle devient française"
+        ]
+      },
+      "explication": "Les citoyens de l'Union européenne qui résident en France peuvent voter aux élections municipales et européennes."
+    },
+    {
+      "id": "s2-8",
+      "theme": 2,
+      "numero": 8,
+      "principe": "État de droit",
+      "situation": "Une loi vous paraît injuste.",
+      "question": "Quelle est la bonne attitude ?",
+      "qcm": {
+        "bonne": "La respecter et agir par des moyens démocratiques pour la faire changer",
+        "mauvaises": [
+          "Ne pas la respecter",
+          "Utiliser la violence",
+          "Attendre qu'elle disparaisse toute seule"
+        ]
+      },
+      "explication": "En démocratie, on peut critiquer une loi, manifester, signer une pétition ou interpeller ses élus, mais il faut la respecter tant qu'elle est en vigueur."
+    },
+    {
+      "id": "s2-9",
+      "theme": 2,
+      "numero": 9,
+      "principe": "Administration",
+      "situation": "Le préfet prend un arrêté qui interdit les feux dans les forêts du département pendant l'été.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Respecter cet arrêté : il a force obligatoire",
+        "mauvaises": [
+          "L'ignorer si vous n'êtes pas d'accord",
+          "Demander l'avis de vos voisins",
+          "Le respecter seulement le week-end"
+        ]
+      },
+      "explication": "Le préfet représente l'État dans le département. Ses arrêtés s'imposent à tous ; on peut les contester devant le tribunal administratif."
+    },
+    {
+      "id": "s2-10",
+      "theme": 2,
+      "numero": 10,
+      "principe": "Administration",
+      "situation": "Vous voulez suivre votre demande de titre de séjour.",
+      "question": "Où pouvez-vous le faire ?",
+      "qcm": {
+        "bonne": "Sur le site officiel de l'administration numérique pour les étrangers en France (ANEF)",
+        "mauvaises": [
+          "Auprès d'un site payant inconnu",
+          "Au consulat de votre pays",
+          "Auprès de la mairie de votre ville natale"
+        ]
+      },
+      "explication": "La plupart des demandes de titre de séjour se font et se suivent en ligne sur le site officiel de l'ANEF. Les sites payants qui promettent des démarches plus rapides ne sont pas officiels."
+    },
+    {
+      "id": "s2-11",
+      "theme": 2,
+      "numero": 11,
+      "principe": "Institutions",
+      "situation": "Pendant votre mariage à la mairie, c'est le maire qui célèbre la cérémonie.",
+      "question": "À quel titre agit-il ?",
+      "qcm": {
+        "bonne": "Comme officier d'état civil, représentant de l'État",
+        "mauvaises": [
+          "Comme chef religieux",
+          "Comme juge",
+          "Comme simple témoin"
+        ]
+      },
+      "explication": "Le maire est à la fois l'élu de la commune et l'agent de l'État pour l'état civil (mariages, naissances, décès)."
+    },
+    {
+      "id": "s2-12",
+      "theme": 2,
+      "numero": 12,
+      "principe": "Ordre public",
+      "situation": "Un policier vous demande de présenter vos papiers dans la rue.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Présenter une pièce d'identité ou votre titre de séjour",
+        "mauvaises": [
+          "Refuser et partir",
+          "Demander à voir le maire d'abord",
+          "Lui donner de l'argent"
+        ]
+      },
+      "explication": "Les contrôles d'identité sont prévus par la loi. Une personne étrangère doit pouvoir présenter les documents qui l'autorisent à séjourner en France."
+    },
+    {
+      "id": "s2-13",
+      "theme": 2,
+      "numero": 13,
+      "principe": "Devoirs civiques",
+      "situation": "Votre voisin, de nationalité française, reçoit une convocation pour être juré à la cour d'assises.",
+      "question": "Que doit-il faire ?",
+      "qcm": {
+        "bonne": "Y aller : c'est un devoir civique, sauf motif grave reconnu",
+        "mauvaises": [
+          "Il peut ignorer la convocation",
+          "Il doit envoyer quelqu'un à sa place",
+          "Il doit payer pour être dispensé"
+        ]
+      },
+      "explication": "Être juré est un devoir civique. Ne pas répondre à la convocation sans motif légitime expose à une amende."
+    },
+    {
+      "id": "s2-14",
+      "theme": 2,
+      "numero": 14,
+      "principe": "Institutions",
+      "situation": "Le président de la République veut modifier seul la Constitution.",
+      "question": "Est-ce possible ?",
+      "qcm": {
+        "bonne": "Non : une révision doit être votée par le Parlement, puis approuvée par référendum ou par le Congrès",
+        "mauvaises": [
+          "Oui, par un simple décret",
+          "Oui, s'il est d'accord avec le Premier ministre",
+          "Oui, pendant les vacances parlementaires"
+        ]
+      },
+      "explication": "La Constitution prévoit une procédure de révision exigeante (article 89), qui protège les règles fondamentales de la République."
+    },
+    {
+      "id": "s2-15",
+      "theme": 2,
+      "numero": 15,
+      "principe": "Citoyenneté",
+      "situation": "Votre fils, de nationalité française, vient d'avoir 16 ans.",
+      "question": "Quelle démarche doit-il faire ?",
+      "qcm": {
+        "bonne": "Se faire recenser à la mairie (ou en ligne)",
+        "mauvaises": [
+          "Rien jusqu'à ses 18 ans",
+          "S'inscrire à l'armée",
+          "Demander une carte d'électeur à la préfecture"
+        ]
+      },
+      "explication": "Le recensement citoyen est obligatoire entre 16 ans et 16 ans et 3 mois. Il permet ensuite la journée défense et citoyenneté et l'inscription automatique sur les listes électorales."
+    },
+    {
+      "id": "s2-16",
+      "theme": 2,
+      "numero": 16,
+      "principe": "Démocratie",
+      "situation": "Le jour du vote, un ami propose de voter à votre place avec votre carte d'électeur.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Non, c'est une fraude électorale ; seule la procuration est permise",
+        "mauvaises": [
+          "Oui, si vous êtes d'accord",
+          "Oui, pour un membre de la famille",
+          "Oui, si vous êtes malade"
+        ]
+      },
+      "explication": "Le vote est personnel. Voter à la place d'un autre sans procuration est puni par la loi."
+    },
+    {
+      "id": "s2-17",
+      "theme": 2,
+      "numero": 17,
+      "principe": "Accès au droit",
+      "situation": "Vous cherchez des informations fiables sur vos droits et vos démarches.",
+      "question": "Quel site officiel pouvez-vous consulter ?",
+      "qcm": {
+        "bonne": "service-public.fr",
+        "mauvaises": [
+          "Un forum anonyme",
+          "La page d'un vendeur de services",
+          "Un groupe de discussion privé"
+        ]
+      },
+      "explication": "Service-public.fr est le site officiel de l'administration française pour les droits et démarches des particuliers."
+    },
+    {
+      "id": "s2-18",
+      "theme": 2,
+      "numero": 18,
+      "principe": "Justice",
+      "situation": "Vous avez un petit litige avec un voisin (une clôture abîmée).",
+      "question": "Que pouvez-vous faire d'abord ?",
+      "qcm": {
+        "bonne": "Faire appel à un conciliateur de justice, gratuit",
+        "mauvaises": [
+          "Vous venger vous-même",
+          "Appeler l'armée",
+          "Détruire sa clôture à votre tour"
+        ]
+      },
+      "explication": "Le conciliateur de justice aide gratuitement à trouver un accord amiable. Pour beaucoup de petits litiges, cette étape est même obligatoire avant d'aller devant le juge."
+    },
+    {
+      "id": "s2-19",
+      "theme": 2,
+      "numero": 19,
+      "principe": "Défenseur des droits",
+      "situation": "Vous pensez qu'une administration vous a traité de façon injuste et discriminatoire.",
+      "question": "Qui pouvez-vous saisir gratuitement ?",
+      "qcm": {
+        "bonne": "Le Défenseur des droits",
+        "mauvaises": [
+          "Le président du Sénat",
+          "Le maire d'une autre commune",
+          "Un avocat payé par l'administration"
+        ]
+      },
+      "explication": "Le Défenseur des droits est une autorité indépendante. Il défend gratuitement les personnes face aux administrations et contre les discriminations."
+    },
+    {
+      "id": "s2-20",
+      "theme": 2,
+      "numero": 20,
+      "principe": "Représentation",
+      "situation": "Vous voulez faire connaître un problème de votre quartier à votre député.",
+      "question": "Comment le joindre ?",
+      "qcm": {
+        "bonne": "Écrire à votre député, élu de votre circonscription, ou le rencontrer lors de ses permanences",
+        "mauvaises": [
+          "Envoyer une lettre au roi",
+          "Passer par un intermédiaire payant",
+          "Ce n'est pas possible pour un simple habitant"
+        ]
+      },
+      "explication": "Le député représente les habitants de sa circonscription. Ses coordonnées figurent sur le site de l'Assemblée nationale."
+    },
+    {
+      "id": "s3-1",
+      "theme": 3,
+      "numero": 1,
+      "principe": "Honnêteté et respect de la loi",
+      "situation": "Dans la rue, vous trouvez un portefeuille avec de l'argent et une carte d'identité.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Le rapporter au commissariat, à la gendarmerie ou au service des objets trouvés",
+        "mauvaises": [
+          "Garder l'argent et jeter le reste",
+          "Le laisser par terre",
+          "Le garder en souvenir"
+        ]
+      },
+      "explication": "Garder un objet trouvé sans chercher à le rendre peut être puni par la loi. Le rapporter permet à son propriétaire de le récupérer."
+    },
+    {
+      "id": "s3-2",
+      "theme": 3,
+      "numero": 2,
+      "principe": "Secours",
+      "situation": "Vous avez un accident de voiture sans blessé avec un autre conducteur.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Remplir ensemble un constat amiable et prévenir son assurance",
+        "mauvaises": [
+          "Partir sans rien dire",
+          "Se disputer jusqu'à l'arrivée de la police",
+          "Payer l'autre conducteur en liquide"
+        ]
+      },
+      "explication": "Le constat amiable décrit l'accident pour les assurances. S'il y a des blessés, il faut d'abord appeler les secours (15, 18 ou 112)."
+    },
+    {
+      "id": "s3-3",
+      "theme": 3,
+      "numero": 3,
+      "principe": "Vivre ensemble",
+      "situation": "Votre voisin fait du bruit très fort presque tous les soirs après 22 heures.",
+      "question": "Quelle est la bonne démarche ?",
+      "qcm": {
+        "bonne": "Lui en parler calmement, puis faire appel à un conciliateur ou à la police si le trouble continue",
+        "mauvaises": [
+          "Taper sur ses murs toute la nuit",
+          "Couper son électricité",
+          "Le menacer"
+        ]
+      },
+      "explication": "Le tapage nocturne est une infraction. Le dialogue reste la première étape ; en cas d'échec, le conciliateur de justice ou les forces de l'ordre peuvent intervenir."
+    },
+    {
+      "id": "s3-4",
+      "theme": 3,
+      "numero": 4,
+      "principe": "Violences conjugales",
+      "situation": "Une amie vous confie que son mari la frappe.",
+      "question": "Que pouvez-vous lui conseiller ?",
+      "qcm": {
+        "bonne": "Appeler le 17 en cas de danger, le 3919 pour être écoutée, et porter plainte",
+        "mauvaises": [
+          "De ne rien dire pour préserver la famille",
+          "D'attendre que cela s'arrête",
+          "De demander l'autorisation de sa belle-famille"
+        ]
+      },
+      "explication": "Les violences conjugales sont des délits graves. Le 3919 est gratuit et anonyme ; la justice peut ordonner des mesures de protection."
+    },
+    {
+      "id": "s3-5",
+      "theme": 3,
+      "numero": 5,
+      "principe": "Protection de l'enfance",
+      "situation": "Vous pensez qu'un enfant de votre immeuble est maltraité.",
+      "question": "Quel numéro pouvez-vous appeler ?",
+      "qcm": {
+        "bonne": "Le 119, Allô Enfance en danger",
+        "mauvaises": [
+          "Le 3919",
+          "Le 15 uniquement pour les adultes",
+          "Aucun, ce n'est pas votre affaire"
+        ]
+      },
+      "explication": "Le 119 est gratuit, joignable 24 heures sur 24. En cas de danger immédiat, il faut appeler le 17 ou le 112."
+    },
+    {
+      "id": "s3-6",
+      "theme": 3,
+      "numero": 6,
+      "principe": "Solidarité",
+      "situation": "Une personne fait un malaise devant vous dans un magasin.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Appeler les secours (15 ou 112) et rester auprès d'elle en suivant leurs consignes",
+        "mauvaises": [
+          "Continuer vos courses",
+          "La filmer avec votre téléphone",
+          "La transporter vous-même chez vous"
+        ]
+      },
+      "explication": "Ne pas porter assistance à une personne en danger est puni par la loi. Appeler les secours est à la portée de tous."
+    },
+    {
+      "id": "s3-7",
+      "theme": 3,
+      "numero": 7,
+      "principe": "Respect d'autrui en ligne",
+      "situation": "Une personne vous insulte et vous menace sur les réseaux sociaux.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Garder des captures d'écran, signaler les messages et porter plainte",
+        "mauvaises": [
+          "Répondre par des menaces",
+          "Publier son adresse en ligne",
+          "Rien, internet n'est pas soumis à la loi"
+        ]
+      },
+      "explication": "Les injures et menaces en ligne sont punies comme ailleurs. On peut signaler les contenus sur la plateforme PHAROS (internet-signalement.gouv.fr)."
+    },
+    {
+      "id": "s3-8",
+      "theme": 3,
+      "numero": 8,
+      "principe": "Vie privée",
+      "situation": "Un adolescent partage sans accord une photo intime d'une camarade.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est un délit grave, même entre mineurs",
+        "mauvaises": [
+          "C'est une simple blague",
+          "C'est autorisé si la photo circule déjà",
+          "C'est autorisé sur les messageries privées"
+        ]
+      },
+      "explication": "Diffuser l'image intime d'une personne sans son accord est puni par la loi. Les victimes de harcèlement à l'école ou en ligne peuvent appeler le 3018."
+    },
+    {
+      "id": "s3-9",
+      "theme": 3,
+      "numero": 9,
+      "principe": "Prudence",
+      "situation": "Vous recevez un message qui semble venir de votre caisse d'allocations et vous demande vos coordonnées bancaires.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Ne pas répondre ni cliquer : c'est probablement une arnaque à signaler",
+        "mauvaises": [
+          "Envoyer rapidement vos codes bancaires",
+          "Transférer le message à tous vos contacts",
+          "Appeler le numéro surtaxé indiqué"
+        ]
+      },
+      "explication": "Les administrations ne demandent jamais vos codes bancaires par message. On peut se faire aider sur cybermalveillance.gouv.fr."
+    },
+    {
+      "id": "s3-10",
+      "theme": 3,
+      "numero": 10,
+      "principe": "Impôts",
+      "situation": "Vous avez travaillé quelques mois cette année avec un petit salaire.",
+      "question": "Devez-vous déclarer vos revenus ?",
+      "qcm": {
+        "bonne": "Oui, la déclaration de revenus est obligatoire, même si vous ne payez pas d'impôt",
+        "mauvaises": [
+          "Non, seulement si vous gagnez beaucoup",
+          "Non, l'employeur s'en occupe pour toujours",
+          "Seulement si vous êtes de nationalité française"
+        ]
+      },
+      "explication": "Toute personne qui réside en France doit déclarer ses revenus chaque année. La déclaration permet aussi d'obtenir certaines aides."
+    },
+    {
+      "id": "s3-11",
+      "theme": 3,
+      "numero": 11,
+      "principe": "Environnement",
+      "situation": "Vous avez des médicaments périmés à la maison.",
+      "question": "Que faut-il en faire ?",
+      "qcm": {
+        "bonne": "Les rapporter à la pharmacie",
+        "mauvaises": [
+          "Les jeter dans les toilettes",
+          "Les mettre dans la nature",
+          "Les donner à un voisin"
+        ]
+      },
+      "explication": "Les pharmacies collectent gratuitement les médicaments non utilisés pour les détruire sans polluer."
+    },
+    {
+      "id": "s3-12",
+      "theme": 3,
+      "numero": 12,
+      "principe": "Environnement",
+      "situation": "Vous avez des piles usagées.",
+      "question": "Où les déposer ?",
+      "qcm": {
+        "bonne": "Dans un point de collecte, par exemple en magasin ou à la déchèterie",
+        "mauvaises": [
+          "Dans la poubelle ordinaire",
+          "Dans un parc",
+          "Dans la rivière"
+        ]
+      },
+      "explication": "Les piles contiennent des produits dangereux. Les magasins qui en vendent doivent les reprendre gratuitement."
+    },
+    {
+      "id": "s3-13",
+      "theme": 3,
+      "numero": 13,
+      "principe": "Santé publique",
+      "situation": "Dans un bar, un client allume une cigarette à l'intérieur.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Non, il est interdit de fumer dans les lieux publics fermés",
+        "mauvaises": [
+          "Oui, après 22 heures",
+          "Oui, si le patron accepte",
+          "Oui, près d'une fenêtre"
+        ]
+      },
+      "explication": "L'interdiction de fumer dans les lieux fermés accueillant du public protège la santé de tous. Elle s'applique aussi au vapotage dans certains lieux."
+    },
+    {
+      "id": "s3-14",
+      "theme": 3,
+      "numero": 14,
+      "principe": "Sécurité routière",
+      "situation": "En voiture, vous voulez répondre à un message sur votre téléphone en conduisant.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : il faut s'arrêter dans un endroit autorisé",
+        "mauvaises": [
+          "C'est autorisé à faible vitesse",
+          "C'est autorisé avec une seule main",
+          "C'est autorisé en ville"
+        ]
+      },
+      "explication": "Tenir son téléphone en conduisant est sanctionné par une amende et un retrait de points."
+    },
+    {
+      "id": "s3-15",
+      "theme": 3,
+      "numero": 15,
+      "principe": "Sécurité routière",
+      "situation": "Après un repas où vous avez bu plusieurs verres d'alcool, vous devez rentrer chez vous.",
+      "question": "Quelle est la bonne décision ?",
+      "qcm": {
+        "bonne": "Ne pas conduire : prendre un taxi, les transports ou laisser conduire une personne sobre",
+        "mauvaises": [
+          "Conduire doucement",
+          "Boire un café et partir",
+          "Conduire en ouvrant la fenêtre"
+        ]
+      },
+      "explication": "L'alcool au volant est une cause majeure d'accidents. Au-delà de la limite légale, c'est une infraction, et au-delà d'un certain taux, un délit."
+    },
+    {
+      "id": "s3-16",
+      "theme": 3,
+      "numero": 16,
+      "principe": "Protection de l'enfant",
+      "situation": "Vous devez sortir faire des courses et pensez laisser seul votre enfant de 4 ans à la maison.",
+      "question": "Que faut-il savoir ?",
+      "qcm": {
+        "bonne": "Un jeune enfant ne doit pas rester sans surveillance : c'est dangereux et peut être puni",
+        "mauvaises": [
+          "C'est autorisé pour une heure",
+          "C'est autorisé si la porte est fermée",
+          "C'est autorisé si la télévision est allumée"
+        ]
+      },
+      "explication": "Les parents doivent assurer la sécurité de leur enfant. Laisser un jeune enfant seul le met en danger."
+    },
+    {
+      "id": "s3-17",
+      "theme": 3,
+      "numero": 17,
+      "principe": "Droits de l'enfant",
+      "situation": "Un parent pense qu'une gifle est une bonne manière d'éduquer son enfant.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Les violences éducatives, même légères, sont interdites",
+        "mauvaises": [
+          "C'est autorisé à la maison",
+          "C'est autorisé avant 6 ans",
+          "C'est autorisé si l'enfant a désobéi"
+        ]
+      },
+      "explication": "Depuis 2019, la loi précise que l'autorité parentale s'exerce sans violences physiques ou psychologiques."
+    },
+    {
+      "id": "s3-18",
+      "theme": 3,
+      "numero": 18,
+      "principe": "Accès à la justice",
+      "situation": "Vous voulez porter plainte, mais on vous dit au commissariat de revenir un autre jour.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "La police et la gendarmerie doivent recevoir les plaintes",
+        "mauvaises": [
+          "Une plainte peut être refusée sans raison",
+          "Il faut payer pour porter plainte",
+          "Seuls les Français peuvent porter plainte"
+        ]
+      },
+      "explication": "Toute victime peut porter plainte, quelle que soit sa nationalité. Les services de police et de gendarmerie sont tenus de recevoir les plaintes."
+    },
+    {
+      "id": "s3-19",
+      "theme": 3,
+      "numero": 19,
+      "principe": "Protection animale",
+      "situation": "Votre voisin frappe régulièrement son chien et le laisse sans nourriture.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Les mauvais traitements envers les animaux sont punis ; on peut les signaler",
+        "mauvaises": [
+          "L'animal lui appartient, il fait ce qu'il veut",
+          "C'est autorisé à la campagne",
+          "Seuls les vétérinaires peuvent intervenir"
+        ]
+      },
+      "explication": "Les sévices et l'abandon d'animaux sont des infractions. On peut alerter la police, la gendarmerie ou une association de protection animale."
+    },
+    {
+      "id": "s3-20",
+      "theme": 3,
+      "numero": 20,
+      "principe": "Droits de la défense",
+      "situation": "Une personne est placée en garde à vue au commissariat.",
+      "question": "Quel droit a-t-elle ?",
+      "qcm": {
+        "bonne": "Être assistée par un avocat et faire prévenir un proche",
+        "mauvaises": [
+          "Aucun droit pendant la garde à vue",
+          "Le droit de partir quand elle veut",
+          "Le droit de choisir son policier"
+        ]
+      },
+      "explication": "La personne gardée à vue a notamment le droit à un avocat, à un médecin, à un interprète si besoin et de faire prévenir un proche."
+    },
+    {
+      "id": "s3-21",
+      "theme": 3,
+      "numero": 21,
+      "principe": "Procès équitable",
+      "situation": "Lors d'une audience au tribunal, vous ne comprenez pas bien le français.",
+      "question": "Que pouvez-vous demander ?",
+      "qcm": {
+        "bonne": "L'assistance d'un interprète",
+        "mauvaises": [
+          "Rien, l'audience se fait sans vous",
+          "Que le juge parle votre langue",
+          "Un report de plusieurs années"
+        ]
+      },
+      "explication": "Toute personne poursuivie qui ne comprend pas le français a droit à un interprète, pour garantir un procès équitable."
+    },
+    {
+      "id": "s3-22",
+      "theme": 3,
+      "numero": 22,
+      "principe": "Accès au droit",
+      "situation": "Vous avez besoin d'un avocat mais vos revenus sont très faibles.",
+      "question": "Que pouvez-vous demander ?",
+      "qcm": {
+        "bonne": "L'aide juridictionnelle, qui prend en charge tout ou partie des frais d'avocat",
+        "mauvaises": [
+          "Rien, la justice est réservée aux riches",
+          "Un avocat payé par la partie adverse",
+          "Une avance de la mairie"
+        ]
+      },
+      "explication": "L'aide juridictionnelle est accordée selon les ressources. La demande se fait auprès du tribunal ou en ligne."
+    },
+    {
+      "id": "s3-23",
+      "theme": 3,
+      "numero": 23,
+      "principe": "Respect du domicile",
+      "situation": "Votre propriétaire entre dans votre appartement pendant votre absence, sans votre accord.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Non : le logement loué est votre domicile, il doit avoir votre accord",
+        "mauvaises": [
+          "Oui, c'est son appartement",
+          "Oui, une fois par mois",
+          "Oui, s'il prévient le voisin"
+        ]
+      },
+      "explication": "Le domicile du locataire est protégé. Le propriétaire ne peut pas y entrer sans l'accord du locataire."
+    },
+    {
+      "id": "s3-24",
+      "theme": 3,
+      "numero": 24,
+      "principe": "Harcèlement",
+      "situation": "Au travail, un responsable fait des remarques sexuelles répétées à une salariée.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est du harcèlement sexuel, interdit et puni ; l'employeur doit agir",
+        "mauvaises": [
+          "Ce sont des compliments",
+          "C'est autorisé s'il est le chef",
+          "Elle doit changer de travail"
+        ]
+      },
+      "explication": "Le harcèlement sexuel est un délit. La victime peut alerter son employeur, l'inspection du travail, le Défenseur des droits ou porter plainte."
+    },
+    {
+      "id": "s3-25",
+      "theme": 3,
+      "numero": 25,
+      "principe": "Protection des mineurs",
+      "situation": "Un adolescent de 15 ans veut acheter de l'alcool dans un magasin.",
+      "question": "Que doit faire le vendeur ?",
+      "qcm": {
+        "bonne": "Refuser : la vente d'alcool aux mineurs est interdite",
+        "mauvaises": [
+          "Accepter s'il a l'air majeur",
+          "Accepter s'il paie en liquide",
+          "Accepter pour de la bière"
+        ]
+      },
+      "explication": "La vente d'alcool aux moins de 18 ans est interdite. Le vendeur peut demander une pièce d'identité."
+    },
+    {
+      "id": "s3-26",
+      "theme": 3,
+      "numero": 26,
+      "principe": "Environnement",
+      "situation": "Vous voyez des déchets déposés en tas au bord d'une route.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Le signaler à la mairie",
+        "mauvaises": [
+          "Ajouter vos propres déchets",
+          "Les brûler sur place",
+          "Rien, ce n'est pas votre affaire"
+        ]
+      },
+      "explication": "Les dépôts sauvages sont interdits et punis d'amendes. La mairie peut faire enlever les déchets et rechercher les auteurs."
+    },
+    {
+      "id": "s3-27",
+      "theme": 3,
+      "numero": 27,
+      "principe": "Intégrité du corps",
+      "situation": "Une famille prévoit de faire exciser sa fille pendant des vacances à l'étranger.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est un crime puni par la loi française, même s'il est commis à l'étranger",
+        "mauvaises": [
+          "C'est autorisé à l'étranger",
+          "C'est une affaire de famille",
+          "C'est autorisé avec l'accord des parents"
+        ]
+      },
+      "explication": "Les mutilations sexuelles sont des crimes. Toute personne inquiète pour une enfant peut appeler le 119 ; la justice peut empêcher la sortie du territoire."
+    },
+    {
+      "id": "s4-1",
+      "theme": 4,
+      "numero": 1,
+      "principe": "Mémoire",
+      "situation": "Le 11 novembre, votre commune organise une cérémonie au monument aux morts.",
+      "question": "Que commémore-t-on ?",
+      "qcm": {
+        "bonne": "L'armistice de 1918 et les morts de la Première Guerre mondiale",
+        "mauvaises": [
+          "La prise de la Bastille",
+          "La fin de la monarchie",
+          "La création de l'Union européenne"
+        ]
+      },
+      "explication": "Le 11 novembre est un jour férié. On y honore aussi tous les morts pour la France."
+    },
+    {
+      "id": "s4-2",
+      "theme": 4,
+      "numero": 2,
+      "principe": "Patrimoine",
+      "situation": "En septembre, votre ville annonce les Journées européennes du patrimoine.",
+      "question": "Qu'est-ce que c'est ?",
+      "qcm": {
+        "bonne": "Des journées où de nombreux monuments se visitent, souvent gratuitement",
+        "mauvaises": [
+          "Une fête religieuse",
+          "Un jour d'élection",
+          "Une période de soldes"
+        ]
+      },
+      "explication": "Chaque année en septembre, des lieux habituellement fermés au public (ministères, palais, ateliers) ouvrent leurs portes."
+    },
+    {
+      "id": "s4-3",
+      "theme": 4,
+      "numero": 3,
+      "principe": "Mémoire",
+      "situation": "L'école de votre enfant organise une visite au Mémorial de la Shoah.",
+      "question": "Pourquoi ?",
+      "qcm": {
+        "bonne": "Pour transmettre la mémoire du génocide des Juifs et lutter contre le racisme",
+        "mauvaises": [
+          "Pour une sortie de loisir",
+          "Pour célébrer une victoire militaire",
+          "Pour étudier une religion"
+        ]
+      },
+      "explication": "Le devoir de mémoire aide les jeunes à comprendre où mènent le racisme et l'antisémitisme."
+    },
+    {
+      "id": "s4-4",
+      "theme": 4,
+      "numero": 4,
+      "principe": "Mémoire",
+      "situation": "Le 8 mai est un jour férié et des drapeaux sont installés dans votre ville.",
+      "question": "Que célèbre-t-on ?",
+      "qcm": {
+        "bonne": "La victoire des Alliés et la fin de la Seconde Guerre mondiale en Europe (1945)",
+        "mauvaises": [
+          "La fête du Travail",
+          "L'armistice de 1918",
+          "La fête nationale"
+        ]
+      },
+      "explication": "Le 8 mai 1945, l'Allemagne nazie a capitulé. Des cérémonies ont lieu devant les monuments aux morts."
+    },
+    {
+      "id": "s4-5",
+      "theme": 4,
+      "numero": 5,
+      "principe": "Culture",
+      "situation": "Votre fille de 20 ans, qui réside en France, veut visiter un musée national comme le Louvre.",
+      "question": "Combien paie-t-elle ?",
+      "qcm": {
+        "bonne": "Rien : les musées nationaux sont gratuits pour les moins de 26 ans résidant dans l'Union européenne",
+        "mauvaises": [
+          "Le double du prix normal",
+          "Le prix d'un abonnement annuel",
+          "Elle n'a pas le droit d'entrer seule"
+        ]
+      },
+      "explication": "Cette gratuité vise à faciliter l'accès des jeunes à la culture. Les mineurs entrent aussi gratuitement."
+    },
+    {
+      "id": "s4-6",
+      "theme": 4,
+      "numero": 6,
+      "principe": "Culture",
+      "situation": "Le 21 juin, des musiciens jouent dans toutes les rues de votre ville.",
+      "question": "De quelle fête s'agit-il ?",
+      "qcm": {
+        "bonne": "La Fête de la musique",
+        "mauvaises": [
+          "La fête nationale",
+          "La Toussaint",
+          "La fête des voisins"
+        ]
+      },
+      "explication": "Créée en France en 1982, la Fête de la musique a lieu chaque 21 juin ; amateurs et professionnels jouent gratuitement."
+    },
+    {
+      "id": "s4-7",
+      "theme": 4,
+      "numero": 7,
+      "principe": "Fête nationale",
+      "situation": "Le soir du 14 juillet, votre commune organise un bal et un feu d'artifice.",
+      "question": "Que célèbre-t-on ?",
+      "qcm": {
+        "bonne": "La fête nationale française",
+        "mauvaises": [
+          "Le Nouvel An",
+          "La fin de l'école",
+          "La victoire de 1945"
+        ]
+      },
+      "explication": "Le 14 juillet rappelle la prise de la Bastille (1789) et la fête de la Fédération (1790). Bals populaires et feux d'artifice ont lieu partout en France."
+    },
+    {
+      "id": "s4-8",
+      "theme": 4,
+      "numero": 8,
+      "principe": "Mémoire nationale",
+      "situation": "Vous visitez le Panthéon, à Paris.",
+      "question": "Qui y est honoré ?",
+      "qcm": {
+        "bonne": "Des personnes ayant marqué l'histoire de France, comme Victor Hugo, Marie Curie ou Joséphine Baker",
+        "mauvaises": [
+          "Uniquement les rois de France",
+          "Les présidents en exercice",
+          "Les sportifs olympiques"
+        ]
+      },
+      "explication": "« Aux grands hommes, la patrie reconnaissante » : le Panthéon honore des femmes et des hommes pour leur rôle dans l'histoire du pays."
+    },
+    {
+      "id": "s4-9",
+      "theme": 4,
+      "numero": 9,
+      "principe": "Patrimoine",
+      "situation": "Pendant une visite, un ami veut graver son nom sur un monument historique.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est une dégradation punie par la loi",
+        "mauvaises": [
+          "C'est une tradition autorisée",
+          "C'est autorisé s'il est discret",
+          "C'est autorisé pour les touristes"
+        ]
+      },
+      "explication": "Dégrader un monument, même par une inscription, est puni. Le patrimoine appartient à tous et doit être protégé."
+    },
+    {
+      "id": "s4-10",
+      "theme": 4,
+      "numero": 10,
+      "principe": "Langues",
+      "situation": "Votre voisin parle breton avec sa famille.",
+      "question": "Est-ce autorisé ?",
+      "qcm": {
+        "bonne": "Oui : les langues régionales font partie du patrimoine de la France",
+        "mauvaises": [
+          "Non, seul le français est permis",
+          "Seulement à la maison et en secret",
+          "Seulement avec une autorisation"
+        ]
+      },
+      "explication": "Le français est la langue de la République, mais chacun est libre de parler d'autres langues. La Constitution reconnaît les langues régionales (article 75-1)."
+    },
+    {
+      "id": "s4-11",
+      "theme": 4,
+      "numero": 11,
+      "principe": "Laïcité et culture",
+      "situation": "La classe de votre enfant visite une cathédrale pour étudier son architecture.",
+      "question": "Est-ce compatible avec la laïcité ?",
+      "qcm": {
+        "bonne": "Oui : c'est une visite culturelle et historique, pas un enseignement religieux",
+        "mauvaises": [
+          "Non, c'est interdit",
+          "Seulement pour les élèves catholiques",
+          "Seulement avec un religieux"
+        ]
+      },
+      "explication": "L'école laïque peut faire découvrir le patrimoine religieux, qui fait partie de l'histoire et de la culture de la France."
+    },
+    {
+      "id": "s4-12",
+      "theme": 4,
+      "numero": 12,
+      "principe": "Géographie",
+      "situation": "Vous partez en vacances dans les Alpes.",
+      "question": "Quel est le plus haut sommet de France ?",
+      "qcm": {
+        "bonne": "Le mont Blanc",
+        "mauvaises": [
+          "Le mont Ventoux",
+          "Le puy de Dôme",
+          "Le Vignemale"
+        ]
+      },
+      "explication": "Le mont Blanc, dans les Alpes, culmine à plus de 4 800 mètres, à la frontière avec l'Italie."
+    },
+    {
+      "id": "s5-1",
+      "theme": 5,
+      "numero": 1,
+      "principe": "Logement",
+      "situation": "Vous signez le bail de votre premier appartement en location.",
+      "question": "Quelle assurance devez-vous souscrire ?",
+      "qcm": {
+        "bonne": "Une assurance habitation",
+        "mauvaises": [
+          "Aucune, le propriétaire s'occupe de tout",
+          "Une assurance vie",
+          "Une assurance voyage"
+        ]
+      },
+      "explication": "Le locataire doit être assuré au moins contre les risques locatifs (incendie, dégât des eaux) et en fournir l'attestation au propriétaire."
+    },
+    {
+      "id": "s5-2",
+      "theme": 5,
+      "numero": 2,
+      "principe": "Logement",
+      "situation": "Pour un logement vide, le propriétaire vous demande trois mois de loyer comme dépôt de garantie.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Pour un logement vide, le dépôt de garantie est limité à un mois de loyer hors charges",
+        "mauvaises": [
+          "Il peut demander ce qu'il veut",
+          "Il doit demander six mois",
+          "Il n'y a jamais de dépôt de garantie"
+        ]
+      },
+      "explication": "Pour un logement loué meublé, la limite est de deux mois de loyer hors charges."
+    },
+    {
+      "id": "s5-3",
+      "theme": 5,
+      "numero": 3,
+      "principe": "Logement",
+      "situation": "En plein mois de janvier, votre propriétaire veut vous faire expulser.",
+      "question": "Que prévoit la loi ?",
+      "qcm": {
+        "bonne": "La trêve hivernale : en principe, pas d'expulsion du 1er novembre au 31 mars",
+        "mauvaises": [
+          "L'expulsion peut avoir lieu le jour même",
+          "Il suffit d'un appel du propriétaire",
+          "La police doit agir sous 24 heures"
+        ]
+      },
+      "explication": "Pendant la trêve hivernale, les expulsions sont suspendues, sauf exceptions prévues par la loi. Une expulsion nécessite toujours une décision de justice."
+    },
+    {
+      "id": "s5-4",
+      "theme": 5,
+      "numero": 4,
+      "principe": "Logement",
+      "situation": "Vous quittez votre logement en bon état. Le propriétaire ne vous rend pas votre dépôt de garantie.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "Il doit le rendre dans un délai d'un mois si l'état des lieux de sortie est conforme",
+        "mauvaises": [
+          "Il peut le garder",
+          "Il le rend après dix ans",
+          "Il le rend seulement si vous relouez chez lui"
+        ]
+      },
+      "explication": "Le délai est de deux mois en cas de différences entre les états des lieux. En cas de litige, on peut saisir la commission départementale de conciliation."
+    },
+    {
+      "id": "s5-5",
+      "theme": 5,
+      "numero": 5,
+      "principe": "Santé",
+      "situation": "Le soir, votre enfant a de la fièvre, mais son état ne semble pas grave. Le cabinet médical est fermé.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Appeler le 116 117 pour joindre un médecin de garde",
+        "mauvaises": [
+          "Aller directement aux urgences pour un simple conseil",
+          "Appeler les pompiers",
+          "Attendre une semaine"
+        ]
+      },
+      "explication": "Le 116 117 permet de joindre un médecin de garde le soir, la nuit et le week-end ; s'il n'est pas encore en service dans votre département, appelez le 15. En cas d'urgence vitale, appelez le 15."
+    },
+    {
+      "id": "s5-6",
+      "theme": 5,
+      "numero": 6,
+      "principe": "Santé",
+      "situation": "Une personne ressent soudain une forte douleur dans la poitrine.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Appeler immédiatement le 15 (SAMU) ou le 112",
+        "mauvaises": [
+          "Attendre le lendemain",
+          "Prendre rendez-vous chez le médecin dans un mois",
+          "Envoyer un e-mail à l'hôpital"
+        ]
+      },
+      "explication": "Une douleur forte dans la poitrine peut être une urgence vitale. Le SAMU décide des secours à envoyer."
+    },
+    {
+      "id": "s5-7",
+      "theme": 5,
+      "numero": 7,
+      "principe": "Santé",
+      "situation": "Vous avez perdu votre carte Vitale.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "En demander une nouvelle, par exemple depuis votre compte en ligne ameli",
+        "mauvaises": [
+          "Utiliser la carte d'un proche",
+          "Ne plus aller chez le médecin",
+          "Acheter une carte sur internet"
+        ]
+      },
+      "explication": "La carte Vitale est personnelle. L'Assurance maladie la remplace gratuitement en cas de perte ou de vol."
+    },
+    {
+      "id": "s5-8",
+      "theme": 5,
+      "numero": 8,
+      "principe": "Santé",
+      "situation": "Vous n'avez pas encore de médecin traitant.",
+      "question": "Pourquoi en déclarer un ?",
+      "qcm": {
+        "bonne": "Pour être suivi et mieux remboursé par l'Assurance maladie",
+        "mauvaises": [
+          "C'est interdit aux étrangers",
+          "Pour ne plus jamais payer",
+          "Pour éviter les vaccins"
+        ]
+      },
+      "explication": "Le médecin traitant coordonne vos soins. Sans médecin traitant déclaré, les consultations sont en principe moins bien remboursées."
+    },
+    {
+      "id": "s5-9",
+      "theme": 5,
+      "numero": 9,
+      "principe": "Santé",
+      "situation": "Votre employeur propose une complémentaire santé collective (mutuelle).",
+      "question": "Que faut-il savoir ?",
+      "qcm": {
+        "bonne": "L'employeur doit la proposer et en payer au moins la moitié",
+        "mauvaises": [
+          "Elle est entièrement à votre charge",
+          "Elle remplace la Sécurité sociale",
+          "Elle est réservée aux cadres"
+        ]
+      },
+      "explication": "Depuis 2016, les employeurs du secteur privé doivent proposer une complémentaire santé collective et financer au moins 50 % de la cotisation."
+    },
+    {
+      "id": "s5-10",
+      "theme": 5,
+      "numero": 10,
+      "principe": "Santé publique",
+      "situation": "Vous voulez inscrire votre bébé à la crèche.",
+      "question": "Quelle condition de santé est exigée ?",
+      "qcm": {
+        "bonne": "Que l'enfant ait reçu les vaccins obligatoires",
+        "mauvaises": [
+          "Un certificat de nationalité",
+          "Une analyse de sang des parents",
+          "Aucune condition"
+        ]
+      },
+      "explication": "Onze vaccins sont obligatoires pour les enfants nés depuis le 1er janvier 2018. Ils sont exigés pour l'entrée en collectivité."
+    },
+    {
+      "id": "s5-11",
+      "theme": 5,
+      "numero": 11,
+      "principe": "Travail",
+      "situation": "Vous venez de perdre votre emploi.",
+      "question": "Quelle démarche faire rapidement ?",
+      "qcm": {
+        "bonne": "S'inscrire à France Travail",
+        "mauvaises": [
+          "Attendre qu'on vous appelle",
+          "S'inscrire à la mairie",
+          "Demander de l'argent à son ancien employeur chaque mois"
+        ]
+      },
+      "explication": "L'inscription à France Travail permet d'être accompagné dans la recherche d'emploi et, sous conditions, d'être indemnisé."
+    },
+    {
+      "id": "s5-12",
+      "theme": 5,
+      "numero": 12,
+      "principe": "Travail",
+      "situation": "Un employeur vous propose de travailler sans contrat ni fiche de paie.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est du travail dissimulé, interdit",
+        "mauvaises": [
+          "C'est autorisé pour un essai",
+          "C'est autorisé si on est payé en liquide",
+          "C'est autorisé dans la restauration"
+        ]
+      },
+      "explication": "Le travail non déclaré prive le salarié de ses droits (assurance maladie, retraite, chômage). L'employeur doit déclarer le salarié et remettre un bulletin de paie."
+    },
+    {
+      "id": "s5-13",
+      "theme": 5,
+      "numero": 13,
+      "principe": "Travail",
+      "situation": "Vous vous blessez sur votre lieu de travail.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Prévenir votre employeur rapidement (dans les 24 heures)",
+        "mauvaises": [
+          "Ne rien dire pour ne pas déranger",
+          "Attendre la fin du mois",
+          "Prévenir seulement votre famille"
+        ]
+      },
+      "explication": "L'employeur doit ensuite déclarer l'accident du travail à l'Assurance maladie. Les soins liés à l'accident sont pris en charge."
+    },
+    {
+      "id": "s5-14",
+      "theme": 5,
+      "numero": 14,
+      "principe": "Travail",
+      "situation": "Vous travaillez à temps plein depuis un an.",
+      "question": "Combien de congés payés avez-vous ?",
+      "qcm": {
+        "bonne": "Cinq semaines par an",
+        "mauvaises": [
+          "Une semaine par an",
+          "Aucun la première année",
+          "Deux mois par an"
+        ]
+      },
+      "explication": "Le salarié acquiert 2,5 jours ouvrables de congés payés par mois de travail, soit cinq semaines par an."
+    },
+    {
+      "id": "s5-15",
+      "theme": 5,
+      "numero": 15,
+      "principe": "Travail",
+      "situation": "Votre salaire horaire est inférieur au SMIC.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "C'est interdit : le salaire ne peut pas être inférieur au SMIC",
+        "mauvaises": [
+          "C'est autorisé pour les étrangers",
+          "C'est autorisé la première année",
+          "C'est autorisé si on est d'accord"
+        ]
+      },
+      "explication": "Le SMIC est le salaire minimum légal. Les conventions collectives peuvent prévoir des minimums plus élevés."
+    },
+    {
+      "id": "s5-16",
+      "theme": 5,
+      "numero": 16,
+      "principe": "Travail",
+      "situation": "Votre employeur ne vous a pas payé votre salaire depuis deux mois.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Lui réclamer par écrit, puis saisir le conseil de prud'hommes si besoin",
+        "mauvaises": [
+          "Prendre de l'argent dans la caisse",
+          "Casser du matériel",
+          "Rien, c'est le risque du métier"
+        ]
+      },
+      "explication": "Le conseil de prud'hommes juge les conflits entre salariés et employeurs. L'inspection du travail peut aussi renseigner."
+    },
+    {
+      "id": "s5-17",
+      "theme": 5,
+      "numero": 17,
+      "principe": "École",
+      "situation": "Votre enfant a 3 ans.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "L'inscrire à l'école maternelle : l'instruction est obligatoire dès 3 ans",
+        "mauvaises": [
+          "Attendre ses 6 ans",
+          "Payer une école privée",
+          "Rien, l'école n'est pas obligatoire"
+        ]
+      },
+      "explication": "Depuis 2019, l'instruction est obligatoire dès 3 ans. L'inscription à l'école publique se fait à la mairie, puis à l'école."
+    },
+    {
+      "id": "s5-18",
+      "theme": 5,
+      "numero": 18,
+      "principe": "École",
+      "situation": "Votre enfant est malade et ne peut pas aller à l'école.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Prévenir l'école et justifier l'absence",
+        "mauvaises": [
+          "Rien, l'école le verra bien",
+          "Envoyer un camarade à sa place",
+          "Attendre qu'on vous appelle"
+        ]
+      },
+      "explication": "Les parents doivent informer l'école de toute absence et en donner le motif. Les absences répétées sans motif sont signalées."
+    },
+    {
+      "id": "s5-19",
+      "theme": 5,
+      "numero": 19,
+      "principe": "École",
+      "situation": "Votre enfant vient d'arriver en France et ne parle pas encore français.",
+      "question": "Que propose l'école ?",
+      "qcm": {
+        "bonne": "Un accueil en classe ordinaire avec un soutien pour apprendre le français",
+        "mauvaises": [
+          "Rien, il doit attendre de parler français",
+          "Une école séparée réservée aux étrangers",
+          "Des cours uniquement dans sa langue"
+        ]
+      },
+      "explication": "Les élèves allophones sont scolarisés comme les autres et reçoivent un enseignement renforcé du français."
+    },
+    {
+      "id": "s5-20",
+      "theme": 5,
+      "numero": 20,
+      "principe": "École",
+      "situation": "Votre fils de 16 ans veut arrêter l'école et rester à la maison.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "De 16 à 18 ans, il doit être en formation, en apprentissage, en emploi ou en service civique",
+        "mauvaises": [
+          "Il peut ne rien faire jusqu'à 18 ans",
+          "Il doit partir à l'armée",
+          "Les parents doivent payer une amende"
+        ]
+      },
+      "explication": "Depuis 2020, l'obligation de formation s'applique jusqu'à 18 ans. Des structures accompagnent les jeunes sans solution."
+    },
+    {
+      "id": "s5-21",
+      "theme": 5,
+      "numero": 21,
+      "principe": "État civil",
+      "situation": "Votre bébé vient de naître.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Déclarer la naissance à la mairie dans les cinq jours",
+        "mauvaises": [
+          "Attendre ses 3 ans",
+          "Le déclarer seulement au consulat",
+          "Ce n'est pas obligatoire"
+        ]
+      },
+      "explication": "La déclaration de naissance est obligatoire. Elle est souvent faite directement depuis la maternité."
+    },
+    {
+      "id": "s5-22",
+      "theme": 5,
+      "numero": 22,
+      "principe": "Démarches",
+      "situation": "Vous déménagez dans une autre ville.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Signaler votre nouvelle adresse aux administrations (impôts, CAF, Assurance maladie…)",
+        "mauvaises": [
+          "Rien, le courrier suivra",
+          "Prévenir seulement vos amis",
+          "Changer de nom"
+        ]
+      },
+      "explication": "Un service en ligne de service-public.fr permet de déclarer son changement d'adresse à plusieurs organismes en une seule fois."
+    },
+    {
+      "id": "s5-23",
+      "theme": 5,
+      "numero": 23,
+      "principe": "Aides sociales",
+      "situation": "Vous avez un loyer élevé et de faibles revenus.",
+      "question": "Quel organisme peut vous verser une aide au logement ?",
+      "qcm": {
+        "bonne": "La CAF (caisse d'allocations familiales)",
+        "mauvaises": [
+          "La préfecture",
+          "La banque",
+          "Votre propriétaire"
+        ]
+      },
+      "explication": "Les aides au logement dépendent des revenus, du loyer et de la situation familiale. La demande se fait en ligne sur le site de la CAF."
+    },
+    {
+      "id": "s5-24",
+      "theme": 5,
+      "numero": 24,
+      "principe": "Environnement",
+      "situation": "Vous voulez vous débarrasser d'un vieux canapé.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "L'apporter à la déchèterie ou utiliser la collecte des encombrants de la mairie",
+        "mauvaises": [
+          "Le laisser dans la rue",
+          "Le brûler dans la cour",
+          "Le jeter dans la nature"
+        ]
+      },
+      "explication": "Les encombrants abandonnés sur la voie publique sont des dépôts sauvages, punis d'amendes."
+    },
+    {
+      "id": "s5-25",
+      "theme": 5,
+      "numero": 25,
+      "principe": "Démarches",
+      "situation": "Vous changez d'adresse et vous avez une voiture.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Mettre à jour l'adresse de votre carte grise dans le mois, sur le site de l'ANTS",
+        "mauvaises": [
+          "Rien, ce n'est pas nécessaire",
+          "Repasser le permis",
+          "Vendre la voiture"
+        ]
+      },
+      "explication": "Le changement d'adresse sur le certificat d'immatriculation est gratuit et se fait en ligne."
+    },
+    {
+      "id": "s5-26",
+      "theme": 5,
+      "numero": 26,
+      "principe": "Démarches",
+      "situation": "Vous avez un permis de conduire obtenu dans un pays hors de l'Union européenne et vous résidez en France.",
+      "question": "Que faut-il savoir ?",
+      "qcm": {
+        "bonne": "Selon le pays, il faut l'échanger contre un permis français, en principe dans l'année qui suit l'obtention du premier titre de séjour",
+        "mauvaises": [
+          "Il est valable en France toute la vie",
+          "Il faut toujours repasser le permis",
+          "Il suffit de le traduire soi-même"
+        ]
+      },
+      "explication": "La demande d'échange se fait en ligne sur le site de l'ANTS ; tous les pays ne permettent pas l'échange."
+    },
+    {
+      "id": "s5-27",
+      "theme": 5,
+      "numero": 27,
+      "principe": "Impôts",
+      "situation": "C'est la première année que vous devez déclarer vos revenus en France.",
+      "question": "Comment faire ?",
+      "qcm": {
+        "bonne": "Faire la déclaration, en ligne sur impots.gouv.fr ou sur papier pour une première déclaration",
+        "mauvaises": [
+          "Attendre que l'administration vous oublie",
+          "Demander à votre employeur de signer à votre place",
+          "Ne rien déclarer la première année"
+        ]
+      },
+      "explication": "La déclaration de revenus est annuelle et obligatoire. Les centres des finances publiques peuvent vous aider."
+    },
+    {
+      "id": "s5-28",
+      "theme": 5,
+      "numero": 28,
+      "principe": "Banque",
+      "situation": "Plusieurs banques refusent de vous ouvrir un compte.",
+      "question": "Quel droit avez-vous ?",
+      "qcm": {
+        "bonne": "Le droit au compte : la Banque de France peut désigner une banque obligée de vous ouvrir un compte",
+        "mauvaises": [
+          "Aucun, il faut vivre sans compte",
+          "Payer une banque étrangère",
+          "Utiliser le compte d'un voisin"
+        ]
+      },
+      "explication": "Toute personne résidant en France a droit à un compte bancaire avec des services de base."
+    },
+    {
+      "id": "s5-29",
+      "theme": 5,
+      "numero": 29,
+      "principe": "Vie en société",
+      "situation": "Vous organisez une fête chez vous un samedi soir.",
+      "question": "Que faut-il respecter ?",
+      "qcm": {
+        "bonne": "Le calme des voisins : le tapage nocturne est interdit",
+        "mauvaises": [
+          "Rien, c'est chez vous",
+          "Le bruit est autorisé jusqu'à 2 heures",
+          "Il suffit de prévenir un voisin"
+        ]
+      },
+      "explication": "Le tapage nocturne est puni d'une amende. Prévenir ses voisins est poli, mais n'autorise pas un bruit excessif."
+    },
+    {
+      "id": "s5-30",
+      "theme": 5,
+      "numero": 30,
+      "principe": "Intégration",
+      "situation": "Vous voulez améliorer votre français.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Suivre les cours prévus par le contrat d'intégration républicaine ou ceux d'associations, souvent gratuits",
+        "mauvaises": [
+          "Rien, c'est trop tard",
+          "Attendre de l'apprendre sans pratiquer",
+          "Payer un faux diplôme"
+        ]
+      },
+      "explication": "Le contrat d'intégration républicaine (CIR) peut inclure une formation linguistique gratuite. De nombreuses associations proposent aussi des cours."
+    },
+    {
+      "id": "s5-31",
+      "theme": 5,
+      "numero": 31,
+      "principe": "Prudence",
+      "situation": "Une annonce vous promet un emploi à condition de payer d'abord des frais d'inscription.",
+      "question": "Que faut-il faire ?",
+      "qcm": {
+        "bonne": "Ne pas payer : un employeur n'a pas à vous faire payer pour obtenir un emploi",
+        "mauvaises": [
+          "Payer vite pour ne pas perdre l'offre",
+          "Envoyer vos papiers d'identité",
+          "Emprunter de l'argent pour payer"
+        ]
+      },
+      "explication": "Ces annonces sont souvent des arnaques. On peut les signaler sur internet-signalement.gouv.fr."
+    },
+    {
+      "id": "s5-32",
+      "theme": 5,
+      "numero": 32,
+      "principe": "Santé",
+      "situation": "Vous avez besoin d'un médicament un dimanche.",
+      "question": "Où vous adresser ?",
+      "qcm": {
+        "bonne": "À la pharmacie de garde",
+        "mauvaises": [
+          "Au commissariat",
+          "À la mairie",
+          "Au supermarché"
+        ]
+      },
+      "explication": "Une pharmacie de garde est ouverte en dehors des horaires habituels ; son adresse est affichée sur les pharmacies ou disponible en ligne."
+    }
+  ]
+}

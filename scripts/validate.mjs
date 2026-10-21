@@ -3,6 +3,7 @@ import { loadJSON, questionSlugs } from "./lib.mjs";
 
 const data = loadJSON("data/questions.json");
 const listes = loadJSON("data/listes.json");
+const situations = loadJSON("data/situations.json");
 const config = loadJSON("site.config.json");
 const errors = [], warnings = [];
 const err = (id, msg) => errors.push(`[${id}] ${msg}`);
@@ -61,6 +62,20 @@ for (const [code, L] of Object.entries(listes)) {
     if (e.texte !== undefined && !String(e.texte).trim()) err(`liste ${code} ${e.theme}-${e.numero}`, "formulation vide");
   }
 }
+// Mises en situation (exercices du site)
+{
+  const seen = new Set(), n = {};
+  for (const x of situations.situations || []) {
+    const id = x.id || "?";
+    if (seen.has(id)) err(id, "id en double"); seen.add(id);
+    n[x.theme] = (n[x.theme] || 0) + 1;
+    if (!themeIds.has(x.theme)) err(id, "thème inconnu");
+    if (id !== `s${x.theme}-${n[x.theme]}` || x.numero !== n[x.theme]) err(id, `id/numéro attendu s${x.theme}-${n[x.theme]}`);
+    for (const f of ["principe", "situation", "question", "explication"]) if (!x[f] || !String(x[f]).trim()) err(id, `champ « ${f} » vide`);
+    const m = x.qcm || {};
+    if (!m.bonne || !Array.isArray(m.mauvaises) || m.mauvaises.length !== 3 || new Set([m.bonne, ...m.mauvaises].map((v) => String(v).trim().toLowerCase())).size !== 4) err(id, "QCM : 1 bonne et 3 mauvaises réponses différentes");
+  }
+}
 const slugs = questionSlugs(structuredClone(data.questions || []));
 if (new Set(slugs.values()).size !== slugs.size) err("slugs", "deux questions produisent la même adresse");
 
@@ -72,4 +87,4 @@ if (errors.length) {
   for (const e of errors) console.error("  " + e);
   process.exit(1);
 }
-console.log(`Données valides : ${data.themes.length} thèmes, ${data.questions.length} questions, listes : ${Object.entries(listes).map(([k, L]) => `${k} ${L.questions.length}`).join(", ")}.`);
+console.log(`Données valides : ${data.themes.length} thèmes, ${data.questions.length} questions, listes : ${Object.entries(listes).map(([k, L]) => `${k} ${L.questions.length}`).join(", ")}, ${situations.situations.length} mises en situation.`);
