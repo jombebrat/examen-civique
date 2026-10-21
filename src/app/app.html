@@ -64,12 +64,16 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .more{ display:inline-block; margin-top:8px; margin-left:8px; font-size:13px; color:var(--accent); }
 
 /* ---------- En-tête ---------- */
-.head{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:22px 0 16px; }
+.head{ padding:22px 0 14px; }
 .head .eyebrow{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--red); font-weight:700; }
 .head h1{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 7vw, 38px); line-height:1.02; letter-spacing:-.01em; margin:6px 0 0; text-wrap:balance; }
-.sync{ display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--muted); background:var(--surface);
-  border:1px solid var(--line); border-radius:999px; padding:5px 11px 5px 9px; white-space:nowrap; }
-.sync i{ width:8px; height:8px; border-radius:50%; background:var(--muted); }
+.meta{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; margin:10px 0 0; font-size:13.5px; color:var(--muted); line-height:1.4; }
+.meta .who{ color:var(--ink); font-weight:700; overflow-wrap:anywhere; }
+.meta .linkbtn{ font-size:13.5px; color:var(--accent); font-weight:700; padding:2px 0; }
+.meta .dot{ color:var(--muted); opacity:.6; }
+#account{ display:contents; }
+.sync{ display:inline-flex; align-items:center; gap:7px; }
+.sync i{ width:8px; height:8px; border-radius:50%; background:var(--muted); flex:none; }
 .sync[data-s="sync"] i{ background:var(--good); } .sync[data-s="saving"] i{ background:var(--accent); }
 .sync[data-s="error"] i{ background:var(--bad); }
 
@@ -114,8 +118,15 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 
 h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px 0 10px; }
 .scopes{ display:grid; gap:8px; }
-.listrow{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 12px; margin:-4px 0 14px; }
-.listsw{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.listrow{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 12px; margin:0 0 16px; }
+.listsw{ display:contents; }
+.listrow .helpsw{ margin-left:auto; }
+.lsel{ display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:var(--muted); }
+.lsel .box{ position:relative; display:inline-flex; }
+.lsel select{ -webkit-appearance:none; appearance:none; font:inherit; font-size:15px; font-weight:700; color:var(--accent); background:var(--accent-weak);
+  border:1.5px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius:999px; padding:7px 36px 7px 14px; cursor:pointer; max-width:100%; }
+.lsel select:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
+.lsel .box::after{ content:""; position:absolute; right:15px; top:50%; width:7px; height:7px; margin-top:-6px; border-right:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(45deg); pointer-events:none; }
 .entog{ display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:6px 12px; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer; }
 .entog b{ font-size:12px; letter-spacing:.04em; border-radius:5px; padding:1px 5px; background:var(--sunk); }
 .entog[aria-pressed="true"]{ border-color:var(--accent); color:var(--accent); background:var(--accent-weak); }
@@ -132,9 +143,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .entog[lang="ar"]{ font-size:14.5px; }
 .en p{ margin:3px 0 0; } .en .enq{ color:var(--muted); } .en .end{ color:var(--muted); }
 .listsw .lbl{ font-size:13.5px; color:var(--muted); margin-right:2px; }
-.lsw{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 13px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
-.lsw-help{ align-self:center; font-size:14px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; padding:6px 4px; }
-.lsw.on{ background:var(--accent); border-color:var(--accent); color:var(--on-accent, #fff); }
+.lsw-help{ align-self:center; font-size:13.5px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; padding:6px 0; }
 .scope{ position:relative; display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px;
   background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:11px 14px; cursor:pointer; }
 .scope input{ position:absolute; opacity:0; pointer-events:none; }
@@ -174,18 +183,6 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 /* ---------- Compte ---------- */
 #account:empty{ display:none; }
 #account{ margin:0 0 12px; }
-.acct.ask{ background:var(--accent-weak); border-color:color-mix(in srgb, var(--accent) 35%, transparent); }
-.acct{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px; display:grid; gap:10px; }
-.acct h3{ font-family:var(--display); font-size:18px; margin:0; }
-.acct p{ margin:0; font-size:15px; color:var(--muted); }
-.acct form{ display:flex; gap:8px; flex-wrap:wrap; }
-.acct input{ flex:1 1 200px; min-width:0; min-height:48px; padding:10px 12px; border-radius:12px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font:inherit; }
-.acct input:focus{ outline:2.5px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
-.acct .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-.acct .err{ color:var(--bad); font-weight:700; font-size:14.5px; }
-.acct .who{ font-weight:700; color:var(--ink); overflow-wrap:anywhere; }
-.acct.compact{ grid-template-columns:1fr auto; align-items:center; }
-@media (max-width:480px){ .acct.compact{ grid-template-columns:1fr; } .acct.compact .row{ justify-content:flex-start; } }
 
 /* ---------- Onglets ---------- */
 .tabs{ display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; background:var(--sunk); border:1px solid var(--line); border-radius:14px; padding:4px; margin:4px 0 14px; position:sticky; top:env(safe-area-inset-top, 0px); z-index:4; }
@@ -372,16 +369,13 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
   <!-- Accueil -->
   <section id="home">
     <header class="head">
-      <div>
-        <div class="eyebrow" id="listEyebrow">Examen civique</div>
-        <h1>Apprendre l’examen civique</h1>
-      </div>
-      <span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span>
+      <div class="eyebrow" id="listEyebrow">Examen civique</div>
+      <h1>Apprendre l’examen civique</h1>
+      <p class="meta"><span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span><span id="account"></span></p>
     </header>
 
-    <div class="listrow"><div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
-      <div class="helpsw"><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية"><b>AR</b>مساعدة بالعربية</button></div></div>
-    <div id="account"></div>
+    <div class="listrow"><div class="listsw" id="listsw"></div>
+      <div class="helpsw" role="group" aria-label="Aide dans une autre langue"><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية"><b>AR</b>بالعربية</button></div></div>
 
     <div class="tabs" role="tablist" aria-label="Sections">
       <button type="button" role="tab" id="tab-apprendre" aria-controls="pane-apprendre" data-act="tab" data-tab="apprendre">Apprendre</button>
@@ -594,7 +588,7 @@ const SY = { timer: null, writing: false, again: false };
 function setSync(s) {
   const el = $("#sync"); if (!el) return;
   el.dataset.s = s;
-  el.lastElementChild.textContent = { local: "Progression enregistrée sur cet appareil", sync: "Progression sauvegardée en ligne", saving: "Enregistrement…", error: "Sauvegarde en ligne interrompue" }[s];
+  el.lastElementChild.textContent = { local: "Progression enregistrée sur cet appareil", sync: "Sauvegardée", saving: "Enregistrement…", error: "Sauvegarde en ligne interrompue" }[s];
 }
 function touch() { P.u = Date.now(); saveLocal(); schedule(); }
 function schedule() {
@@ -629,10 +623,8 @@ function renderAccount() {
   if (!ID) { box.innerHTML = ""; return; }
   const e = ID.email();
   box.innerHTML = e
-    ? `<div class="acct compact"><div><p>Progression liée à</p><div class="who">${esc(e)}</div></div><div class="row"><button class="btn small" data-act="acct-change">Changer d’adresse</button></div></div>`
-    : Object.keys(P.cards).length
-      ? `<div class="acct compact ask"><div><h3>Gardez votre progression</h3><p>Indiquez votre email, sans mot de passe : rien de ce que vous avez appris n’est perdu, et vous le retrouvez sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`
-      : `<div class="acct compact ask"><div><h3>Déjà commencé ailleurs ?</h3><p>Indiquez votre email pour retrouver votre progression. Sinon, commencez simplement votre première leçon ci-dessous.</p></div><div class="row"><button class="btn small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
+    ? `<span class="dot" aria-hidden="true">·</span><span class="who">${esc(e)}</span><span class="dot" aria-hidden="true">·</span><button type="button" class="linkbtn" data-act="acct-change">Changer</button>`
+    : `<button type="button" class="linkbtn" data-act="acct-ask">${Object.keys(P.cards).length ? "Sauvegarder avec mon email" : "Déjà commencé ailleurs ?"}</button>`;
 }
 function initAccount() {
   ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
@@ -765,10 +757,16 @@ function renderHistory() {
     return `<div class="hrow"><span>${when}</span><span class="sc">${e.s} / ${e.n}</span><span class="pill ${ok ? "ok" : "ko"}">${ok ? "Réussi" : "Pas encore"}</span></div>`;
   }).join("");
 }
+function setList(code) {
+  if (!code || code === LIST || !LISTS.some(l => l.code === code)) return;
+  try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {}
+  location.href = location.pathname + "?liste=" + encodeURIComponent(code);
+}
+document.addEventListener("change", (e) => { if (e.target && e.target.id === "listsel") setList(e.target.value); });
 function renderLists() {
-  const ey = $("#listEyebrow"); if (ey) ey.textContent = `${LIST_INFO.nom} · ${LIST_INFO.count} questions officielles` + (LIST_INFO.count !== TOTAL ? ` (${TOTAL} différentes)` : "");
+  const ey = $("#listEyebrow"); if (ey) ey.textContent = `${LIST_INFO.count} questions officielles`;
   const box = $("#listsw"); if (!box) return;
-  box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("") + `<a class="lsw-help" href="${DATA.site}guide/qui-doit-passer-examen-civique/#quelle-liste">Je ne sais pas</a>`;
+  box.innerHTML = `<label class="lsel" for="listsel">Ma liste <span class="box"><select id="listsel">` + LISTS.map(l => `<option value="${l.code}"${l.code === LIST ? " selected" : ""}>${esc(l.nom)}</option>`).join("") + `</select></span></label><a class="lsw-help" href="${DATA.site}guide/qui-doit-passer-examen-civique/#quelle-liste">Quelle liste ?</a>`;
 }
 /* ---------- Parcours : des leçons courtes, comme une application de langue ----------
    Chaque thème est découpé en leçons d'environ 8 questions, dans l'ordre de la liste officielle.
@@ -1227,7 +1225,7 @@ document.addEventListener("click", e => {
     case "rep-ok": REP.reussi = true; REP.err = ""; renderReport(); break;
     case "rep-ko": REP.reussi = false; REP.err = ""; renderReport(); break;
     case "share-result": if (S && S.over) shareResult(S.score, S.score >= EXAM_PASS); break;
-    case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
+    case "set-list": setList(b.dataset.list); break;
     case "leave-no": S.leave = false; renderExam(); break;
     case "help": setHelp(HELP === b.dataset.l ? "" : b.dataset.l); break;
     case "helpbar": setHelp(HELP ? "" : HELP_PREF); break;

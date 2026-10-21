@@ -56,6 +56,11 @@ h1,h2,h3{ font-family:var(--display); line-height:1.12; text-wrap:balance; margi
 .hero h1{ font-weight:800; font-size:clamp(32px, 7.4vw, 50px); letter-spacing:-.015em; margin-top:10px; }
 .lead{ font-size:19px; color:var(--muted); margin:16px 0 22px; max-width:60ch; }
 .ctas{ display:flex; flex-wrap:wrap; gap:10px; }
+@media (max-width:560px){
+  .hero-text .ctas{ display:grid; grid-template-columns:1fr 1fr; }
+  .hero-text .ctas .btn.primary{ grid-column:1/-1; }
+  .hero-text .ctas .btn:not(.primary){ font-size:15.5px; padding:10px 10px; }
+}
 .facts{ display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin:30px 0 0; }
 .fact{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
 .fact b{ display:block; font-family:var(--display); font-weight:800; font-size:26px; line-height:1.05; font-variant-numeric:tabular-nums; }

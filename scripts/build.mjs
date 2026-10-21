@@ -244,7 +244,7 @@ function home() {
       <div class="eyebrow">Examen civique 2026 · listes officielles</div>
       <h1>${typo("Apprenez l’examen civique, 5 minutes par jour")}</h1>
       <p class="lead">${typo("L’appli 100 % gratuite et sans inscription pour apprendre les questions officielles pas à pas : des leçons courtes, un quiz après chaque leçon et des examens blancs. Pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle.")}</p>
-      <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}">Commencer à apprendre</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}">Mon plan en 7 jours</a></div>
+      <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}" data-ev="accueil-cta-apprendre">Commencer à apprendre</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}" data-ev="accueil-cta-plan">Mon plan en 7 jours</a><a class="btn big" href="${href("/examen-civique-pdf/")}" data-ev="accueil-cta-pdf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>PDF gratuits</a></div>
       <ul class="trust"><li>${CHECK}100 % gratuit</li><li>${CHECK}Sans inscription</li><li>${CHECK}Leçons de 5 minutes</li><li>${CHECK}Listes officielles 2026</li></ul>
       <p class="proof" data-chiffres hidden></p>
     </div>
