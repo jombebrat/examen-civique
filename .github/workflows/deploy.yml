@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      tout:
+        description: "Signaler toutes les pages aux moteurs IndexNow"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -76,4 +81,6 @@ jobs:
           name: pages-modifiees
           path: build-cache
       - name: Prévenir les moteurs de recherche (IndexNow)
+        env:
+          INDEXNOW_ALL: ${{ inputs.tout && '1' || '' }}
         run: node scripts/indexnow.mjs build-cache/changed-urls.json
