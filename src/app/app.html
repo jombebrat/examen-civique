@@ -82,6 +82,8 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .ring b{ position:relative; font-family:var(--display); font-size:19px; }
 .ring small{ font-size:11px; margin-left:1px; }
 .ready p{ margin:2px 0 0; font-size:14.5px; color:var(--muted); }
+.ready .weakth{ margin-top:6px; font-size:14px; }
+.ready .weakth .linkbtn{ font-size:14px; color:var(--ink); font-weight:700; }
 .ready .est{ font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:12px; margin-left:4px; }
 .streak{ display:grid; justify-items:center; gap:0; color:var(--muted); font-size:12px; text-align:center; }
 .streak svg{ color:var(--line); } .streak.on svg{ color:#F08A24; }
@@ -700,8 +702,15 @@ function renderSummary() {
     </div>
     <div class="ready">
       <div class="ring" style="--v:${rd.v}" role="img" aria-label="Prêt pour l’examen : ${rd.v} %"><b>${rd.v}<small>%</small></b></div>
-      <div><div class="lbl">Prêt pour l’examen <span class="est">estimation</span></div><p>${readyMsg(rd)}</p></div>
+      <div><div class="lbl">Prêt pour l’examen <span class="est">estimation</span></div><p>${readyMsg(rd)}</p>${weakTheme()}</div>
     </div>`;
+}
+/* Le thème le moins maîtrisé (une fois que l'on a commencé) : un bouton pour l'ouvrir dans « S'entraîner » */
+function weakTheme() {
+  if (!Object.keys(P.cards).length) return "";
+  const th = THEMES.filter(t => t.count).map(t => { const s = stats(CARDS.filter(c => c.t === t.t)); return { t, p: s.m / s.total }; }).sort((a, b) => a.p - b.p);
+  const w = th[0]; if (!w || w.p >= 0.9) return "";
+  return `<p class="weakth">À travailler en priorité : <button type="button" class="linkbtn" data-act="weak-theme" data-scope="${w.t.t}">${esc(plain(w.t.name))}</button> (${Math.round(100 * w.p)} % maîtrisé)</p>`;
 }
 let OPEN_SCOPE = /^([1-5]|sit)$/.test(PARAMS.get("theme") || "") ? PARAMS.get("theme") : null;
 const GO_SVG = `<svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>`;
@@ -1228,6 +1237,11 @@ document.addEventListener("click", e => {
     case "lpick": if (S && S.mode === "lesson") lessonPick(i); break;
     case "lcont": if (S && S.mode === "lesson") { lessonContinue(); window.scrollTo(0, 0); } break;
     case "tab": showTab(b.dataset.tab); window.scrollTo(0, 0); break;
+    case "weak-theme": {
+      OPEN_SCOPE = b.dataset.scope; showTab("entrainement"); renderScopes();
+      const el = document.getElementById("sc-" + OPEN_SCOPE); if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
+      break;
+    }
     case "scope-open": {
       const v = b.dataset.scope; OPEN_SCOPE = String(OPEN_SCOPE) === v ? null : v; renderScopes();
       const el = document.getElementById("sc-" + v); if (el && OPEN_SCOPE) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
