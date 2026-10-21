@@ -321,6 +321,10 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .verdict{ font-weight:700; font-size:17px; }
 .verdict.ok{ color:var(--good); } .verdict.ko{ color:var(--bad); }
 .next{ margin-top:14px; width:100%; }
+.next.auto{ position:relative; overflow:hidden; }
+.next.auto span{ position:relative; z-index:1; }
+.next.auto::after{ content:""; position:absolute; inset:0; background:rgba(255,255,255,.25); transform-origin:left center; transform:scaleX(0); animation:coq-fill var(--d, 1900ms) linear forwards; }
+@keyframes coq-fill{ to{ transform:scaleX(1); } }
 
 /* ---------- Examen ---------- */
 .clock{ font-family:var(--display); font-weight:700; font-variant-numeric:tabular-nums; font-size:17px; padding:5px 11px; border-radius:999px; background:var(--surface); border:1px solid var(--line); }
@@ -875,7 +879,7 @@ function renderLesson() {
         }).join("")}</div>
         ${answered ? `<div class="feedback ${ok ? "ok" : "ko"}"><div class="verdict ${ok ? "ok" : "ko"}">${ok ? "Bonne réponse !" : "Pas tout à fait"}</div>${ok ? "" : `<div class="a">${c.a}</div>`}${c.d ? `<div class="d">${c.d}</div>` : ""}${enBlock(c, true)}${ok ? "" : `<div class="d">Cette question reviendra à la fin de la leçon.</div>`}</div>` : ""}
       </article>
-      ${answered ? `<button class="btn primary next" data-act="lcont">Continuer</button><div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
+      ${answered ? `${nextBtn("lcont", "Continuer", ok)}<div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
     return;
   }
   // Fin de leçon
@@ -892,16 +896,25 @@ function renderLesson() {
     ${nudge}
     <div class="row-btns">${nx ? `<button class="btn primary" data-act="lesson" data-l="${nx.key}">Leçon suivante</button>` : `<button class="btn primary" data-act="start-exam">Faire un examen blanc</button>`}<button class="btn" data-act="home">Mon parcours</button></div></div>`;
 }
+/* Après une bonne réponse, on passe tout seul à la suite (un peu plus tard si l'aide EN/AR est affichée).
+   Après une erreur, on laisse le temps de lire la bonne réponse : « Continuer » reste à toucher. */
+let AUTO = null;
+const autoDelay = () => (HELP ? 3800 : 1900);
+function autoNext(fn) { clearTimeout(AUTO); AUTO = setTimeout(() => { AUTO = null; fn(); }, autoDelay()); }
+function stopAuto() { clearTimeout(AUTO); AUTO = null; }
+const nextBtn = (act, label, auto) => `<button class="btn primary next${auto ? " auto" : ""}" data-act="${act}"${auto ? ` style="--d:${autoDelay()}ms"` : ""}><span>${label}</span></button>`;
 function lessonPick(i) {
   if (S.pick !== null) return;
   S.pick = i;
-  const k = S.cur, ok = S.opts[i].ok;
+  const k = S.cur, ok = S.opts[i].ok, at = S.qi;
   if (!(k in S.first)) S.first[k] = ok;
   grade(k, ok);
   if (!ok) S.tries[k] = (S.tries[k] || 0) + 1;
   renderLesson();
+  if (ok) autoNext(() => { if (S && S.mode === "lesson" && S.phase === "quiz" && S.qi === at && S.pick !== null) { lessonContinue(); window.scrollTo(0, 0); } });
 }
 function lessonContinue() {
+  stopAuto();
   const k = S.cur, wrong = !S.opts[S.pick].ok;
   if (wrong && S.tries[k] <= 2) S.queue.push(k);
   S.qi++;
@@ -1023,7 +1036,7 @@ function show(view) {
   window.scrollTo(0, 0);
 }
 function goHome() {
-  clearInterval(tick); tick = null; S = null;
+  stopAuto(); clearInterval(tick); tick = null; S = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
   show("home"); refreshHome();
 }
@@ -1103,16 +1116,18 @@ function renderQuiz() {
       }).join("")}</div>
       ${answered ? `<div class="ans"><div class="verdict ${ok ? "ok" : "ko"}">${ok ? "Bonne réponse" : "Ce n’est pas ça"}</div><div class="a" style="margin-top:6px">${c.a}</div>${detail(c)}${enBlock(c, true)}</div>` : ""}
     </article>
-    ${answered ? `<button class="btn primary next" data-act="qnext">${S.i + 1 < S.q.length ? "Question suivante" : "Voir le résultat"}</button><div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
+    ${answered ? `${nextBtn("qnext", S.i + 1 < S.q.length ? "Question suivante" : "Voir le résultat", ok)}<div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
 }
 function quizChoose(i) {
   if (S.pick !== null) return;
   S.pick = i;
-  const ok = S.opts[S.i][i].ok;
+  const ok = S.opts[S.i][i].ok, at = S.i;
   if (ok) S.score++;
   grade(S.q[S.i], ok);
   renderQuiz();
+  if (ok) autoNext(() => { if (S && S.mode === "quiz" && S.i === at && S.pick !== null) { quizNext(); window.scrollTo(0, 0); } });
 }
+function quizNext() { stopAuto(); S.i++; S.pick = null; renderQuiz(); }
 
 /* Examen blanc */
 function startExam() {
@@ -1223,7 +1238,7 @@ document.addEventListener("click", e => {
     case "know": cardAnswer(true); break;
     case "again": cardAnswer(false); break;
     case "choose": quizChoose(i); break;
-    case "qnext": S.i++; S.pick = null; renderQuiz(); break;
+    case "qnext": quizNext(); window.scrollTo(0, 0); break;
     case "epick": S.pick[S.i] = i; S.finishAsk = false; renderExam(); break;
     case "eprev": S.i = Math.max(0, S.i - 1); renderExam(); break;
     case "enext": S.i = Math.min(EXAM_N - 1, S.i + 1); renderExam(); break;
@@ -1257,7 +1272,7 @@ document.addEventListener("keydown", e => {
     else if (S.open && e.key === "2") cardAnswer(true);
   } else if (S.mode === "quiz" && S.i < S.q.length) {
     if (S.pick === null && /^[1-4]$/.test(e.key)) quizChoose(+e.key - 1);
-    else if (S.pick !== null && e.key === "Enter" && tag !== "button") { e.preventDefault(); S.i++; S.pick = null; renderQuiz(); }
+    else if (S.pick !== null && e.key === "Enter" && tag !== "button") { e.preventDefault(); quizNext(); }
   } else if (S.mode === "exam" && !S.over) {
     if (/^[1-4]$/.test(e.key)) { S.pick[S.i] = +e.key - 1; renderExam(); }
     else if (e.key === "ArrowRight") { S.i = Math.min(EXAM_N - 1, S.i + 1); renderExam(); }
