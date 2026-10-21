@@ -125,7 +125,7 @@ node scripts/build.mjs && node tools/entretien/pdf.mjs && node scripts/build.mjs
 
 ## Données ouvertes
 
-Le build écrit `dist/data/opendata/` (questions des trois listes mises en correspondance, mises en situation, en CSV et JSON), publiées sur data.gouv.fr comme ressources distantes : voir `datagouv/README.md`.
+Le build écrit `dist/data/opendata/` (questions des trois listes mises en correspondance, mises en situation, en CSV et JSON), publiées sur data.gouv.fr comme ressources distantes (organisation https://www.data.gouv.fr/organizations/coq-civique) : voir `datagouv/README.md`.
 
 ## Sources
 

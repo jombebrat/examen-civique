@@ -12,6 +12,15 @@ Fajlovi su na sajtu i ažuriraju se sami pri svakoj objavi. Na data.gouv.fr ih d
 
 Slike su u ovom folderu: `logo-coq-civique.png` (logo organizacije), `capture-application.png` (slika za réutilisation).
 
+## Stanje (21. oktobar 2026, uveče)
+
+- Organizacija: https://www.data.gouv.fr/organizations/coq-civique (logo i sajt u redu)
+- Skup podataka 1, objavljen, oba linka proverena (status 200): https://www.data.gouv.fr/datasets/examen-civique-questions-des-trois-listes-officielles-mises-en-correspondance-avec-propositions-de-reponses
+  - Sitnica: oznaka „livre-de-citoyen“ treba da glasi „livret-du-citoyen“.
+- Skup podataka 2 (mises en situation): nije javno vidljiv.
+- Réutilisation: nije javno vidljiva.
+- Na sajtu: odeljak „Données ouvertes“ na stranici À propos (#donnees-ouvertes).
+
 ## Koraci (oko 20 minuta)
 
 1. **Nalog.** Na https://www.data.gouv.fr klikni „Se connecter“ i napravi nalog (može preko ProConnect ili emailom).
