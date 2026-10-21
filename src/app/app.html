@@ -193,6 +193,66 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .acct.compact{ grid-template-columns:1fr auto; align-items:center; }
 @media (max-width:480px){ .acct.compact{ grid-template-columns:1fr; } .acct.compact .row{ justify-content:flex-start; } }
 
+/* ---------- Parcours : leçon du jour et chemin des leçons ---------- */
+.today{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px 14px; align-items:center; }
+.today .coq{ width:68px; height:68px; border-radius:20px; background:#fff; object-fit:cover; }
+.today .nx .lbl{ text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; font-weight:700; color:var(--red); }
+.today .nx b{ display:block; font-family:var(--display); font-size:21px; line-height:1.15; margin-top:2px; }
+.today .nx span{ font-size:14px; color:var(--muted); }
+.today .go{ grid-column:1/-1; width:100%; font-size:17px; min-height:54px; box-shadow:0 4px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+.today .go:active{ transform:translateY(2px); box-shadow:0 2px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+.goal{ grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 14px; align-items:center; border-top:1px solid var(--line); padding-top:12px; }
+.goal .gl{ font-size:13.5px; color:var(--muted); } .goal .gl b{ color:var(--ink); }
+.gbar{ height:10px; background:var(--sunk); border-radius:99px; overflow:hidden; }
+.gbar span{ display:block; height:100%; background:#F08A24; border-radius:99px; transition:width .4s; }
+.goal .streak{ grid-row:span 2; }
+.unit{ margin-top:10px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); }
+.unit > summary{ list-style:none; cursor:pointer; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; padding:14px 16px; }
+.unit > summary::-webkit-details-marker{ display:none; }
+.unit .un{ font-family:var(--display); font-weight:800; font-size:22px; color:var(--c); }
+.unit .ut{ font-weight:700; line-height:1.25; }
+.unit .us{ display:block; font-size:13px; color:var(--muted); margin-top:3px; }
+.unit .mini{ display:flex; height:5px; border-radius:99px; overflow:hidden; background:var(--sunk); margin-top:6px; }
+.unit .mini span{ height:100%; background:var(--c); }
+.unit .chev{ color:var(--muted); transition:transform .2s; } .unit[open] .chev{ transform:rotate(90deg); }
+.nodes{ display:flex; flex-direction:column; align-items:center; gap:12px; padding:4px 16px 22px; }
+.node{ --x:0px; transform:translateX(var(--x)); display:grid; justify-items:center; gap:5px; background:none; border:0; padding:0; cursor:pointer; color:var(--ink); font:inherit; }
+.node .dot{ width:62px; height:62px; border-radius:50%; display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:22px; background:var(--sunk); color:var(--muted); box-shadow:0 5px 0 var(--line); transition:transform .1s; }
+.node:active .dot{ transform:translateY(3px); box-shadow:0 2px 0 var(--line); }
+.node.prac .dot{ border-radius:20px; }
+.node.done .dot{ background:var(--c); color:var(--surface); box-shadow:0 5px 0 color-mix(in srgb, var(--c) 55%, #000); }
+.node.review .dot{ background:#F08A24; color:#fff; box-shadow:0 5px 0 #B9600F; }
+.node.next .dot{ width:72px; height:72px; background:var(--accent); color:var(--on-accent); box-shadow:0 5px 0 color-mix(in srgb, var(--accent) 55%, #000), 0 0 0 6px var(--accent-weak); animation:coq-bob 1.8s ease-in-out infinite; }
+@keyframes coq-bob{ 50%{ transform:translateY(-4px); } }
+.node .nl{ font-size:12.5px; font-weight:700; color:var(--muted); max-width:150px; text-align:center; line-height:1.25; }
+.node.next .nl{ color:var(--accent); }
+.node .dot svg{ width:26px; height:26px; }
+.trophy{ display:grid; justify-items:center; gap:6px; margin:18px auto 0; text-align:center; }
+.trophy .dot{ background:#FFE7A3; color:#8A6516; box-shadow:0 5px 0 #D9B24C; }
+.sub{ margin:-4px 0 10px; font-size:14px; color:var(--muted); }
+/* Leçon : apprendre, puis quiz */
+.step{ font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-weak); border-radius:999px; padding:3px 10px; }
+.step.quiz{ color:#B9600F; background:#FFF0DD; }
+.learn .ans{ border-top:0; padding-top:0; margin-top:14px; }
+.learn .ans .lbl{ text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; font-weight:700; }
+.feedback{ margin-top:14px; border-radius:12px; padding:12px 14px; }
+.feedback.ok{ background:var(--good-weak); } .feedback.ko{ background:var(--bad-weak); }
+.feedback .verdict{ display:flex; align-items:center; gap:8px; }
+.feedback .a{ font-weight:700; margin-top:4px; }
+.feedback .d{ margin-top:6px; color:var(--muted); font-size:15px; }
+.intro{ text-align:center; padding:28px 18px; }
+.intro img, .lesson-done img{ display:block; margin:0 auto 10px; border-radius:24px; background:#fff; }
+.intro h2, .lesson-done h2{ font-family:var(--display); font-size:26px; margin:0 0 6px; }
+.intro p{ color:var(--muted); margin:0 auto; max-width:40ch; }
+.lesson-done{ text-align:center; padding:26px 18px; }
+.lesson-done .stats{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:14px 0 4px; }
+.lesson-done .stat{ min-width:110px; border:1.5px solid var(--line); border-radius:14px; padding:10px 12px; }
+.lesson-done .stat b{ display:block; font-family:var(--display); font-size:24px; }
+.lesson-done .stat span{ font-size:12.5px; color:var(--muted); }
+.lesson-done .gbar{ max-width:320px; margin:12px auto 4px; }
+.save-nudge{ margin-top:16px; text-align:left; background:var(--accent-weak); border-radius:14px; padding:14px 16px; display:grid; gap:10px; }
+.save-nudge p{ margin:0; font-size:15px; }
+
 /* ---------- Barre d'étude ---------- */
 .studybar{ position:sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:var(--paper); display:flex; align-items:center; gap:10px; padding:12px 0; }
 .back{ display:inline-flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:7px 13px 7px 9px; cursor:pointer; font-size:14px; font-weight:700; }
@@ -291,24 +351,32 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
   <section id="home">
     <header class="head">
       <div>
-        <div class="eyebrow" id="listEyebrow">Examen civique · QCM</div>
-        <h1>Réviser l’examen civique</h1>
+        <div class="eyebrow" id="listEyebrow">Examen civique</div>
+        <h1>Apprendre l’examen civique</h1>
       </div>
       <span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span>
     </header>
 
     <div class="listrow"><div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
       <button type="button" class="entog" data-act="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button></div>
-    <div class="panel summary" id="summary"></div>
+    <div class="panel today" id="today"></div>
+
+    <h2 class="sec">Mon parcours</h2>
+    <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
+    <div id="path"></div>
+
     <div class="panel qdj" id="qdj"></div>
     <div id="account"></div>
 
-    <h2 class="sec">Que voulez-vous réviser ?</h2>
+    <h2 class="sec">Ma progression</h2>
+    <div class="panel summary" id="summary"></div>
+
+    <h2 class="sec">Entraînement libre</h2>
+    <p class="sub">Choisissez un thème, puis une façon de réviser.</p>
     <div class="scopes" id="scopes" role="radiogroup" aria-label="Thème à réviser"></div>
 
-    <h2 class="sec">Comment ?</h2>
-    <div class="modes">
-      <button class="mode primary" data-act="start-cards">
+    <div class="modes" style="margin-top:10px">
+      <button class="mode" data-act="start-cards">
         <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg></span>
         <span><span class="t">Cartes</span><br><span class="s">Lisez la question, retrouvez la réponse</span></span>
         <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -419,7 +487,7 @@ function enBlock(c, full) {
 }
 function rerender() {
   if (!S) { if (!$("#home").hidden) renderQdj(); return; }
-  if (S.mode === "cards") renderCards(); else if (S.mode === "quiz") renderQuiz(); else if (S.mode === "exam") renderExam();
+  if (S.mode === "cards") renderCards(); else if (S.mode === "quiz") renderQuiz(); else if (S.mode === "exam") renderExam(); else if (S.mode === "lesson") renderLesson();
 }
 
 /* ---------- Progression : modèle et fusion ---------- */
@@ -515,7 +583,7 @@ function renderAccount() {
   const e = ID.email();
   box.innerHTML = e
     ? `<div class="acct compact"><div><p>Progression liée à</p><div class="who">${esc(e)}</div></div><div class="row"><button class="btn small" data-act="acct-change">Changer d’adresse</button></div></div>`
-    : `<div class="acct compact"><div><h3>Gardez votre progression</h3><p>Indiquez votre email pour la retrouver sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
+    : `<div class="acct compact"><div><h3>Gardez votre progression</h3><p>Indiquez votre email, sans mot de passe : rien de ce que vous avez appris n’est perdu, et vous le retrouvez sur tous vos appareils.</p></div><div class="row"><button class="btn primary small" data-act="acct-ask">Indiquer mon email</button></div></div>`;
 }
 function initAccount() {
   ID = window.COQ_ID && window.COQ_ID.enabled ? window.COQ_ID : null;
@@ -528,7 +596,7 @@ function initAccount() {
   if (!ID) return;
   renderAccount();
   pull();
-  ID.onChange(() => { renderAccount(); pull(); });
+  ID.onChange(() => { renderAccount(); pull(); if (S && S.mode === "lesson" && S.phase === "done") renderLesson(); });
 }
 
 /* ---------- Accueil ---------- */
@@ -562,14 +630,14 @@ function readiness() {
   return { v: Math.round(100 * (0.5 * mastery + 0.5 * avg)), exams: ex.length, avg };
 }
 function readyMsg(r) {
-  if (!r.exams) return r.v < 40 ? "Commencez par un thème par jour, puis faites un examen blanc." : "Bien avancé ! Faites un examen blanc pour mesurer votre niveau.";
+  if (!r.exams) return r.v < 40 ? "Suivez votre parcours, une leçon par jour, puis faites un examen blanc." : "Bien avancé ! Faites un examen blanc pour mesurer votre niveau.";
   if (r.avg >= 0.85 && r.v >= 80) return "Vous êtes prêt : continuez quelques examens blancs pour garder le rythme.";
   if (r.v >= 65) return "Presque prêt : retravaillez vos erreurs et visez 36 sur 40.";
-  return "Continuez : un thème par jour et vos questions « À revoir ».";
+  return "Continuez : une leçon par jour et vos questions « À revoir ».";
 }
 function renderSummary() {
   const st = stats(CARDS), now = Date.now();
-  const rd = readiness(), sk = streak();
+  const rd = readiness();
   const due = CARDS.filter(c => isDue(P.cards[c.k], now)).length;
   const pc = x => (100 * x / TOTAL).toFixed(2) + "%";
   $("#summary").innerHTML = `
@@ -586,7 +654,6 @@ function renderSummary() {
     <div class="ready">
       <div class="ring" style="--v:${rd.v}" role="img" aria-label="Prêt pour l’examen : ${rd.v} %"><b>${rd.v}<small>%</small></b></div>
       <div><div class="lbl">Prêt pour l’examen <span class="est">estimation</span></div><p>${readyMsg(rd)}</p></div>
-      <div class="streak${sk ? " on" : ""}" title="Jours de révision consécutifs"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 3.5-1.5 5-1.5 7.5 0 1.4 1 2.5 2.3 2.5 1.6 0 2.4-1.3 2.2-3.2C17.6 10.6 19 13 19 15.5 19 19.1 15.9 22 12 22s-7-2.9-7-6.5C5 10 10.5 7.5 12 2z"/></svg><b>${sk}</b><span>jour${sk > 1 ? "s" : ""} de suite</span></div>
     </div>`;
 }
 function renderScopes() {
@@ -625,6 +692,159 @@ function renderLists() {
   const box = $("#listsw"); if (!box) return;
   box.innerHTML = `<span class="lbl">Ma liste :</span>` + LISTS.map(l => `<button type="button" role="radio" aria-checked="${l.code === LIST}" class="lsw${l.code === LIST ? " on" : ""}" data-act="set-list" data-list="${l.code}">${esc(l.nom)}</button>`).join("");
 }
+/* ---------- Parcours : des leçons courtes, comme une application de langue ----------
+   Chaque thème est découpé en leçons d'environ 8 questions, dans l'ordre de la liste officielle.
+   Une leçon : on lit les réponses (« Apprendre »), puis un quiz où chaque erreur revient à la fin.
+   L'état d'une leçon se déduit de la progression des questions : rien de plus à enregistrer ni à synchroniser. */
+const LESSON_SIZE = 8, DAILY_GOAL = 10;
+const chunkSizes = n => { if (!n) return []; const k = Math.ceil(n / LESSON_SIZE), base = Math.floor(n / k), extra = n % k; return Array.from({ length: k }, (_, i) => base + (i < extra ? 1 : 0)); };
+function splitLessons(list, prefix, t, kind) {
+  const out = []; let at = 0;
+  chunkSizes(list.length).forEach((sz, i) => { out.push({ key: `${prefix}${t}-${i + 1}`, t, i: i + 1, kind, cards: list.slice(at, at + sz).map(c => c.k) }); at += sz; });
+  return out;
+}
+const UNITS = THEMES.map(th => ({
+  t: th.t, name: th.name,
+  lessons: [...splitLessons(CARDS.filter(c => c.t === th.t).sort((a, b) => a.n - b.n), "", th.t, "know"),
+    ...splitLessons(SITS.filter(c => c.t === th.t).sort((a, b) => a.n - b.n), "s", th.t, "sit")],
+}));
+const LESSONS = UNITS.flatMap(u => u.lessons);
+const LESSON = Object.fromEntries(LESSONS.map(l => [l.key, l]));
+const lessonTitle = l => (l.kind === "sit" ? `Mises en situation ${l.i}` : `Leçon ${l.i}`);
+// Terminée : toutes les questions ont été travaillées ; « à revoir » si la dernière réponse à l'une d'elles était fausse
+function lessonState(l) {
+  const rs = l.cards.map(k => P.cards[k]);
+  const seen = rs.filter(r => r && r.r + r.w > 0).length;
+  if (seen === rs.length) return rs.some(r => r.b === 0) ? "review" : "done";
+  return seen ? "started" : "new";
+}
+function nextLesson() {
+  return LESSONS.find(l => { const s = lessonState(l); return s === "new" || s === "started"; }) || LESSONS.find(l => lessonState(l) === "review") || null;
+}
+const FLAME = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 3.5-1.5 5-1.5 7.5 0 1.4 1 2.5 2.3 2.5 1.6 0 2.4-1.3 2.2-3.2C17.6 10.6 19 13 19 15.5 19 19.1 15.9 22 12 22s-7-2.9-7-6.5C5 10 10.5 7.5 12 2z"/></svg>`;
+const streakHtml = sk => `<div class="streak${sk ? " on" : ""}" title="Jours d’apprentissage consécutifs">${FLAME}<b>${sk}</b><span>jour${sk > 1 ? "s" : ""} de suite</span></div>`;
+const todayCount = () => (P.days || {})[dayKey()] || 0;
+const goalBar = () => { const n = todayCount(); return `<div class="gbar" role="img" aria-label="Objectif du jour : ${Math.min(n, DAILY_GOAL)} sur ${DAILY_GOAL}"><span style="width:${Math.min(100, 100 * n / DAILY_GOAL)}%"></span></div>`; };
+function renderToday() {
+  const box = $("#today"); if (!box) return;
+  const nx = nextLesson(), n = todayCount();
+  const goal = `<div class="goal"><div><div class="gl">Objectif du jour : <b>${Math.min(n, DAILY_GOAL)} / ${DAILY_GOAL}</b> questions${n >= DAILY_GOAL ? " · atteint, bravo !" : ""}</div>${goalBar()}</div>${streakHtml(streak())}</div>`;
+  const coq = DATA.mascot ? `<img class="coq" src="${DATA.mascot}" width="68" height="68" alt="">` : "";
+  if (!nx) { box.innerHTML = `${coq}<div class="nx"><div class="lbl">Parcours terminé</div><b>Bravo, vous avez vu toutes les leçons !</b><span>Place aux examens blancs pour vous mettre en conditions réelles.</span></div><button class="btn primary go" data-act="start-exam">Faire un examen blanc</button>${goal}`; return; }
+  const st = lessonState(nx), first = !Object.keys(P.cards).length;
+  box.innerHTML = `${coq}<div class="nx"><div class="lbl">${first ? "Votre première leçon" : st === "review" ? "À revoir" : "Leçon suivante"}</div>
+    <b>Thème ${nx.t} · ${lessonTitle(nx)}</b><span>${plain(THEMES[nx.t - 1].name)} · ${nx.cards.length} questions · environ 5 min</span></div>
+    <button class="btn primary go" data-act="lesson" data-l="${nx.key}">${first ? "Commencer à apprendre" : st === "started" ? "Continuer" : "Commencer la leçon"}</button>${goal}`;
+}
+const OFFS = [0, 44, 66, 44, 0, -44, -66, -44];
+const ICON_OK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
+const ICON_AGAIN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></svg>`;
+const ICON_SIT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v10H9l-5 4z"/><path d="M9 9h6M9 12h4"/></svg>`;
+const ICON_CUP = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>`;
+function renderPath() {
+  const box = $("#path"); if (!box) return;
+  const nx = nextLesson(), openT = nx ? nx.t : 0;
+  const labels = { done: "terminée", review: "à revoir", started: "commencée", new: "à faire" };
+  box.innerHTML = UNITS.map(u => {
+    const st = u.lessons.map(lessonState), done = st.filter(s => s === "done" || s === "review").length;
+    return `<details class="unit" style="--c:${tcol(u.t)}"${u.t === openT ? " open" : ""}>
+      <summary><span class="un">0${u.t}</span><span><span class="ut">${u.name}</span><span class="us">${done} / ${u.lessons.length} leçons terminées</span><span class="mini"><span style="width:${u.lessons.length ? 100 * done / u.lessons.length : 0}%"></span></span></span>
+      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></summary>
+      <div class="nodes">${u.lessons.map((l, j) => {
+        const s = st[j], isNext = nx && l.key === nx.key;
+        const cls = ["node", l.kind === "sit" ? "prac" : "", isNext ? "next" : s === "done" ? "done" : s === "review" ? "review" : ""].filter(Boolean).join(" ");
+        const inner = s === "done" && !isNext ? ICON_OK : s === "review" && !isNext ? ICON_AGAIN : l.kind === "sit" ? ICON_SIT : l.i;
+        return `<button type="button" class="${cls}" style="--x:${OFFS[j % OFFS.length]}px" data-act="lesson" data-l="${l.key}" aria-label="${esc(lessonTitle(l))}, ${isNext ? "leçon suivante" : labels[s]}"><span class="dot">${inner}</span><span class="nl">${isNext ? "Commencer" : esc(l.kind === "sit" ? `Situations ${l.i}` : `Leçon ${l.i}`)}</span></button>`;
+      }).join("")}</div></details>`;
+  }).join("") + `<div class="trophy"><button type="button" class="node" data-act="start-exam" aria-label="Examen blanc"><span class="dot">${ICON_CUP}</span><span class="nl">Examen blanc<br>40 questions · 45 min</span></button></div>`;
+}
+
+/* Session « leçon » */
+function startLesson(key) {
+  const l = LESSON[key]; if (!l) return;
+  enBar(true);
+  const learn = l.kind === "know";
+  S = { mode: "lesson", l, phase: learn ? "learn" : "quiz", li: 0, queue: shuffle([...l.cards]), qi: 0, opts: null, pick: null, first: {}, tries: {}, done: 0, cur: null };
+  if (!learn) prepQuestion();
+  show("study"); renderLesson();
+}
+function prepQuestion() { S.cur = S.queue[S.qi]; S.opts = optionsFor(BY_K[S.cur]); S.pick = null; }
+function lessonProgress() {
+  const learnN = S.l.kind === "know" ? S.l.cards.length : 0;
+  const total = learnN + S.queue.length;
+  const done = (S.phase === "learn" ? S.li : learnN) + (S.phase === "quiz" ? S.qi + (S.pick !== null ? 1 : 0) : S.phase === "done" ? S.queue.length : 0);
+  return Math.min(1, done / total);
+}
+function renderLesson() {
+  const l = S.l, where = `Thème ${l.t} · ${lessonTitle(l)}`;
+  if (S.phase === "learn") {
+    const c = BY_K[l.cards[S.li]]; S.cur = c.k;
+    setBar(where, `Apprendre ${S.li + 1} / ${l.cards.length}`, lessonProgress());
+    const last = S.li === l.cards.length - 1;
+    $("#stage").innerHTML = `
+      <article class="card learn" style="--c:${tcol(c.t)}">
+        <div class="meta"><span class="step">Apprendre</span>${speakBtn()}</div>
+        <p class="q">${c.q}</p>
+        <div class="ans"><div class="lbl">Réponse</div><div class="a">${c.a}</div>${detail(c)}${enBlock(c, true)}</div>
+      </article>
+      <button class="btn primary next" data-act="lnext">${last ? "J’ai lu, place au quiz" : "Suivant"}</button>
+      <div class="keys"><kbd>Entrée</kbd> continuer</div>`;
+    return;
+  }
+  if (S.phase === "quizintro") {
+    setBar(where, "Quiz", lessonProgress());
+    $("#stage").innerHTML = `<div class="panel intro">${DATA.mascot ? `<img src="${DATA.mascot}" width="110" height="110" alt="">` : ""}
+      <h2>À vous de jouer !</h2><p>Un petit quiz sur les ${l.cards.length} questions que vous venez de lire. Une erreur ? La question reviendra à la fin.</p>
+      <div class="row-btns"><button class="btn primary" data-act="lquiz">Commencer le quiz</button></div></div>`;
+    return;
+  }
+  if (S.phase === "quiz") {
+    const c = BY_K[S.cur], answered = S.pick !== null, ok = answered && S.opts[S.pick].ok;
+    setBar(where, `Quiz ${Math.min(S.qi + 1, S.queue.length)} / ${S.queue.length}`, lessonProgress());
+    $("#stage").innerHTML = `
+      <article class="card" style="--c:${tcol(c.t)}">
+        <div class="meta"><span class="step quiz">${S.qi >= S.l.cards.length ? "Encore une fois" : "Quiz"}</span>${speakBtn()}</div>
+        <p class="q">${c.q}</p>${answered ? "" : enBlock(c, false)}
+        <div class="opts">${S.opts.map((o, i) => {
+          let cls = "opt"; if (answered) cls += o.ok ? " ok" : (i === S.pick ? " ko" : " dim");
+          return `<button class="${cls}" data-act="lpick" data-i="${i}" ${answered ? "disabled" : ""}><span class="L">${"ABCD"[i]}</span><span>${o.h}</span></button>`;
+        }).join("")}</div>
+        ${answered ? `<div class="feedback ${ok ? "ok" : "ko"}"><div class="verdict ${ok ? "ok" : "ko"}">${ok ? "Bonne réponse !" : "Pas tout à fait"}</div>${ok ? "" : `<div class="a">${c.a}</div>`}${c.d ? `<div class="d">${c.d}</div>` : ""}${enBlock(c, true)}${ok ? "" : `<div class="d">Cette question reviendra à la fin de la leçon.</div>`}</div>` : ""}
+      </article>
+      ${answered ? `<button class="btn primary next" data-act="lcont">Continuer</button><div class="keys"><kbd>Entrée</kbd> continuer</div>` : `<div class="keys"><kbd>1</kbd>–<kbd>4</kbd> choisir une réponse</div>`}`;
+    return;
+  }
+  // Fin de leçon
+  setBar(where, "Terminé", 1);
+  const n = l.cards.length, firstOk = l.cards.filter(k => S.first[k]).length, sk = streak();
+  const u = UNITS.find(x => x.t === l.t), unitDone = u.lessons.every(x => ["done", "review"].includes(lessonState(x)));
+  const nx = nextLesson();
+  const nudge = ID && !ID.email() ? `<div class="save-nudge"><p><b>Ne perdez pas vos progrès.</b> Indiquez votre adresse email, sans mot de passe : vous retrouverez votre parcours sur tous vos appareils.</p><button class="btn primary small" data-act="acct-ask">Sauvegarder ma progression</button></div>` : "";
+  $("#stage").innerHTML = `<div class="panel lesson-done">${DATA.mascot ? `<img class="celebrate" src="${DATA.mascot}" width="120" height="120" alt="Le coq vous félicite">` : ""}
+    <h2>${unitDone ? `Thème ${l.t} terminé !` : "Leçon terminée !"}</h2>
+    <p class="lbl" style="font-size:15px">${firstOk === n ? "Sans faute, bravo !" : firstOk >= n * 0.75 ? "Très bien, continuez comme ça." : "C’est en se trompant qu’on retient : ces questions reviendront dans vos révisions."}</p>
+    <div class="stats"><div class="stat"><b>${firstOk} / ${n}</b><span>du premier coup</span></div><div class="stat"><b>${sk}</b><span>jour${sk > 1 ? "s" : ""} de suite</span></div></div>
+    <div class="lbl">Objectif du jour : ${Math.min(todayCount(), DAILY_GOAL)} / ${DAILY_GOAL} questions</div>${goalBar()}
+    ${nudge}
+    <div class="row-btns">${nx ? `<button class="btn primary" data-act="lesson" data-l="${nx.key}">Leçon suivante</button>` : `<button class="btn primary" data-act="start-exam">Faire un examen blanc</button>`}<button class="btn" data-act="home">Mon parcours</button></div></div>`;
+}
+function lessonPick(i) {
+  if (S.pick !== null) return;
+  S.pick = i;
+  const k = S.cur, ok = S.opts[i].ok;
+  if (!(k in S.first)) S.first[k] = ok;
+  grade(k, ok);
+  if (!ok) S.tries[k] = (S.tries[k] || 0) + 1;
+  renderLesson();
+}
+function lessonContinue() {
+  const k = S.cur, wrong = !S.opts[S.pick].ok;
+  if (wrong && S.tries[k] <= 2) S.queue.push(k);
+  S.qi++;
+  if (S.qi >= S.queue.length) { S.phase = "done"; renderLesson(); window.scrollTo(0, 0); return; }
+  prepQuestion(); renderLesson();
+}
+
 /* Question du jour : la même pour tous, chaque jour, dans la liste choisie */
 let QDJ = null;
 function qdjCard() {
@@ -729,7 +949,7 @@ async function shareResult(score, pass) {
   } catch (e) { if (e && e.name === "AbortError") return; }
   window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + url), "_blank", "noopener");
 }
-function refreshHome() { if (!$("#home").hidden) { renderLists(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); renderReport(); } }
+function refreshHome() { if (!$("#home").hidden) { renderLists(); renderToday(); renderPath(); renderSummary(); renderQdj(); renderScopes(); renderHistory(); renderReport(); } }
 document.addEventListener("change", e => {
   if (e.target.name === "scope") { scope = e.target.value; try { localStorage.setItem(LS_KEY + ":scope", scope); } catch (er) {} }
 });
@@ -956,6 +1176,11 @@ document.addEventListener("click", e => {
     case "qdj-open": if (QDJ) { QDJ.folded = false; clearTimeout(QDJ.timer); renderQdj(); } break;
     case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
+    case "lesson": startLesson(b.dataset.l); break;
+    case "lnext": if (S && S.mode === "lesson") { S.li++; if (S.li >= S.l.cards.length) S.phase = "quizintro"; renderLesson(); window.scrollTo(0, 0); } break;
+    case "lquiz": if (S && S.mode === "lesson") { S.phase = "quiz"; prepQuestion(); renderLesson(); } break;
+    case "lpick": if (S && S.mode === "lesson") lessonPick(i); break;
+    case "lcont": if (S && S.mode === "lesson") { lessonContinue(); window.scrollTo(0, 0); } break;
     case "start-cards": startCards(); break;
     case "start-quiz": startQuiz(); break;
     case "start-exam": startExam(); break;
@@ -971,9 +1196,9 @@ document.addEventListener("click", e => {
     case "finish": if (S.pick.some(x => x === null)) { S.finishAsk = true; renderExam(); } else finishExam(); break;
     case "finish-yes": finishExam(); break;
     case "finish-no": S.finishAsk = false; S.i = Math.max(0, S.pick.indexOf(null)); renderExam(); break;
-    case "speak": if (S) speak(plain(BY_K[S.q[S.i]].q)); break;
-    case "acct-ask": if (ID) ID.ask(""); break;
-    case "acct-change": if (ID) { ID.forget(); ID.ask(""); } break;
+    case "speak": if (S) speak(plain(BY_K[S.mode === "lesson" ? S.cur : S.q[S.i]].q)); break;
+    case "acct-ask": if (ID) ID.ask("save"); break;
+    case "acct-change": if (ID) { ID.forget(); ID.ask("save"); } break;
     case "ask-reset": $("#resetZone").innerHTML = `<div class="confirm"><span>${ID && ID.email() ? "Effacer toute votre progression, sur cet appareil et en ligne ?" : "Effacer toute votre progression sur cet appareil ?"}</span><button class="btn small bad" data-act="reset-yes">Effacer</button><button class="btn small" data-act="reset-no">Annuler</button></div>`; break;
     case "reset-no": $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; break;
     case "reset-yes": { const t = Date.now(); P = empty(); P.reset = t; touch(); $("#resetZone").innerHTML = `<button class="linkbtn" data-act="ask-reset">Effacer ma progression</button>`; refreshHome(); break; }
@@ -982,7 +1207,12 @@ document.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if (!S || e.metaKey || e.ctrlKey || e.altKey) return;
   const tag = (e.target.tagName || "").toLowerCase();
-  if (S.mode === "cards") {
+  if (S.mode === "lesson") {
+    if (S.phase === "learn" && (e.key === "Enter" || e.key === " ") && tag !== "button") { e.preventDefault(); $('[data-act="lnext"]').click(); }
+    else if (S.phase === "quizintro" && e.key === "Enter" && tag !== "button") { e.preventDefault(); $('[data-act="lquiz"]').click(); }
+    else if (S.phase === "quiz" && S.pick === null && /^[1-4]$/.test(e.key)) lessonPick(+e.key - 1);
+    else if (S.phase === "quiz" && S.pick !== null && e.key === "Enter" && tag !== "button") { e.preventDefault(); lessonContinue(); }
+  } else if (S.mode === "cards") {
     if (!S.open && (e.key === " " || e.key === "Enter") && tag !== "button") { e.preventDefault(); S.open = true; renderCards(); }
     else if (S.open && e.key === "1") cardAnswer(false);
     else if (S.open && e.key === "2") cardAnswer(true);
@@ -1001,12 +1231,18 @@ document.querySelectorAll(".entog").forEach(b => b.setAttribute("aria-pressed", 
 if (EN) { try { localStorage.setItem("coq:en", "1"); } catch (e) {} loadEn(); }
 refreshHome();
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAccount); else initAccount();
+// Lien direct vers une leçon (pages des questions) : ?lecon=1-3
+if (LESSON[PARAMS.get("lecon")]) {
+  const lk = PARAMS.get("lecon");
+  try { const u = new URL(location.href); u.searchParams.delete("lecon"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) {}
+  startLesson(lk);
+}
 // Lien direct vers un examen blanc (page /examen-blanc/) : ?start=examen
 if (PARAMS.get("start") === "examen") {
   try { const u = new URL(location.href); u.searchParams.delete("start"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) {}
   startExam();
 }
-window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS, streak, readiness };
+window.__civique = { merge, sanitize, pickExam, pickCards, stats, INTERVALS, streak, readiness, LESSONS, lessonState, nextLesson };
 })();
 </script>
 </body>

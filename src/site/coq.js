@@ -153,6 +153,7 @@
       var t = ev.target.closest("[data-coq]"); if (!t) return;
       var a = t.getAttribute("data-coq");
       if (a === "later") { ssSet(K_LATER, "1"); hide(); }
+      if (a === "go") ssSet(K_LATER, "1");
       if (a === "close") hide();
     });
     gate.addEventListener("submit", function (ev) {
@@ -184,12 +185,12 @@
     window.addEventListener("resize", pad);
   }
   function renderForm() {
-    var pdf = why === "pdf";
+    var pdf = why === "pdf", save = why === "save";
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t" aria-describedby="coq-d">' +
       '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later">×</button>' +
       '<div class="coq-head"><img src="' + esc(cfg.logo) + '" alt="" width="46" height="46"><div>' +
-      '<h2 id="coq-t">' + (pdf ? "Télécharger le livret PDF" : "Bienvenue sur Coq Civique") + '</h2>' +
-      '<p id="coq-d">' + (pdf ? "Indiquez votre email : le téléchargement s’affiche aussitôt." : "Indiquez votre email pour garder votre progression et télécharger le livret PDF.") + '</p></div></div>' +
+      '<h2 id="coq-t">' + (pdf ? "Télécharger le livret PDF" : save ? "Gardez votre progression" : "Bienvenue sur Coq Civique") + '</h2>' +
+      '<p id="coq-d">' + (pdf ? "Indiquez votre email : le téléchargement s’affiche aussitôt." : save ? "Indiquez votre email, sans mot de passe : ce que vous avez déjà appris est conservé et vous le retrouvez sur tous vos appareils." : "Indiquez votre email pour garder votre progression et télécharger le livret PDF.") + '</p></div></div>' +
       '<form novalidate><div class="coq-row"><input type="email" autocomplete="email" inputmode="email" placeholder="prenom@exemple.fr" aria-label="Votre adresse email" required>' +
       '<button class="coq-btn" type="submit">Continuer</button></div>' +
       '<label class="coq-check"><input type="checkbox"> Recevoir de temps en temps des nouvelles de Coq Civique (facultatif)</label>' +
@@ -224,6 +225,37 @@
     ev.preventDefault(); pending = a.getAttribute("href"); show("pdf", true);
   });
 
-  // À l'arrivée : on demande l'adresse, sauf si elle est connue ou si « Plus tard » a été choisi pendant cette visite.
-  if (!ID.email() && !ssGet(K_LATER)) show("", false);
+  /* À l'arrivée sur une page du site (souvent depuis Google) : une invitation à apprendre, pas une demande d'email.
+     Elle apparaît une fois la réponse lue (quelques secondes ou en faisant défiler la page), en bas de l'écran.
+     L'adresse est demandée pour le PDF, et à la fin d'une leçon pour garder la progression. */
+  function hasProgress() {
+    try { var p = JSON.parse(localStorage.getItem("civique259:v1") || "null"); return !!(p && p.cards && Object.keys(p.cards).length); } catch (e) { return false; }
+  }
+  function renderInvite() {
+    var el = document.querySelector("[data-lecon]");
+    var url = el ? el.getAttribute("data-lecon") : cfg.reviser, label = el ? el.getAttribute("data-lecon-label") : "";
+    gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t" aria-describedby="coq-d">' +
+      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later">×</button>' +
+      '<div class="coq-head"><img src="' + esc(cfg.mascot || cfg.logo) + '" alt="" width="46" height="46"><div>' +
+      '<h2 id="coq-t">' + (label ? "Apprenez-la pour de bon" : "Apprenez l’examen civique, 5 minutes par jour") + '</h2>' +
+      '<p id="coq-d">' + (label ? "Elle fait partie de la " + esc(label) + ". Apprenez-la avec Coq Civique, l’appli gratuite : des leçons courtes, puis un quiz." : "Coq Civique, c’est l’appli gratuite pour apprendre pas à pas : des leçons courtes sur les questions officielles, un quiz après chaque leçon et des examens blancs.") + '</p></div></div>' +
+      '<div class="coq-row"><a class="coq-btn" href="' + esc(url) + '" data-coq="go">' + (label ? "Commencer cette leçon" : "Commencer à apprendre") + '</a>' +
+      '<button class="coq-btn alt" type="button" data-coq="later">Plus tard</button></div>' +
+      '<p class="coq-note">Gratuit, sans inscription ni mot de passe.</p></div>';
+  }
+  function invite() {
+    if (!gate) build();
+    if (!gate.hidden) return;
+    renderInvite(); gate.hidden = false; pad();
+  }
+  if (!onApp && !ID.email() && !ssGet(K_LATER) && !hasProgress()) {
+    var invited = false, go = function () {
+      if (invited) return; invited = true;
+      window.removeEventListener("scroll", onScroll);
+      invite();
+    };
+    var onScroll = function () { if (window.scrollY > Math.min(600, document.documentElement.scrollHeight * 0.25)) go(); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    setTimeout(go, 7000);
+  }
 })();
