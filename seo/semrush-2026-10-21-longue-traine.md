@@ -103,3 +103,12 @@ Mots-clés où prepacivique.fr, qcmcivique.fr, letestcivique.fr ou franceaccueil
 | Test de naturalisation | test nationalité française 720 (38), test naturalisation française 590 (33), questionnaire nationalité 390 (16), qcm naturalisation 390 (22) | qcmcivique 2e |
 | Questions de l'entretien en PDF | 200 questions naturalisation pdf (gratuit) 260 + 260 + 140 (4-6) | franceaccueil 1er-2e |
 | Timbre fiscal titre de séjour | 9 900 (32), timbre titre de séjour 3 600 (23) | prepacivique 5e-7e (hors sujet principal) |
+
+## 9. Jeu de données des centres (data.gouv.fr), vérifié le 21 octobre 2026
+
+« Centres agréés pour l'examen civique en France — liste consolidée (2026) » : publié par l'organisation Prépa-Examen, Licence Ouverte 2.0
+(réutilisation possible avec mention de la source), 242 centres dans 99 départements, CSV (nom, adresse, code postal, ville, département,
+téléphone, email, site), mis à jour le 24 septembre 2026, « vérifié en août 2026 ». Sources annoncées : informations publiques du ministère
+et centres eux-mêmes ; les listes CCIP et FEI ne sont pas citées. Le fichier n'a pas pu être téléchargé depuis l'environnement de travail
+(réseau) : à contrôler par sondage (10 centres comparés aux sites CCIP et FEI) avant toute page par ville.
+Semrush : l'API ne permet pas de créer un projet ; la liste de suivi est dans seo/position-tracking.md.
