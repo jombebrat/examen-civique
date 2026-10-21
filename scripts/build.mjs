@@ -667,6 +667,39 @@ function examen40Data() {
   const s = situations.map((x) => [x.id, x.theme, pdfText(x.situation), pdfText(x.question), pdfText(x.qcm.bonne), x.qcm.mauvaises.map(pdfText), abs(`/mises-en-situation/#${x.id}`)]);
   return { v: 1, themes: themes.map((t) => ({ t: t.id })), lists, q, s };
 }
+/* Données ouvertes (publiées aussi sur data.gouv.fr, en ressources distantes) : questions des trois listes mises en correspondance, et mises en situation */
+function openData() {
+  const dir = join(DIST, "data/opendata");
+  mkdirSync(dir, { recursive: true });
+  const t = (s) => (s == null ? "" : plain(String(s)).replace(/[  ]/g, " "));
+  const csv = (rows) => "﻿" + rows.map((r) => r.map((v) => { const s = String(v ?? ""); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(",")).join("\r\n") + "\r\n";
+  const qs = questions.map((q) => {
+    // Une même question peut figurer deux fois dans une liste, sous deux formulations : on garde tous les numéros
+    const nums = (code) => member.get(q.id).filter((x) => x.code === code).map((x) => x.numero);
+    const forms = (code) => member.get(q.id).filter((x) => x.code === code && x.texte).map((x) => t(x.texte));
+    return {
+      id: q.id, theme: q.theme, theme_titre: themeById[q.theme].titre,
+      question: t(q.question), reponse: t(q.reponse), bonne_reponse_qcm: t(q.qcm.bonne), propositions_incorrectes: q.qcm.mauvaises.map(t),
+      explication: t(q.explication), pages_livret_du_citoyen: q.livret_pages || "",
+      numeros_naturalisation: nums("nat"),
+      numeros_carte_de_resident: nums("cr"), formulations_carte_de_resident: forms("cr"),
+      numeros_carte_de_sejour_pluriannuelle: nums("csp"), formulations_carte_de_sejour_pluriannuelle: forms("csp"),
+      url: abs(qPath(q)),
+    };
+  });
+  const sits = situations.map((x) => ({
+    id: x.id, theme: x.theme, theme_titre: themeById[x.theme].titre, principe: t(x.principe), situation: t(x.situation), question: t(x.question),
+    bonne_reponse: t(x.qcm.bonne), propositions_incorrectes: x.qcm.mauvaises.map(t), explication: t(x.explication), url: abs(`/mises-en-situation/#${x.id}`),
+  }));
+  const meta = { producteur: NAME, site: abs("/"), licence: "Licence Ouverte / Open Licence 2.0 (Etalab)", mise_a_jour: UPDATED, sources: [data.source.liste, listes.cr.source, listes.csp.source, data.source.livret].filter(Boolean),
+    avertissement: "Questions : listes officielles du ministère de l’Intérieur. Réponses, explications et mises en situation rédigées par Coq Civique (non officielles)." };
+  writeFileSync(join(dir, "examen-civique-questions.json"), JSON.stringify({ ...meta, questions: qs }, null, 1));
+  writeFileSync(join(dir, "examen-civique-mises-en-situation.json"), JSON.stringify({ ...meta, mises_en_situation: sits }, null, 1));
+  const qCols = Object.keys(qs[0]);
+  writeFileSync(join(dir, "examen-civique-questions.csv"), csv([qCols, ...qs.map((r) => qCols.map((k) => Array.isArray(r[k]) ? r[k].join(" | ") : r[k]))]));
+  const sCols = Object.keys(sits[0]);
+  writeFileSync(join(dir, "examen-civique-mises-en-situation.csv"), csv([sCols, ...sits.map((r) => sCols.map((k) => Array.isArray(r[k]) ? r[k].join(" | ") : r[k]))]));
+}
 function examen40Page() {
   const path = EX40_PATH;
   const items = [["Accueil", "/"], ["Livrets PDF", "/examen-civique-pdf/"], ["Sujets de 40 questions", path]];
@@ -941,6 +974,7 @@ cpSync(join(ROOT, "data/listes.json"), join(DIST, "data/listes.json"));
 cpSync(join(ROOT, "data/en.json"), join(DIST, "data/en.json"));
 cpSync(join(ROOT, "data/ar.json"), join(DIST, "data/ar.json"));
 writeFileSync(join(DIST, "data/examen40.json"), JSON.stringify(examen40Data()));
+openData();
 home();
 questionsIndex();
 listPage("cr");
