@@ -14,12 +14,14 @@ const { build, render } = globalThis.CoqExam40;
 const data = JSON.parse(readFileSync(join(ROOT, "dist/data/examen40.json"), "utf8"));
 const site = JSON.parse(readFileSync(join(ROOT, "site.config.json"), "utf8")).url;
 
+const img = (f, type) => `data:${type};base64,` + readFileSync(join(ROOT, f)).toString("base64");
+const logo = img("assets/pdf/logo.jpg", "image/jpeg"), mascot = img("assets/pdf/mascotte.jpg", "image/jpeg");
 const NUM = 2026, out = join(ROOT, "assets/examens"), inv = {};
 mkdirSync(out, { recursive: true });
 for (const code of ["nat", "cr", "csp"]) {
   const ex = build(data, code, NUM);
   // Date et identifiant fixes : le fichier ne change que si le contenu change
-  const doc = render(jsPDF, ex, { site, date: new Date("2026-10-21T12:00:00Z"), fileId: "C0C1C1C1E0A0000000000000000" + String(NUM).padStart(5, "0") });
+  const doc = render(jsPDF, ex, { site, logo, mascot, date: new Date("2026-10-21T12:00:00Z"), fileId: "C0C1C1C1E0A0000000000000000" + String(NUM).padStart(5, "0") });
   const fichier = `coq-civique-examen-civique-40-questions-${code}-${NUM}.pdf`;
   writeFileSync(join(out, fichier), Buffer.from(doc.output("arraybuffer")));
   inv[code] = { fichier, sujet: ex.id, pages: doc.getNumberOfPages() };

@@ -26,13 +26,18 @@ const text = (t, x, y, st, sz, c, opt) => { font(st, sz); col(c || INK); doc.tex
 let y = TOP;
 const newPage = () => { doc.addPage(); y = TOP; };
 
-// En-tête
-doc.setFillColor(0, 85, 164); doc.rect(M, 12, 9, 1.6, "F");
-doc.setFillColor(226, 230, 238); doc.rect(M + 9, 12, 9, 1.6, "F");
-doc.setFillColor(225, 0, 15); doc.rect(M + 18, 12, 9, 1.6, "F");
-text("COQ CIVIQUE", M, 17, "bold", 9, BLUE);
-font("normal", 9); col(MUTED); doc.text("Gratuit, sans inscription : " + host, W - M, 17, { align: "right", baseline: "top" });
-y = 25;
+// En-tête : logo, nom, adresse du site et pastille « gratuit »
+const img = (f) => "data:image/jpeg;base64," + readFileSync(join(ROOT, f)).toString("base64");
+const LOGO = img("assets/pdf/logo.jpg"), MASCOT = img("assets/pdf/mascotte.jpg");
+doc.addImage(LOGO, "JPEG", M, 9, 17, 17, "logo");
+text("Coq Civique", M + 21, 10.5, "bold", 17, BLUE);
+text("L’appli gratuite pour apprendre l’examen civique", M + 21, 18, "normal", 9.5, INK);
+text(host, M + 21, 22.4, "bold", 9.5, BLUE);
+font("bold", 9); const badge = "GRATUIT · SANS INSCRIPTION", bw = doc.getTextWidth(badge) + 8;
+doc.setFillColor(...BLUE); doc.roundedRect(W - M - bw, 12, bw, 7, 3.5, 3.5, "F");
+doc.setTextColor(255, 255, 255); doc.text(badge, W - M - bw / 2, 15.5, { align: "center", baseline: "middle" });
+doc.setDrawColor(...LINE); doc.setLineWidth(0.3); doc.line(M, 30, W - M, 30);
+y = 35;
 const title = split(`Entretien de naturalisation : ${E.n} questions pour s’entraîner`, "bold", 19, CW);
 text(title, M, y, "bold", 19, INK); y += title.length * lh(19) + 2;
 text("Avec les réponses à connaître et des conseils pour les questions personnelles", M, y, "bold", 11.5, BLUE); y += 8;
@@ -74,21 +79,29 @@ for (const s of E.sections) {
   }
   y += 2;
 }
-// Encadré final
-const end = split(`Révisez les questions de connaissance gratuitement sur ${host} : leçons de 5 minutes, quiz, examens blancs et sujets PDF de 40 questions. Version en ligne de ces questions : ${E.page.replace(/^https?:\/\//, "")}`, "normal", 10, CW - 10);
-const endH = 9 + end.length * lh(10);
+// Encadré final, avec la mascotte
+const MAS = 30, tx = M + MAS + 8, tw = CW - MAS - 13;
+const end = split(`Révisez les questions de connaissance gratuitement sur ${host} : leçons de 5 minutes, quiz, examens blancs et sujets PDF de 40 questions. Version en ligne de ces questions : ${E.page.replace(/^https?:\/\//, "")}`, "normal", 10, tw);
+const endH = Math.max(12 + end.length * lh(10), MAS + 6);
 if (y + endH > H - BOTTOM) newPage();
-doc.setFillColor(...SOFT); doc.roundedRect(M, y, CW, endH, 2, 2, "F");
-text("Continuer à apprendre", M + 5, y + 3, "bold", 10.5, BLUE);
-text(end, M + 5, y + 8, "normal", 10, INK);
+doc.setFillColor(...SOFT); doc.roundedRect(M, y, CW, endH, 3, 3, "F");
+doc.setFillColor(255, 255, 255); doc.roundedRect(M + 3, y + 3, MAS, MAS, 3, 3, "F"); doc.addImage(MASCOT, "JPEG", M + 3, y + 3, MAS, MAS, "mascot");
+text("Bonne préparation !", tx, y + 4, "bold", 12, BLUE);
+text(end, tx, y + 10.5, "normal", 10, INK);
 doc.link(M, y, CW, endH, { url: E.site + "reviser/" });
 const pages = doc.getNumberOfPages();
 for (let p = 1; p <= pages; p++) {
   doc.setPage(p);
-  doc.setDrawColor(...LINE); doc.setLineWidth(0.25); doc.line(M, H - 13, W - M, H - 13);
+  doc.setFillColor(0, 85, 164); doc.rect(0, 0, W / 3, 2.2, "F");
+  doc.setFillColor(226, 230, 238); doc.rect(W / 3, 0, W / 3, 2.2, "F");
+  doc.setFillColor(225, 0, 15); doc.rect(2 * W / 3, 0, W / 3, 2.2, "F");
+  doc.setDrawColor(...LINE); doc.setLineWidth(0.25); doc.line(M, H - 14, W - M, H - 14);
+  doc.addImage(LOGO, "JPEG", M, H - 12.2, 6.5, 6.5, "logo");
+  font("bold", 9); col(BLUE); doc.text(host, M + 8.5, H - 10.6, { baseline: "top" });
+  const hw = doc.getTextWidth(host);
   font("normal", 7.5); col(MUTED);
-  doc.text("Coq Civique, site indépendant et non officiel · questions d’entraînement, non officielles · mise à jour : " + E.maj.split("-").reverse().join("/"), M, H - 10, { baseline: "top" });
-  doc.text(p + " / " + pages, W - M, H - 10, { align: "right", baseline: "top" });
+  doc.text("  ·  gratuit, sans inscription  ·  questions d’entraînement non officielles  ·  mise à jour : " + E.maj.split("-").reverse().join("/"), M + 8.5 + hw, H - 10.2, { baseline: "top" });
+  doc.text(p + " / " + pages, W - M, H - 10.2, { align: "right", baseline: "top" });
 }
 const out = join(ROOT, "assets/coq-civique-questions-entretien-naturalisation.pdf");
 writeFileSync(out, Buffer.from(doc.output("arraybuffer")));

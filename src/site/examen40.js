@@ -75,13 +75,24 @@
     function text(t, x, yy, style, size, c, opt) { font(style, size); col(c || INK); doc.text(t, x, yy, opt || { baseline: "top" }); }
     function newPage() { doc.addPage(); y = TOP; }
 
-    /* En-tête de la première page */
-    doc.setFillColor(0, 85, 164); doc.rect(M, 12, 9, 1.6, "F");
-    doc.setFillColor(226, 230, 238); doc.rect(M + 9, 12, 9, 1.6, "F");
-    doc.setFillColor(225, 0, 15); doc.rect(M + 18, 12, 9, 1.6, "F");
-    text("COQ CIVIQUE", M, 17, "bold", 9, BLUE);
-    font("normal", 9); col(MUTED); doc.text("Gratuit, sans inscription : " + host, W - M, 17, { align: "right", baseline: "top" });
-    y = 25;
+    /* Bandeau tricolore en haut de chaque page */
+    function flag() {
+      doc.setFillColor(0, 85, 164); doc.rect(0, 0, W / 3, 2.2, "F");
+      doc.setFillColor(226, 230, 238); doc.rect(W / 3, 0, W / 3, 2.2, "F");
+      doc.setFillColor(225, 0, 15); doc.rect(2 * W / 3, 0, W / 3, 2.2, "F");
+    }
+    /* En-tête de la première page : logo, nom, adresse du site et pastille « gratuit » */
+    var LOGO = 17;
+    if (o.logo) doc.addImage(o.logo, "JPEG", M, 9, LOGO, LOGO, "logo");
+    var bx = o.logo ? M + LOGO + 4 : M;
+    text("Coq Civique", bx, 10.5, "bold", 17, BLUE);
+    text("L’appli gratuite pour apprendre l’examen civique", bx, 18, "normal", 9.5, INK);
+    text(host, bx, 22.4, "bold", 9.5, BLUE);
+    font("bold", 9); var badge = "GRATUIT · SANS INSCRIPTION", bw = doc.getTextWidth(badge) + 8;
+    doc.setFillColor(BLUE[0], BLUE[1], BLUE[2]); doc.roundedRect(W - M - bw, 12, bw, 7, 3.5, 3.5, "F");
+    doc.setTextColor(255, 255, 255); doc.text(badge, W - M - bw / 2, 15.5, { align: "center", baseline: "middle" });
+    doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.line(M, 30, W - M, 30);
+    y = 35;
     text("Examen civique : sujet de 40 questions", M, y, "bold", 19, INK); y += 9;
     text(ex.nom + " · Sujet n° " + ex.id, M, y, "bold", 12, BLUE); y += 8;
     var rules = [
@@ -172,23 +183,31 @@
       });
     }
 
-    /* Dernier encadré : continuer gratuitement */
-    var ctaLines = split("Revoyez vos erreurs gratuitement sur " + host + " : leçons de 5 minutes, quiz et examens blancs en ligne, et un nouveau sujet PDF à chaque clic.", "normal", 10, CW - 10);
-    var ctaH = 9 + ctaLines.length * lh(10);
+    /* Dernier encadré : la mascotte et l'invitation à continuer gratuitement */
+    var MAS = o.mascot ? 30 : 0, tx = M + 5 + (MAS ? MAS + 4 : 0), tw = CW - 10 - (MAS ? MAS + 4 : 0);
+    var ctaLines = split("Revoyez vos erreurs gratuitement sur " + host + " : leçons de 5 minutes, quiz et examens blancs en ligne, et un nouveau sujet PDF à chaque clic.", "normal", 10, tw);
+    var ctaH = Math.max(14 + ctaLines.length * lh(10), MAS + 6);
     if (y + ctaH + 6 > H - BOTTOM) newPage(); else y += 4;
-    doc.setFillColor(SOFT[0], SOFT[1], SOFT[2]); doc.roundedRect(M, y, CW, ctaH, 2, 2, "F");
-    text("Continuer à apprendre", M + 5, y + 3, "bold", 10.5, BLUE);
-    text(ctaLines, M + 5, y + 8, "normal", 10, INK);
+    doc.setFillColor(SOFT[0], SOFT[1], SOFT[2]); doc.roundedRect(M, y, CW, ctaH, 3, 3, "F");
+    if (MAS) { doc.setFillColor(255, 255, 255); doc.roundedRect(M + 3, y + 3, MAS, MAS, 3, 3, "F"); doc.addImage(o.mascot, "JPEG", M + 3, y + 3, MAS, MAS, "mascot"); }
+    text("Bravo, continuez comme ça !", tx, y + 4, "bold", 12, BLUE);
+    text(ctaLines, tx, y + 10.5, "normal", 10, INK);
+    font("bold", 10); col(BLUE); doc.text(host, tx, y + 10.5 + ctaLines.length * lh(10) + 1, { baseline: "top" });
     doc.link(M, y, CW, ctaH, { url: site + "reviser/" });
 
-    /* Pied de page */
+    /* Bandeau et pied de page sur chaque page : logo et adresse du site, pour qu'on sache d'où vient la feuille */
     var pages = doc.getNumberOfPages();
     for (var p = 1; p <= pages; p++) {
       doc.setPage(p);
-      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.25); doc.line(M, H - 13, W - M, H - 13);
+      flag();
+      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.25); doc.line(M, H - 14, W - M, H - 14);
+      var fx = M;
+      if (o.logo) { doc.addImage(o.logo, "JPEG", M, H - 12.2, 6.5, 6.5, "logo"); fx = M + 8.5; }
+      font("bold", 9); col(BLUE); doc.text(host, fx, H - 10.6, { baseline: "top" });
+      var hw = doc.getTextWidth(host);
       font("normal", 7.5); col(MUTED);
-      doc.text("Sujet " + ex.id + " · Coq Civique, site indépendant et non officiel · questions : listes officielles du ministère de l’Intérieur", M, H - 10, { baseline: "top" });
-      doc.text(p + " / " + pages, W - M, H - 10, { align: "right", baseline: "top" });
+      doc.text("  ·  gratuit, sans inscription  ·  sujet " + ex.id + "  ·  site indépendant et non officiel", fx + hw, H - 10.2, { baseline: "top" });
+      doc.text(p + " / " + pages, W - M, H - 10.2, { align: "right", baseline: "top" });
     }
     return doc;
   }
@@ -206,6 +225,17 @@
   function loadData() {
     if (!dataP) dataP = fetch(cfg.data).then(function (r) { if (!r.ok) throw new Error("data"); return r.json(); });
     return dataP;
+  }
+  var imgP = null;
+  function dataUrl(u) {
+    return fetch(u).then(function (r) { if (!r.ok) throw new Error("img"); return r.blob(); }).then(function (b) {
+      return new Promise(function (ok, ko) { var f = new FileReader(); f.onload = function () { ok(f.result); }; f.onerror = ko; f.readAsDataURL(b); });
+    });
+  }
+  // Logo et mascotte : facultatifs, le sujet se fait même s'ils ne se chargent pas
+  function loadImages() {
+    if (!imgP) imgP = Promise.all([cfg.logo ? dataUrl(cfg.logo).catch(function () { return null; }) : null, cfg.mascot ? dataUrl(cfg.mascot).catch(function () { return null; }) : null]);
+    return imgP;
   }
   function loadLib() {
     if (root.jspdf && root.jspdf.jsPDF) return Promise.resolve(root.jspdf.jsPDF);
@@ -228,7 +258,7 @@
     btn.textContent = "Télécharger le sujet " + asked.code.toUpperCase() + "-" + asked.num;
   }
   // Préparer en avance, sans bloquer la page
-  var warm = function () { loadData().catch(function () {}); };
+  var warm = function () { loadData().catch(function () {}); loadImages(); };
   if ("requestIdleCallback" in root) root.requestIdleCallback(warm, { timeout: 4000 }); else setTimeout(warm, 2500);
 
   function say(html) { status.innerHTML = html; }
@@ -239,8 +269,8 @@
     var num = asked && asked.code === code ? asked.num : 1000 + Math.floor(Math.random() * 9000);
     asked = null;
     btn.disabled = true; say("Préparation du sujet…");
-    Promise.all([loadLib(), loadData()]).then(function (res) {
-      var ex = build(res[1], code, num), doc = render(res[0], ex, { site: cfg.site, key: key });
+    Promise.all([loadLib(), loadData(), loadImages()]).then(function (res) {
+      var ex = build(res[1], code, num), doc = render(res[0], ex, { site: cfg.site, key: key, logo: res[2][0], mascot: res[2][1] });
       doc.save("examen-civique-40-questions-" + ex.id.toLowerCase() + ".pdf");
       var link = location.origin + location.pathname + "?sujet=" + ex.id.toLowerCase();
       say("<b>Sujet " + ex.id + " téléchargé.</b> Chaque clic donne un nouveau sujet. " +

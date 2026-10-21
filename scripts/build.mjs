@@ -771,7 +771,7 @@ function examen40Page() {
   const path = EX40_PATH;
   const items = [["Accueil", "/"], ["Livrets PDF", "/examen-civique-pdf/"], ["Sujets de 40 questions", path]];
   const desc = "Examen civique 40 questions en PDF gratuit : un nouveau sujet à chaque clic, au format officiel (28 questions de votre liste + 12 mises en situation), avec corrigé. Sans inscription.";
-  const cfg = { data: `${href("/data/examen40.json")}?v=${V}`, lib: href("/assets/vendor/jspdf.umd.min.js"), site: abs("/") };
+  const cfg = { data: `${href("/data/examen40.json")}?v=${V}`, lib: href("/assets/vendor/jspdf.umd.min.js"), site: abs("/"), logo: href("/assets/pdf/logo.jpg"), mascot: href("/assets/pdf/mascotte.jpg") };
   const examples = LISTS.filter((l) => EX40_INV[l.code]).map((l) => {
     const e = EX40_INV[l.code];
     return `<li><a href="${href(`/assets/examens/${e.fichier}`)}" download>${esc(l.nom)} : sujet ${esc(e.sujet)}</a> <span class="muted">(PDF, ${e.pages} pages, avec corrigé)</span></li>`;
