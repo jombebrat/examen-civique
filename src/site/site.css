@@ -392,3 +392,10 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .tcard blockquote{ margin:0 0 10px; font-size:16.5px; line-height:1.55; }
 .tcard figcaption{ font-size:14px; color:var(--muted); }
 .tnote{ font-size:13px; color:var(--muted); margin:10px 0 0; }
+
+/* Pages en arabe : écriture de droite à gauche */
+[lang="ar"], [lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3{ font-family:"Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, system-ui, sans-serif; }
+.prose[dir="rtl"]{ line-height:1.8; }
+.prose[dir="rtl"] h1{ line-height:1.35; }
+.prose[dir="rtl"] th, .prose[dir="rtl"] td{ text-align:right; }
+.prose[dir="rtl"] .eyebrow{ letter-spacing:0; }

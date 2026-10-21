@@ -9,6 +9,7 @@ const data = loadJSON("data/questions.json");
 const listes = loadJSON("data/listes.json");
 const situations = loadJSON("data/situations.json").situations;
 const EN = existsSync(join(ROOT, "data/en.json")) ? loadJSON("data/en.json") : { q: {}, s: {} };
+const ALTS = [["fr", "/"], ["en", "/en/"], ["ar", "/ar/"], ["x-default", "/"]];
 const config = loadJSON("site.config.json");
 const argUrl = (() => { const i = process.argv.indexOf("--base-url"); return i > 0 ? process.argv[i + 1] : ""; })();
 // Toujours https en ligne (GitHub Pages peut annoncer http:// tant que le certificat n'est pas prêt).
@@ -65,7 +66,7 @@ const LESSON_OF = Object.fromEntries(LISTS.map((l) => {
 
 const sitemap = [];
 // Version des fichiers statiques : change dès que site.css ou coq.js change (évite l'ancien style en cache)
-const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json", "data/en.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
+const V = (() => { const h = createHash("sha256"); for (const f of ["src/site/site.css", "src/site/coq.js", "src/site/pwa.js", "src/site/sw.js", "src/app/app.html", "data/questions.json", "data/listes.json", "data/situations.json", "data/en.json", "data/ar.json"]) h.update(readFileSync(join(ROOT, f))); return h.digest("hex").slice(0, 10); })();
 // Application installable (PWA) : manifeste, service worker, invitation à installer
 const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest")}">
 <meta name="mobile-web-app-capable" content="yes">
@@ -122,7 +123,7 @@ function layout({ title, description, path, body, jsonld = [], canonical = path,
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${abs(canonical)}">
 ${index ? "" : '<meta name="robots" content="noindex">\n'}<meta property="og:type" content="${ogType}">
-<meta property="og:locale" content="${lang === "en" ? "en_GB" : "fr_FR"}">
+<meta property="og:locale" content="${{ en: "en_GB", ar: "ar_AR" }[lang] || "fr_FR"}">
 ${alternates.map(([l, p]) => `<link rel="alternate" hreflang="${l}" href="${abs(p)}">`).join("\n")}
 <meta property="og:site_name" content="${esc(NAME)}">
 <meta property="og:title" content="${esc(title)}">
@@ -185,7 +186,8 @@ ${body}
       <a href="${href("/conditions-utilisation/")}">Conditions d’utilisation</a>
       <a href="${href("/mentions-legales/")}">Mentions légales et confidentialité</a>
       <a href="mailto:${esc(config.editeur.contact)}">Contact</a>
-      <a href="${href("/en/")}" hreflang="en" lang="en">English</a></div>
+      <a href="${href("/en/")}" hreflang="en" lang="en">English</a>
+      <a href="${href("/ar/")}" hreflang="ar" lang="ar" dir="rtl">العربية</a></div>
   </div>
   <p class="fnote">${esc(NAME)} est un site indépendant et non officiel, sans lien avec le ministère de l’Intérieur. Questions : listes officielles des questions de connaissance (naturalisation, carte de résident, carte de séjour pluriannuelle). Réponses rédigées par ${esc(NAME)}, notamment d’après le Livret du citoyen (édition mai 2026).</p>
 </div></footer>
@@ -321,7 +323,7 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
   write("/", layout({
     title: `Examen civique 2026 : apprendre les questions officielles, leçons et QCM gratuits | ${NAME}`,
     description: `Apprenez l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles et leurs réponses, quiz QCM, examens blancs et livret PDF. Gratuit.`,
-    path: "/", body, jsonld: ld, wide: true, alternates: [["fr", "/"], ["en", "/en/"], ["x-default", "/"]],
+    path: "/", body, jsonld: ld, wide: true, alternates: ALTS,
   }));
 }
 
@@ -675,7 +677,7 @@ function appPage() {
     };
   });
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
-  const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), en: `${href("/data/en.json")}?v=${V}`, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
+  const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), help: { en: `${href("/data/en.json")}?v=${V}`, ar: `${href("/data/ar.json")}?v=${V}` }, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
   const title = `Apprendre l’examen civique gratuitement : leçons, QCM et examen blanc | ${NAME}`;
   const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs.`;
@@ -749,8 +751,21 @@ function contentPages() {
     const items = [["Coq Civique", "/"], ["English", path]];
     write(path, layout({
       title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, lang: "en", jsonld: [breadcrumbLd(items)],
-      alternates: p.slug === "index" ? [["fr", "/"], ["en", "/en/"], ["x-default", "/"]] : [],
+      alternates: p.slug === "index" ? ALTS : [],
       body: `${crumbs(items)}<article class="prose" lang="en"><div class="eyebrow">In English · updated ${new Date(p.meta.maj + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</div><h1>${esc(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${esc(p.meta.chapo)}</p>` : ""}${fillVarsEn(p.html)}</article>`,
+    }));
+  }
+  // En arabe : les passages en français sont isolés (<bdi>) pour garder le bon sens de lecture
+  const LATIN = /[A-Za-zÀ-ÖØ-öø-ÿŒœ][A-Za-zÀ-ÖØ-öø-ÿŒœ0-9'’.,!?…\-–/: ]*[A-Za-zÀ-ÖØ-öø-ÿŒœ0-9.!?…]|[A-Za-zÀ-ÖØ-öø-ÿŒœ]/g;
+  const bidiHtml = (html) => html.replace(/>([^<]+)</g, (m, txt) => ">" + txt.replace(LATIN, "<bdi>$&</bdi>") + "<");
+  const bidiText = (t) => esc(t).replace(LATIN, "<bdi>$&</bdi>");
+  for (const p of readContent("content/ar")) {
+    const path = p.slug === "index" ? "/ar/" : `/ar/${p.slug}/`;
+    const items = [["Coq Civique", "/"], ["العربية", path]];
+    write(path, layout({
+      title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, lang: "ar", jsonld: [breadcrumbLd(items)],
+      alternates: p.slug === "index" ? ALTS : [],
+      body: `${crumbs(items)}<article class="prose" lang="ar" dir="rtl"><div class="eyebrow">بالعربية · آخر تحديث ${new Date(p.meta.maj + "T12:00:00Z").toLocaleDateString("ar", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</div><h1>${bidiText(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${bidiText(p.meta.chapo)}</p>` : ""}${bidiHtml(fillVarsEn(p.html))}</article>`,
     }));
   }
   for (const p of readContent("content/pages")) {
@@ -834,6 +849,7 @@ mkdirSync(join(DIST, "data"), { recursive: true });
 cpSync(join(ROOT, "data/questions.json"), join(DIST, "data/questions.json"));
 cpSync(join(ROOT, "data/listes.json"), join(DIST, "data/listes.json"));
 cpSync(join(ROOT, "data/en.json"), join(DIST, "data/en.json"));
+cpSync(join(ROOT, "data/ar.json"), join(DIST, "data/ar.json"));
 home();
 questionsIndex();
 listPage("cr");

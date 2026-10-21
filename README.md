@@ -10,8 +10,10 @@ Site de révision pour l’examen civique, publié sur https://coqcivique.com : 
 | `data/listes.json` | Listes officielles carte de résident (CR) et carte de séjour pluriannuelle (CSP) : ordre, numéro et formulation exacte de chaque question, avec l’id de la question qui porte la réponse. |
 | `data/situations.json` | Mises en situation (exercices rédigés par Coq Civique, non officiels), générées par `tools/situations/generer.py`. |
 | `data/en.json` | Aide en anglais de l’application (bouton « EN ») : questions, réponses, explications et mises en situation. Générée par `python3 tools/en/generer.py` à partir des fichiers de `tools/en/`. |
+| `data/ar.json` | Aide en arabe (bouton « AR »), même structure. Générée par `python3 tools/ar/generer.py` à partir des fichiers de `tools/ar/`. |
 | `content/guides/`, `content/pages/` | Guides et pages (À propos, plan en 7 jours, conditions d’utilisation) en HTML simple, avec un en-tête JSON (titre, description, date). |
 | `content/en/` | Page en anglais (`/en/`), reliée à l’accueil par les balises hreflang. |
+| `content/ar/` | Page en arabe (`/ar/`, de droite à gauche), reliée de la même façon. |
 | `site.config.json` | Nom du site, éditeur (mentions légales), connexion Supabase. |
 | `src/site/site.css` | Apparence des pages du site. |
 | `src/site/coq.js` | Fenêtre « votre email », liens PDF, sauvegarde en ligne. |
@@ -26,7 +28,7 @@ Site de révision pour l’examen civique, publié sur https://coqcivique.com : 
 - **Naturalisation** : les questions dont l’id est « thème-numéro » (par exemple `1-17`) dans `data/questions.json`.
 - **Carte de résident et CSP** : `data/listes.json`. Une question déjà présente dans la liste naturalisation est simplement référencée (avec sa formulation officielle si elle diffère) ; les questions propres à ces listes ont un id `csp-…` ou `cr-…` dans `data/questions.json`.
 - Si le ministère modifie les listes : mettre à jour `data/sources/listes-csp-cr.txt` et les réponses dans `tools/listes/contenu_a.py` / `contenu_b.py`, puis lancer `python3 tools/listes/fusion.py`.
-- Après une modification des questions ou des mises en situation, mettre à jour la traduction dans `tools/en/` (`nat_a.py`, `nat_b.py`, `new.py`, `sit.py`) puis lancer `python3 tools/en/generer.py` : le script s’arrête si une question n’a pas de traduction.
+- Après une modification des questions ou des mises en situation, mettre à jour les traductions dans `tools/en/` et `tools/ar/` (`nat_a.py`, `nat_b.py`, `new.py`, `sit.py`) puis lancer `python3 tools/en/generer.py` et `python3 tools/ar/generer.py` : le script s’arrête si une question n’a pas de traduction.
 
 ## Modifier un guide ou une page
 

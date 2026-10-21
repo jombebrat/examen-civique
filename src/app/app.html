@@ -121,6 +121,13 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .studybar .entog{ padding:6px 10px; }
 .en{ margin-top:12px; padding:10px 13px; border-radius:10px; background:var(--sunk); border-left:3px solid var(--accent); font-size:14.5px; line-height:1.45; color:var(--ink); text-align:left; }
 .en .enh{ font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
+.rv .en{ font-size:14px; }
+.helpsw{ display:flex; flex-wrap:wrap; gap:6px; }
+[lang="ar"]{ font-family:"Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, system-ui, sans-serif; }
+.en[dir="rtl"]{ text-align:right; border-left:0; border-right:3px solid var(--accent); font-size:16px; line-height:1.75; }
+.en[dir="rtl"] .enh{ letter-spacing:0; font-size:13px; }
+.en bdi.nw{ white-space:nowrap; }
+.entog[lang="ar"]{ font-size:14.5px; }
 .en p{ margin:3px 0 0; } .en .enq{ color:var(--muted); } .en .end{ color:var(--muted); }
 .listsw .lbl{ font-size:13.5px; color:var(--muted); margin-right:2px; }
 .lsw{ border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 13px; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
@@ -342,7 +349,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     </header>
 
     <div class="listrow"><div class="listsw" id="listsw" role="radiogroup" aria-label="Ma liste de questions"></div>
-      <button type="button" class="entog" data-act="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button></div>
+      <div class="helpsw"><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English help</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية"><b>AR</b>مساعدة بالعربية</button></div></div>
     <div id="account"></div>
     <div class="panel today" id="today"></div>
 
@@ -397,7 +404,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
       <button class="back" data-act="home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>Accueil</button>
       <span class="where" id="where"></span>
       <span class="count" id="count"></span>
-      <button type="button" class="entog" data-act="en" aria-pressed="false" lang="en" title="English help"><b>EN</b></button>
+      <button type="button" class="entog" data-act="helpbar" aria-pressed="false" lang="en" title="English help"><b>EN</b></button>
     </div>
     <div class="prog"><span id="progfill" style="width:0"></span></div>
     <div id="stage"></div>
@@ -437,35 +444,66 @@ const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;"
 const plain = html => { const d = document.createElement("div"); d.innerHTML = html; return d.textContent; };
 const tcol = t => `var(--t${t})`;
 
-/* ---------- Aide en anglais (bouton « EN ») : le français reste la référence ---------- */
-let EN = PARAMS.get("en") === "1";
-if (PARAMS.has("en")) { try { const u = new URL(location.href); u.searchParams.delete("en"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) {} }
-if (!EN) { try { EN = localStorage.getItem("coq:en") === "1"; } catch (e) {} }
-let EN_DATA = null, EN_STATE = "idle"; // idle | loading | ok | error
-function loadEn() {
-  if (EN_STATE === "loading" || EN_STATE === "ok" || !DATA.en) return;
-  EN_STATE = "loading";
-  fetch(DATA.en).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(j => { EN_DATA = j; EN_STATE = "ok"; })
-    .catch(() => { EN_STATE = "error"; })
+/* ---------- Aide dans une autre langue (boutons « EN » et « AR ») : le français reste la référence ---------- */
+const HELP_TXT = {
+  en: { head: "In English", answer: "Answer:", loading: "Loading…", error: "English help could not be loaded. Connect to the internet once, then try again." },
+  ar: { head: "بالعربية", answer: "الجواب:", loading: "جارٍ التحميل…", error: "تعذّر تحميل المساعدة بالعربية. اتصل بالإنترنت مرة واحدة ثم أعد المحاولة." },
+};
+const HELP_LANGS = Object.keys(HELP_TXT).filter(l => (DATA.help || {})[l]);
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+let HELP = "";
+{ // ?aide=ar, ?aide=en ou ?en=1 (liens depuis /en/ et /ar/), sinon le dernier choix
+  const want = PARAMS.get("aide") || (PARAMS.get("en") === "1" ? "en" : "");
+  if (PARAMS.has("aide") || PARAMS.has("en")) { try { const u = new URL(location.href); u.searchParams.delete("aide"); u.searchParams.delete("en"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (e) {} }
+  HELP = want || lsGet("coq:aide") || (lsGet("coq:en") === "1" ? "en" : "");
+  if (!HELP_LANGS.includes(HELP)) HELP = "";
+}
+// Langue proposée par le bouton de la barre d'étude quand l'aide est coupée
+let HELP_PREF = HELP || lsGet("coq:aide-pref") || (/^ar\b/i.test(navigator.language || "") ? "ar" : "en");
+if (!HELP_LANGS.includes(HELP_PREF)) HELP_PREF = HELP_LANGS[0] || "en";
+const HELP_DATA = {}, HELP_STATE = {}; // état : idle | loading | ok | error
+function loadHelp(l) {
+  if (!l || HELP_STATE[l] === "loading" || HELP_STATE[l] === "ok" || !(DATA.help || {})[l]) return;
+  HELP_STATE[l] = "loading";
+  fetch(DATA.help[l]).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(j => { HELP_DATA[l] = j; HELP_STATE[l] = "ok"; })
+    .catch(() => { HELP_STATE[l] = "error"; })
     .then(rerender);
 }
-function setEn(on) {
-  EN = on;
-  try { localStorage.setItem("coq:en", on ? "1" : "0"); } catch (e) {}
-  document.querySelectorAll(".entog").forEach(b => b.setAttribute("aria-pressed", String(on)));
-  if (on) loadEn();
+function paintHelpButtons() {
+  document.querySelectorAll(".entog[data-l]").forEach(b => b.setAttribute("aria-pressed", String(HELP === b.dataset.l)));
+  document.querySelectorAll(".studybar .entog").forEach(b => {
+    const l = HELP || HELP_PREF; b.setAttribute("aria-pressed", String(!!HELP));
+    b.innerHTML = `<b>${l.toUpperCase()}</b>`; b.lang = l; b.title = l === "ar" ? "مساعدة بالعربية" : "English help";
+  });
+}
+function setHelp(l) {
+  HELP = HELP_LANGS.includes(l) ? l : "";
+  if (HELP) { HELP_PREF = HELP; lsSet("coq:aide-pref", HELP); }
+  lsSet("coq:aide", HELP); lsSet("coq:en", HELP === "en" ? "1" : "0");
+  paintHelpButtons();
+  if (HELP) loadHelp(HELP);
   rerender();
+}
+// En arabe, les passages en français (noms, citations) sont isolés pour garder le bon sens de lecture
+const LATIN = /[A-Za-zÀ-ÖØ-öø-ÿŒœ][A-Za-zÀ-ÖØ-öø-ÿŒœ0-9'’.,!?…\-–/: ]*[A-Za-zÀ-ÖØ-öø-ÿŒœ0-9.!?…]|[A-Za-zÀ-ÖØ-öø-ÿŒœ]/g;
+function bidi(t) {
+  let out = "", last = 0;
+  String(t).replace(LATIN, (m, off) => { out += esc(t.slice(last, off)) + (m.length <= 24 ? '<bdi class="nw">' : "<bdi>") + esc(m) + "</bdi>"; last = off + m.length; return m; });
+  return out + esc(String(t).slice(last));
 }
 // full = false : la question seulement (avant de répondre) ; true : question, réponse et explication
 function enBlock(c, full) {
-  if (!EN) return "";
-  if (EN_STATE !== "ok") return `<div class="en" lang="en"><div class="enh">In English</div><p class="enq">${EN_STATE === "error" ? "English help could not be loaded. Connect to the internet once, then try again." : "Loading…"}</p></div>`;
-  const e = c.x ? EN_DATA.s[c.k] : EN_DATA.q[c.k];
+  if (!HELP) return "";
+  const T = HELP_TXT[HELP], attrs = HELP === "ar" ? 'lang="ar" dir="rtl"' : 'lang="en"';
+  if (HELP_STATE[HELP] !== "ok") return `<div class="en" ${attrs}><div class="enh">${T.head}</div><p class="enq">${HELP_STATE[HELP] === "error" ? T.error : T.loading}</p></div>`;
+  const D = HELP_DATA[HELP], e = c.x ? D.s[c.k] : D.q[c.k];
   if (!e) return "";
   const [sit, q, a, d] = c.x ? e : ["", ...e];
-  return `<div class="en" lang="en"><div class="enh">In English</div><p class="enq">${sit ? esc(sit) + " " : ""}${esc(q)}</p>`
-    + (full ? `<p class="ena"><b>Answer:</b> ${esc(a)}</p>${d ? `<p class="end">${esc(d)}</p>` : ""}` : "") + `</div>`;
+  const tx = HELP === "ar" ? bidi : esc;
+  return `<div class="en" ${attrs}><div class="enh">${T.head}</div><p class="enq">${sit ? tx(sit) + " " : ""}${tx(q)}</p>`
+    + (full ? `<p class="ena"><b>${T.answer}</b> ${tx(a)}</p>${d ? `<p class="end">${tx(d)}</p>` : ""}` : "") + `</div>`;
 }
 function rerender() {
   if (!S) return;
@@ -1123,6 +1161,8 @@ document.addEventListener("click", e => {
     case "share-result": if (S && S.over) shareResult(S.score, S.score >= EXAM_PASS); break;
     case "set-list": { const code = b.dataset.list; if (code && code !== LIST) { try { localStorage.setItem("coq:liste", code); localStorage.removeItem(LS_KEY + ":scope"); } catch (er) {} location.href = location.pathname + "?liste=" + encodeURIComponent(code); } break; }
     case "leave-no": S.leave = false; renderExam(); break;
+    case "help": setHelp(HELP === b.dataset.l ? "" : b.dataset.l); break;
+    case "helpbar": setHelp(HELP ? "" : HELP_PREF); break;
     case "lesson": startLesson(b.dataset.l); break;
     case "lnext": if (S && S.mode === "lesson") { S.li++; if (S.li >= S.l.cards.length) S.phase = "quizintro"; renderLesson(); window.scrollTo(0, 0); } break;
     case "lquiz": if (S && S.mode === "lesson") { S.phase = "quiz"; prepQuestion(); renderLesson(); } break;
@@ -1174,8 +1214,8 @@ document.addEventListener("keydown", e => {
 });
 
 /* ---------- Démarrage ---------- */
-document.querySelectorAll(".entog").forEach(b => b.setAttribute("aria-pressed", String(EN)));
-if (EN) { try { localStorage.setItem("coq:en", "1"); } catch (e) {} loadEn(); }
+paintHelpButtons();
+if (HELP) { lsSet("coq:aide", HELP); loadHelp(HELP); }
 refreshHome();
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initAccount); else initAccount();
 // Lien direct vers une leçon (pages des questions) : ?lecon=1-3
