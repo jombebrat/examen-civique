@@ -237,6 +237,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .node.prac .dot{ border-radius:20px; }
 .node.done .dot{ background:var(--c); color:var(--surface); box-shadow:0 5px 0 color-mix(in srgb, var(--c) 55%, #000); }
 .node.review .dot{ background:#F08A24; color:#fff; box-shadow:0 5px 0 #B9600F; }
+.vh{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .node.next .dot{ width:72px; height:72px; background:var(--accent); color:var(--on-accent); box-shadow:0 5px 0 color-mix(in srgb, var(--accent) 55%, #000), 0 0 0 6px var(--accent-weak); animation:coq-bob 1.8s ease-in-out infinite; }
 @keyframes coq-bob{ 50%{ transform:translateY(-4px); } }
 .node .nl{ font-size:12.5px; font-weight:700; color:var(--muted); max-width:150px; text-align:center; line-height:1.25; }
@@ -830,9 +831,10 @@ function renderPath() {
         const s = st[j], isNext = nx && l.key === nx.key;
         const cls = ["node", l.kind === "sit" ? "prac" : "", isNext ? "next" : s === "done" ? "done" : s === "review" ? "review" : ""].filter(Boolean).join(" ");
         const inner = s === "done" && !isNext ? ICON_OK : s === "review" && !isNext ? ICON_AGAIN : l.kind === "sit" ? ICON_SIT : l.i;
-        return `<button type="button" class="${cls}" style="--x:${OFFS[j % OFFS.length]}px" data-act="lesson" data-l="${l.key}" aria-label="${esc(lessonTitle(l))}, ${isNext ? "leçon suivante" : labels[s]}"><span class="dot">${inner}</span><span class="nl">${isNext ? "Commencer" : esc(l.kind === "sit" ? `Situations ${l.i}` : `Leçon ${l.i}`)}</span></button>`;
+        // Nom accessible = texte visible + état (WCAG 2.5.3 : le nom lu commence par ce qui est écrit)
+        return `<button type="button" class="${cls}" style="--x:${OFFS[j % OFFS.length]}px" data-act="lesson" data-l="${l.key}"><span class="dot" aria-hidden="true">${inner}</span><span class="nl">${isNext ? "Commencer" : esc(l.kind === "sit" ? `Situations ${l.i}` : `Leçon ${l.i}`)}</span><span class="vh">${isNext ? ` : ${esc(lessonTitle(l))}` : `, ${labels[s]}`}</span></button>`;
       }).join("")}</div></details>`;
-  }).join("") + `<div class="trophy"><button type="button" class="node" data-act="start-exam" aria-label="Examen blanc"><span class="dot">${ICON_CUP}</span><span class="nl">Examen blanc<br>40 questions · 45 min</span></button></div>`;
+  }).join("") + `<div class="trophy"><button type="button" class="node" data-act="start-exam"><span class="dot" aria-hidden="true">${ICON_CUP}</span><span class="nl">Examen blanc<br>40 questions · 45 min</span></button></div>`;
 }
 
 /* Session « leçon » */

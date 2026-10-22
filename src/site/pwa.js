@@ -19,7 +19,7 @@
   var SHARE = '<svg class="coq-share" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Partager"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
   var CSS = ".coq-inst{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;justify-content:center;padding:0 10px calc(10px + env(safe-area-inset-bottom));pointer-events:none}" +
     ".coq-inst>div{pointer-events:auto;position:relative;display:flex;gap:12px;align-items:center;width:100%;max-width:520px;background:#fff;color:#15203B;border:1px solid #DADFE9;border-radius:18px;box-shadow:0 14px 44px rgba(12,18,32,.28);padding:12px 44px 12px 12px;font-size:14.5px;line-height:1.4;animation:coq-up2 .35s ease-out}" +
-    "@keyframes coq-up2{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}@media (prefers-reduced-motion: reduce){.coq-inst>div{animation:none}}" +
+    "@keyframes coq-up2{from{transform:translateY(130%)}to{transform:none}}@media (prefers-reduced-motion: reduce){.coq-inst>div{animation:none}}" +
     ".coq-inst img{width:44px;height:44px;border-radius:11px;flex:none}" +
     ".coq-inst b{display:block;font-size:15px}" +
     ".coq-inst a{color:#1F4E9C;font-weight:700}" +

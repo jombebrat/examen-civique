@@ -73,7 +73,7 @@ const pwaHead = () => `<link rel="manifest" href="${href("/manifest.webmanifest"
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="${esc(NAME)}">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">`;
-const pwaScripts = () => `<script>window.COQ_PWA=${JSON.stringify({ sw: href("/sw.js"), scope: href("/"), icon: href("/assets/icon-192.png"), guide: href("/installer-application/"), app: href("/reviser/") })};</script>
+const pwaScripts = () => `<script>window.COQ_PWA=${JSON.stringify({ sw: href("/sw.js"), scope: href("/"), icon: href("/assets/icon-96.png"), guide: href("/installer-application/"), app: href("/reviser/") })};</script>
 <script src="${href("/assets/pwa.js")}?v=${V}" defer></script>`;
 const SB = config.supabase || {};
 // Adresse email + progression en ligne + livret PDF : actifs si l'adresse et la clé publique Supabase sont renseignées.
@@ -101,6 +101,21 @@ function clip(s, n = 155) {
   s = s.replace(/\s+/g, " ").trim();
   if (s.length <= n) return s;
   return s.slice(0, n - 1).replace(/\s+\S*$/, "") + "…";
+}
+// Titres : 60 caractères au plus, ce que Google affiche sans couper (il montre déjà le nom du site au-dessus).
+// fit() ajoute le premier suffixe qui tient ; brand() ajoute « | Coq Civique » seulement s'il tient. Voir seo/keyword-map.csv.
+const TITLE_MAX = 60;
+function fit(base, ...suffixes) {
+  for (const s of suffixes) if ((base + s).length <= TITLE_MAX) return base + s;
+  return base;
+}
+const brand = (base) => (base.includes(NAME) ? base : fit(base, ` | ${NAME}`));
+// Description : la base, puis la plus longue des fins proposées qui garde le total sous `max`.
+function descWith(base, tails, max = 155) {
+  base = base.replace(/\s+/g, " ").trim();
+  if (base.length > max) return clip(base, max);
+  for (const t of tails) if ((base + t).length <= max) return base + t;
+  return base;
 }
 const breadcrumbLd = (items) => ({
   "@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -347,8 +362,8 @@ ${faq.map(([q, a]) => `<details><summary>${typo(q)}</summary><p>${typo(a)}</p></
     { "@context": "https://schema.org", "@type": "Organization", name: NAME, url: abs("/"), logo: abs("/assets/icon-512.png"), founder: { "@type": "Person", name: "Jovan Pavlovic" } },
   ];
   write("/", layout({
-    title: `Examen civique 2026 : test gratuit et QCM pour apprendre les questions officielles | ${NAME}`,
-    description: `Test civique gratuit et sans inscription pour apprendre l’examen civique pas à pas : leçons de 5 minutes sur les questions officielles, QCM, examens blancs et PDF.`,
+    title: brand(`Examen civique 2026 : questions officielles et QCM gratuit`),
+    description: `Préparez l’examen civique 2026 gratuitement, sans inscription : questions officielles et réponses, leçons de 5 minutes, QCM, examens blancs et PDF.`,
     path: "/", body, jsonld: ld, wide: true, alternates: ALTS,
   }));
 }
@@ -363,8 +378,8 @@ function questionsIndex() {
 </section>`).join("");
   const items = [["Accueil", "/"], ["Naturalisation", "/questions/"]];
   write("/questions/", layout({
-    title: `Examen civique naturalisation : les ${TOTAL} questions et réponses (QCM gratuit) | ${NAME}`,
-    description: `La liste officielle des ${TOTAL} questions de connaissance de l’examen civique pour la naturalisation, avec leurs réponses, un QCM et un test de naturalisation gratuits.`,
+    title: brand(`Examen civique naturalisation : ${TOTAL} questions et réponses`),
+    description: `Les ${TOTAL} questions officielles de l’examen civique pour la naturalisation, avec leurs réponses, classées par thème. QCM et test gratuits, sans inscription.`,
     path: "/questions/", jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Examen civique naturalisation : les ${TOTAL} questions`)}</h1>
 <p class="lead">La liste officielle des questions de connaissance pour la naturalisation (publiée le 12 décembre 2025), dans l’ordre de la liste, avec un lien vers chaque réponse.</p>
@@ -393,7 +408,7 @@ function listPage(code) {
   }).join("");
   const common = new Set(L.questions.map((e) => e.id).filter((id) => /^[1-5]-\d+$/.test(id))).size;
   write(info.path, layout({
-    title: `Examen civique ${longName} : ${info.count} questions-réponses et QCM gratuit | ${NAME}`,
+    title: brand(code === "csp" ? `Examen civique titre de séjour pluriannuel : ${info.count} questions` : `Examen civique carte de résident (10 ans) : ${info.count} questions`),
     description: clip(`Les ${info.count} questions officielles de l’examen civique pour la ${longName}, avec leurs réponses, classées par thème. QCM et examen blanc gratuits.`),
     path: info.path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="eyebrow">Liste officielle · ${esc(info.court)}</div>
@@ -413,7 +428,8 @@ function themePage(t) {
   const items = [["Accueil", "/"], ["Naturalisation", "/questions/"], [plain(t.titre), tPath(t)]];
   const list = qs.map((q) => `<li><span class="n">${q.numero}</span><span><a href="${href(qPath(q))}">${typo(q.question)}</a><span class="r">${typo(q.reponse)}</span></span></li>`).join("");
   write(tPath(t), layout({
-    title: `${plain(t.titre)} : ${qs.length} questions et réponses – QCM examen civique`,
+    title: [plain(t.titre), plain(t.titre_court)].flatMap((n) => [`${n} : ${qs.length} questions de l’examen civique`, `${n} : ${qs.length} questions – examen civique`])
+      .find((s) => s.length <= TITLE_MAX) || brand(`${plain(t.titre_court)} : ${qs.length} questions`),
     description: clip(`Examen civique, thème « ${plain(t.titre)} » : les ${qs.length} questions officielles (naturalisation) et leurs réponses, avec l’essentiel à retenir et un QCM gratuit.`),
     path: tPath(t), theme: t.id, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}
@@ -427,6 +443,7 @@ function themePage(t) {
 }
 
 /* ---------- Pages question ---------- */
+const USED_DESC = new Set();
 function questionPage(q, i) {
   const t = themeById[q.theme];
   const ms = member.get(q.id);
@@ -446,7 +463,11 @@ function questionPage(q, i) {
   if (!q.livret_pages && !q.reponse_hors_livret) src.push(`Réponse rédigée par ${esc(NAME)} d’après les textes officiels.`);
   src.push(`Mis à jour le ${dateFr(UPDATED)} · <a href="${reportLink(plain(q.question), qPath(q))}">Signaler une erreur</a>`);
   const det = detailHtml(q);
-  const desc = clip(`${plain(q.reponse)} ${plain(q.explication || "")}`.trim());
+  // Description : la réponse et l'explication, complétées si elles sont courtes ; jamais deux fois la même.
+  const tails = [` Question officielle de l’examen civique (liste « ${LIST[main.code].nom.toLowerCase()} »), avec QCM gratuit.`, ` Question officielle de l’examen civique, avec QCM gratuit.`, ` Examen civique : QCM gratuit.`];
+  let desc = descWith(`${plain(q.reponse)} ${plain(q.explication || "")}`, tails);
+  if (desc.length < 120 || USED_DESC.has(desc)) desc = descWith(`${plain(q.question)} ${plain(q.reponse)} ${plain(q.explication || "")}`, tails);
+  if (qPath(q) === qPath(canonicalQ)) USED_DESC.add(desc);
   const seen = new Set();
   const badges = ms.filter((m) => !seen.has(m.code) && seen.add(m.code)).map((m) => `<a class="lbadge" href="${href(LIST[m.code].path)}">${esc(LIST[m.code].nom)} <b>n°\u00a0${m.theme}-${m.numero}</b></a>`).join("");
   const variants = [...new Map(ms.filter((m) => m.texte).map((m) => [m.texte, m])).values()];
@@ -462,7 +483,7 @@ function questionPage(q, i) {
   const lesLabel = `leçon ${les.i} du thème « ${plain(themeById[les.t].titre_court)} » (${les.n} questions)`;
   const enHelp = en ? `<details class="en-help" lang="en"><summary><b>EN</b>In English</summary><p>${esc(en[0])}</p><p><b>Answer:</b> ${esc(en[1])}</p>${en[2] ? `<p class="end">${esc(en[2])}</p>` : ""}</details>` : "";
   write(qPath(q), layout({
-    title: `${plain(q.question)} | QCM examen civique`,
+    title: fit(plain(q.question), " | QCM examen civique", " – examen civique"),
     description: desc, path: qPath(q), canonical: qPath(canonicalQ), theme: t.id, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}
 <article>
@@ -539,7 +560,7 @@ function livretPage() {
   const withPage = natQ.filter((q) => q.livret_pages).length;
   const MAJ = "2026-10-21";
   const h1 = "Livret du citoyen 2026 : sommaire et questions de l’examen civique";
-  const desc = "Le Livret du citoyen (édition mai 2026) expliqué partie par partie : sommaire, pages clés et questions de l’examen civique qui s’y rapportent. Lien vers le PDF officiel.";
+  const desc = "Le Livret du citoyen (édition mai 2026) résumé partie par partie : sommaire, pages clés et questions de l’examen civique liées. Lien vers le PDF officiel.";
   const rows = LIVRET_PARTS.map((part) => {
     const n = part.chaps.reduce((s, c) => s + qOf(c).length, 0);
     return `<tr><td><a href="#${part.n ? `partie-${part.n}` : "annexes"}">${part.n ? `Partie ${part.n} — ` : ""}${typo(part.titre)}</a></td><td class="n">${pagesFr(part.p)}</td><td class="n">${n || "—"}</td></tr>`;
@@ -557,7 +578,7 @@ ${qs.length ? `<p><b>${qs.length} question${qs.length > 1 ? "s" : ""} de l’exa
   }).join("\n")}`;
   }).join("\n");
   write(path, layout({
-    title: `Livret du citoyen 2026 (PDF) : sommaire, résumé et questions de l’examen civique | ${NAME}`,
+    title: brand(`Livret du citoyen 2026 PDF : résumé, sommaire et questions`),
     description: desc, path, ogType: "article",
     jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: h1, description: desc, inLanguage: "fr", dateModified: MAJ, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path), about: { "@type": "CreativeWork", name: "Livret du citoyen", url: LIVRET_URL } }],
     body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(MAJ)}</div><h1>${typo(h1)}</h1>
@@ -589,9 +610,9 @@ ${parts}
 function pdfPage() {
   const path = "/examen-civique-pdf/";
   const items = [["Accueil", "/"], ["Livrets PDF", path]];
-  const desc = "Examen civique 2026 en PDF gratuit, sans inscription : toutes les questions officielles et leurs réponses (naturalisation 259, carte de résident, CSP) et des sujets de 40 questions avec corrigé.";
+  const desc = "Examen civique 2026 en PDF gratuit, sans inscription : questions officielles et réponses (naturalisation, carte de résident, CSP) et sujets corrigés.";
   write(path, layout({
-    title: `Examen civique 2026 PDF gratuit : questions et réponses à imprimer, sans inscription | ${NAME}`,
+    title: brand(`Examen civique 2026 PDF gratuit : questions et réponses`),
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">À imprimer · gratuit</div><h1>${typo("Examen civique en PDF : les questions et réponses à imprimer")}</h1>
 <p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille. Gratuit, sans inscription.")}</p>
@@ -636,9 +657,9 @@ function pdfPage() {
 function examBlancPage() {
   const path = "/examen-blanc/";
   const items = [["Accueil", "/"], ["Examen blanc", path]];
-  const desc = "Simulateur gratuit de l’examen civique, sans inscription : 40 questions en 45 minutes, 28 questions de votre liste officielle et 12 mises en situation, score sur 40 et correction.";
+  const desc = "Simulateur gratuit de l’examen civique : 40 questions en 45 minutes (28 de votre liste officielle et 12 mises en situation), score sur 40 et correction.";
   write(path, layout({
-    title: `Examen blanc de l’examen civique : simulateur gratuit de 40 questions (2026) | ${NAME}`,
+    title: brand(`Examen civique test gratuit : simulation de 40 questions`),
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Simulateur · gratuit · sans inscription</div><h1>${typo("Examen blanc de l’examen civique : la simulation en conditions réelles")}</h1>
 <p class="lead">${typo("40 questions en 45 minutes, comme le jour de l’examen : 28 questions de votre liste officielle et 12 mises en situation. Votre score sur 40 et la correction de chaque erreur.")}</p>
@@ -718,13 +739,13 @@ function entretienPage() {
   const pt = (s) => (s ? plain(s).replace(/[  ]/g, " ") : "");
   writeFileSync(join(DIST, "data/entretien.json"), JSON.stringify({ maj: ENTRETIEN.maj, n, site: abs("/"), page: abs(path), sections: secs.map((s) => ({ titre: pt(s.titre), chapo: pt(s.chapo), items: s.items.map((it) => ({ q: pt(it.q), a: pt([it.a, it.d].filter(Boolean).join(" ")), c: pt(it.conseil), u: it.url ? abs(it.url) : "" })) })) }));
   const items = [["Accueil", "/"], ["Guides", "/guide/"], ["Questions de l’entretien", path]];
-  const desc = `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner, avec réponses et conseils, en PDF gratuit. Parcours, valeurs, institutions, histoire, vie quotidienne.`;
+  const desc = `${n} questions d’entraînement pour l’entretien de naturalisation, avec réponses et conseils, en PDF gratuit : parcours, valeurs, institutions, histoire.`;
   const pdf = existsSync(join(ROOT, ENT_PDF.slice(1)));
   let k = 0;
   const body = secs.map((s) => `<h2>${typo(s.titre)}</h2>${s.chapo ? `<p>${typo(s.chapo)}</p>` : ""}
 <div class="qa">${s.items.map((it) => { k++; return `<details><summary><span class="qn">${k}</span>${typo(it.q)}</summary><div>${it.a ? `<p><b>Réponse :</b> ${typo(it.a)}${it.d ? ` ${typo(it.d)}` : ""}${it.url ? ` <a href="${href(it.url)}">${it.url.startsWith("/mises") ? "L’exercice" : "La fiche"} ›</a>` : ""}</p>` : ""}${it.conseil ? `<p><b>Conseil :</b> ${typo(it.conseil)}</p>` : ""}</div></details>`; }).join("\n")}</div>`).join("\n");
   write(path, layout({
-    title: `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner (PDF gratuit) | ${NAME}`,
+    title: brand(`Questions-réponses entretien naturalisation (PDF gratuit)`),
     description: desc, path, ogType: "article",
     jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: `Questions de l’entretien de naturalisation : ${n} questions pour s’entraîner`, description: desc, inLanguage: "fr", dateModified: ENTRETIEN.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
     body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · gratuit · mis à jour le ${dateFr(ENTRETIEN.maj)}</div>
@@ -788,14 +809,14 @@ function openData() {
 function examen40Page() {
   const path = EX40_PATH;
   const items = [["Accueil", "/"], ["Livrets PDF", "/examen-civique-pdf/"], ["Sujets de 40 questions", path]];
-  const desc = "Examen civique 40 questions en PDF gratuit : un nouveau sujet à chaque clic, au format officiel (28 questions de votre liste + 12 mises en situation), avec corrigé. Sans inscription.";
+  const desc = "Examen civique 40 questions en PDF gratuit : un nouveau sujet à chaque clic, au format officiel (28 questions + 12 mises en situation), avec corrigé.";
   const cfg = { data: `${href("/data/examen40.json")}?v=${V}`, lib: href("/assets/vendor/jspdf.umd.min.js"), site: abs("/"), logo: href("/assets/pdf/logo.jpg"), mascot: href("/assets/pdf/mascotte.jpg") };
   const examples = LISTS.filter((l) => EX40_INV[l.code]).map((l) => {
     const e = EX40_INV[l.code];
     return `<li><a href="${href(`/assets/examens/${e.fichier}`)}" download data-ev="pdf40-exemple-${l.code}">${esc(l.nom)} : sujet ${esc(e.sujet)}</a> <span class="muted">(PDF, ${e.pages} pages, avec corrigé)</span></li>`;
   }).join("");
   write(path, layout({
-    title: `Examen civique 40 questions PDF gratuit : sujets avec corrigé | ${NAME}`,
+    title: brand(`Examen civique 40 questions PDF gratuit : sujets corrigés`),
     description: desc, path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<article class="prose"><div class="eyebrow">Gratuit · sans inscription · à imprimer</div>
 <h1>${typo("Examen civique : 40 questions en PDF, gratuit, avec corrigé")}</h1>
@@ -857,8 +878,8 @@ ${xs.map((x) => `<article class="sit-item" id="${x.id}"><div class="sit-meta">${
 <details><summary>Voir la réponse</summary><p class="sit-a">${typo(x.qcm.bonne)}</p><p class="sit-d">${typo(x.explication)}</p></details></article>`).join("\n")}</section>`;
   }).join("");
   write(path, layout({
-    title: `Mises en situation de l’examen civique : ${situations.length} exemples corrigés | ${NAME}`,
-    description: `Entraînez-vous aux mises en situation de l’examen civique : ${situations.length} cas de la vie quotidienne corrigés et expliqués (travail, école, laïcité, santé, logement…).`,
+    title: brand(`Mises en situation examen civique : ${situations.length} exemples corrigés`),
+    description: `Entraînez-vous aux mises en situation de l’examen civique : ${situations.length} cas de la vie quotidienne corrigés (travail, école, laïcité, santé, logement…).`,
     path, jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="eyebrow">Exercices d’entraînement · non officiels</div>
 <h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Mises en situation de l’examen civique : ${situations.length} exemples corrigés`)}</h1>
@@ -884,8 +905,8 @@ function appPage() {
   const sits = situations.map((x) => ({ i: x.id, t: x.theme, n: x.numero, s: typo(x.situation), q: typo(x.question), c: typo(x.qcm.bonne), w: x.qcm.mauvaises.map(typo), d: typo(x.explication), p: x.principe }));
   const appData = { site: abs("/"), pdfs: Object.fromEntries(LIVRETS.map((l) => [l.code, { url: href(l.url), pages: l.pages }])), sits, sitUrl: href("/mises-en-situation/"), mascot: href("/assets/mascotte-fin.jpg"), help: { en: `${href("/data/en.json")}?v=${V}`, ar: `${href("/data/ar.json")}?v=${V}` }, themes: themes.map((t) => ({ t: t.id, name: typo(t.titre) })), lists: LISTS.map((l) => ({ code: l.code, nom: l.nom, court: l.court, count: l.count })), cards };
   const tpl = readFileSync(join(ROOT, "src/app/app.html"), "utf8");
-  const title = `Test civique et QCM civique gratuits : apprendre l’examen civique en leçons de 5 minutes | ${NAME}`;
-  const desc = `Apprenez l’examen civique pas à pas, 5 minutes par jour : des leçons courtes sur les questions officielles de votre liste (naturalisation, carte de résident ou CSP), un quiz après chaque leçon et des examens blancs. Gratuit, sans inscription.`;
+  const title = brand(`Test civique et QCM civique gratuits`);
+  const desc = `Test civique et QCM civique gratuits : leçons de 5 minutes sur les questions officielles de votre liste, quiz après chaque leçon et examens blancs.`;
   sitemap.push("/reviser/");
   write("/reviser/", tpl
     .replaceAll("__TITLE__", esc(title))
@@ -964,7 +985,7 @@ function contentPages() {
     const path = `/guide/${g.slug}/`;
     const items = [["Accueil", "/"], ["Guides", "/guide/"], [g.meta.h1, path]];
     write(path, layout({
-      title: `${g.meta.titre} | ${NAME}`, description: g.meta.description, path, ogType: "article",
+      title: brand(g.meta.titre), description: g.meta.description, path, ogType: "article",
       jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: g.meta.h1, description: g.meta.description, inLanguage: "fr", dateModified: g.meta.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
       body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Guide · mis à jour le ${dateFr(g.meta.maj)}</div><h1>${typo(g.meta.h1)}</h1>${g.meta.chapo ? `<p class="lead">${typo(g.meta.chapo)}</p>` : ""}${fillVars(g.html).replace("{{outil-liste}}", () => outilListe())}
 <p class="src">Par Jovan, créateur de ${esc(NAME)}. Site indépendant et non officiel : en cas de doute, référez-vous aux sites officiels cités. <a href="${reportLink(g.meta.h1, path)}">Signaler une erreur</a></p></article>
@@ -979,7 +1000,7 @@ function contentPages() {
     const qs = (f.meta.questions || []).map((id) => { const q = qById.get(id); if (!q) throw new Error(`fiche ${f.slug} : question inconnue ${id}`); return q; });
     const theme = f.meta.theme ? themeById[f.meta.theme] : null;
     write(path, layout({
-      title: `${f.meta.titre} | ${NAME}`, description: f.meta.description, path, ogType: "article",
+      title: brand(f.meta.titre), description: f.meta.description, path, ogType: "article",
       jsonld: [breadcrumbLd(items), { "@context": "https://schema.org", "@type": "Article", headline: f.meta.h1, description: f.meta.description, inLanguage: "fr", dateModified: f.meta.maj, author: { "@type": "Person", name: "Jovan Pavlovic", url: abs("/a-propos/") }, publisher: { "@type": "Organization", name: NAME, logo: { "@type": "ImageObject", url: abs("/assets/icon-512.png") } }, mainEntityOfPage: abs(path) }],
       body: `${crumbs(items)}<article class="prose guide"><div class="eyebrow">Fiche de révision · mise à jour le ${dateFr(f.meta.maj)}</div><h1>${typo(f.meta.h1)}</h1>${f.meta.chapo ? `<p class="lead">${typo(f.meta.chapo)}</p>` : ""}${fillVars(f.html)}
 ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</h2>
@@ -991,8 +1012,8 @@ ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</
   if (fiches.length) {
     const fi = [["Accueil", "/"], ["Fiches", "/fiches/"]];
     write("/fiches/", layout({
-      title: `Fiches de révision de l’examen civique : laïcité, Républiques, institutions, vie quotidienne | ${NAME}`,
-      description: "Des fiches courtes pour comprendre les sujets de l’examen civique : laïcité, les cinq Républiques, la séparation des pouvoirs, les numéros d’urgence, et plus. Gratuites, avec les questions officielles liées.",
+      title: brand(`Fiches de révision de l’examen civique`),
+      description: "Fiches courtes et gratuites pour comprendre l’examen civique : laïcité, cinq Républiques, séparation des pouvoirs, numéros d’urgence, et leurs questions.",
       path: "/fiches/", jsonld: [breadcrumbLd(fi)],
       body: `${crumbs(fi)}<h1 style="font-size:clamp(28px,6vw,40px)">Fiches de révision</h1>
 <p class="lead">${typo("Les sujets de l’examen civique expliqués simplement, avec les questions officielles qui s’y rapportent.")}</p>
@@ -1001,8 +1022,8 @@ ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</
   }
   const hubItems = [["Accueil", "/"], ["Guides", "/guide/"]];
   write("/guide/", layout({
-    title: `Guides de l’examen civique 2026 : déroulement, inscription, dispenses | ${NAME}`,
-    description: "Tout comprendre de l’examen civique : déroulement, inscription, qui doit le passer, niveau de français, Livret du citoyen, entretien de naturalisation et plan de révision.",
+    title: brand(`Guides de l’examen civique : inscription, prix, résultat`),
+    description: "Tout sur l’examen civique : déroulement, inscription, prix, résultat, dispenses, niveau de français, Livret du citoyen et entretien de naturalisation.",
     path: "/guide/", jsonld: [breadcrumbLd(hubItems)],
     body: `${crumbs(hubItems)}<h1 style="font-size:clamp(28px,6vw,40px)">Guides de l’examen civique</h1>
 <p class="lead">Les réponses aux questions pratiques, vérifiées sur les sites officiels.</p>
@@ -1020,7 +1041,7 @@ ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</
     const path = p.slug === "index" ? "/en/" : `/en/${p.slug}/`;
     const items = [["Coq Civique", "/"], ["English", path]];
     write(path, layout({
-      title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, lang: "en", jsonld: [breadcrumbLd(items)],
+      title: brand(p.meta.titre), description: p.meta.description, path, lang: "en", jsonld: [breadcrumbLd(items)],
       alternates: p.slug === "index" ? ALTS : [],
       body: `${crumbs(items)}<article class="prose" lang="en"><div class="eyebrow">In English · updated ${new Date(p.meta.maj + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</div><h1>${esc(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${esc(p.meta.chapo)}</p>` : ""}${fillVarsEn(p.html)}</article>`,
     }));
@@ -1033,7 +1054,7 @@ ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</
     const path = p.slug === "index" ? "/ar/" : `/ar/${p.slug}/`;
     const items = [["Coq Civique", "/"], ["العربية", path]];
     write(path, layout({
-      title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, lang: "ar", jsonld: [breadcrumbLd(items)],
+      title: brand(p.meta.titre), description: p.meta.description, path, lang: "ar", jsonld: [breadcrumbLd(items)],
       alternates: p.slug === "index" ? ALTS : [],
       body: `${crumbs(items)}<article class="prose" lang="ar" dir="rtl"><div class="eyebrow">بالعربية · آخر تحديث ${new Date(p.meta.maj + "T12:00:00Z").toLocaleDateString("ar", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</div><h1>${bidiText(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${bidiText(p.meta.chapo)}</p>` : ""}${bidiHtml(fillVarsEn(p.html))}</article>`,
     }));
@@ -1042,7 +1063,7 @@ ${qs.length ? `<h2>${typo("Les questions de l’examen civique sur ce sujet")}</
     const path = `/${p.slug}/`;
     const items = [["Accueil", "/"], [p.meta.h1, path]];
     write(path, layout({
-      title: `${p.meta.titre} | ${NAME}`, description: p.meta.description, path, jsonld: [breadcrumbLd(items)],
+      title: brand(p.meta.titre), description: p.meta.description, path, jsonld: [breadcrumbLd(items)],
       body: `${crumbs(items)}<article class="prose${p.meta.classe ? ` ${p.meta.classe}` : ""}">${p.meta.maj ? `<div class="eyebrow">Mis à jour le ${dateFr(p.meta.maj)}</div>` : ""}<h1>${typo(p.meta.h1)}</h1>${p.meta.chapo ? `<p class="lead">${typo(p.meta.chapo)}</p>` : ""}${fillVars(p.html)}</article>`,
     }));
   }
@@ -1071,8 +1092,8 @@ function legal() {
 <p>Le site n’utilise aucun cookie ni traceur publicitaire. Il enregistre dans votre navigateur votre progression et, si vous l’avez indiquée, votre adresse email, pour ne pas vous la redemander à chaque visite. Ces informations sont strictement nécessaires au fonctionnement du service.</p>` : `
 <p>Le site ne collecte aucune donnée personnelle, ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience. Votre progression de révision est enregistrée dans votre navigateur (stockage local), sur votre appareil ; elle n’est jamais envoyée au site. Vous pouvez l’effacer à tout moment depuis la page « Réviser » ou en supprimant les données de navigation.</p>`;
   write("/mentions-legales/", layout({
-    title: `Mentions légales et confidentialité | ${NAME}`,
-    description: `Mentions légales, hébergement et politique de confidentialité du site ${NAME}.`,
+    title: brand(`Mentions légales et confidentialité`),
+    description: `Mentions légales et politique de confidentialité de ${NAME} : éditeur, hébergement, données enregistrées, mesure d’audience sans cookie et vos droits.`,
     path: "/mentions-legales/", jsonld: [breadcrumbLd(items)],
     body: `${crumbs(items)}<div class="prose">
 <h1 style="font-size:clamp(28px,6vw,38px)">Mentions légales et confidentialité</h1>

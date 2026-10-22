@@ -31,7 +31,7 @@ export function typo(raw) {
 /** Version texte (sans balises) pour les balises <title> et meta description. */
 export function plain(raw) {
   return String(raw).replace(/\*\*(.+?)\*\*/g, "$1").replace(/'/g, "’").replace(/\.\.\./g, "…")
-    .replace(/\s+([?!:;»])/g, " $1").replace(/«\s+/g, "« ");
+    .replace(/\s+([?!:;»])/g, " $1").replace(/«\s+/g, "« ").replace(/(?<=[^\s ])([?!])/g, " $1");
 }
 
 export function slugify(s, max = 80) {
