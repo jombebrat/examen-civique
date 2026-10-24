@@ -476,3 +476,10 @@ main.wrap:not(.wide) .list-card .num{ font-size:32px; }
 .ql-res p{ margin:0 0 8px; }
 .ql-links{ display:flex; flex-wrap:wrap; gap:8px; }
 .ql-note{ font-size:14px; color:var(--muted); }
+/* Couplets de chanson (fiche Marseillaise) */
+.verse{ margin:12px 0 18px; padding:14px 18px; border-left:4px solid var(--red); background:var(--surface); border-radius:10px; line-height:1.65; }
+.verse .n{ display:block; margin-bottom:4px; font-weight:700; font-size:13.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+.verse.refrain{ border-left-color:var(--accent); background:var(--accent-weak); }
+.gloss{ display:grid; gap:10px; padding:0; list-style:none; }
+.gloss li{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
+.gloss q{ display:block; font-weight:700; quotes:"\00AB\00A0" "\00A0\00BB"; }

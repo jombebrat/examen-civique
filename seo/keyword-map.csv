@@ -16,7 +16,7 @@ url,mot_cle_principal,volume_fr,kd,mots_cles_secondaires,title,title_len,h1,desc
 /preparer-examen-civique-en-7-jours/,préparer l'examen civique,1300,41,,Préparer l’examen civique en 7 jours : le plan de révision,58,Préparer l’examen civique en 7 jours,147
 /fiches/separation-des-pouvoirs/,séparation des pouvoirs,1300,30,,Séparation des pouvoirs : définition simple et Montesquieu,58,"La séparation des pouvoirs, expliquée simplement",155
 /fiches/polygamie-repudiation/,répudiation,1300,20,"polygamie en france (1000, 22)",Polygamie et répudiation en France : ce que dit la loi,54,Polygamie et répudiation : ce que dit la loi en France,152
-/fiches/fete-de-la-federation/,fête de la fédération,1300,28,,Fête de la Fédération : 14 juillet 1790 et fête nationale,57,La fête de la Fédération et le 14 juillet,147
+/fiches/fete-de-la-federation/,fête de la fédération / 14 juillet 1790,1300 + 1000,28 / 26,"fête nationale française (1900, 39) ; pourquoi le 14 juillet (590, 31)","14 juillet 1790, fête de la Fédération et fête nationale",56,Fête nationale du 14 juillet : la Bastille et la fête de la Fédération,144
 /guide/prix-examen-civique/,examen civique prix,1000,13,"examen civique 2026 prix (390, 8) ; test civique prix (70, 6)",Prix de l’examen civique 2026 : combien ça coûte ?,50,Combien coûte l’examen civique ?,153
 /examen-civique-pdf/,examen civique 2026 pdf,1000,12-16,,Examen civique 2026 PDF gratuit : questions et réponses,55,Examen civique en PDF : les questions et réponses à imprimer,149
 /examen-civique-40-questions-pdf/,examen civique 40 questions pdf gratuit,1000,12-16,,Examen civique 40 questions PDF gratuit : sujets corrigés,57,"Examen civique : 40 questions en PDF, gratuit, avec corrigé",149
@@ -41,4 +41,6 @@ url,mot_cle_principal,volume_fr,kd,mots_cles_secondaires,title,title_len,h1,desc
 /guide/,guide examen civique,,,page hub,"Guides de l’examen civique : inscription, prix, résultat",56,Guides de l’examen civique,150
 /ar/,examen civique en arabe,20,,les arabophones cherchent surtout en français,الامتحان المدني الفرنسي 2026 (examen civique): تدريب مجاني,58,الامتحان المدني الفرنسي: تعلّم الأسئلة الرسمية مع الشرح بالعربية,135
 /guide/preparation-gratuite-examen-civique/,préparation examen civique gratuite,,,"page pour obtenir des liens (associations, centres, bibliothèques) ; volume non relevé",Préparation gratuite à l’examen civique : où se faire aider,59,Se préparer gratuitement à l’examen civique : qui peut vous aider ?,154
+/fiches/la-marseillaise-paroles/,paroles de la marseillaise,12100,36,"la marseillaise paroles (12100, 30) ; hymne national français (1900, 51)",Paroles de la Marseillaise : texte complet et explication,57,La Marseillaise : paroles complètes et explication simple,147
+/fiches/marianne/,marianne symbole,2400,35,"marianne symbole de la république (210, 31)","Marianne, symbole de la République : origine et sens",52,"Marianne, symbole de la République française",151
 /questions/<thème>/<question>/ (465 pages),la question officielle elle-même,,,title = la question (+ « | QCM examen civique » si ≤ 60 car.) ; description = réponse + explication (+ question si courte),,,,

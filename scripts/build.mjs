@@ -444,6 +444,12 @@ function themePage(t) {
 
 /* ---------- Pages question ---------- */
 const USED_DESC = new Set();
+// Fiche de révision liée à une question (premier fiche qui la cite), pour le lien « Pour aller plus loin »
+let FICHE_OF = null;
+const ficheOf = (id) => {
+  if (!FICHE_OF) { FICHE_OF = new Map(); for (const f of readContent("content/fiches")) for (const qid of f.meta.questions || []) if (!FICHE_OF.has(qid)) FICHE_OF.set(qid, f); }
+  return FICHE_OF.get(id);
+};
 function questionPage(q, i) {
   const t = themeById[q.theme];
   const ms = member.get(q.id);
@@ -498,6 +504,7 @@ function questionPage(q, i) {
   </div>
   ${qcm}
   ${enHelp}
+  ${ficheOf(q.id) ? `<div class="note"><p>${typo("Pour aller plus loin :")} <a href="${href(`/fiches/${ficheOf(q.id).slug}/`)}">${typo(ficheOf(q.id).meta.h1)}</a></p></div>` : ""}
   ${variants.length ? `<div class="variants"><h2>Autres formulations officielles</h2><ul>${variants.map((m) => `<li>« ${typo(m.texte)} » <small>(${esc(LIST[m.code].nom)}, n°\u00a0${m.theme}-${m.numero})</small></li>`).join("")}</ul></div>` : ""}
 </article>
 <div class="cta" data-lecon="${lesUrl}" data-lecon-label="${esc(lesLabel)}"><p>${typo(`Apprenez cette question avec les ${les.n - 1} autres de sa leçon, en 5 minutes : vous lisez les réponses, puis un petit quiz. Gratuit.`)}</p><a class="btn primary" href="${lesUrl}">Apprendre cette leçon</a></div>
