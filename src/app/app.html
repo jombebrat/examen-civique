@@ -63,9 +63,9 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .more{ display:inline-block; margin-top:8px; margin-left:8px; font-size:13px; color:var(--accent); }
 
 /* ---------- En-tête ---------- */
-.head{ padding:22px 0 14px; }
+.head{ padding:20px 0 14px; }
 .head .eyebrow{ font-size:14.5px; color:var(--muted); font-weight:700; }
-.head h1{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 7vw, 38px); line-height:1.02; letter-spacing:-.01em; margin:6px 0 0; text-wrap:balance; }
+.head h1{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 7vw, 38px); line-height:1.05; letter-spacing:-.02em; margin:0; text-wrap:balance; }
 .meta{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; margin:10px 0 0; font-size:13.5px; color:var(--muted); line-height:1.4; }
 .meta .who{ color:var(--ink); font-weight:700; overflow-wrap:anywhere; }
 .meta .linkbtn{ font-size:13.5px; color:var(--accent); font-weight:700; padding:2px 0; }
@@ -89,7 +89,7 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 .ready .weakth .linkbtn{ font-size:14px; color:var(--ink); font-weight:700; }
 .ready .est{ font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:12px; margin-left:4px; }
 .streak{ display:grid; justify-items:center; gap:0; color:var(--muted); font-size:12px; text-align:center; }
-.streak svg{ color:var(--line); } .streak.on svg{ color:#F08A24; }
+.streak svg{ color:var(--line); } .streak.on svg{ color:var(--accent); }
 .streak b{ font-family:var(--display); font-size:22px; line-height:1; color:var(--ink); }
 .celebrate{ display:block; margin:0 auto 6px; border-radius:24px; background:#fff; animation:coq-pop .6s cubic-bezier(.2,1.4,.4,1) both; }
 @keyframes coq-pop{ from{ transform:scale(.4) rotate(-8deg); opacity:0 } to{ transform:none; opacity:1 } }
@@ -179,7 +179,13 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .linkbtn{ background:none; border:0; padding:0; color:var(--muted); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font-size:13px; justify-self:start; }
 .confirm{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:var(--bad-weak); color:var(--ink); border-radius:10px; padding:10px 12px; }
 
-/* ---------- Compte ---------- */
+/* ---------- Compte : une ligne discrète sous la leçon, sans afficher l'adresse ---------- */
+.acct{ margin:10px 4px 0; gap:4px 16px; }
+.goal .gl .done{ display:block; color:var(--good); font-weight:700; }
+.helpsw .hl{ align-self:center; font-size:13.5px; color:var(--muted); margin-right:2px; }
+.listrow .entog{ padding:5px 12px; }
+.keys{ display:flex; flex-wrap:wrap; gap:4px 16px; }
+.tu{ color:var(--muted); margin-left:8px; }
 #account:empty{ display:none; }
 #account{ margin:0 0 12px; }
 
@@ -208,17 +214,18 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .go2.main .ic{ background:color-mix(in srgb, var(--on-accent) 18%, transparent); color:var(--on-accent); } .go2.main .s, .go2.main .go{ color:var(--on-accent); opacity:.85; }
 
 /* ---------- Parcours : leçon du jour et chemin des leçons ---------- */
-.today{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px 14px; align-items:center; }
+.today{ display:grid; grid-template-columns:minmax(0,1fr); gap:14px; }
 .today .coq{ width:68px; height:68px; border-radius:20px; background:#fff; object-fit:cover; }
 .today .nx .lbl{ font-size:14px; font-weight:700; color:var(--accent); }
 .today .nx b{ display:block; font-family:var(--display); font-size:21px; line-height:1.15; margin-top:2px; }
-.today .nx span{ font-size:14px; color:var(--muted); }
+.today .nx span{ display:block; font-size:15px; color:var(--muted); line-height:1.45; }
+.today .nx b + span{ margin-top:4px; }
 .today .go{ grid-column:1/-1; width:100%; font-size:17px; min-height:54px; }
 .today .go:active{ transform:translateY(1px); }
 .goal{ grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 14px; align-items:center; border-top:1px solid var(--line); padding-top:12px; }
 .goal .gl{ font-size:13.5px; color:var(--muted); } .goal .gl b{ color:var(--ink); }
 .gbar{ height:10px; background:var(--sunk); border-radius:99px; overflow:hidden; }
-.gbar span{ display:block; height:100%; background:#F08A24; border-radius:99px; transition:width .4s; }
+.gbar span{ display:block; height:100%; background:var(--good); border-radius:99px; transition:width .4s; }
 .goal .streak{ grid-row:span 2; }
 .unit{ margin-top:10px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); }
 .unit > summary{ list-style:none; cursor:pointer; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; padding:14px 16px; }
@@ -368,13 +375,11 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
   <!-- Accueil -->
   <section id="home">
     <header class="head">
-      <div class="eyebrow" id="listEyebrow">Examen civique</div>
       <h1>Apprendre l’examen civique</h1>
-      <p class="meta"><span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span><span id="account"></span></p>
     </header>
 
     <div class="listrow"><div class="listsw" id="listsw"></div>
-      <div class="helpsw" role="group" aria-label="Aide dans une autre langue"><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English"><b>EN</b>English</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية"><b>AR</b>بالعربية</button></div></div>
+      <div class="helpsw" role="group" aria-label="Aide dans une autre langue"><span class="hl" aria-hidden="true">Traduction</span><button type="button" class="entog" data-act="help" data-l="en" aria-pressed="false" lang="en" title="Show the questions and answers in English">English</button><button type="button" class="entog" data-act="help" data-l="ar" aria-pressed="false" lang="ar" dir="rtl" title="عرض الأسئلة والأجوبة بالعربية">العربية</button></div></div>
 
     <div class="tabs" role="tablist" aria-label="Sections">
       <button type="button" role="tab" id="tab-apprendre" aria-controls="pane-apprendre" data-act="tab" data-tab="apprendre">Apprendre</button>
@@ -384,6 +389,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 
     <div class="pane" id="pane-apprendre" role="tabpanel" aria-labelledby="tab-apprendre">
       <div class="panel today" id="today"></div>
+      <p class="meta acct"><span class="sync" id="sync" data-s="local" role="status"><i></i><span>Progression enregistrée sur cet appareil</span></span><span id="account"></span></p>
       <h2 class="sec">Mon parcours</h2>
       <p class="sub">Des leçons courtes : on apprend les réponses, puis un petit quiz pour les retenir.</p>
       <div id="path"></div>
@@ -392,7 +398,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
     <div class="pane" id="pane-entrainement" role="tabpanel" aria-labelledby="tab-entrainement" hidden>
       <button class="mode primary" data-act="start-exam">
         <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span>
-        <span><span class="t">Examen blanc</span><br><span class="s">Comme le jour J : 28 questions de votre liste + 12 mises en situation · 45 min · 32 pour réussir</span></span>
+        <span><span class="t">Examen blanc</span><br><span class="s">Comme le jour J : 28 questions de votre liste et 12 mises en situation, 45 min, 32 pour réussir</span></span>
         <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
       </button>
       <h2 class="sec">Réviser un thème</h2>
@@ -622,7 +628,7 @@ function renderAccount() {
   if (!ID) { box.innerHTML = ""; return; }
   const e = ID.email();
   box.innerHTML = e
-    ? `<span class="dot" aria-hidden="true">·</span><span class="who">${esc(e)}</span><span class="dot" aria-hidden="true">·</span><button type="button" class="linkbtn" data-act="acct-change">Changer</button>`
+    ? `<button type="button" class="linkbtn" data-act="acct-change" title="${esc(e)}">Changer d’adresse</button>`
     : `<button type="button" class="linkbtn" data-act="acct-ask">${Object.keys(P.cards).length ? "Sauvegarder avec mon email" : "Déjà commencé ailleurs ?"}</button>`;
 }
 function initAccount() {
@@ -652,7 +658,7 @@ function scopeCards(s) {
 function scopeLabel(s) {
   if (s === "weak") return "Mes erreurs";
   if (s === "sit") return "Mises en situation";
-  if (/^[1-5]$/.test(String(s))) return "Thème " + s + " · " + plain(THEMES[s - 1].name);
+  if (/^[1-5]$/.test(String(s))) return "Thème " + s + " : " + plain(THEMES[s - 1].name);
   return "Tous les thèmes";
 }
 /* Série de jours et estimation « prêt pour l'examen » */
@@ -751,7 +757,7 @@ function renderHistory() {
   if (!P.exams.length) { $("#history").innerHTML = `<p class="empty" style="margin:0">Aucun examen blanc pour l’instant. Faites-en un pour voir où vous en êtes : il faut 32 bonnes réponses sur 40.</p>`; return; }
   $("#history").innerHTML = P.exams.slice(0, 6).map(e => {
     const d = new Date(e.at);
-    const when = d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) + " · " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+    const when = d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) + ", " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
     const ok = e.s >= EXAM_PASS;
     return `<div class="hrow"><span>${when}</span><span class="sc">${e.s} / ${e.n}</span><span class="pill ${ok ? "ok" : "ko"}">${ok ? "Réussi" : "Pas encore"}</span></div>`;
   }).join("");
@@ -765,7 +771,7 @@ document.addEventListener("change", (e) => { if (e.target && e.target.id === "li
 function renderLists() {
   const ey = $("#listEyebrow"); if (ey) ey.textContent = `${LIST_INFO.count} questions officielles`;
   const box = $("#listsw"); if (!box) return;
-  box.innerHTML = `<label class="lsel" for="listsel">Ma liste <span class="box"><select id="listsel">` + LISTS.map(l => `<option value="${l.code}"${l.code === LIST ? " selected" : ""}>${esc(l.nom)}</option>`).join("") + `</select></span></label><a class="lsw-help" href="${DATA.site}guide/qui-doit-passer-examen-civique/#quelle-liste">Quelle liste ?</a>`;
+  box.innerHTML = `<label class="lsel" for="listsel">Ma liste <span class="box"><select id="listsel">` + LISTS.map(l => `<option value="${l.code}"${l.code === LIST ? " selected" : ""}>${esc(l.nom)}</option>`).join("") + `</select></span></label>${Object.keys(P.cards).length ? "" : `<a class="lsw-help" href="${DATA.site}guide/qui-doit-passer-examen-civique/#quelle-liste">Quelle liste ?</a>`}`;
 }
 /* ---------- Parcours : des leçons courtes, comme une application de langue ----------
    Chaque thème est découpé en leçons d'environ 8 questions, dans l'ordre de la liste officielle.
@@ -803,12 +809,12 @@ const goalBar = () => { const n = todayCount(); return `<div class="gbar" role="
 function renderToday() {
   const box = $("#today"); if (!box) return;
   const nx = nextLesson(), n = todayCount();
-  const goal = `<div class="goal"><div><div class="gl">Objectif du jour : <b>${Math.min(n, DAILY_GOAL)} / ${DAILY_GOAL}</b> questions${n >= DAILY_GOAL ? " · atteint, bravo !" : ""}</div>${goalBar()}</div>${streakHtml(streak())}</div>`;
-  const coq = DATA.mascot ? `<img class="coq" src="${DATA.mascot}" width="68" height="68" alt="">` : "";
+  const goal = `<div class="goal"><div><div class="gl">Objectif du jour : <b>${Math.min(n, DAILY_GOAL)} / ${DAILY_GOAL}</b> questions${n >= DAILY_GOAL ? `<span class="done">Atteint, bravo !</span>` : ""}</div>${goalBar()}</div>${streakHtml(streak())}</div>`;
+  const coq = "";
   if (!nx) { box.innerHTML = `${coq}<div class="nx"><div class="lbl">Parcours terminé</div><b>Bravo, vous avez vu toutes les leçons !</b><span>Place aux examens blancs pour vous mettre en conditions réelles.</span></div><button class="btn primary go" data-act="start-exam">Faire un examen blanc</button>${goal}`; return; }
   const st = lessonState(nx), first = !Object.keys(P.cards).length;
   box.innerHTML = `${coq}<div class="nx"><div class="lbl">${first ? "Votre première leçon" : st === "review" ? "À revoir" : "Leçon suivante"}</div>
-    <b>Thème ${nx.t} · ${lessonTitle(nx)}</b><span>${plain(THEMES[nx.t - 1].name)} · ${nx.cards.length} questions · environ 5 min</span></div>
+    <b>Thème ${nx.t}, ${lessonTitle(nx).toLowerCase()}</b><span>${plain(THEMES[nx.t - 1].name)}</span><span>${nx.cards.length} questions, environ 5 min</span></div>
     <button class="btn primary go" data-act="lesson" data-l="${nx.key}">${first ? "Commencer à apprendre" : st === "started" ? "Continuer" : "Commencer la leçon"}</button>${goal}`;
 }
 const OFFS = [0, 44, 66, 44, 0, -44, -66, -44];
@@ -832,7 +838,7 @@ function renderPath() {
         // Nom accessible = texte visible + état (WCAG 2.5.3 : le nom lu commence par ce qui est écrit)
         return `<button type="button" class="${cls}" style="--x:${OFFS[j % OFFS.length]}px" data-act="lesson" data-l="${l.key}"><span class="dot" aria-hidden="true">${inner}</span><span class="nl">${isNext ? "Commencer" : esc(l.kind === "sit" ? `Situations ${l.i}` : `Leçon ${l.i}`)}</span><span class="vh">${isNext ? ` : ${esc(lessonTitle(l))}` : `, ${labels[s]}`}</span></button>`;
       }).join("")}</div></details>`;
-  }).join("") + `<div class="trophy"><button type="button" class="node" data-act="start-exam"><span class="dot" aria-hidden="true">${ICON_CUP}</span><span class="nl">Examen blanc<br>40 questions · 45 min</span></button></div>`;
+  }).join("") + `<div class="trophy"><button type="button" class="node" data-act="start-exam"><span class="dot" aria-hidden="true">${ICON_CUP}</span><span class="nl">Examen blanc<br>40 questions, 45 min</span></button></div>`;
 }
 
 /* Session « leçon » */
@@ -852,7 +858,7 @@ function lessonProgress() {
   return Math.min(1, done / total);
 }
 function renderLesson() {
-  const l = S.l, where = `Thème ${l.t} · ${lessonTitle(l)}`;
+  const l = S.l, where = `Thème ${l.t}, ${lessonTitle(l).toLowerCase()}`;
   if (S.phase === "learn") {
     const c = BY_K[l.cards[S.li]]; S.cur = c.k;
     setBar(where, `Apprendre ${S.li + 1} / ${l.cards.length}`, lessonProgress());
@@ -985,7 +991,7 @@ function scoreImage(score, pass) {
         g.font = "700 54px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = pass ? "#17744A" : "#1F4E9C";
         g.fillText(pass ? "Examen blanc réussi !" : "Je m’entraîne chaque jour", 540, 820);
         g.font = "400 40px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = "#56607A";
-        g.fillText("Examen civique · " + LIST_INFO.nom, 540, 890);
+        g.fillText("Examen civique : " + LIST_INFO.nom, 540, 890);
         g.font = "700 44px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = "#1F4E9C"; g.fillText("coqcivique.com", 540, 950);
         c.toBlob(b => resolve(b), "image/png");
       };
@@ -1086,7 +1092,7 @@ function renderCards() {
       ${S.open ? `<div class="ans"><div class="a">${c.a}</div>${detail(c)}${enBlock(c, true)}</div>` : `${enBlock(c, false)}<button class="btn primary reveal" data-act="reveal">Afficher la réponse</button>`}
     </article>
     ${S.open ? `<div class="grade"><button class="btn bad" data-act="again">À revoir</button><button class="btn good" data-act="know">Je savais</button></div>
-    <div class="keys"><kbd>1</kbd> à revoir · <kbd>2</kbd> je savais</div>` : `<div class="keys"><kbd>Espace</kbd> afficher la réponse</div>`}`;
+    <div class="keys"><span><kbd>1</kbd> à revoir</span><span><kbd>2</kbd> je savais</span></div>` : `<div class="keys"><kbd>Espace</kbd> afficher la réponse</div>`}`;
 }
 function cardAnswer(ok) {
   const k = S.q[S.i];
@@ -1187,7 +1193,7 @@ function finishExam() {
 }
 function renderExamResult() {
   const pass = S.score >= EXAM_PASS;
-  setBar("Examen blanc · résultat", "", 1);
+  setBar("Examen blanc : résultat", "", 1);
   const wrong = S.q.map((k, i) => ({ c: BY_K[k], i })).filter(x => !(S.pick[x.i] !== null && S.opts[x.i][S.pick[x.i]].ok));
   $("#stage").innerHTML = `
     <div class="panel result">
@@ -1196,7 +1202,7 @@ function renderExamResult() {
       <div class="big">${S.score}<small> / ${EXAM_N}</small></div>
       <div class="scale" role="img" aria-label="${S.score} sur ${EXAM_N}, seuil 32"><span class="fill" style="width:${100 * S.score / EXAM_N}%;background:${pass ? "var(--good)" : "var(--bad)"}"></span><span class="mark" style="left:${100 * EXAM_PASS / EXAM_N}%"></span></div>
       <div class="scale-l"><span>0</span><span>seuil : 32</span><span>40</span></div>
-      <p style="margin:14px 0 0"><span class="pill ${pass ? "ok" : "ko"}">${pass ? "Réussi" : "Pas encore"}</span> · temps utilisé ${fmt(S.used)}</p>
+      <p style="margin:14px 0 0"><span class="pill ${pass ? "ok" : "ko"}">${pass ? "Réussi" : "Pas encore"}</span> <span class="tu">Temps utilisé : ${fmt(S.used)}</span></p>
       <div class="row-btns"><button class="btn primary" data-act="share-result">Partager mon résultat</button><button class="btn" data-act="start-exam">Nouvel examen blanc</button><button class="btn" data-act="home">Accueil</button></div>
     </div>
     ${wrong.length ? `<h2 class="sec">À retravailler (${wrong.length})</h2><div class="review">${wrong.map(({ c, i }) => {
@@ -1208,7 +1214,7 @@ function renderExamResult() {
 }
 
 function renderDone(title, text, again) {
-  setBar(S.mode === "cards" ? scopeLabel(scope) : "Quiz · " + scopeLabel(scope), "", 1);
+  setBar(S.mode === "cards" ? scopeLabel(scope) : "Quiz : " + scopeLabel(scope), "", 1);
   $("#stage").innerHTML = `<div class="panel done-card"><h2>${title}</h2><p class="lbl" style="font-size:15px;margin:0 auto;max-width:42ch">${text}</p>
     <div class="row-btns"><button class="btn primary" data-act="${again}">Encore 20 questions</button><button class="btn" data-act="home">Accueil</button></div></div>`;
 }
