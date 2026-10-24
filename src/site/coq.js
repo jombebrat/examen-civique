@@ -249,13 +249,14 @@
   function renderInvite() {
     var el = document.querySelector("[data-lecon]");
     var url = el ? el.getAttribute("data-lecon") : cfg.reviser, label = el ? el.getAttribute("data-lecon-label") : "";
+    var after = document.querySelector("[data-invite-title]"), custom = after ? after.getAttribute("data-invite-title") : "";
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t" aria-describedby="coq-d">' +
-      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later">×</button>' +
+      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later" data-ev="invite-fermer">×</button>' +
       '<div class="coq-head"><img src="' + esc(cfg.mascot || cfg.logo) + '" alt="" width="46" height="46"><div>' +
-      '<h2 id="coq-t">' + (label ? "Apprenez-la pour de bon" : "Apprenez l’examen civique, 5 minutes par jour") + '</h2>' +
+      '<h2 id="coq-t">' + (label ? "Apprenez-la pour de bon" : esc(custom || "Apprenez l’examen civique, 5 minutes par jour")) + '</h2>' +
       '<p id="coq-d">' + (label ? "Elle fait partie de la " + esc(label) + ". Apprenez-la avec Coq Civique, l’appli gratuite : des leçons courtes, puis un quiz." : "Coq Civique, c’est l’appli gratuite pour apprendre pas à pas : des leçons courtes sur les questions officielles, un quiz après chaque leçon et des examens blancs.") + '</p></div></div>' +
-      '<div class="coq-row"><a class="coq-btn" href="' + esc(url) + '" data-coq="go">' + (label ? "Commencer cette leçon" : "Commencer à apprendre") + '</a>' +
-      '<button class="coq-btn alt" type="button" data-coq="later">Plus tard</button></div>' +
+      '<div class="coq-row"><a class="coq-btn" href="' + esc(url) + '" data-coq="go" data-ev="invite-apprendre">' + (label ? "Commencer cette leçon" : "Commencer à apprendre") + '</a>' +
+      '<button class="coq-btn alt" type="button" data-coq="later" data-ev="invite-plus-tard">Plus tard</button></div>' +
       '<p class="coq-note">Gratuit, sans inscription ni mot de passe.</p></div>';
   }
   function invite() {
@@ -269,8 +270,14 @@
       window.removeEventListener("scroll", onScroll);
       invite();
     };
-    var onScroll = function () { if (window.scrollY > Math.min(600, document.documentElement.scrollHeight * 0.25)) go(); };
+    // Accueil : le haut de page est déjà une invitation (titre, bouton, quiz). On n'invite qu'une fois ce haut de page dépassé,
+    // et pas du tout si le visiteur a répondu au quiz (le résultat du quiz propose déjà de continuer).
+    var top = document.querySelector("[data-invite-after]");
+    var quizUsed = function () { return !!document.querySelector("#hq [data-done], #hq .hq-score"); };
+    var onScroll = top
+      ? function () { if (quizUsed()) { window.removeEventListener("scroll", onScroll); return; } if (top.getBoundingClientRect().bottom < 0) go(); }
+      : function () { if (window.scrollY > Math.min(600, document.documentElement.scrollHeight * 0.25)) go(); };
     window.addEventListener("scroll", onScroll, { passive: true });
-    setTimeout(go, 7000);
+    if (!top) setTimeout(go, 7000);
   }
 })();

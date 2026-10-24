@@ -163,14 +163,24 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
 <a class="skip" href="#contenu">Aller au contenu</a>
 <div class="flag" aria-hidden="true"><i></i><i></i><i></i></div>
 <header class="site-head"><div class="wrap wide top">
-  <a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt="">${esc(NAME)}</a>
+  <a class="brand" href="${href("/")}"><img src="${href("/assets/icon-64.png")}" width="32" height="32" alt=""><span class="brand-t">${esc(NAME)}</span></a>
   <nav class="nav" aria-label="Navigation principale">
-    <a class="hide-sm" href="${href("/questions/")}">Questions</a>
-    <a class="hide-sm" href="${href("/guide/")}">Guides</a>
-    <a class="btn small" href="${href("/examen-civique-pdf/")}">PDF</a>
-    <a class="btn primary small" href="${href("/reviser/")}">Apprendre</a>
+    <a class="hide-sm" href="${href("/questions/")}" data-ev="entete-questions">Questions</a>
+    <a class="hide-sm" href="${href("/guide/")}" data-ev="entete-guides">Guides</a>
+    <a class="btn small hide-sm" href="${href("/examen-civique-pdf/")}" data-ev="entete-pdf">PDF</a>
+    <a class="btn primary small" href="${href("/reviser/")}" data-ev="entete-apprendre">Apprendre</a>
+    <details class="menu show-sm"><summary class="btn small" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+      <div class="menu-panel">
+        <a href="${href("/questions/")}" data-ev="menu-questions">Questions officielles</a>
+        <a href="${href("/examen-civique-pdf/")}" data-ev="menu-pdf">Livrets PDF gratuits</a>
+        <a href="${href("/examen-blanc/")}" data-ev="menu-examen-blanc">Examen blanc</a>
+        <a href="${href("/preparer-examen-civique-en-7-jours/")}" data-ev="menu-plan">Plan en 7 jours</a>
+        <a href="${href("/guide/")}" data-ev="menu-guides">Guides pratiques</a>
+      </div>
+    </details>
   </nav>
 </div></header>
+<script>(function(){function shut(e){document.querySelectorAll("details.menu[open]").forEach(function(d){if(e.type==="keydown"){d.removeAttribute("open");d.querySelector("summary").focus();}else if(!d.contains(e.target))d.removeAttribute("open");});}document.addEventListener("click",shut);document.addEventListener("keydown",function(e){if(e.key==="Escape")shut(e);});})();</script>
 <main id="contenu" class="wrap${wide ? " wide" : ""}">
 ${body}
 </main>
@@ -221,13 +231,13 @@ ${pwaScripts()}
 }
 
 const LIST_COLOR = { nat: "var(--t1)", cr: "var(--red)", csp: "var(--t2)" };
-const listCards = (current = "") => `<div class="lists">${LISTS.map((l) => `<a class="list-card${l.code === current ? " on" : ""}" href="${href(l.path)}" style="--lc:${LIST_COLOR[l.code]}"><span class="lk">Liste officielle</span><b>${esc(l.nom)}</b><span class="num">${l.count}<small> questions</small></span><small>${esc(l.sous)}</small><span class="go">${l.code === current ? "Vous êtes ici" : "Voir les questions →"}</span></a>`).join("")}</div>`;
+const listCards = (current = "") => `<div class="lists">${LISTS.map((l) => `<a class="list-card${l.code === current ? " on" : ""}" href="${href(l.path)}" style="--lc:${LIST_COLOR[l.code]}"><span class="lk">Liste officielle</span><b>${esc(l.nom)}</b><span class="num">${l.count}<small> questions</small></span><small>${esc(l.sous)}</small><span class="go">${l.code === current ? "Vous êtes ici" : "Voir les questions"}</span></a>`).join("")}</div>`;
 
 /* ---------- Accueil ---------- */
 function home() {
   const rows = themes.map((t) => {
     const qs = byTheme(t.id);
-    const ex = qs.slice(0, 2).map((q) => typo(q.question)).join(" · ");
+    const ex = qs.slice(0, 2).map((q) => `<span>${typo(q.question)}</span>`).join("");
     return `<a class="theme-row" href="${href(tPath(t))}" style="--c:var(--t${t.id})"><span class="num">0${t.id}</span>
       <span><span class="tt">${typo(t.titre)}</span><span class="ex">${ex}</span></span><span class="ct">${qs.length}\u00a0questions</span></a>`;
   }).join("\n");
@@ -253,14 +263,14 @@ function home() {
   const hqFirst = (() => { const x = HQ[0]; return `<p class="hq-q">${esc(x.q)}</p><div class="hq-opts">${[x.c, ...x.w].map((o) => `<button type="button" class="hq-o">${esc(o)}</button>`).join("")}</div>`; })();
   const CHECK = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
   const body = `
-<section class="band band-hero">
+<section class="band band-hero" data-invite-after data-invite-title="${esc(typo("Envie d’aller plus loin ?"))}">
   <div class="hero hero-m">
     <div class="hero-text">
-      <div class="eyebrow">Examen civique 2026 · listes officielles</div>
       <h1>${typo("Apprenez l’examen civique, 5 minutes par jour")}</h1>
-      <p class="lead">${typo("L’appli 100 % gratuite et sans inscription pour apprendre les questions officielles pas à pas : des leçons courtes, un quiz après chaque leçon et des examens blancs. Pour la naturalisation, la carte de résident et la carte de séjour pluriannuelle.")}</p>
-      <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}" data-ev="accueil-cta-apprendre">Commencer à apprendre</a><a class="btn big" href="${href("/preparer-examen-civique-en-7-jours/")}" data-ev="accueil-cta-plan">Mon plan en 7 jours</a><a class="btn big" href="${href("/examen-civique-pdf/")}" data-ev="accueil-cta-pdf"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>PDF gratuits</a></div>
-      <ul class="trust"><li>${CHECK}100 % gratuit</li><li>${CHECK}Sans inscription</li><li>${CHECK}Leçons de 5 minutes</li><li>${CHECK}Listes officielles 2026</li></ul>
+      <p class="lead">${typo("Les questions officielles, apprises pas à pas avec une appli 100 % gratuite et sans inscription.")}</p>
+      <div class="ctas"><a class="btn primary big" href="${href("/reviser/")}" data-ev="accueil-cta-apprendre">Commencer à apprendre</a>
+        <p class="alt-links"><a href="${href("/preparer-examen-civique-en-7-jours/")}" data-ev="accueil-cta-plan">Mon plan en 7 jours</a><a href="${href("/examen-civique-pdf/")}" data-ev="accueil-cta-pdf">Les PDF gratuits</a></p></div>
+      <ul class="trust"><li>${CHECK}100 % gratuit</li><li>${CHECK}Sans inscription</li><li>${CHECK}Listes officielles 2026</li></ul>
       <p class="proof" data-chiffres hidden></p>
     </div>
     <section class="hq" id="hq" aria-labelledby="hq-t">
@@ -271,7 +281,7 @@ function home() {
       <script type="application/json" id="hq-data">${JSON.stringify(HQ).replace(/</g, "\\u003c")}</script>
     </section>
   </div>
-  <script>(function(){var r=document.getElementById("hq");if(!r)return;var data;try{data=JSON.parse(document.getElementById("hq-data").textContent);}catch(e){return;}var APP=${JSON.stringify(href("/reviser/"))},N=5,body=r.querySelector(".hq-body"),num=r.querySelector(".hq-n");function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}function ev(n){try{if(window.COQ_ID&&window.COQ_ID.event)window.COQ_ID.event(n);}catch(e){}}var know=data.filter(function(x){return!x.s;}),sits=data.filter(function(x){return x.s;});function draw(){return shuf(shuf(know).slice(0,4).concat(shuf(sits).slice(0,1)));}var set=draw(),i=0,score=0,first=true;function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}function render(){var x=set[i];num.textContent="Question "+(i+1)+" sur "+N;body.innerHTML="";if(x.s)body.appendChild(el("p","hq-s",x.s));body.appendChild(el("p","hq-q",x.q));var box=el("div","hq-opts"),opts=shuf([{t:x.c,ok:true}].concat(x.w.map(function(w){return{t:w,ok:false};})));opts.forEach(function(o){var b=el("button","hq-o",o.t);b.type="button";b.addEventListener("click",function(){pick(b,o,opts,box,x);});box.appendChild(b);});body.appendChild(box);}function pick(b,o,opts,box,x){if(box.getAttribute("data-done"))return;box.setAttribute("data-done","1");if(first){first=false;ev("accueil-quiz-reponse");}if(o.ok)score++;Array.prototype.forEach.call(box.children,function(c,k){c.disabled=true;if(opts[k].ok)c.classList.add("ok");});if(!o.ok)b.classList.add("ko");var fb=el("div","hq-fb"+(o.ok?" ok":""));fb.appendChild(el("b",null,o.ok?"Bonne réponse ! ":"Pas tout à fait. "));fb.appendChild(document.createTextNode(x.d+" "));var more=el("a",null,"En savoir plus");more.href=x.u;fb.appendChild(more);body.appendChild(fb);var nx=el("button","btn primary hq-next",i<N-1?"Question suivante":"Voir mon score");nx.type="button";nx.addEventListener("click",function(){i++;if(i<N)render();else end();});body.appendChild(nx);}function end(){ev("accueil-quiz-fini");num.textContent="Votre résultat";body.innerHTML="";body.appendChild(el("p","hq-score",score+" / "+N));body.appendChild(el("p","hq-msg",score>=4?"Très bien ! Continuez avec les leçons pour tout retenir.":"Chaque erreur est une question apprise : continuez avec les leçons de 5 minutes."));var go=el("a","btn primary big hq-go","Continuer avec les leçons");go.href=APP;go.addEventListener("click",function(){ev("accueil-quiz-app");});body.appendChild(go);var ag=el("button","hq-again","Recommencer avec 5 autres questions");ag.type="button";ag.addEventListener("click",function(){set=draw();i=0;score=0;render();});body.appendChild(ag);}render();})();</script>
+  <script>(function(){var r=document.getElementById("hq");if(!r)return;var data;try{data=JSON.parse(document.getElementById("hq-data").textContent);}catch(e){return;}var APP=${JSON.stringify(href("/reviser/"))},N=5,body=r.querySelector(".hq-body"),num=r.querySelector(".hq-n");function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}function ev(n){try{if(window.COQ_ID&&window.COQ_ID.event)window.COQ_ID.event(n);}catch(e){}}var know=data.filter(function(x){return!x.s;}),sits=data.filter(function(x){return x.s;});function draw(){return shuf(shuf(know).slice(0,4).concat(shuf(sits).slice(0,1)));}var set=draw(),i=0,score=0,first=true;function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}function render(){var x=set[i];num.textContent="Question "+(i+1)+" sur "+N;body.innerHTML="";if(x.s)body.appendChild(el("p","hq-s",x.s));body.appendChild(el("p","hq-q",x.q));var box=el("div","hq-opts"),opts=shuf([{t:x.c,ok:true}].concat(x.w.map(function(w){return{t:w,ok:false};})));opts.forEach(function(o){var b=el("button","hq-o",o.t);b.type="button";b.addEventListener("click",function(){pick(b,o,opts,box,x);});box.appendChild(b);});body.appendChild(box);}function pick(b,o,opts,box,x){if(box.getAttribute("data-done"))return;box.setAttribute("data-done","1");if(first){first=false;ev("accueil-quiz-reponse");}if(o.ok)score++;Array.prototype.forEach.call(box.children,function(c,k){c.disabled=true;if(opts[k].ok)c.classList.add("ok");});if(!o.ok)b.classList.add("ko");var fb=el("div","hq-fb"+(o.ok?" ok":""));fb.appendChild(el("b",null,o.ok?"Bonne réponse ! ":"Pas tout à fait. "));fb.appendChild(document.createTextNode(x.d+" "));var more=el("a",null,"En savoir plus");more.href=x.u;fb.appendChild(more);body.appendChild(fb);var nx=el("button","btn primary hq-next",i<N-1?"Question suivante":"Voir mon score");nx.type="button";nx.addEventListener("click",function(){i++;if(i<N)render();else end();});body.appendChild(nx);}function end(){ev("accueil-quiz-fini");num.textContent="Votre résultat";body.innerHTML="";body.appendChild(el("p","hq-score",score+" / "+N));body.appendChild(el("p","hq-msg",score>=4?"Très bien ! Continuez avec les leçons pour tout retenir.":"Chaque erreur est une question apprise : continuez avec les leçons de 5 minutes."));var go=el("a","btn primary big hq-go","Commencer à apprendre");go.href=APP;go.addEventListener("click",function(){ev("accueil-quiz-app");});body.appendChild(go);var ag=el("button","hq-again","Recommencer avec 5 autres questions");ag.type="button";ag.addEventListener("click",function(){set=draw();i=0;score=0;render();});body.appendChild(ag);}render();})();</script>
   <script>(function(){var v=document.querySelector(".hq video");if(!v)return;var end=${JSON.stringify(href("/assets/mascotte-fin.jpg"))};function still(){v.removeAttribute("src");v.poster=end;v.querySelectorAll("source").forEach(function(s){s.remove()});v.load();}if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){still();return;}var p=v.play();if(p&&p.catch)p.catch(still);})();</script>
   <div class="facts">
     <div class="fact"><b>40</b><span>questions à l’examen</span></div>
@@ -283,7 +293,7 @@ function home() {
 
 <section class="band alt" id="listes">
   <div class="shead"><div class="eyebrow">Votre démarche</div><h2>Choisissez votre liste</h2>
-  <p>Les 28 questions de connaissance de l’examen sont tirées de la liste officielle de votre démarche. Beaucoup de questions sont communes aux trois listes.</p></div>
+  <p>${typo("Coq Civique couvre les trois démarches : naturalisation, carte de résident et carte de séjour pluriannuelle. Les 28 questions de connaissance de l’examen sont tirées de la liste officielle de votre démarche. Beaucoup de questions sont communes aux trois listes.")}</p></div>
   ${listCards()}
 </section>
 
@@ -295,7 +305,7 @@ function home() {
       <h2>Pourquoi j’ai créé Coq Civique</h2>
       <p>Je m’appelle Jovan. Comme vous, je dois passer l’examen civique. Quand j’ai ouvert la liste officielle, j’ai trouvé des centaines de questions… et aucune réponse. Je voulais être prêt en 7 jours, et aider mes proches qui devaient le passer eux aussi.</p>
       <p>Alors j’ai rédigé une réponse claire pour chaque question, puis j’ai construit l’outil dont nous avions besoin. Le voici, gratuit, pour vous aussi.</p>
-      <p class="sign">— Jovan, créateur de ${esc(NAME)}</p>
+      <p class="sign">Jovan, créateur de ${esc(NAME)}</p>
       <a class="btn" href="${href("/a-propos/")}">Lire l’histoire</a>
     </div>
   </div>
@@ -318,12 +328,12 @@ function home() {
 
 <section class="band alt">
   <div class="shead"><div class="eyebrow">La méthode</div><h2>On apprend, puis on vérifie</h2>
-  <p>${typo("Comme pour apprendre une langue : un parcours de leçons courtes, et les questions que vous ne savez pas encore reviennent plus souvent.")}</p></div>
+  <p>${typo("Des leçons courtes, un quiz après chaque leçon et des examens blancs. Comme pour apprendre une langue, les questions que vous ne savez pas encore reviennent plus souvent.")}</p></div>
   <div class="modes">
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12v15H6a2 2 0 0 0-2 2"/><path d="M8 8h6M8 11h4"/></svg></span><h3>1. Des leçons de 5 minutes</h3><p>${typo("Chaque thème est découpé en petites leçons d’environ 8 questions. Vous lisez les réponses, avec une explication simple.")}</p></div>
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><h3>2. Un quiz pour retenir</h3><p>${typo("Après chaque leçon, un QCM comme le jour de l’examen. Une erreur ? La question revient à la fin, puis dans vos révisions.")}</p></div>
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>3. L’examen blanc</h3><p>Au format officiel : 28 questions de votre liste et 12 mises en situation, en 45 minutes. Votre score et les questions à retravailler. <a href="${href("/examen-blanc/")}">En savoir plus</a></p></div>
-    <div><span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M9 9h6M9 12h4"/></svg></span><h3>4. Les mises en situation</h3><p>${situations.length} cas de la vie quotidienne pour s’entraîner aux 12 questions non publiées de l’examen. <a href="${href("/mises-en-situation/")}">Voir les exemples</a></p></div>
+    <div><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12v15H6a2 2 0 0 0-2 2"/><path d="M8 8h6M8 11h4"/></svg></span><h3>1. Des leçons de 5 minutes</h3><p>${typo("Chaque thème est découpé en petites leçons d’environ 8 questions. Vous lisez les réponses, avec une explication simple.")}</p></div>
+    <div><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.6"/><circle cx="5" cy="12" r="1.6"/><circle cx="5" cy="18" r="1.6"/><path d="M10 6h10M10 12h10M10 18h10"/></svg></span><h3>2. Un quiz pour retenir</h3><p>${typo("Après chaque leçon, un QCM comme le jour de l’examen. Une erreur ? La question revient à la fin, puis dans vos révisions.")}</p></div>
+    <div><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></span><h3>3. L’examen blanc</h3><p>Au format officiel : 28 questions de votre liste et 12 mises en situation, en 45 minutes. Votre score et les questions à retravailler. <a href="${href("/examen-blanc/")}">En savoir plus</a></p></div>
+    <div><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M9 9h6M9 12h4"/></svg></span><h3>4. Les mises en situation</h3><p>${situations.length} cas de la vie quotidienne pour s’entraîner aux 12 questions non publiées de l’examen. <a href="${href("/mises-en-situation/")}">Voir les exemples</a></p></div>
   </div>
   <p class="more"><a class="btn primary" href="${href("/reviser/")}">Commencer à apprendre</a></p>
 </section>
@@ -331,8 +341,8 @@ function home() {
 <section class="band" id="pdf">
   <div class="shead"><div class="eyebrow">À imprimer</div><h2>Les livrets de révision en PDF</h2>
   <p>${typo("Toutes les questions de votre liste et leurs réponses, au format A4 : l’essentiel de chaque thème, une colonne réponse à cacher pour s’interroger, et une fiche mémo pour la veille de l’examen. Gratuit, sans inscription.")}</p></div>
-  <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
-  <p class="more"><a href="${href(EX40_PATH)}">${typo("Un sujet de 40 questions comme à l’examen, en PDF ›")}</a> · <a href="${href("/examen-civique-pdf/")}">${typo("Le contenu des livrets et les documents officiels ›")}</a></p>
+  <div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions, ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
+  <p class="more alt-links"><a href="${href(EX40_PATH)}">${typo("Un sujet de 40 questions comme à l’examen, en PDF")}</a><a href="${href("/examen-civique-pdf/")}">${typo("Le contenu des livrets et les documents officiels")}</a></p>
 </section>
 
 <section class="band alt" id="guides">
@@ -625,7 +635,7 @@ function pdfPage() {
 <p class="lead">${typo("Un livret par liste officielle : toutes les questions de votre démarche avec leur réponse, à imprimer pour réviser loin des écrans, seul ou en famille. Gratuit, sans inscription.")}</p>
 <div class="cta"><p>${typo("Besoin d’un sujet de 40 questions comme à l’examen, avec corrigé ? Un nouveau sujet à chaque clic.")}</p><a class="btn primary" href="${href(EX40_PATH)}">${typo("Sujets de 40 questions en PDF")}</a></div>
 </article>
-<div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions · ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
+<div class="livrets">${LIVRETS.map((l) => `<div class="livret"><img src="${href(l.cover)}" alt="Couverture du livret ${esc(LIST[l.code].nom)}" width="331" height="468" loading="lazy"><div><b>${esc(LIST[l.code].nom)}</b><span>${l.questions} questions, ${l.pages} pages</span><a class="btn primary" href="${href(l.url)}" data-pdf-link download>Télécharger le PDF</a></div></div>`).join("")}</div>
 <article class="prose">
 <h2>Ce que contient chaque livret</h2>
 <ul>
