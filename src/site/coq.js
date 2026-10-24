@@ -55,8 +55,12 @@
     stats: function () { return rpc("coq_chiffres", {}); },
     // Compteur anonyme d'usage (PDF fait, leçon finie, réponse au quiz de l'accueil) : un nom, un compteur par jour, rien d'autre
     event: function (name) {
-      if (!ON || !name) return Promise.resolve();
-      return rpc("coq_vue", { p_path: "/~/" + String(name).replace(/[^a-z0-9-]/gi, "").slice(0, 60), p_ref: "" }).catch(function () {});
+      if (!name) return Promise.resolve();
+      var n = String(name).replace(/[^a-z0-9-]/gi, "").slice(0, 60);
+      // Même événement dans Umami (sans cookie, sans identifiant, jamais avec l'adresse email)
+      try { if (window.umami && typeof window.umami.track === "function") window.umami.track(n); } catch (e) {}
+      if (!ON) return Promise.resolve();
+      return rpc("coq_vue", { p_path: "/~/" + n, p_ref: "" }).catch(function () {});
     },
     onChange: function (f) { listeners.push(f); },
     ask: function (why) { show(why || "", true); },

@@ -84,6 +84,9 @@ const LIVRETS_INV = existsSync(join(ROOT, "assets/livrets.json")) ? JSON.parse(r
 const COVERS = { nat: "/assets/livret-couverture.png", cr: "/assets/livret-couverture-cr.png", csp: "/assets/livret-couverture-csp.png" };
 const LIVRETS = ["nat", "cr", "csp"].filter((c) => LIVRETS_INV[c]).map((c) => ({ code: c, url: `/assets/${LIVRETS_INV[c].fichier}`, pages: LIVRETS_INV[c].pages, questions: LIVRETS_INV[c].questions, cover: COVERS[c] }));
 const LIVRET = Object.fromEntries(LIVRETS.map((l) => [l.code, l]));
+// Mesure d'audience sans cookie (Umami Cloud) : uniquement sur le domaine de production, jamais reliée à une adresse email
+const UMAMI = { src: "https://cloud.umami.is/script.js", id: "e66a04a4-c4c3-451f-bd75-1bb95925d222", domains: "coqcivique.com,www.coqcivique.com" };
+const umamiTag = () => `<script defer src="${UMAMI.src}" data-website-id="${UMAMI.id}" data-domains="${UMAMI.domains}"></script>`;
 const sbScripts = () => SB_ON ? `<script>window.COQ=${JSON.stringify({ sbUrl: SB.url, sbKey: SB.cle_publique, pdfUrl: href(PDF_PATH), pdfs: LIVRETS.map((l) => ({ code: l.code, nom: { nat: "Naturalisation", cr: "Carte de résident", csp: "Carte de séjour pluriannuelle" }[l.code], url: href(l.url), pages: l.pages })), logo: href("/assets/icon-192.png"), mascot: href("/assets/mascotte-fin.jpg"), reviser: href("/reviser/"), privacyUrl: href("/mentions-legales/#donnees") }).replace(/</g, "\\u003c")};</script>
 <script src="${href("/assets/coq.js")}?v=${V}" defer></script>` : "";
 
@@ -157,6 +160,7 @@ ${pwaHead()}
 <link rel="preload" href="${href("/assets/fonts/atkinson-400.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${href("/assets/fonts/atkinson-next-800.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${href("/assets/site.css")}?v=${V}">
+${umamiTag()}
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, "\\u003c")}</script>`).join("\n")}
 </head>
 <body${color}${wide ? ' class="home"' : ""}>
@@ -934,7 +938,7 @@ function appPage() {
     .replaceAll("__QUESTIONS__", href("/questions/"))
     .replaceAll("__ASSETS__", href("/assets"))
     .replaceAll("__OGIMAGE__", abs("/assets/og-image.png"))
-    .replace("__PWAHEAD__", () => pwaHead())
+    .replace("__PWAHEAD__", () => pwaHead() + "\n" + umamiTag())
     .replace("__SUPABASE__", () => sbScripts() + "\n" + pwaScripts())
     .replace("__DATA__", () => JSON.stringify(appData).replace(/<\//g, "<\\/")));
 }
@@ -1101,8 +1105,9 @@ function legal() {
 <p>Si vous indiquez votre résultat à l’examen, nous enregistrons ce résultat, la liste concernée et, si vous les donnez, votre score, votre prénom avec l’initiale du nom et votre témoignage, sans adresse email. Finalité : établir des statistiques de réussite et, uniquement avec votre accord explicite, publier votre témoignage après vérification. Base légale : votre consentement. Durée : 3 ans. Pour retirer un témoignage publié, écrivez-nous.</p>
 <h3>Mesure d’audience</h3>
 <p>Nous comptons le nombre de pages vues chaque jour, le site d’origine de la visite (par exemple un moteur de recherche) et quelques compteurs d’usage (par exemple le nombre de sujets PDF créés ou de leçons terminées dans la journée). Aucune donnée personnelle n’est enregistrée : ni adresse IP, ni cookie, ni identifiant. Ces chiffres servent uniquement à améliorer le site.</p>
+<p>Pour mieux comprendre comment le site est utilisé (pages consultées, site d’origine, type d’appareil, pays, passage d’une page à l’autre), nous utilisons aussi Umami Cloud, un outil de mesure d’audience sans cookie : il ne dépose rien sur votre appareil, ne vous suit pas d’un site à l’autre et ne permet pas de vous identifier. Votre adresse IP sert seulement à en déduire le pays de la visite ; elle n’est pas conservée. Ces statistiques ne sont jamais reliées à votre adresse email et sont conservées 6 mois. Base légale : l’intérêt légitime de l’éditeur à améliorer le site.</p>
 <h3>Destinataires et prestataires</h3>
-<p>Vos données sont destinées uniquement à l’éditeur du site. Base de données : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Hébergement du site : GitHub Pages, qui enregistre, comme tout hébergeur, des données techniques de connexion (adresse IP) pour assurer la sécurité du service. Ces prestataires agissent dans le cadre d’accords de traitement des données ; lorsqu’ils peuvent accéder aux données depuis un pays hors de l’Union européenne, ce transfert est encadré par les clauses contractuelles types de la Commission européenne. Pour administrer le site, l’éditeur utilise aussi l’assistant Claude (Anthropic), qui accède à ces données lorsque l’éditeur les consulte par son intermédiaire. Vos données ne sont ni vendues ni cédées à des tiers.</p>
+<p>Vos données sont destinées uniquement à l’éditeur du site. Base de données : Supabase${SB.region ? ` (données hébergées dans la région ${esc(SB.region)})` : ""}. Mesure d’audience : Umami Cloud (Umami Software). Hébergement du site : GitHub Pages, qui enregistre, comme tout hébergeur, des données techniques de connexion (adresse IP) pour assurer la sécurité du service. Ces prestataires agissent dans le cadre d’accords de traitement des données ; lorsqu’ils peuvent accéder aux données depuis un pays hors de l’Union européenne, ce transfert est encadré par les clauses contractuelles types de la Commission européenne. Pour administrer le site, l’éditeur utilise aussi l’assistant Claude (Anthropic), qui accède à ces données lorsque l’éditeur les consulte par son intermédiaire. Vos données ne sont ni vendues ni cédées à des tiers.</p>
 <h3>Vos droits</h3>
 <p>Vous pouvez accéder à vos données, les rectifier, les effacer, en limiter l’utilisation, vous y opposer, en demander la portabilité et retirer votre consentement : écrivez à ${contact}. Nous répondons dans un délai d’un mois. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).</p>
 <h3>Stockage dans votre navigateur</h3>
