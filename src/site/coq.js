@@ -121,7 +121,7 @@
     "@media (prefers-reduced-motion: reduce){.coq-card{animation:none}}" +
     ".coq-head{display:flex;gap:12px;align-items:center;padding-right:28px}" +
     ".coq-head img{width:46px;height:46px;border-radius:12px;flex:none}" +
-    ".coq-card h2{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:19px;line-height:1.15;margin:0;color:#15203B}" +
+    ".coq-card h2{font-family:\"Atkinson Hyperlegible Next\",\"Atkinson Hyperlegible\",system-ui,sans-serif;font-weight:800;font-size:19px;line-height:1.15;letter-spacing:-.01em;margin:0;color:#14203C}" +
     ".coq-card p{margin:2px 0 0;color:#56607A}" +
     ".coq-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}" +
     ".coq-row input{flex:1 1 190px;min-width:0;min-height:48px;padding:10px 12px;border-radius:12px;border:1.5px solid #C9D0DE;background:#fff;color:#15203B;font:inherit;font-size:16px}" +
@@ -199,7 +199,7 @@
   function renderForm() {
     var pdf = why === "pdf", save = why === "save";
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t" aria-describedby="coq-d">' +
-      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later">×</button>' +
+      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<div class="coq-head"><img src="' + esc(cfg.logo) + '" alt="" width="46" height="46"><div>' +
       '<h2 id="coq-t">' + (pdf ? "Télécharger le livret PDF" : save ? "Gardez votre progression" : "Bienvenue sur Coq Civique") + '</h2>' +
       '<p id="coq-d">' + (pdf ? "Gratuit et sans inscription. Si vous le souhaitez, indiquez votre email : votre progression dans l’application sera gardée sur tous vos appareils." : save ? "Indiquez votre email, sans mot de passe : ce que vous avez déjà appris est conservé et vous le retrouvez sur tous vos appareils." : "Indiquez votre email pour garder votre progression sur tous vos appareils.") + '</p></div></div>' +
@@ -214,7 +214,7 @@
   }
   function renderDone() {
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t">' +
-      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="close">×</button>' +
+      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<div class="coq-head"><img src="' + esc(cfg.logo) + '" alt="" width="46" height="46"><div>' +
       '<h2 id="coq-t">C’est noté !</h2><p>Votre progression est liée à <span class="coq-who">' + esc(ID.email()) + '</span>.</p></div></div>' +
       '<div class="coq-row">' + pdfBtn() +
@@ -251,7 +251,7 @@
     var url = el ? el.getAttribute("data-lecon") : cfg.reviser, label = el ? el.getAttribute("data-lecon-label") : "";
     var after = document.querySelector("[data-invite-title]"), custom = after ? after.getAttribute("data-invite-title") : "";
     gate.innerHTML = '<div class="coq-card" role="dialog" aria-labelledby="coq-t" aria-describedby="coq-d">' +
-      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later" data-ev="invite-fermer">×</button>' +
+      '<button class="coq-x" type="button" aria-label="Fermer" data-coq="later" data-ev="invite-fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<div class="coq-head"><img src="' + esc(cfg.mascot || cfg.logo) + '" alt="" width="46" height="46"><div>' +
       '<h2 id="coq-t">' + (label ? "Apprenez-la pour de bon" : esc(custom || "Apprenez l’examen civique, 5 minutes par jour")) + '</h2>' +
       '<p id="coq-d">' + (label ? "Elle fait partie de la " + esc(label) + ". Apprenez-la avec Coq Civique, l’appli gratuite : des leçons courtes, puis un quiz." : "Coq Civique, c’est l’appli gratuite pour apprendre pas à pas : des leçons courtes sur les questions officielles, un quiz après chaque leçon et des examens blancs.") + '</p></div></div>' +

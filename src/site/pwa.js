@@ -34,7 +34,7 @@
     if (gate) return; // ne pas superposer à la fenêtre « email »
     var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
     box = document.createElement("div"); box.className = "coq-inst"; box.setAttribute("role", "dialog"); box.setAttribute("aria-label", "Installer l’application");
-    box.innerHTML = '<div><img src="' + (cfg.icon || "") + '" alt="">' + html + '<button class="x" type="button" aria-label="Fermer">×</button></div>';
+    box.innerHTML = '<div><img src="' + (cfg.icon || "") + '" alt="">' + html + '<button class="x" type="button" aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>';
     document.body.appendChild(box);
     box.querySelector(".x").addEventListener("click", function () { hide(true); });
     var go = box.querySelector(".go"); if (go) go.addEventListener("click", function () { prompt(); });

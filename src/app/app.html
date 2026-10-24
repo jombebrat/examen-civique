@@ -13,9 +13,8 @@ __PWAHEAD__
 <meta property="og:image" content="__OGIMAGE__">
 <link rel="preload" href="__ASSETS__/fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@font-face{ font-family:"Fraunces"; font-weight:600; font-display:swap; src:url("__ASSETS__/fonts/fraunces-600.woff2") format("woff2"); }
-@font-face{ font-family:"Fraunces"; font-weight:700; font-display:swap; src:url("__ASSETS__/fonts/fraunces-700.woff2") format("woff2"); }
-@font-face{ font-family:"Fraunces"; font-weight:800; font-display:swap; src:url("__ASSETS__/fonts/fraunces-800.woff2") format("woff2"); }
+@font-face{ font-family:"Atkinson Hyperlegible Next"; font-weight:700; font-display:swap; src:url("__ASSETS__/fonts/atkinson-next-700.woff2") format("woff2"); }
+@font-face{ font-family:"Atkinson Hyperlegible Next"; font-weight:800; font-display:swap; src:url("__ASSETS__/fonts/atkinson-next-800.woff2") format("woff2"); }
 @font-face{ font-family:"Atkinson Hyperlegible"; font-weight:400; font-display:swap; src:url("__ASSETS__/fonts/atkinson-400.woff2") format("woff2"); }
 @font-face{ font-family:"Atkinson Hyperlegible"; font-weight:700; font-display:swap; src:url("__ASSETS__/fonts/atkinson-700.woff2") format("woff2"); }
 /* Layout : un jeu de fiches de poche — une carte à la fois ; les cinq thèmes officiels comme onglets de couleur, numérotés comme la brochure imprimée */
@@ -24,7 +23,7 @@ __PWAHEAD__
   --accent:#1F4E9C; --on-accent:#FFFFFF; --accent-weak:#E6EDF9; --red:#C8102E;
   --good:#17744A; --good-weak:#E3F3EA; --bad:#B42318; --bad-weak:#FBE9E7;
   --t1:#1F4E9C; --t2:#2B6B5E; --t3:#A8432F; --t4:#8A6516; --t5:#5B3F8E;
-  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --display:"Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r:14px;
 }
@@ -65,7 +64,7 @@ sup{ font-size:.66em; line-height:0; vertical-align:.45em; }
 
 /* ---------- En-tête ---------- */
 .head{ padding:22px 0 14px; }
-.head .eyebrow{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--red); font-weight:700; }
+.head .eyebrow{ font-size:14.5px; color:var(--muted); font-weight:700; }
 .head h1{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 7vw, 38px); line-height:1.02; letter-spacing:-.01em; margin:6px 0 0; text-wrap:balance; }
 .meta{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px; margin:10px 0 0; font-size:13.5px; color:var(--muted); line-height:1.4; }
 .meta .who{ color:var(--ink); font-weight:700; overflow-wrap:anywhere; }
@@ -128,16 +127,16 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .lsel select:focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; }
 .lsel .box::after{ content:""; position:absolute; right:15px; top:50%; width:7px; height:7px; margin-top:-6px; border-right:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(45deg); pointer-events:none; }
 .entog{ display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:6px 12px; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer; }
-.entog b{ font-size:12px; letter-spacing:.04em; border-radius:5px; padding:1px 5px; background:var(--sunk); }
+.entog b{ font-size:12.5px; border-radius:5px; padding:1px 5px; background:var(--sunk); }
 .entog[aria-pressed="true"]{ border-color:var(--accent); color:var(--accent); background:var(--accent-weak); }
 .entog[aria-pressed="true"] b{ background:var(--accent); color:var(--on-accent); }
 .studybar .entog{ padding:6px 10px; }
-.en{ margin-top:12px; padding:10px 13px; border-radius:10px; background:var(--sunk); border-left:3px solid var(--accent); font-size:14.5px; line-height:1.45; color:var(--ink); text-align:left; }
-.en .enh{ font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
+.en{ margin-top:12px; padding:10px 13px; border-radius:10px; background:var(--sunk); font-size:14.5px; line-height:1.45; color:var(--ink); text-align:left; }
+.en .enh{ font-size:13.5px; font-weight:800; color:var(--accent); }
 .rv .en{ font-size:14px; }
 .helpsw{ display:flex; flex-wrap:wrap; gap:6px; }
 [lang="ar"]{ font-family:"Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", "Segoe UI", Tahoma, system-ui, sans-serif; }
-.en[dir="rtl"]{ text-align:right; border-left:0; border-right:3px solid var(--accent); font-size:16px; line-height:1.75; }
+.en[dir="rtl"]{ text-align:right; font-size:16px; line-height:1.75; }
 .en[dir="rtl"] .enh{ letter-spacing:0; font-size:13px; }
 .en bdi.nw{ white-space:nowrap; }
 .entog[lang="ar"]{ font-size:14.5px; }
@@ -211,11 +210,11 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 /* ---------- Parcours : leçon du jour et chemin des leçons ---------- */
 .today{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px 14px; align-items:center; }
 .today .coq{ width:68px; height:68px; border-radius:20px; background:#fff; object-fit:cover; }
-.today .nx .lbl{ text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; font-weight:700; color:var(--red); }
+.today .nx .lbl{ font-size:14px; font-weight:700; color:var(--accent); }
 .today .nx b{ display:block; font-family:var(--display); font-size:21px; line-height:1.15; margin-top:2px; }
 .today .nx span{ font-size:14px; color:var(--muted); }
-.today .go{ grid-column:1/-1; width:100%; font-size:17px; min-height:54px; box-shadow:0 4px 0 color-mix(in srgb, var(--accent) 55%, #000); }
-.today .go:active{ transform:translateY(2px); box-shadow:0 2px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+.today .go{ grid-column:1/-1; width:100%; font-size:17px; min-height:54px; }
+.today .go:active{ transform:translateY(1px); }
 .goal{ grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 14px; align-items:center; border-top:1px solid var(--line); padding-top:12px; }
 .goal .gl{ font-size:13.5px; color:var(--muted); } .goal .gl b{ color:var(--ink); }
 .gbar{ height:10px; background:var(--sunk); border-radius:99px; overflow:hidden; }
@@ -232,25 +231,24 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .unit .chev{ color:var(--muted); transition:transform .2s; } .unit[open] .chev{ transform:rotate(90deg); }
 .nodes{ display:flex; flex-direction:column; align-items:center; gap:12px; padding:4px 16px 22px; }
 .node{ --x:0px; transform:translateX(var(--x)); display:grid; justify-items:center; gap:5px; background:none; border:0; padding:0; cursor:pointer; color:var(--ink); font:inherit; }
-.node .dot{ width:62px; height:62px; border-radius:50%; display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:22px; background:var(--sunk); color:var(--muted); box-shadow:0 5px 0 var(--line); transition:transform .1s; }
-.node:active .dot{ transform:translateY(3px); box-shadow:0 2px 0 var(--line); }
+.node .dot{ width:62px; height:62px; border-radius:50%; display:grid; place-items:center; font-family:var(--display); font-weight:800; font-size:22px; background:var(--surface); color:var(--muted); box-shadow:inset 0 0 0 1.5px var(--line); transition:transform .12s ease-out; }
+.node:active .dot{ transform:translateY(1px); }
 .node.prac .dot{ border-radius:20px; }
-.node.done .dot{ background:var(--c); color:var(--surface); box-shadow:0 5px 0 color-mix(in srgb, var(--c) 55%, #000); }
-.node.review .dot{ background:#F08A24; color:#fff; box-shadow:0 5px 0 #B9600F; }
+.node.done .dot{ background:var(--c); color:var(--surface); box-shadow:none; }
+.node.review .dot{ background:var(--review, #B85C0F); color:var(--surface); box-shadow:none; }
 .vh{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-.node.next .dot{ width:72px; height:72px; background:var(--accent); color:var(--on-accent); box-shadow:0 5px 0 color-mix(in srgb, var(--accent) 55%, #000), 0 0 0 6px var(--accent-weak); animation:coq-bob 1.8s ease-in-out infinite; }
-@keyframes coq-bob{ 50%{ transform:translateY(-4px); } }
+.node.next .dot{ width:72px; height:72px; background:var(--accent); color:var(--on-accent); box-shadow:0 0 0 6px var(--accent-weak); }
 .node .nl{ font-size:12.5px; font-weight:700; color:var(--muted); max-width:150px; text-align:center; line-height:1.25; }
 .node.next .nl{ color:var(--accent); }
 .node .dot svg{ width:26px; height:26px; }
 .trophy{ display:grid; justify-items:center; gap:6px; margin:18px auto 0; text-align:center; }
-.trophy .dot{ background:#FFE7A3; color:#8A6516; box-shadow:0 5px 0 #D9B24C; }
+.trophy .dot{ background:var(--sunk); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--line); }
 .sub{ margin:-4px 0 10px; font-size:14px; color:var(--muted); }
 /* Leçon : apprendre, puis quiz */
-.step{ font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-weak); border-radius:999px; padding:3px 10px; }
+.step{ font-size:13.5px; font-weight:800; color:var(--accent); background:var(--accent-weak); border-radius:999px; padding:3px 10px; }
 .step.quiz{ color:#B9600F; background:#FFF0DD; }
 .learn .ans{ border-top:0; padding-top:0; margin-top:14px; }
-.learn .ans .lbl{ text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; font-weight:700; }
+.learn .ans .lbl{ font-size:14px; font-weight:700; }
 .feedback{ margin-top:14px; border-radius:12px; padding:12px 14px; }
 .feedback.ok{ background:var(--good-weak); } .feedback.ko{ background:var(--bad-weak); }
 .feedback .verdict{ display:flex; align-items:center; gap:8px; }
@@ -280,8 +278,8 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 /* ---------- Carte ---------- */
 .card{ background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--c); border-radius:var(--r); padding:20px 18px 18px; }
 .card .meta{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
-.sit{ display:block; font-weight:400; font-size:.88em; line-height:1.5; color:var(--muted); background:var(--sunk); border-left:3px solid var(--bad); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
-.chip{ display:inline-flex; gap:6px; align-items:baseline; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700; color:var(--c); min-width:0; }
+.sit{ display:block; font-weight:400; font-size:.88em; line-height:1.5; color:var(--muted); background:var(--sunk); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
+.chip{ display:inline-flex; gap:6px; align-items:baseline; font-size:14px; font-weight:700; color:var(--c); min-width:0; }
 .chip b{ font-family:var(--display); font-size:15px; letter-spacing:0; text-transform:none; }
 .speak{ display:inline-grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer; flex:none; }
 .speak:hover{ color:var(--accent); border-color:var(--accent); }
@@ -291,7 +289,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .ans .a{ font-size:18px; font-weight:700; color:var(--accent); }
 .ans .d{ margin-top:8px; color:var(--muted); font-size:15px; }
 .ref{ display:inline-block; margin-top:8px; font-size:13px; color:var(--muted); background:var(--sunk); border-radius:6px; padding:2px 8px; }
-.tag{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--red); border:1px solid var(--red); border-radius:5px; padding:0 5px; margin:0 3px; vertical-align:1px; white-space:nowrap; }
+.tag{ display:inline-block; font-size:13px; font-weight:700; color:var(--red); border:1px solid var(--red); border-radius:5px; padding:0 5px; margin:0 3px; vertical-align:1px; white-space:nowrap; }
 @keyframes rise{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
 
 .btn{ display:inline-flex; justify-content:center; align-items:center; gap:8px; min-height:50px; padding:12px 18px; border-radius:12px; border:1.5px solid var(--line);
@@ -344,7 +342,7 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .scale .mark{ position:absolute; top:-5px; bottom:-5px; width:2px; background:var(--red); }
 .scale-l{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
 .review{ display:grid; gap:10px; margin-top:16px; }
-.rv{ background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--c); border-radius:12px; padding:14px 16px; }
+.rv{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
 .rv .rq{ font-weight:700; }
 .rv .yours{ margin-top:6px; font-size:15px; color:var(--bad); }
 .rv .right{ margin-top:4px; font-size:15px; color:var(--good); font-weight:700; }
@@ -983,7 +981,7 @@ function scoreImage(score, pass) {
         g.fillStyle = "#FFFFFF"; if (g.roundRect) { g.beginPath(); g.roundRect(70, 90, 940, 900, 48); g.fill(); } else g.fillRect(70, 90, 940, 900);
         if (img) g.drawImage(img, 330, 120, 420, 420);
         g.textAlign = "center"; g.fillStyle = "#15203B";
-        g.font = "800 190px Fraunces, Georgia, serif"; g.fillText(score + "/40", 540, 735);
+        g.font = "800 190px \"Atkinson Hyperlegible Next\", \"Atkinson Hyperlegible\", sans-serif"; g.fillText(score + "/40", 540, 735);
         g.font = "700 54px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = pass ? "#17744A" : "#1F4E9C";
         g.fillText(pass ? "Examen blanc réussi !" : "Je m’entraîne chaque jour", 540, 820);
         g.font = "400 40px 'Atkinson Hyperlegible', Arial, sans-serif"; g.fillStyle = "#56607A";
@@ -998,7 +996,7 @@ function scoreImage(score, pass) {
 async function shareResult(score, pass) {
   const url = DATA.site || location.origin + "/";
   const text = pass ? `J’ai eu ${score}/40 à l’examen blanc de l’examen civique sur Coq Civique ! Entraînez-vous gratuitement :` : `Je m’entraîne pour l’examen civique sur Coq Civique (${score}/40 à mon examen blanc). C’est gratuit :`;
-  try { if (document.fonts && document.fonts.load) await document.fonts.load("800 120px Fraunces"); } catch (e) {}
+  try { if (document.fonts && document.fonts.load) await document.fonts.load("800 120px \"Atkinson Hyperlegible Next\""); } catch (e) {}
   const blob = await scoreImage(score, pass);
   const file = blob && window.File ? new File([blob], "coq-civique-resultat.png", { type: "image/png" }) : null;
   try {
