@@ -563,3 +563,15 @@ p, li{ text-wrap:pretty; }
 .hq-fb{ animation:hq-in .28s cubic-bezier(.16,1,.3,1) both; }
 @keyframes hq-ok{ from{ background-color:var(--surface); transform:scale(.985); } to{ background-color:var(--good-weak); transform:scale(1); } }
 @keyframes hq-in{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+/* Livrets dans la colonne de lecture (page PDF) : une carte par ligne, rien de coupé */
+main.wrap:not(.wide) .livrets{ grid-template-columns:1fr; gap:12px; margin:28px 0 8px; max-width:none; }
+main.wrap:not(.wide) .livret{ grid-template-columns:84px minmax(0,1fr); padding:14px 18px 14px 14px; }
+main.wrap:not(.wide) .livret > div{ grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:16px; }
+main.wrap:not(.wide) .livret > div b, main.wrap:not(.wide) .livret > div span{ grid-column:1; }
+main.wrap:not(.wide) .livret .btn{ grid-column:2; grid-row:1 / span 2; margin:0; }
+@media (max-width:560px){
+  main.wrap:not(.wide) .livret{ grid-template-columns:64px minmax(0,1fr); }
+  main.wrap:not(.wide) .livret > div{ grid-template-columns:1fr; }
+  main.wrap:not(.wide) .livret .btn{ grid-column:1; grid-row:auto; margin-top:6px; }
+}
+.prose .meta-line{ color:var(--muted); }
