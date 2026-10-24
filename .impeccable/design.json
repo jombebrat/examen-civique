@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T18:58:07Z",
+  "title": "Design System: Coq Civique",
+  "extensions": {
+    "colorMeta": {
+      "tricolour-blue": {
+        "role": "primary",
+        "displayName": "Tricolour Blue",
+        "canonical": "#1F4E9C",
+        "tonalRamp": [
+          "#0C1E3B",
+          "#112B56",
+          "#163870",
+          "#1B4589",
+          "#4C71B0",
+          "#849EC9",
+          "#BCCAE1",
+          "#E9EDF5"
+        ]
+      },
+      "blue-deep": {
+        "role": "primary",
+        "displayName": "Deep Ink Blue",
+        "canonical": "#183F80",
+        "tonalRamp": [
+          "#091831",
+          "#0D2346",
+          "#112D5C",
+          "#153771",
+          "#466599",
+          "#8095B9",
+          "#BAC5D9",
+          "#E8ECF2"
+        ]
+      },
+      "blue-mist": {
+        "role": "primary",
+        "displayName": "Blue Mist",
+        "canonical": "#E6EDF9",
+        "tonalRamp": [
+          "#575A5F",
+          "#7F8289",
+          "#A6ABB3",
+          "#CAD1DB",
+          "#EBF1FA",
+          "#F1F5FC",
+          "#F8FAFD",
+          "#FCFDFE"
+        ]
+      },
+      "flag-red": {
+        "role": "secondary",
+        "displayName": "Flag Red",
+        "canonical": "#C8102E",
+        "tonalRamp": [
+          "#4C0611",
+          "#6E0919",
+          "#900C21",
+          "#B00E28",
+          "#D34058",
+          "#E17C8C",
+          "#EEB7C0",
+          "#FAE7EA"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#14203C",
+        "tonalRamp": [
+          "#080C17",
+          "#0B1221",
+          "#0E172B",
+          "#121C35",
+          "#434D63",
+          "#7E8494",
+          "#B8BCC4",
+          "#E8E9EC"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Quiet Slate",
+        "canonical": "#4F5A74",
+        "tonalRamp": [
+          "#1E222C",
+          "#2B3240",
+          "#394154",
+          "#464F66",
+          "#727B90",
+          "#9EA4B3",
+          "#CACED5",
+          "#EDEEF1"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#616161",
+          "#8C8C8C",
+          "#B8B8B8",
+          "#E0E0E0",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Morning Mist",
+        "canonical": "#F1F4F9",
+        "tonalRamp": [
+          "#5C5D5F",
+          "#858689",
+          "#AEB0B3",
+          "#D4D7DB",
+          "#F4F6FA",
+          "#F7F9FC",
+          "#FBFCFD",
+          "#FEFEFE"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline Grey",
+        "canonical": "#DDE2EC",
+        "tonalRamp": [
+          "#54565A",
+          "#7A7C82",
+          "#9FA3AA",
+          "#C2C7D0",
+          "#E4E8F0",
+          "#ECEFF5",
+          "#F5F6F9",
+          "#FCFCFD"
+        ]
+      },
+      "pass-green": {
+        "role": "tertiary",
+        "displayName": "Pass Green",
+        "canonical": "#17744A",
+        "tonalRamp": [
+          "#092C1C",
+          "#0D4029",
+          "#115435",
+          "#146641",
+          "#45906E",
+          "#7FB39B",
+          "#B9D5C9",
+          "#E8F1ED"
+        ]
+      },
+      "pass-wash": {
+        "role": "tertiary",
+        "displayName": "Pass Wash",
+        "canonical": "#E3F3EA",
+        "tonalRamp": [
+          "#565C59",
+          "#7D8681",
+          "#A3AFA8",
+          "#C8D6CE",
+          "#E9F5EE",
+          "#F0F8F3",
+          "#F7FBF9",
+          "#FCFEFD"
+        ]
+      },
+      "theme-values": {
+        "role": "tertiary",
+        "displayName": "Theme 1 Blue",
+        "canonical": "#1F4E9C",
+        "tonalRamp": [
+          "#0C1E3B",
+          "#112B56",
+          "#163870",
+          "#1B4589",
+          "#4C71B0",
+          "#849EC9",
+          "#BCCAE1",
+          "#E9EDF5"
+        ]
+      },
+      "theme-institutions": {
+        "role": "tertiary",
+        "displayName": "Theme 2 Green",
+        "canonical": "#2B6B5E",
+        "tonalRamp": [
+          "#102924",
+          "#183B34",
+          "#1F4D44",
+          "#265E53",
+          "#55897E",
+          "#8AAEA6",
+          "#BFD3CF",
+          "#EAF0EF"
+        ]
+      },
+      "theme-rights": {
+        "role": "tertiary",
+        "displayName": "Theme 3 Brick",
+        "canonical": "#A8432F",
+        "tonalRamp": [
+          "#401912",
+          "#5C251A",
+          "#793022",
+          "#943B29",
+          "#B96959",
+          "#CF988D",
+          "#E5C7C1",
+          "#F6ECEA"
+        ]
+      },
+      "theme-history": {
+        "role": "tertiary",
+        "displayName": "Theme 4 Ochre",
+        "canonical": "#86621A",
+        "tonalRamp": [
+          "#33250A",
+          "#4A360E",
+          "#604713",
+          "#765617",
+          "#9E8148",
+          "#BCA981",
+          "#DBD0BA",
+          "#F3EFE8"
+        ]
+      },
+      "theme-society": {
+        "role": "tertiary",
+        "displayName": "Theme 5 Violet",
+        "canonical": "#5B3F8E",
+        "tonalRamp": [
+          "#231836",
+          "#32234E",
+          "#422D66",
+          "#50377D",
+          "#7C65A5",
+          "#A595C1",
+          "#CEC5DD",
+          "#EFECF4"
+        ]
+      },
+      "footer-navy": {
+        "role": "neutral",
+        "displayName": "Footer Navy",
+        "canonical": "#14203A",
+        "tonalRamp": [
+          "#080C16",
+          "#0B1220",
+          "#0E172A",
+          "#121C33",
+          "#434D61",
+          "#7E8493",
+          "#B8BCC4",
+          "#E8E9EB"
+        ]
+      },
+      "footer-ink": {
+        "role": "neutral",
+        "displayName": "Footer Ink",
+        "canonical": "#B9C4D8",
+        "tonalRamp": [
+          "#464A52",
+          "#666C77",
+          "#858D9C",
+          "#A3ACBE",
+          "#C7D0E0",
+          "#D8DFEA",
+          "#EAEDF3",
+          "#F8F9FB"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home headline and page titles."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles (h2)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Item titles: lists, guides, quiz head."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All running text, answers, options."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Meta lines under titles, card labels, counters; sentence case."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft-lift",
+        "value": "0 1px 2px rgba(20,32,60,.04), 0 12px 32px rgba(20,32,60,.07)",
+        "purpose": "The quiz card, the answer box, a list card on hover."
+      },
+      {
+        "name": "rest",
+        "value": "0 1px 2px rgba(20,32,60,.04)",
+        "purpose": "Clickable list cards at rest."
+      },
+      {
+        "name": "print",
+        "value": "0 1px 0 #DDE2EC, 0 6px 18px rgba(21,32,59,.13)",
+        "purpose": "PDF covers only, so they read as paper."
+      }
+    ],
+    "motion": [
+      {
+        "name": "reveal",
+        "value": "320ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "The one signature moment: the correct quiz answer settles in green, the feedback rises 6px."
+      },
+      {
+        "name": "control",
+        "value": "120-150ms ease-out",
+        "purpose": "Button press (1px) and border or colour changes on hover."
+      },
+      {
+        "name": "reduced",
+        "value": "none",
+        "purpose": "prefers-reduced-motion removes every animation and transition."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tiny",
+        "value": "350px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "tablet",
+        "value": "860px"
+      },
+      {
+        "name": "wide-hero",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single filled action of a view, usually Commencer à apprendre.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Commencer à apprendre</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:12px 22px;border-radius:14px;border:1.5px solid #1F4E9C;background:#1F4E9C;color:#FFFFFF;font:700 17px/1.2 'Atkinson Hyperlegible',system-ui,sans-serif;text-decoration:none;transition:transform .12s ease-out,background-color .15s ease-out}.ds-btn-primary:hover{background:#183F80;border-color:#183F80}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2.5px solid #1F4E9C;outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined button for a second action in the header (PDF) or a list footer.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Tous les guides</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;min-height:46px;padding:10px 18px;border-radius:12px;border:1.5px solid #DDE2EC;background:#FFFFFF;color:#14203C;font:700 16px/1.2 'Atkinson Hyperlegible',system-ui,sans-serif;text-decoration:none}.ds-btn-secondary:hover{border-color:#1F4E9C}.ds-btn-secondary:active{transform:translateY(1px)}.ds-btn-secondary:focus-visible{outline:2.5px solid #1F4E9C;outline-offset:2px}"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "link-text",
+      "description": "Every secondary action: underlined, bold, no arrow.",
+      "html": "<a class=\"ds-link\" href=\"#\">Mon plan en 7 jours</a>",
+      "css": ".ds-link{color:#1F4E9C;font:700 16px/1.4 'Atkinson Hyperlegible',system-ui,sans-serif;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}.ds-link:hover{color:#183F80}.ds-link:focus-visible{outline:2.5px solid #1F4E9C;outline-offset:2px;border-radius:6px}"
+    },
+    {
+      "name": "Quiz Card",
+      "kind": "card",
+      "refersTo": "quiz-card",
+      "description": "The signature: a real official question with four options and instant correction.",
+      "html": "<div class=\"ds-quiz\"><b>Testez-vous : 5 questions</b><small>Question 1 sur 5</small><p>Que commémore la fête nationale ?</p><button>La prise de la Bastille et la fête de la Fédération</button><button>La fin de la Seconde Guerre mondiale en Europe</button></div>",
+      "css": ".ds-quiz{max-width:420px;padding:22px;border:1px solid #DDE2EC;border-radius:18px;background:#FFFFFF;box-shadow:0 1px 2px rgba(20,32,60,.04),0 12px 32px rgba(20,32,60,.07);font:400 17px/1.55 'Atkinson Hyperlegible',system-ui,sans-serif;color:#14203C}.ds-quiz b{display:block;font:800 19px/1.2 'Atkinson Hyperlegible Next',system-ui,sans-serif}.ds-quiz small{display:block;color:#4F5A74;font-size:14px}.ds-quiz p{font-weight:700;margin:12px 0}.ds-quiz button{display:block;width:100%;text-align:left;margin:0 0 8px;padding:10px 12px;min-height:46px;border:1.5px solid #DDE2EC;border-radius:12px;background:#FFFFFF;color:#14203C;font:inherit;cursor:pointer}.ds-quiz button:hover{border-color:#1F4E9C}.ds-quiz button:first-of-type{border-color:#17744A;background:#E3F3EA}"
+    },
+    {
+      "name": "List Card",
+      "kind": "card",
+      "refersTo": "list-card",
+      "description": "One of the three official lists; the count carries the list colour.",
+      "html": "<a class=\"ds-list\" href=\"#\"><small>Liste officielle</small><b>Naturalisation</b><span>259 <i>questions</i></span><u>Voir les questions</u></a>",
+      "css": ".ds-list{display:flex;flex-direction:column;gap:6px;max-width:320px;padding:24px 22px 20px;border:1px solid #DDE2EC;border-radius:16px;background:#FFFFFF;box-shadow:0 1px 2px rgba(20,32,60,.04);color:#14203C;text-decoration:none;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;transition:transform .15s ease-out}.ds-list:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(20,32,60,.04),0 12px 32px rgba(20,32,60,.07)}.ds-list small{color:#4F5A74;font-weight:700;font-size:14.5px}.ds-list b{font:800 22px/1.15 'Atkinson Hyperlegible Next',system-ui,sans-serif}.ds-list span{font:800 44px/1 'Atkinson Hyperlegible Next',system-ui,sans-serif;color:#1F4E9C}.ds-list i{font:700 15px 'Atkinson Hyperlegible',sans-serif;font-style:normal;color:#4F5A74}.ds-list u{color:#1F4E9C;font-weight:700;text-underline-offset:4px}"
+    },
+    {
+      "name": "Hairline List",
+      "kind": "custom",
+      "refersTo": "hairline-list",
+      "description": "Themes, guides and FAQ: rows separated by 1px rules, no card.",
+      "html": "<ul class=\"ds-rows\"><li><b>Comment se passe l’examen</b><span>Format, durée, score à obtenir et attestation.</span></li><li><b>Qui doit le passer ?</b><span>Carte de séjour, carte de résident, naturalisation.</span></li></ul>",
+      "css": ".ds-rows{list-style:none;margin:0;padding:0;border-top:1px solid #DDE2EC;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;max-width:480px}.ds-rows li{display:grid;gap:4px;padding:18px 2px;border-bottom:1px solid #DDE2EC}.ds-rows b{font:800 19px/1.2 'Atkinson Hyperlegible Next',system-ui,sans-serif;color:#14203C}.ds-rows li:hover b{color:#1F4E9C}.ds-rows span{color:#4F5A74}"
+    },
+    {
+      "name": "Site Header",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Flag bar, wordmark, two text links, PDF and Apprendre; on phones Apprendre plus a menu.",
+      "html": "<div class=\"ds-flag\"><i></i><i></i><i></i></div><nav class=\"ds-nav\"><b>Coq Civique</b><a href=\"#\">Questions</a><a href=\"#\">Guides</a><a class=\"pdf\" href=\"#\">PDF</a><a class=\"go\" href=\"#\">Apprendre</a></nav>",
+      "css": ".ds-flag{display:flex;height:4px}.ds-flag i{flex:1}.ds-flag i:nth-child(1){background:#1F4E9C}.ds-flag i:nth-child(2){background:#DDE2EC}.ds-flag i:nth-child(3){background:#C8102E}.ds-nav{display:flex;align-items:center;gap:16px;padding:12px 18px;border-bottom:1px solid #DDE2EC;background:#FFFFFF;font:700 15px 'Atkinson Hyperlegible',system-ui,sans-serif}.ds-nav b{margin-right:auto;font:800 20px 'Atkinson Hyperlegible Next',system-ui,sans-serif;color:#14203C}.ds-nav a{color:#14203C;text-decoration:none}.ds-nav a:hover{color:#1F4E9C}.ds-nav .pdf{padding:6px 14px;border:1.5px solid #DDE2EC;border-radius:12px}.ds-nav .go{padding:6px 14px;border-radius:12px;background:#1F4E9C;color:#FFFFFF}.ds-nav a:focus-visible{outline:2.5px solid #1F4E9C;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La réponse claire",
+    "overview": "Every page exists to hand a candidate one clear answer, calmly. The system is the category standard played straight, at the finish of Babbel and Alan: a white page, soft blue-grey bands, navy ink and one blue for actions. Nothing competes with the question being learned; the live quiz, a real official question with instant correction, is the one object that is allowed to stand out.\n\nThe audience reads French at A2–B1, mostly on a phone. That decides density: one idea per band, generous type, short lines, labels in plain sentence case. The tricolour is identity, not decoration; it lives in the 4px flag bar and in red for mistakes. The site is independent and must never look like a government service, a game, or an expensive private school.",
+    "keyCharacteristics": [
+      "White ground, alternating with a quiet blue-grey band; no textures, no gradients.",
+      "One display family (Atkinson Hyperlegible Next ExtraBold) over the hyperlegible body face.",
+      "Hairline lists instead of stacks of cards; cards only for things you click.",
+      "One filled button per view; every other action is an underlined text link.",
+      "A single authored motion: the correct quiz answer settling in green."
+    ],
+    "rules": [
+      {
+        "name": "The Flag-Only Rule",
+        "body": "Blue, white and red appear together only in the flag bar. Red alone means \"wrong\" or \"attention\"; it never decorates.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Blue Rule",
+        "body": "Only one colour is clickable. If something is Tricolour Blue, a visitor must be able to tap it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Plain Label Rule",
+        "body": "Labels are sentence case in the body face. No capitals with letter-spacing, anywhere, in the site or the app.",
+        "section": "typography"
+      },
+      {
+        "name": "The Title-First Rule",
+        "body": "A meta line (theme, list, date) sits under the title it describes, never above it as a kicker.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lift-Means-Live Rule",
+        "body": "Only an element you can interact with right now may lift: the quiz, the answer you are reading, the card under your cursor.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep one filled button per view and make every other action an underlined text link.",
+      "**Do** put meta (theme, list, date) under the title in a 15px bold slate or theme-coloured line.",
+      "**Do** separate lists with 1px Hairline Grey rules and keep cards for clickable things.",
+      "**Do** keep prose at 54ch or less and body text at 17px with 1.55 line height.",
+      "**Do** use drawn SVG icons (check, close, menu, download) at 14–22px with aria-hidden."
+    ],
+    "donts": [
+      "**Don't** put a small label above a heading, and don't set any label in spaced capitals.",
+      "**Don't** use coloured side stripes or top bars on cards, notes or verses.",
+      "**Don't** use hard offset \"3D\" shadows, bounce animations or other game devices; the product must never feel like a game.",
+      "**Don't** use text characters (✓, ×, +, ▶) as icons.",
+      "**Don't** use a serif or decorative display face, cursive, notebook ruling or other school props.",
+      "**Don't** borrow anything that makes the site look official: no Marianne block, no government page patterns.",
+      "**Don't** show invented numbers, ratings or testimonials; only official facts and real counters."
+    ]
+  }
+}
