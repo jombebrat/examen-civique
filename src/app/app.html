@@ -340,7 +340,10 @@ h2.sec{ font-family:var(--display); font-weight:700; font-size:20px; margin:28px
 .grid40 button{ aspect-ratio:1; max-width:100%; border-radius:7px; border:1px solid var(--line); background:var(--surface); font-size:12.5px; font-variant-numeric:tabular-nums; cursor:pointer; padding:0; color:var(--muted); }
 .grid40 button.done{ background:var(--accent-weak); color:var(--accent); border-color:transparent; font-weight:700; }
 .grid40 button.cur{ outline:2px solid var(--accent); outline-offset:1px; }
-.finish{ margin-top:16px; width:100%; }
+.finish{ margin-top:12px; width:100%; }
+.navrow.last{ grid-template-columns:auto minmax(0,1fr); }
+.navrow.last .btn{ white-space:nowrap; }
+#finask{ flex-wrap:wrap; }
 
 .result{ text-align:center; padding:26px 18px; }
 .result .big{ font-size:64px; }
@@ -1172,13 +1175,15 @@ function renderExam() {
       <p class="q">${c.q}</p>
       <div class="opts">${opts.map((o, i) => `<button class="opt ${S.pick[S.i] === i ? "sel" : ""}" data-act="epick" data-i="${i}" aria-pressed="${S.pick[S.i] === i}"><span class="L">${"ABCD"[i]}</span><span>${o.h}</span></button>`).join("")}</div>
     </article>
-    <div class="navrow">
+    <div class="navrow${S.i === EXAM_N - 1 ? " last" : ""}">
       <button class="btn" data-act="eprev" ${S.i === 0 ? "disabled" : ""}>Précédente</button>
-      <button class="btn primary" data-act="enext" ${S.i === EXAM_N - 1 ? "disabled" : ""}>Suivante</button>
+      ${S.i === EXAM_N - 1
+        ? `<button class="btn primary" data-act="finish">Terminer l’examen</button>`
+        : `<button class="btn primary" data-act="enext">Suivante</button>`}
     </div>
-    <div class="grid40" aria-label="Aller à une question">${S.q.map((k, i) => `<button class="${S.pick[i] !== null ? "done" : ""} ${i === S.i ? "cur" : ""}" data-act="ego" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join("")}</div>
-    ${S.finishAsk ? `<div class="confirm" style="margin-top:14px"><span>${EXAM_N - answered} question${EXAM_N - answered > 1 ? "s" : ""} sans réponse. Terminer quand même ?</span><button class="btn small primary" data-act="finish-yes">Terminer</button><button class="btn small" data-act="finish-no">Revenir</button></div>`
-      : `<button class="btn finish" data-act="finish">Terminer l’examen (${answered} / ${EXAM_N} répondues)</button>`}`;
+    ${S.finishAsk ? `<div class="confirm" id="finask" style="margin-top:14px"><span>${EXAM_N - answered} question${EXAM_N - answered > 1 ? "s" : ""} sans réponse. Terminer quand même ?</span><button class="btn small primary" data-act="finish-yes">Terminer</button><button class="btn small" data-act="finish-no">Répondre aux questions restantes</button></div>`
+      : S.i === EXAM_N - 1 ? "" : `<button class="btn finish" data-act="finish">Terminer l’examen (${answered} / ${EXAM_N} répondues)</button>`}
+    <div class="grid40" aria-label="Aller à une question">${S.q.map((k, i) => `<button class="${S.pick[i] !== null ? "done" : ""} ${i === S.i ? "cur" : ""}" data-act="ego" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join("")}</div>`;
 }
 function finishExam() {
   if (!S || S.over) return;
@@ -1263,7 +1268,7 @@ document.addEventListener("click", e => {
     case "eprev": S.i = Math.max(0, S.i - 1); renderExam(); break;
     case "enext": S.i = Math.min(EXAM_N - 1, S.i + 1); renderExam(); break;
     case "ego": S.i = i; renderExam(); break;
-    case "finish": if (S.pick.some(x => x === null)) { S.finishAsk = true; renderExam(); } else finishExam(); break;
+    case "finish": if (S.pick.some(x => x === null)) { S.finishAsk = true; renderExam(); const fa = $("#finask"); if (fa) fa.scrollIntoView({ block: "center", behavior: "smooth" }); } else finishExam(); break;
     case "finish-yes": finishExam(); break;
     case "finish-no": S.finishAsk = false; S.i = Math.max(0, S.pick.indexOf(null)); renderExam(); break;
     case "speak": if (S) speak(plain(BY_K[S.mode === "lesson" ? S.cur : S.q[S.i]].q)); break;
