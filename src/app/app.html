@@ -904,7 +904,7 @@ function renderLesson() {
   const n = l.cards.length, firstOk = l.cards.filter(k => S.first[k]).length, sk = streak();
   const u = UNITS.find(x => x.t === l.t), unitDone = u.lessons.every(x => ["done", "review"].includes(lessonState(x)));
   const nx = nextLesson();
-  const nudge = ID && !ID.email() ? `<div class="save-nudge"><p><b>Ne perdez pas vos progrès.</b> Indiquez votre adresse email, sans mot de passe : vous retrouverez votre parcours sur tous vos appareils.</p><button class="btn primary small" data-act="acct-ask">Sauvegarder ma progression</button></div>` : "";
+  const nudge = saveNudge();
   $("#stage").innerHTML = `<div class="panel lesson-done">${DATA.mascot ? `<img class="celebrate" src="${DATA.mascot}" width="120" height="120" alt="Le coq vous félicite">` : ""}
     <h2>${unitDone ? `Thème ${l.t} terminé !` : "Leçon terminée !"}</h2>
     <p class="lbl" style="font-size:15px">${firstOk === n ? "Sans faute, bravo !" : firstOk >= n * 0.75 ? "Très bien, continuez comme ça." : "C’est en se trompant qu’on retient : ces questions reviendront dans vos révisions."}</p>
@@ -1208,6 +1208,7 @@ function renderExamResult() {
       <div class="scale" role="img" aria-label="${S.score} sur ${EXAM_N}, seuil 32"><span class="fill" style="width:${100 * S.score / EXAM_N}%;background:${pass ? "var(--good)" : "var(--bad)"}"></span><span class="mark" style="left:${100 * EXAM_PASS / EXAM_N}%"></span></div>
       <div class="scale-l"><span>0</span><span>seuil : 32</span><span>40</span></div>
       <p style="margin:14px 0 0"><span class="pill ${pass ? "ok" : "ko"}">${pass ? "Réussi" : "Pas encore"}</span> <span class="tu">Temps utilisé : ${fmt(S.used)}</span></p>
+      ${saveNudge()}
       <div class="row-btns"><button class="btn primary" data-act="share-result">Partager mon résultat</button><button class="btn" data-act="start-exam">Nouvel examen blanc</button><button class="btn" data-act="home">Accueil</button></div>
     </div>
     ${wrong.length ? `<h2 class="sec">À retravailler (${wrong.length})</h2><div class="review">${wrong.map(({ c, i }) => {
@@ -1218,9 +1219,11 @@ function renderExamResult() {
     }).join("")}</div>` : `<p class="empty" style="text-align:center;margin-top:16px">Aucune erreur. Bravo !</p>`}`;
 }
 
+const saveNudge = () => ID && !ID.email() ? `<div class="save-nudge"><p><b>Ne perdez pas vos progrès.</b> Indiquez votre adresse email, sans mot de passe : vous retrouverez votre parcours sur tous vos appareils.</p><button class="btn primary small" data-act="acct-ask">Sauvegarder ma progression</button></div>` : "";
 function renderDone(title, text, again) {
   setBar(S.mode === "cards" ? scopeLabel(scope) : "Quiz : " + scopeLabel(scope), "", 1);
   $("#stage").innerHTML = `<div class="panel done-card"><h2>${title}</h2><p class="lbl" style="font-size:15px;margin:0 auto;max-width:42ch">${text}</p>
+    ${saveNudge()}
     <div class="row-btns"><button class="btn primary" data-act="${again}">Encore 20 questions</button><button class="btn" data-act="home">Accueil</button></div></div>`;
 }
 

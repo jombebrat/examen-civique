@@ -236,12 +236,10 @@
   }
   function hide() { if (gate) { gate.hidden = true; pad(); } }
 
-  // Liens vers le PDF : sans adresse enregistrée, on la demande d'abord.
+  // Liens vers le PDF : téléchargement direct, sans email ; un compteur anonyme par clic.
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest && ev.target.closest("[data-pdf-link]");
-    if (a && ID.email()) ID.event("livret-direct");
-    if (!a || ID.email()) return;
-    ev.preventDefault(); pending = a.getAttribute("href"); show("pdf", true);
+    if (a) ID.event("livret-direct");
   });
 
   /* À l'arrivée sur une page du site (souvent depuis Google) : une invitation à apprendre, pas une demande d'email.
