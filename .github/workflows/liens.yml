@@ -1,0 +1,27 @@
+name: Liens cassés
+
+# Vérification hebdomadaire des liens du site publié. Ne bloque jamais la publication.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  liens:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier les liens
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-concurrency 4 --recursive --max-recursion-depth 3 --exclude-mail "https://coqcivique.com/"
+          fail: false
+          output: liens-rapport.md
+      - name: Garder le rapport
+        uses: actions/upload-artifact@v4
+        with:
+          name: liens-rapport
+          path: liens-rapport.md
+          if-no-files-found: ignore
