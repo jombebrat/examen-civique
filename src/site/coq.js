@@ -88,7 +88,7 @@
     var fr = function (n) { return Number(n).toLocaleString("fr-FR"); };
     if (proof && c.inscrits >= 50) {
       var t = "Déjà " + fr(c.inscrits) + " personnes révisent avec Coq Civique";
-      if (c.resultats >= 20) t += " · " + Math.round(100 * c.reussites / c.resultats) + " % de réussite parmi les " + fr(c.resultats) + " résultats qui nous ont été communiqués";
+      if (c.resultats >= 100) t += " · " + Math.round(100 * c.reussites / c.resultats) + " % des " + fr(c.resultats) + " candidats qui ont déclaré leur résultat ont réussi (chiffres déclarés par les utilisateurs, non vérifiés)";
       proof.textContent = t + "."; proof.hidden = false;
     }
     if (tem && c.temoignages && c.temoignages.length) {
