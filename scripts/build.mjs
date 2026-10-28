@@ -124,6 +124,7 @@ const breadcrumbLd = (items) => ({
   "@context": "https://schema.org", "@type": "BreadcrumbList",
   itemListElement: items.map(([name, path], i) => ({ "@type": "ListItem", position: i + 1, name, item: abs(path) })),
 });
+const qFaqLd = (q) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: [{ "@type": "Question", name: plain(q.question), acceptedAnswer: { "@type": "Answer", text: plain(`${q.reponse} ${q.explication || ""}`.trim()) } }] });
 const crumbs = (items) => `<nav class="crumbs" aria-label="Fil d’Ariane"><ol>${items.map(([name, path], i) =>
   i === items.length - 1 ? `<li aria-current="page">${esc(name)}</li>` : `<li><a href="${href(path)}">${esc(name)}</a></li>`).join("")}</ol></nav>`;
 const reportLink = (what, path) => `mailto:${esc(config.editeur.contact)}?subject=${encodeURIComponent(`Erreur signalée : ${what}`)}&body=${encodeURIComponent(`Page : ${abs(path)}\n\nCe qui me semble faux :\n`)}`;
@@ -504,7 +505,7 @@ function questionPage(q, i) {
   const enHelp = en ? `<details class="en-help" lang="en"><summary><b>EN</b>In English</summary><p>${esc(en[0])}</p><p><b>Answer:</b> ${esc(en[1])}</p>${en[2] ? `<p class="end">${esc(en[2])}</p>` : ""}</details>` : "";
   write(qPath(q), layout({
     title: fit(plain(q.question), " | QCM examen civique", " – examen civique"),
-    description: desc, path: qPath(q), canonical: qPath(canonicalQ), theme: t.id, jsonld: [breadcrumbLd(items)],
+    description: desc, path: qPath(q), canonical: qPath(canonicalQ), theme: t.id, jsonld: [breadcrumbLd(items), qFaqLd(q)],
     body: `${crumbs(items)}
 <article>
   <div class="qhead"><h1>${typo(q.question)}</h1>
@@ -883,25 +884,69 @@ ${examples ? `<h2>${typo("Trois sujets prêts à imprimer")}</h2>
 }
 
 /* ---------- Mises en situation (exercices rédigés par le site) ---------- */
+const slugify = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const sitPath = (x) => `/mises-en-situation/${slugify(x.principe)}-${x.id}/`;
+// Position de la bonne réponse : fixe pour chaque exercice
+const sitOptions = (x) => {
+  let h = 0; for (const ch of x.id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const opts = [...x.qcm.mauvaises]; opts.splice(h % 4, 0, x.qcm.bonne); return opts;
+};
+const shortSit = (t) => (t.length > 90 ? t.slice(0, 88).replace(/\s+\S*$/, "") + "…" : t);
+const sitFaqLd = (x) => ({
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [{ "@type": "Question", name: plain(`${x.situation} ${x.question}`), acceptedAnswer: { "@type": "Answer", text: plain(`${x.qcm.bonne}. ${x.explication}`) } }],
+});
+
+// Une page par exercice : la réponse n’est donnée que là (pas de doublon avec le sommaire)
+function sitItemPages() {
+  situations.forEach((x, i) => {
+    const path = sitPath(x);
+    const t = themeById[x.theme];
+    const prev = situations[i - 1], next = situations[i + 1];
+    const same = situations.filter((y) => y.theme === x.theme && y.id !== x.id).slice(0, 6);
+    const items = [["Accueil", "/"], ["Mises en situation", "/mises-en-situation/"], [x.principe, path]];
+    write(path, layout({
+      title: fit(`Mise en situation : ${x.principe}`, " | Examen civique", " – examen civique"),
+      description: descWith(plain(x.explication), [" Exercice corrigé de l’examen civique, gratuit.", " Exercice corrigé, gratuit."]),
+      path, jsonld: [breadcrumbLd(items), sitFaqLd(x)], theme: t.id,
+      body: `${crumbs(items)}
+<article class="sit-item">
+<div class="sit-meta">${esc(x.principe)}, thème ${t.id}, ${typo(t.titre_court)}</div>
+<h1>${typo(`Mise en situation : ${x.principe}`)}</h1>
+<p class="sit-s">${typo(x.situation)}</p>
+<p class="sit-q">${typo(x.question)}</p>
+<ol class="sit-opts" type="A">${sitOptions(x).map((o) => `<li>${typo(o)}</li>`).join("")}</ol>
+<details><summary>Voir la réponse</summary><p class="sit-a">${typo(x.qcm.bonne)}</p><p class="sit-d">${typo(x.explication)}</p></details>
+</article>
+<p class="note">${typo("Exercice rédigé par Coq Civique : le ministère ne publie pas ces mises en situation, il ne s’agit donc pas d’une question officielle.")}</p>
+<nav class="sit-nav" aria-label="Exercices voisins">${prev ? `<a href="${href(sitPath(prev))}">← ${esc(prev.principe)}</a>` : "<span></span>"}${next ? `<a href="${href(sitPath(next))}">${esc(next.principe)} →</a>` : "<span></span>"}</nav>
+<h2>Dans le même thème</h2>
+<ul>${same.map((y) => `<li><a href="${href(sitPath(y))}">${esc(y.principe)} : ${esc(shortSit(y.situation))}</a></li>`).join("")}</ul>
+<p>${typo("Pour vous entraîner en QCM :")} <a href="${href("/reviser/?theme=sit")}">mises en situation</a>. ${typo("La méthode pour les réussir est expliquée dans")} <a href="${href("/guide/mises-en-situation-examen-civique/")}">notre guide</a>.</p>
+<p class="src">${typo("Mis à jour le")} ${dateFr(UPDATED)}. <a href="${reportLink(`Mise en situation : ${x.principe}`, path)}">Signaler une erreur</a></p>`,
+    }));
+  });
+}
+
+// Sommaire : un lien par exercice, sans la réponse
 function sitPage() {
   const path = "/mises-en-situation/";
   const items = [["Accueil", "/"], ["Mises en situation", path]];
-  const order = (x) => { // position de la bonne réponse : fixe pour chaque exercice
-    let h = 0; for (const ch of x.id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-    const opts = [...x.qcm.mauvaises]; opts.splice(h % 4, 0, x.qcm.bonne); return opts;
-  };
   const toc = themes.map((t) => `<a href="#theme-${t.id}" style="--c:var(--t${t.id})"><span>0${t.id}</span> ${typo(t.titre_court)}</a>`).join("");
   const sections = themes.map((t) => {
     const xs = situations.filter((x) => x.theme === t.id);
     return `<section class="block" id="theme-${t.id}" style="--c:var(--t${t.id})"><h2>${typo(t.titre)} <small class="count">${xs.length}\u00a0exercices</small></h2>
-${xs.map((x) => `<article class="sit-item" id="${x.id}"><div class="sit-meta">${esc(x.principe)}</div><p class="sit-s">${typo(x.situation)}</p><p class="sit-q">${typo(x.question)}</p>
-<ol class="sit-opts" type="A">${order(x).map((o) => `<li>${typo(o)}</li>`).join("")}</ol>
-<details><summary>Voir la réponse</summary><p class="sit-a">${typo(x.qcm.bonne)}</p><p class="sit-d">${typo(x.explication)}</p></details></article>`).join("\n")}</section>`;
+<ul class="sit-list" style="list-style:none;padding:0">${xs.map((x) => `<li id="${x.id}" style="margin:0 0 12px"><a href="${href(sitPath(x))}"><b>${esc(x.principe)}</b> : ${typo(x.situation)}</a></li>`).join("\n")}</ul></section>`;
   }).join("");
+  const itemList = {
+    "@context": "https://schema.org", "@type": "ItemList", name: "Mises en situation de l’examen civique",
+    numberOfItems: situations.length,
+    itemListElement: situations.map((x, i) => ({ "@type": "ListItem", position: i + 1, name: plain(x.principe), url: abs(sitPath(x)) })),
+  };
   write(path, layout({
     title: brand(`Mises en situation examen civique : ${situations.length} exemples corrigés`),
     description: `Entraînez-vous aux mises en situation de l’examen civique : ${situations.length} cas de la vie quotidienne corrigés (travail, école, laïcité, santé, logement…).`,
-    path, jsonld: [breadcrumbLd(items)],
+    path, jsonld: [breadcrumbLd(items), itemList],
     body: `${crumbs(items)}<h1 style="font-size:clamp(28px,6vw,40px)">${typo(`Mises en situation de l’examen civique : ${situations.length} exemples corrigés`)}</h1>
 <p class="meta-line">Exercices d’entraînement, non officiels</p>
 <p class="lead">${typo("À l’examen, 12 des 40 questions décrivent une situation de la vie quotidienne. Elles ne sont pas publiées : ces exercices, rédigés par Coq Civique, reposent sur les mêmes principes pour vous y préparer.")}</p>
@@ -1174,6 +1219,7 @@ listPage("csp");
 themes.forEach(themePage);
 questions.forEach(questionPage);
 sitPage();
+sitItemPages();
 appPage();
 livretPage();
 pdfPage();
@@ -1200,6 +1246,28 @@ writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${Object.entries(PAGES).map(([p, x]) => `  <url><loc>${abs(p)}</loc><lastmod>${x.d}</lastmod></url>`).join("\n")}
 </urlset>
+`);
+writeFileSync(join(DIST, "llms.txt"), `# Coq Civique
+
+> Site indépendant et gratuit pour préparer l’examen civique français (naturalisation, carte de résident, carte de séjour pluriannuelle). Chaque question officielle a sa page avec la réponse, une explication et la source. Sans inscription.
+
+## Listes officielles
+- [Naturalisation (${LIST.nat.count} questions)](${abs("/questions/")})
+- [Carte de résident (${LIST.cr.count} questions)](${abs(LIST.cr.path)})
+- [Carte de séjour pluriannuelle (${LIST.csp.count} questions)](${abs(LIST.csp.path)})
+- [Mises en situation (${situations.length} exercices corrigés, non officiels)](${abs("/mises-en-situation/")})
+
+## Faits clés
+- Examen : 40 questions en 45 minutes, dont 28 de connaissance et 12 mises en situation.
+- Seuil de réussite : 32 bonnes réponses sur 40.
+- Site non officiel. Questions : listes du ministère de l’Intérieur. Réponses et explications : Coq Civique.
+
+## Autres
+- [Livret du citoyen](${abs("/livret-du-citoyen/")})
+- [Déroulement de l’examen](${abs("/guide/deroulement-examen-civique/")})
+- [Plan en 7 jours](${abs("/preparer-examen-civique-en-7-jours/")})
+- [Livrets PDF gratuits](${abs("/examen-civique-pdf/")})
+- [English](${abs("/en/")}) · [العربية](${abs("/ar/")})
 `);
 writeFileSync(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${abs("/sitemap.xml")}\n`);
 writeFileSync(join(DIST, ".nojekyll"), "");

@@ -1,6 +1,6 @@
 {
   "source": "Exercices rédigés par Coq Civique pour s'entraîner aux mises en situation (non officiels).",
-  "mise_a_jour": "2026-10-21",
+  "mise_a_jour": "2026-10-28",
   "situations": [
     {
       "id": "s1-1",
@@ -2024,6 +2024,448 @@
         ]
       },
       "explication": "Une pharmacie de garde est ouverte en dehors des horaires habituels ; son adresse est affichée sur les pharmacies ou disponible en ligne."
+    },
+    {
+      "id": "s1-29",
+      "theme": 1,
+      "numero": 29,
+      "principe": "Neutralité des agents publics",
+      "situation": "Une employée d’une mairie porte un signe religieux visible en accueillant le public au guichet.",
+      "question": "Que dit la laïcité sur ce cas ?",
+      "qcm": {
+        "bonne": "Dans l’exercice de ses fonctions, l’agent public doit rester neutre ; sa liberté de croire s’exerce en dehors du service.",
+        "mauvaises": [
+          "Elle peut afficher ses convictions au guichet, sans limite",
+          "Le maire doit lui interdire toute pratique religieuse, même privée",
+          "Seuls les agents de police sont concernés par la neutralité"
+        ]
+      },
+      "explication": "La neutralité s’impose aux agents publics pendant leur service, pour que chaque usager soit traité de la même façon. Leur liberté de conscience, elle, est protégée."
+    },
+    {
+      "id": "s1-30",
+      "theme": 1,
+      "numero": 30,
+      "principe": "Droit de manifester",
+      "situation": "Une association veut organiser une manifestation pacifique sur la voie publique.",
+      "question": "Que doit-elle faire ?",
+      "qcm": {
+        "bonne": "Déclarer la manifestation à la mairie ou à la préfecture avant de la tenir.",
+        "mauvaises": [
+          "Rien : une manifestation ne se déclare jamais",
+          "Obtenir l’accord du voisinage uniquement",
+          "Attendre que la police vienne l’autoriser sur place"
+        ]
+      },
+      "explication": "Manifester est une liberté, mais une manifestation sur la voie publique doit être déclarée à l’avance pour que les autorités puissent organiser la circulation et la sécurité."
+    },
+    {
+      "id": "s1-31",
+      "theme": 1,
+      "numero": 31,
+      "principe": "Fraternité et secours",
+      "situation": "Vous voyez un inconnu s’effondrer dans la rue et ne plus réagir.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Appeler les secours (15, 18 ou 112) et rester auprès de la personne jusqu’à leur arrivée.",
+        "mauvaises": [
+          "Passer votre chemin, ce n’est pas votre affaire",
+          "Le filmer pour le publier sur les réseaux",
+          "Lui donner à manger pour le réveiller"
+        ]
+      },
+      "explication": "Ne pas porter secours à une personne en danger est une infraction pénale en France. Alerter les secours est le premier geste à faire."
+    },
+    {
+      "id": "s1-32",
+      "theme": 1,
+      "numero": 32,
+      "principe": "Égalité d’accès aux services publics",
+      "situation": "Un agent d’un service public refuse de vous recevoir parce que vous êtes d’une origine différente.",
+      "question": "Quel recours avez-vous ?",
+      "qcm": {
+        "bonne": "Saisir le Défenseur des droits, qui lutte contre les discriminations.",
+        "mauvaises": [
+          "Accepter, car le service public peut refuser un usager",
+          "Abandonner, puisque la discrimination est sans sanction",
+          "Vous adresser uniquement à votre employeur"
+        ]
+      },
+      "explication": "Le service public doit accueillir tout le monde dans les mêmes conditions. Le Défenseur des droits reçoit les réclamations pour discrimination."
+    },
+    {
+      "id": "s1-33",
+      "theme": 1,
+      "numero": 33,
+      "principe": "Respect de la loi commune",
+      "situation": "Un groupe de jeunes exige qu’une école applique ses propres règles au lieu de celles de la République.",
+      "question": "Quelle est la réponse républicaine ?",
+      "qcm": {
+        "bonne": "Les règles communes de la République s’appliquent à tous, et l’école doit les faire respecter.",
+        "mauvaises": [
+          "Chaque quartier peut fixer ses propres lois",
+          "La loi ne vaut que pour les adultes",
+          "Les règles de l’école sont au-dessus de la loi"
+        ]
+      },
+      "explication": "La loi est la même pour tous sur le territoire. Une règle locale ne peut pas contredire la loi nationale."
+    },
+    {
+      "id": "s2-21",
+      "theme": 2,
+      "numero": 21,
+      "principe": "Élections municipales",
+      "situation": "Vous êtes ressortissant d’un pays hors de l’Union européenne et vous voulez voter aux élections municipales.",
+      "question": "Pouvez-vous voter ?",
+      "qcm": {
+        "bonne": "Non : seuls les citoyens français et les citoyens de l’Union européenne peuvent voter aux municipales.",
+        "mauvaises": [
+          "Oui, dès que vous êtes installé depuis un an",
+          "Oui, si vous payez vos impôts en France",
+          "Oui, avec une simple carte de séjour"
+        ]
+      },
+      "explication": "Les élections municipales sont ouvertes aux Français et aux citoyens de l’Union européenne. Les autres étrangers ne peuvent pas voter à ces élections."
+    },
+    {
+      "id": "s2-22",
+      "theme": 2,
+      "numero": 22,
+      "principe": "Nomination du Premier ministre",
+      "situation": "Un citoyen se demande qui choisit le Premier ministre.",
+      "question": "Quelle est la bonne réponse ?",
+      "qcm": {
+        "bonne": "Le président de la République le nomme.",
+        "mauvaises": [
+          "Les électeurs, directement, par un vote",
+          "Le Sénat, à la majorité simple",
+          "Le Conseil constitutionnel"
+        ]
+      },
+      "explication": "Dans la Ve République, le président nomme le Premier ministre, qui doit ensuite conduire une politique et rester soutenu par le Parlement."
+    },
+    {
+      "id": "s2-23",
+      "theme": 2,
+      "numero": 23,
+      "principe": "Question prioritaire de constitutionnalité",
+      "situation": "Vous estimez qu’une loi porte atteinte à un droit garanti par la Constitution, pendant un procès.",
+      "question": "Quel moyen pouvez-vous utiliser ?",
+      "qcm": {
+        "bonne": "Soulever une question prioritaire de constitutionnalité (QPC) devant le juge.",
+        "mauvaises": [
+          "Écrire directement au président de l’Assemblée nationale",
+          "Organiser une pétition sur internet",
+          "Désobéir à la loi jusqu’à sa suppression"
+        ]
+      },
+      "explication": "La QPC permet à un justiciable de contester une loi déjà en vigueur devant le juge. Le Conseil constitutionnel peut ensuite être saisi."
+    },
+    {
+      "id": "s2-24",
+      "theme": 2,
+      "numero": 24,
+      "principe": "Séances du conseil municipal",
+      "situation": "Vous souhaitez assister à une séance du conseil municipal de votre commune.",
+      "question": "Est-ce possible ?",
+      "qcm": {
+        "bonne": "Oui, les séances sont en principe publiques.",
+        "mauvaises": [
+          "Non, seuls les élus peuvent y assister",
+          "Oui, mais uniquement sur invitation du maire",
+          "Non, elles se déroulent à huis clos"
+        ]
+      },
+      "explication": "Le conseil municipal décide des affaires de la commune. Ses séances sont en principe publiques, ce qui permet aux habitants de suivre les décisions."
+    },
+    {
+      "id": "s2-25",
+      "theme": 2,
+      "numero": 25,
+      "principe": "Adoption d’une loi",
+      "situation": "Un projet de loi est présenté au Parlement.",
+      "question": "Que faut-il pour qu’il devienne une loi ?",
+      "qcm": {
+        "bonne": "Qu’il soit adopté dans les mêmes termes par l’Assemblée nationale et le Sénat, puis promulgué.",
+        "mauvaises": [
+          "Un vote du seul Sénat",
+          "Une signature du Premier ministre seul",
+          "Un référendum dans chaque commune"
+        ]
+      },
+      "explication": "Le Parlement est composé de l’Assemblée nationale et du Sénat. La loi est votée par les deux assemblées, puis promulguée par le président."
+    },
+    {
+      "id": "s2-26",
+      "theme": 2,
+      "numero": 26,
+      "principe": "Défenseur des droits",
+      "situation": "Un agent de l’administration vous répond de manière discriminatoire et vous n’obtenez pas de solution.",
+      "question": "Vers qui pouvez-vous vous tourner ?",
+      "qcm": {
+        "bonne": "Vers le Défenseur des droits.",
+        "mauvaises": [
+          "Vers le président de la République, uniquement",
+          "Vers le tribunal de commerce",
+          "Vers la préfecture de votre département uniquement"
+        ]
+      },
+      "explication": "Le Défenseur des droits est une autorité indépendante. Il défend les droits des usagers face à l’administration et lutte contre les discriminations."
+    },
+    {
+      "id": "s3-28",
+      "theme": 3,
+      "numero": 28,
+      "principe": "Scolarité obligatoire",
+      "situation": "Votre enfant a 4 ans et vous hésitez à l’inscrire à l’école maternelle.",
+      "question": "Que dit la loi ?",
+      "qcm": {
+        "bonne": "L’instruction est obligatoire à partir de 3 ans : il doit être scolarisé.",
+        "mauvaises": [
+          "Il n’y a pas d’obligation avant 6 ans",
+          "L’obligation commence seulement à 10 ans",
+          "Une simple garde à domicile suffit jusqu’à 6 ans"
+        ]
+      },
+      "explication": "Depuis 2019, l’instruction est obligatoire de 3 à 16 ans. Les parents doivent donc inscrire leurs enfants à l’école."
+    },
+    {
+      "id": "s3-29",
+      "theme": 3,
+      "numero": 29,
+      "principe": "Impôts",
+      "situation": "Vous recevez votre avis d’imposition et vous devez déclarer vos revenus de l’année.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Déclarer vos revenus chaque année, notamment en ligne sur impots.gouv.fr.",
+        "mauvaises": [
+          "Attendre que l’administration déclare à votre place",
+          "Déclarer seulement tous les dix ans",
+          "Payer sans déclarer, puisque l’avis est déjà reçu"
+        ]
+      },
+      "explication": "La déclaration annuelle des revenus est une obligation civique. Elle permet de calculer l’impôt sur le revenu."
+    },
+    {
+      "id": "s3-30",
+      "theme": 3,
+      "numero": 30,
+      "principe": "Jury d’assises",
+      "situation": "Vous êtes convoqué pour siéger comme juré à la cour d’assises.",
+      "question": "Que faites-vous ?",
+      "qcm": {
+        "bonne": "Vous présenter à la convocation, sauf motif valable reconnu par la justice.",
+        "mauvaises": [
+          "Refuser, car c’est un choix personnel",
+          "Envoyer un courrier pour être dispensé sans justification",
+          "Ne rien faire, la convocation n’a pas de valeur"
+        ]
+      },
+      "explication": "Être juré est un devoir citoyen. Il est possible de demander à être excusé pour un motif sérieux, mais il faut répondre à la convocation."
+    },
+    {
+      "id": "s3-31",
+      "theme": 3,
+      "numero": 31,
+      "principe": "Droit à l’image et vie privée",
+      "situation": "Un voisin publie sur internet une photo de vous prise sans votre accord.",
+      "question": "Quel recours avez-vous ?",
+      "qcm": {
+        "bonne": "Demander le retrait de la photo et, si besoin, porter plainte ou saisir le juge.",
+        "mauvaises": [
+          "Rien : toute photo publiée sur internet est libre",
+          "Publier à votre tour une photo de lui",
+          "Attendre la fin de l’été pour que la photo disparaisse"
+        ]
+      },
+      "explication": "Chacun a droit au respect de sa vie privée et à son image. La publication sans accord peut être sanctionnée."
+    },
+    {
+      "id": "s4-13",
+      "theme": 4,
+      "numero": 13,
+      "principe": "Mémoire de la Grande Guerre",
+      "situation": "Vous visitez Verdun, près de l’ossuaire et des tranchées.",
+      "question": "Quel est ce lieu ?",
+      "qcm": {
+        "bonne": "Un haut lieu de mémoire de la Première Guerre mondiale.",
+        "mauvaises": [
+          "Un ancien château royal du XVIe siècle",
+          "Un site préhistorique daté de l’âge du bronze",
+          "Un site industriel du XIXe siècle"
+        ]
+      },
+      "explication": "Verdun est associé à la bataille de 1916, l’une des plus meurtrières de la Première Guerre mondiale. C’est un lieu de mémoire majeur."
+    },
+    {
+      "id": "s4-14",
+      "theme": 4,
+      "numero": 14,
+      "principe": "Commémoration du 8 mai",
+      "situation": "Une cérémonie est organisée dans votre commune le 8 mai.",
+      "question": "Quelle commémoration est célébrée ?",
+      "qcm": {
+        "bonne": "La victoire de 1945 et la fin de la Seconde Guerre mondiale en Europe.",
+        "mauvaises": [
+          "La fin de la guerre d’Algérie",
+          "La prise de la Bastille",
+          "La signature du traité de Versailles"
+        ]
+      },
+      "explication": "Le 8 mai commémore la capitulation de l’Allemagne nazie en 1945, qui met fin à la Seconde Guerre mondiale en Europe."
+    },
+    {
+      "id": "s4-15",
+      "theme": 4,
+      "numero": 15,
+      "principe": "Patrimoine mondial",
+      "situation": "Vous visitez le Mont-Saint-Michel, en Normandie.",
+      "question": "Quel est son statut ?",
+      "qcm": {
+        "bonne": "Il est inscrit au patrimoine mondial de l’UNESCO.",
+        "mauvaises": [
+          "Il est un parc d’attractions privé",
+          "Il est une ancienne forteresse détruite en 1900",
+          "Il est un musée d’histoire naturelle"
+        ]
+      },
+      "explication": "Le Mont-Saint-Michel fait partie des sites inscrits par l’UNESCO. Il illustre le patrimoine culturel français."
+    },
+    {
+      "id": "s4-16",
+      "theme": 4,
+      "numero": 16,
+      "principe": "Langues régionales et langue de la République",
+      "situation": "Dans une région, une langue régionale est pratiquée à côté du français.",
+      "question": "Quelle est la langue officielle de la République ?",
+      "qcm": {
+        "bonne": "Le français.",
+        "mauvaises": [
+          "L’occitan, parlé dans le sud",
+          "Le breton, parlé en Bretagne",
+          "Toutes les langues régionales à égalité"
+        ]
+      },
+      "explication": "La Constitution précise que la langue de la République est le français. Les langues régionales font partie du patrimoine culturel."
+    },
+    {
+      "id": "s5-33",
+      "theme": 5,
+      "numero": 33,
+      "principe": "Logement et loyer",
+      "situation": "Votre propriétaire veut augmenter votre loyer en dehors de ce que prévoit le bail.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Vérifier le bail et le cadre légal, puis demander conseil à l’ADIL ou à un conciliateur.",
+        "mauvaises": [
+          "Payer la hausse sans rien dire",
+          "Quitter le logement le jour même",
+          "Ne plus payer le loyer jusqu’à nouvel ordre"
+        ]
+      },
+      "explication": "Le loyer ne peut être révisé que selon les règles et la clause prévues dans le bail. L’ADIL, présente dans chaque département, informe gratuitement les locataires."
+    },
+    {
+      "id": "s5-34",
+      "theme": 5,
+      "numero": 34,
+      "principe": "Urgence médicale",
+      "situation": "Vous avez une douleur thoracique intense et vous avez du mal à respirer.",
+      "question": "Que faites-vous ?",
+      "qcm": {
+        "bonne": "Vous appelez immédiatement le 15 ou le 112.",
+        "mauvaises": [
+          "Vous attendez le lendemain pour voir votre médecin",
+          "Vous prenez un médicament sans avis médical et restez chez vous",
+          "Vous envoyez un message à vos proches"
+        ]
+      },
+      "explication": "Certains symptômes exigent une prise en charge immédiate. Le 15 (SAMU) et le 112 permettent d’obtenir des secours rapidement."
+    },
+    {
+      "id": "s5-35",
+      "theme": 5,
+      "numero": 35,
+      "principe": "Ouverture d’un compte bancaire",
+      "situation": "Vous souhaitez ouvrir un compte dans une banque en France.",
+      "question": "Que présentez-vous généralement ?",
+      "qcm": {
+        "bonne": "Une pièce d’identité et un justificatif de domicile.",
+        "mauvaises": [
+          "Votre dernier relevé d’un autre pays, sans pièce d’identité",
+          "Un certificat de naissance seulement",
+          "Rien : l’ouverture est automatique"
+        ]
+      },
+      "explication": "Les banques demandent une identité et une adresse pour respecter les obligations de lutte contre la fraude. Les pièces exactes varient selon la banque."
+    },
+    {
+      "id": "s5-36",
+      "theme": 5,
+      "numero": 36,
+      "principe": "Arnaque par SMS ou mail",
+      "situation": "Vous recevez un SMS vous demandant vos coordonnées bancaires pour éviter une prétendue suspension.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Ne pas répondre, ne rien cliquer et signaler le message au 33700.",
+        "mauvaises": [
+          "Répondre immédiatement pour éviter la suspension",
+          "Cliquer sur le lien et saisir vos codes",
+          "Transférer le message à tous vos contacts"
+        ]
+      },
+      "explication": "Une administration ou une banque ne demande jamais vos codes par SMS. Le 33700 permet de signaler les SMS frauduleux."
+    },
+    {
+      "id": "s5-37",
+      "theme": 5,
+      "numero": 37,
+      "principe": "Transports en commun",
+      "situation": "Vous montez dans un train sans titre de transport valable.",
+      "question": "Quel risque encourez-vous ?",
+      "qcm": {
+        "bonne": "Une amende, en plus du prix du billet.",
+        "mauvaises": [
+          "Aucun, si vous payez en liquide au contrôleur",
+          "Une simple remarque sans conséquence",
+          "Une interdiction de voyager à vie"
+        ]
+      },
+      "explication": "Voyager sans titre valable est une infraction. Les contrôleurs peuvent établir une amende."
+    },
+    {
+      "id": "s5-38",
+      "theme": 5,
+      "numero": 38,
+      "principe": "Absence scolaire",
+      "situation": "Votre enfant est malade le matin et ne peut pas aller à l’école.",
+      "question": "Que devez-vous faire ?",
+      "qcm": {
+        "bonne": "Prévenir l’école et ne pas envoyer l’enfant en classe.",
+        "mauvaises": [
+          "Le laisser partir quand même pour ne pas manquer le cours",
+          "Attendre une semaine pour prévenir l’école",
+          "Demander à un autre élève de signer à sa place"
+        ]
+      },
+      "explication": "Prévenir l’école est une obligation de bonne conduite. L’enfant malade doit rester à la maison pour se soigner et ne pas contaminer les autres."
+    },
+    {
+      "id": "s5-39",
+      "theme": 5,
+      "numero": 39,
+      "principe": "Dépôt sauvage de déchets",
+      "situation": "Vous voyez des déchets abandonnés en pleine nature, au bord d’un chemin.",
+      "question": "Que pouvez-vous faire ?",
+      "qcm": {
+        "bonne": "Signaler le dépôt à la mairie ou au service de propreté de la commune.",
+        "mauvaises": [
+          "Ne rien faire, ce n’est pas votre responsabilité",
+          "Brûler les déchets sur place",
+          "Les déplacer dans le champ voisin"
+        ]
+      },
+      "explication": "Le dépôt sauvage est une infraction environnementale. Le signaler permet à la collectivité d’intervenir."
     }
   ]
 }

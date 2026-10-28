@@ -578,3 +578,9 @@ main.wrap:not(.wide) .livret .btn{ grid-column:2; grid-row:1 / span 2; margin:0;
 .hq-save{ margin:14px 0 0; padding:14px; border-radius:12px; background:var(--sunk); }
 .hq-save p{ margin:0 0 10px; font-size:15px; }
 .hq-save .btn{ width:100%; }
+
+/* Mises en situation : navigation entre exercices et exercices du même thème */
+.sit-nav{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin:22px 0 10px; font-weight:700; }
+.sit-nav a{ color:var(--accent); }
+.sit-nav a:last-child{ margin-left:auto; text-align:right; }
+.sit-item .sit-d, .sit-item .sit-a{ margin:8px 0 0; }
