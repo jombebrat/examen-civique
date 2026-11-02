@@ -71,6 +71,17 @@ def free_space_per_theme(pdf_path, marks_phys):
     return res
 
 
+def draw_qr(c, url, x, y, size):
+    from reportlab.graphics.barcode.qr import QrCodeWidget
+    from reportlab.graphics.shapes import Drawing
+    from reportlab.graphics import renderPDF
+    w = QrCodeWidget(url, barLevel="M")
+    x0, y0, x1, y1 = w.getBounds()
+    d = Drawing(size, size, transform=[size / (x1 - x0), 0, 0, size / (y1 - y0), 0, 0])
+    d.add(w)
+    renderPDF.draw(d, c, x, y)
+
+
 def footer_overlay(n_pages, font_regular, font_semibold, out_path):
     pdfmetrics.registerFont(RLTTFont("InterR", font_regular))
     pdfmetrics.registerFont(RLTTFont("InterS", font_semibold))
@@ -80,13 +91,15 @@ def footer_overlay(n_pages, font_regular, font_semibold, out_path):
         if p > 1:
             y = 8.2 * mm
             c.setStrokeColorRGB(0.85, 0.87, 0.91); c.setLineWidth(0.5)
-            c.line(15 * mm, y + 4.2 * mm, W - 15 * mm, y + 4.2 * mm)
-            c.setFillColorRGB(0.45, 0.49, 0.58)
+            qs = 12 * mm  # QR : 12 mm, lisible imprimé
+            c.line(15 * mm, y + 4.2 * mm, W - 15 * mm - qs - 3 * mm, y + 4.2 * mm)
+            c.setFillColorRGB(0.40, 0.44, 0.52)
             c.setFont("InterR", 7.3)
-            c.drawString(15 * mm, y, f"{build.BRAND} · Examen civique — {build.DOMAIN}")
+            c.drawString(15 * mm, y, f"{build.BRAND} · {build.DOMAIN} · {build.SHARE_LINE}")
             c.setFont("InterS", 7.6)
             c.setFillColorRGB(0.10, 0.16, 0.32)
-            c.drawRightString(W - 15 * mm, y, f"{p} / {n_pages}")
+            c.drawRightString(W - 15 * mm - qs - 3 * mm, y, f"{p} / {n_pages}")
+            draw_qr(c, build.QR_URL, W - 15 * mm - qs, 2.5 * mm, qs)
         c.showPage()
     c.save()
 

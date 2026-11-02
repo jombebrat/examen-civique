@@ -211,7 +211,10 @@ html,body{ margin:0; padding:0; }
 .cover .total .big{ font-family:'Fraunces',serif; font-weight:800; font-size:30pt; color:var(--navy); line-height:1; }
 .cover .total .big small{ font-size:11pt; font-weight:700; color:var(--muted); margin-left:2mm; }
 .cover .cover-exam{ margin-top:13mm; }
-.cover .foot{ font-size:7.8pt; color:var(--soft); text-align:right; line-height:1.45; }
+.cover .foot{ font-size:7.8pt; color:var(--soft); text-align:right; line-height:1.45; display:flex; align-items:center; gap:4mm; }
+.cover .foot b{ color:var(--navy); font-size:9pt; }
+.cover .total{ align-items:center; }
+.qr svg{ width:100%; height:100%; display:block; }
 """
 
 
@@ -228,6 +231,24 @@ def logo_data_uri():
     import base64
     with open(os.path.join(ROOT, "assets", "logo.png"), "rb") as f:
         return "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
+
+
+QR_URL = f"https://{DOMAIN}/?depuis=pdf-" + (os.environ.get("COQ_LISTE", "nat"))
+SHARE_LINE = "Gratuit, sans inscription. Libre d’imprimer et de partager."
+
+
+def qr_svg(url, size_mm):
+    """QR code en SVG (noir sur blanc, lisible imprimé en noir et blanc)."""
+    from reportlab.graphics.barcode.qr import QrCodeWidget
+    from reportlab.graphics.shapes import Drawing
+    from reportlab.graphics import renderSVG
+    w = QrCodeWidget(url, barLevel="M")
+    x0, y0, x1, y1 = w.getBounds()
+    d = Drawing(x1 - x0, y1 - y0)
+    d.add(w)
+    svg = renderSVG.drawToString(d)
+    svg = svg[svg.index("<svg"):]
+    return f'<div class="qr" style="width:{size_mm}mm;height:{size_mm}mm">{svg}</div>'
 
 
 def build_cover():
@@ -255,7 +276,7 @@ def build_cover():
     </div>
     <div class="themes">{rows}</div>
     <div class="total"><div class="big">{total}<small>questions · 5 thèmes</small></div>
-      <div class="foot">Document de révision non officiel.<br>{DOMAIN}</div></div>
+      <div class="foot"><div class="ftxt">{T(SHARE_LINE)}<br>Document de révision non officiel.<br><b>{DOMAIN}</b></div>{qr_svg(QR_URL, 22)}</div></div>
   </div>
 </div></body></html>"""
 
