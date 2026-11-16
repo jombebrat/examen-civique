@@ -176,6 +176,10 @@ td.a .ref{ display:inline-block; margin-top:0.4mm; font-size:7.3pt; color:var(--
 .tbl td.k{ font-family:'Fraunces',serif; font-weight:700; color:var(--blue); white-space:nowrap; width:23mm; }
 .memo-sec{ break-inside:avoid; margin-bottom:5.5mm; }
 .memo-p2{ padding-top:1mm; }
+.memo-brand{ break-inside:avoid; display:flex; align-items:center; gap:4mm; margin-top:5mm; padding:3.5mm 4mm; border:1pt solid var(--navy); border-radius:2.5mm; }
+.memo-brand img{ width:13mm; height:13mm; }
+.memo-brand .mb-t{ flex:1; font-size:10pt; line-height:1.4; color:var(--ink); }
+.memo-brand .mb-t b{ color:var(--navy); }
 .method{ margin-top:2mm; border:0.8pt solid var(--line); border-radius:2.2mm; padding:4mm 5mm; break-inside:avoid; }
 .method h3{ font-size:12pt; margin-bottom:2.4mm; }
 .method ol{ margin:0; padding-left:5mm; }
@@ -212,7 +216,13 @@ html,body{ margin:0; padding:0; }
 .cover .total .big small{ font-size:11pt; font-weight:700; color:var(--muted); margin-left:2mm; }
 .cover .cover-exam{ margin-top:13mm; }
 .cover .foot{ font-size:7.8pt; color:var(--soft); text-align:right; line-height:1.45; display:flex; align-items:center; gap:4mm; }
-.cover .foot b{ color:var(--navy); font-size:9pt; }
+.cover .foot .fbig{ font-size:12.5pt; color:var(--navy); font-weight:400; }
+.cover .foot .fbig b{ font-weight:700; }
+.cover .brandline{ display:flex; align-items:center; gap:4mm; }
+.cover .blogo{ width:17mm; height:17mm; }
+.cover .bname{ font-family:'Fraunces',serif; font-weight:800; font-size:21pt; color:var(--navy); line-height:1.05; }
+.cover .bkind{ font-size:9.4pt; color:var(--muted); margin-top:0.8mm; }
+.cover h1{ margin-top:9mm !important; }
 .cover .total{ align-items:center; }
 .qr svg{ width:100%; height:100%; display:block; }
 """
@@ -251,6 +261,51 @@ def qr_svg(url, size_mm):
     return f'<div class="qr" style="width:{size_mm}mm;height:{size_mm}mm">{svg}</div>'
 
 
+def build_back():
+    """Dernière page : ce qu'on voit quand le livret est posé à l'envers, ou passé à quelqu'un."""
+    return f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Dos</title>
+<style>{font_faces()}{CSS}{COVER_CSS}{BACK_CSS}</style></head><body>
+<div class="cover back">
+  <div class="flag"><span style="background:#1F4E9C"></span><span style="background:#E9ECF2"></span><span style="background:#C8102E"></span></div>
+  <div class="inner">
+    <div class="brandline"><img class="blogo" src="{logo_data_uri()}" alt=""><div><div class="bname">{BRAND}</div><div class="bkind">{T("Préparer l’examen civique, gratuitement")}</div></div></div>
+    <h1 class="bh">{T("Ce livret est gratuit.")}</h1>
+    <p class="blead">{T("On vous l’a passé ? Téléchargez-le vous aussi et entraînez-vous en ligne, sans inscription et sans publicité.")}</p>
+    <div class="bqr">{qr_svg(QR_URL, 58)}<div class="burl"><div class="bdom">{DOMAIN}</div><div class="bscan">{T("Scannez le code avec l’appareil photo de votre téléphone.")}</div></div></div>
+    <ul class="bwhat">
+      <li>{T("Toutes les questions officielles des trois listes, avec les réponses expliquées")}</li>
+      <li>{T("Des QCM et des examens blancs au format de l’examen : 40 questions, 45 minutes")}</li>
+      <li>{T("Des mises en situation corrigées")}</li>
+      <li>{T("Une application qui fonctionne aussi sans internet")}</li>
+    </ul>
+    <p class="bpass">{T("Vous connaissez quelqu’un qui prépare l’examen ? Passez-lui ce livret.")}</p>
+    <div class="blang">
+      <p lang="en">Free French civic exam practice, with English help: <b>{DOMAIN}/en/</b></p>
+      <p lang="ar" dir="rtl">تحضير مجاني للامتحان المدني الفرنسي، مع ترجمة عربية: <b dir="ltr">{DOMAIN}/ar/</b></p>
+    </div>
+    <p class="bfine">{T("Site indépendant, non officiel. Libre d’imprimer et de partager.")}</p>
+  </div>
+</div></body></html>"""
+
+
+BACK_CSS = r"""
+.back .inner{ top:20mm; }
+.back .bh{ font-size:40pt; line-height:1.02; margin-top:14mm; color:var(--navy); }
+.back .blead{ font-family:'Fraunces',serif; font-size:15pt; line-height:1.35; color:var(--navy); margin:6mm 0 0; max-width:150mm; }
+.back .bqr{ display:flex; align-items:center; gap:8mm; margin-top:12mm; }
+.back .bdom{ font-family:'Fraunces',serif; font-weight:800; font-size:28pt; color:var(--navy); line-height:1; }
+.back .bscan{ font-size:10pt; color:var(--muted); margin-top:3mm; max-width:80mm; line-height:1.4; }
+.back .bwhat{ margin:12mm 0 0; padding:0; list-style:none; border-top:1.2pt solid var(--navy); }
+.back .bwhat li{ padding:3mm 0 3mm 7mm; border-bottom:0.6pt solid var(--line); font-size:11pt; color:var(--ink); position:relative; }
+.back .bwhat li::before{ content:""; position:absolute; left:0; top:4.6mm; width:3mm; height:3mm; border-radius:50%; background:var(--red); }
+.back .bpass{ margin:9mm 0 0; font-size:13pt; font-weight:700; color:var(--navy); }
+.back .blang{ margin-top:auto; padding-top:5mm; border-top:0.6pt solid var(--line); }
+.back .blang p{ margin:1.5mm 0; font-size:10pt; color:var(--muted); }
+.back .blang p[lang="ar"]{ font-family:'DejaVu Sans', sans-serif; font-size:10.5pt; text-align:right; }
+.back .bfine{ margin:3mm 0 0; font-size:8pt; color:var(--soft); }
+"""
+
+
 def build_cover():
     rows = ""
     for i, (name, qs) in enumerate(THEMES):
@@ -261,9 +316,8 @@ def build_cover():
 <style>{font_faces()}{CSS}{COVER_CSS}</style></head><body>
 <div class="cover">
   <div class="flag"><span style="background:#1F4E9C"></span><span style="background:#E9ECF2"></span><span style="background:#C8102E"></span></div>
-  <img class="logo" src="{logo_data_uri()}" alt="">
   <div class="inner">
-    <div class="eyebrow">{BRAND} · Fiches de révision · {LIST_NAME}</div>
+    <div class="brandline"><img class="blogo" src="{logo_data_uri()}" alt=""><div><div class="bname">{BRAND}</div><div class="bkind">Fiches de révision · {LIST_NAME}</div></div></div>
     <h1>Examen<br>civique <em>2026</em></h1>
     <div class="subtitle">Les {total} questions officielles de connaissance, avec leurs réponses expliquées.</div>
     <div class="rule"></div>
@@ -276,7 +330,7 @@ def build_cover():
     </div>
     <div class="themes">{rows}</div>
     <div class="total"><div class="big">{total}<small>questions · 5 thèmes</small></div>
-      <div class="foot"><div class="ftxt">{T(SHARE_LINE)}<br>Document de révision non officiel.<br><b>{DOMAIN}</b></div>{qr_svg(QR_URL, 22)}</div></div>
+      <div class="foot"><div class="ftxt"><span class="fbig">Gratuit sur <b>{DOMAIN}</b></span><br>{T("Libre d’imprimer et de partager.")}<br>Document de révision non officiel.</div>{qr_svg(QR_URL, 26)}</div></div>
   </div>
 </div></body></html>"""
 
@@ -459,6 +513,7 @@ def build_memo():
     <div class="memo-sec"><h3>Pièges fréquents</h3><ul class="pieges">{pl}</ul></div>
   </div>
   <div class="method"><h3>Le jour de l’examen : la bonne méthode</h3><ol>{ml}</ol></div>
+  <div class="memo-brand"><img src="{logo_data_uri()}" alt=""><div class="mb-t"><b>{T("Fiche gratuite de " + BRAND)}</b><br>{T("Les questions, les QCM et les examens blancs sur")} <b>{DOMAIN}</b></div>{qr_svg(QR_URL, 18)}</div>
   </div>
   <p class="endnote">{T("¹ Information hors livret. Sources : Livret du citoyen, édition mai 2026 ; Charte des droits et devoirs du citoyen français ; " + LIST_ENDNOTE + ".")}</p>
 </section>"""

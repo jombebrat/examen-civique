@@ -71,6 +71,9 @@ def free_space_per_theme(pdf_path, marks_phys):
     return res
 
 
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+
 def draw_qr(c, url, x, y, size):
     from reportlab.graphics.barcode.qr import QrCodeWidget
     from reportlab.graphics.shapes import Drawing
@@ -88,7 +91,14 @@ def footer_overlay(n_pages, font_regular, font_semibold, out_path):
     W, H = 210 * mm, 297 * mm
     c = canvas.Canvas(out_path, pagesize=(W, H), initialFontName="InterR", initialFontSize=7.3)
     for p in range(1, n_pages + 1):
-        if p > 1:
+        if 1 < p < n_pages:
+            # en-tête : logo et nom, pour qu'une page seule montre d'où elle vient
+            logo = os.path.join(ROOT_DIR, "assets", "logo.png")
+            c.drawImage(logo, 15 * mm, H - 11.2 * mm, width=6.2 * mm, height=6.2 * mm, mask="auto")
+            c.setFont("InterS", 8.6); c.setFillColorRGB(0.10, 0.16, 0.32)
+            c.drawString(23 * mm, H - 8.9 * mm, build.BRAND)
+            c.setFont("InterR", 7.6); c.setFillColorRGB(0.40, 0.44, 0.52)
+            c.drawRightString(W - 15 * mm, H - 8.9 * mm, f"Examen civique · {build.LIST_NAME} · {build.DOMAIN}")
             y = 8.2 * mm
             c.setStrokeColorRGB(0.85, 0.87, 0.91); c.setLineWidth(0.5)
             qs = 12 * mm  # QR : 12 mm, lisible imprimé
@@ -113,6 +123,9 @@ def main():
         pg = b.new_page()
         # passe 1
         open(os.path.join(OUT, "cover.html"), "w", encoding="utf-8").write(build.build_cover())
+        open(os.path.join(OUT, "back.html"), "w", encoding="utf-8").write(build.build_back())
+        html_to_pdf(pg, os.path.join(OUT, "back.html"), os.path.join(OUT, "back.pdf"))
+        assert len(PdfReader(os.path.join(OUT, "back.pdf")).pages) == 1
         open(os.path.join(OUT, "main.html"), "w", encoding="utf-8").write(build.build_main({}))
         html_to_pdf(pg, os.path.join(OUT, "cover.html"), os.path.join(OUT, "cover.pdf"))
         html_to_pdf(pg, os.path.join(OUT, "main.html"), os.path.join(OUT, "main.pdf"))
@@ -137,7 +150,7 @@ def main():
         b.close()
 
     w = PdfWriter()
-    for f in ["cover.pdf", "main.pdf"]:
+    for f in ["cover.pdf", "main.pdf", "back.pdf"]:
         for page in PdfReader(os.path.join(OUT, f)).pages:
             w.add_page(page)
     n = len(w.pages)

@@ -1,17 +1,17 @@
 {
   "nat": {
     "fichier": "coq-civique-examen-civique.pdf",
-    "pages": 27,
+    "pages": 28,
     "questions": 259
   },
   "cr": {
     "fichier": "coq-civique-examen-civique-carte-de-resident.pdf",
-    "pages": 24,
+    "pages": 25,
     "questions": 209
   },
   "csp": {
     "fichier": "coq-civique-examen-civique-carte-de-sejour-pluriannuelle.pdf",
-    "pages": 23,
+    "pages": 24,
     "questions": 191
   }
 }
