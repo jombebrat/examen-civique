@@ -10,6 +10,23 @@
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+
+  // ?moi=1 : les visites de cet appareil ne sont plus comptées (Umami et compteurs du site) ; ?moi=0 : de nouveau comptées
+  var MOI = null;
+  try { MOI = new URLSearchParams(location.search).get("moi"); } catch (e) {}
+  if (MOI === "1") lsSet("umami.disabled", "1");
+  if (MOI === "0") lsSet("umami.disabled", null);
+  var NOT_ME = !lsGet("umami.disabled");
+  if (MOI === "1" || MOI === "0") {
+    document.addEventListener("DOMContentLoaded", function () {
+      var d = document.createElement("p");
+      d.setAttribute("role", "status");
+      d.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:99;margin:0;padding:12px 16px;border-radius:12px;background:#14203C;color:#fff;font-weight:700;text-align:center";
+      d.textContent = MOI === "1" ? "Vos visites ne sont plus comptées sur cet appareil." : "Vos visites sont de nouveau comptées sur cet appareil.";
+      document.body.appendChild(d);
+      setTimeout(function () { d.remove(); }, 5000);
+    });
+  }
   function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
   function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -58,6 +75,7 @@
       if (!name) return Promise.resolve();
       var n = String(name).replace(/[^a-z0-9-]/gi, "").slice(0, 60);
       // Même événement dans Umami (sans cookie, sans identifiant, jamais avec l'adresse email)
+      if (!NOT_ME) return Promise.resolve();
       try { if (window.umami && typeof window.umami.track === "function") window.umami.track(n); } catch (e) {}
       if (!ON) return Promise.resolve();
       return rpc("coq_vue", { p_path: "/~/" + n, p_ref: "" }).catch(function () {});
@@ -78,7 +96,8 @@
   try {
     var ref = "";
     if (document.referrer) { var rh = new URL(document.referrer).hostname; if (rh && rh !== location.hostname) ref = rh.replace(/^www\./, ""); }
-    rpc("coq_vue", { p_path: location.pathname.slice(0, 200), p_ref: ref.slice(0, 100) }).catch(function () {});
+    if (!ref) { var us = new URLSearchParams(location.search).get("utm_source"); if (us) ref = "utm:" + us.replace(/[^a-z0-9-]/gi, ""); }
+    if (NOT_ME) rpc("coq_vue", { p_path: location.pathname.slice(0, 200), p_ref: ref.slice(0, 100) }).catch(function () {});
   } catch (e) {}
 
   /* Chiffres réels et témoignages validés (affichés seulement à partir d'un seuil) */

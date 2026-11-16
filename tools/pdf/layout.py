@@ -233,7 +233,7 @@ def logo_data_uri():
         return "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
 
 
-QR_URL = f"https://{DOMAIN}/?depuis=pdf-" + (os.environ.get("COQ_LISTE", "nat"))
+QR_URL = f"https://{DOMAIN}/?utm_source=livret-" + (os.environ.get("COQ_LISTE", "nat")) + "&utm_medium=print"
 SHARE_LINE = "Gratuit, sans inscription. Libre d’imprimer et de partager."
 
 

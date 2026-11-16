@@ -1003,7 +1003,7 @@ function scoreImage(score, pass) {
   });
 }
 async function shareResult(score, pass) {
-  const url = DATA.site || location.origin + "/";
+  const url = (DATA.site || location.origin + "/") + "?utm_source=partage&utm_medium=resultat";
   const text = pass ? `J’ai eu ${score}/40 à l’examen blanc de l’examen civique sur Coq Civique ! Entraînez-vous gratuitement :` : `Je m’entraîne pour l’examen civique sur Coq Civique (${score}/40 à mon examen blanc). C’est gratuit :`;
   try { if (document.fonts && document.fonts.load) await document.fonts.load("800 120px \"Atkinson Hyperlegible Next\""); } catch (e) {}
   const blob = await scoreImage(score, pass);

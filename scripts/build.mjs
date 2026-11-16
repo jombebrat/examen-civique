@@ -1190,7 +1190,7 @@ cpSync(join(ROOT, "assets/favicon.ico"), join(DIST, "favicon.ico"));
 writeFileSync(join(DIST, "manifest.webmanifest"), JSON.stringify({
   name: `${NAME} – Examen civique`, short_name: NAME, lang: "fr", dir: "ltr",
   description: "QCM gratuit de l’examen civique : questions officielles, réponses, cartes et examens blancs.",
-  id: href("/reviser/"), start_url: href("/reviser/?source=app"), scope: href("/"), display: "standalone",
+  id: href("/reviser/"), start_url: href("/reviser/?utm_source=app&utm_medium=pwa"), scope: href("/"), display: "standalone",
   background_color: "#F4F6FA", theme_color: "#1F4E9C",
   icons: [
     { src: href("/assets/icon-192.png"), sizes: "192x192", type: "image/png" },
